@@ -277,7 +277,12 @@ class mm:
             # PIL Image — preserva EXIF se disponível
             exif = img.info.get("exif", b"")
             img.save(path, exif=exif) if exif else img.save(path)
+
             
+    @staticmethod
+    def drawImg(f):
+        return mm.drawImage(f)
+
     @staticmethod
     def drawImage(f):
         """Retorna string formatada da matriz para impressão."""
@@ -301,13 +306,7 @@ class mm:
         [plt.axvline(i+.5, 0, h, color='r') for i in range(w-1)]
         [plt.axhline(j+.5, 0, w, color='r') for j in range(h-1)]
 
-    @staticmethod
-    def drawImagePlt(f, scale=40):
-        """Exibe imagem com grade e rótulos via Matplotlib."""
-        import matplotlib.pyplot as plt
-        h,w=f.shape[:2]
-        plt.figure(figsize=(w/100*scale,h/100*scale))
-        mm._plot_grid(f)
+ 
 
     @staticmethod
     def drawImageKernel(f,B,x,y,scale=40):

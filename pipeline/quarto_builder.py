@@ -545,6 +545,8 @@ format:
     # include-before-body é processado imediatamente após \\begin{{document}},
     # antes de qualquer conteúdo gerado pelo Pandoc — ao contrário de
     # \\AtBeginDocument (que chega tarde demais no fluxo do book).
+    # **atenção** TwemojiMozilla trocou por 
+    # Noto Color Emoji
 
 
     include-in-header:
@@ -567,7 +569,7 @@ format:
           \\usepackage{{fancyvrb}}
           \\usepackage{{csquotes}}
           \\usepackage{{emoji}}
-          \\setemojifont{{TwemojiMozilla}}
+          \\setemojifont{{Noto Color Emoji}}
           \\usepackage{{graphicx}}
           \\usepackage{{geometry}}
           \\definecolor{{pdi-blue}}{{RGB}}{{21,101,192}}
@@ -1088,7 +1090,7 @@ def _fix_tex_cover(qdir: Path):
 \renewcommand{\partname}{Parte}
 
 \usepackage{emoji}
-\setemojifont{TwemojiMozilla}
+\setemojifont{Noto Color Emoji}
 
 \AtBeginDocument{
   \fvset{breaklines=true, breaksymbolleft={}}
