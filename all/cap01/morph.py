@@ -327,32 +327,6 @@ class mm:
         [plt.plot([x-Bcx-.5,x-Bcx+Bw-.5],[j+y-Bcy-.5]*2,color='y',lw=2) for j in range(Bh+1)]
 
     @staticmethod
-    def drawImgPlt(f, scale=40):
-        return mm.drawImagePlt(f, scale)
-
-    @staticmethod
-    def drawImagePlt(f, scale=40):
-        """ Displays the input image f using Matplotlib.
-        Args: f (ndarray): The input image.
-        Example: drawImagePlt(f) """
-        import matplotlib.pyplot as plt
-        # Set up the plot.
-        h,w=f.shape[:2]
-        plt.figure(figsize=(w/100*scale,h/100*scale))
-        plt.rcParams['xtick.bottom'] = plt.rcParams['xtick.labelbottom'] = False
-        plt.rcParams['xtick.top'] = plt.rcParams['xtick.labeltop'] = True
-        # Display the image.
-        _ = plt.imshow(f, 'gray')
-        # Set the tick marks and labels.
-        plt.yticks(range(h))
-        plt.xticks(range(w))
-        plt.ylabel('y')
-        plt.xlabel('x')
-        # Add grid lines.
-        [plt.axvline(i + .5, 0, h, color='r') for i in range(w - 1)]
-        [plt.axhline(j + .5, 0, w, color='r') for j in range(h - 1)]
-
-    @staticmethod
     def lblshow(f, border=3):
         """Exibe contornos coloridos de cada componente."""
         import matplotlib.pyplot as plt
