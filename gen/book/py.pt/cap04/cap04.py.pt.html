@@ -1235,7 +1235,7 @@ R_g^\delta(f) = (f \oplus_g b)^\infty, \quad \text{onde } (f \oplus_g b)^{(k)} =
 <p>A reconstrução morfológica é significativamente mais robusta que a abertura convencional porque filtra estruturas indesejadas <strong>sem alterar a morfologia</strong> dos objetos preservados. Enquanto a abertura suaviza cantos e deforma contornos devido à aplicação irrestrita do elemento estruturante, a reconstrução geodésica resgata os limites exatos dos objetos que interceptam o marcador, conforme ilustrado na <a href="#fig-04-reconstrucao-didatica" class="quarto-xref">Figura&nbsp;<span>4.7</span></a> com o elemento estruturante em cruz da <a href="#fig-04-elemento-cruz" class="quarto-xref">Figura&nbsp;<span>4.6</span></a>.</p>
 <div id="cell-fig-04-elemento-cruz" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>B_cruz <span class="op">=</span> mm.secross()</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>mm.drawImagePlt(B_cruz, scale<span class="op">=</span><span class="dv">20</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>mm.drawImgPlt(B_cruz, scale<span class="op">=</span><span class="dv">20</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div id="fig-04-elemento-cruz" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -3958,7 +3958,7 @@ Figura&nbsp;4.23: Segmentação * da imagem das moedas com k=2, 4 e 6 clusters. 
 <li><strong>(10%)</strong> Implemente manualmente o critério de Otsu sem usar <code>cv2.threshold</code>: calcule <span class="math inline">\(\sigma_B^2(T)\)</span> para todos os <span class="math inline">\(T \in [0,255]\)</span> usando <code>mm.hist</code>, identifique <span class="math inline">\(T^*\)</span> e compare com o valor do OpenCV. Plote <span class="math inline">\(\sigma_B^2\)</span> em função de <span class="math inline">\(T\)</span> e marque o máximo.</li>
 <li><strong>(15%)</strong> Aplique limiarização adaptativa com blocos de tamanho 11, 31 e 51 à imagem Lena com gradiente de iluminação simulado (<code>np.linspace</code> adicionado à imagem). Compare visualmente com Otsu global e explique por que a adaptativa é superior nesse cenário.</li>
 <li><strong>(15%)</strong> Execute o <em>pipeline</em> <em>watershed</em> na imagem de moedas variando o limiar da transformada de distância (<span class="math inline">\(0.3\)</span>, <span class="math inline">\(0.5\)</span>, <span class="math inline">\(0.7 \times\)</span> máximo). Explique como esse parâmetro afeta a separação de objetos sobrepostos e a criação de sobre-segmentação.</li>
-<li><strong>(15%)</strong> Usando <code>mm.drawImage</code> e <code>mm.drawImageKernel</code>, crie uma demonstração visual passo a passo da erosão de uma imagem binária 7×7 com elemento estruturante 3×3 quadrado — mostrando para cada pixel central se o elemento estruturante está completamente contido em <span class="math inline">\(A\)</span> ou não.</li>
+<li><strong>(15%)</strong> Usando <code>mm.drawImg</code> e <code>mm.drawImgKernel</code>, crie uma demonstração visual passo a passo da erosão de uma imagem binária 7×7 com elemento estruturante 3×3 quadrado — mostrando para cada pixel central se o elemento estruturante está completamente contido em <span class="math inline">\(A\)</span> ou não.</li>
 <li><strong>(15%)</strong> Demonstre a <strong>dualidade erosão–dilatação</strong> experimentalmente com <code>mm.ero</code>, <code>mm.dil</code> e <code>mm.bnot</code>: verifique que <span class="math inline">\((A \ominus B)^c = A^c \oplus \hat{B}\)</span>. Calcule a diferença pixel a pixel entre os dois lados e exiba com <code>mm.histImg</code>.</li>
 <li><strong>(15%)</strong> Implemente o <strong>gradiente morfológico</strong> manualmente usando <code>mm.ero</code> e <code>mm.dil</code> e compare com <code>cv2.morphologyEx(img, cv2.MORPH_GRADIENT, B)</code>. Aplique com elementos estruturantes de forma e tamanho diferentes (quadrado 3×3, disco 5×5, linha 1×9) e explique as diferenças na resposta de bordas.</li>
 <li><strong>(15%)</strong> Construa um <em>pipeline</em> completo para contar e classificar as moedas por tamanho (pequena, média, grande) usando área e circularidade como critérios. Calcule o <strong>IoU</strong> entre sua segmentação e uma máscara de referência criada manualmente. Apresente os resultados em tabela e com <code>mm.show</code> em grade.</li>
@@ -3986,7 +3986,7 @@ Figura&nbsp;4.23: Segmentação * da imagem das moedas com k=2, 4 e 6 clusters. 
 <section id="download" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="download">Download</h4>
 <p>Baixe <code>morph.py</code> e <code>testsuite.py</code> executando a célula abaixo:</p>
-<div id="71379671" class="cell">
+<div id="008c6e50" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os, sys, importlib, inspect, urllib.request</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="co"># URLs do repositório</span></span>
@@ -4263,7 +4263,7 @@ Figura&nbsp;4.24: Simulador: Distâncias Euclidiana, <em>City-block</em> e <em>C
 </figure>
 </div>
 </div>
-<div id="50d8a18b" class="cell">
+<div id="2cc8ca01" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile EP02_01.py</span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Código Python</span></span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>x1,y1,x2,y2 <span class="op">=</span> <span class="bu">int</span>(<span class="bu">input</span>()), <span class="bu">int</span>(<span class="bu">input</span>()), <span class="bu">int</span>(<span class="bu">input</span>()), <span class="bu">int</span>(<span class="bu">input</span>())</span>
@@ -4288,19 +4288,19 @@ Figura&nbsp;4.24: Simulador: Distâncias Euclidiana, <em>City-block</em> e <em>C
 <pre><code>Writing EP02_01.py</code></pre>
 </div>
 </div>
-<div id="cbb209ff" class="cell">
+<div id="117808ad" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>np.set_printoptions(linewidth<span class="op">=</span><span class="dv">100</span>, edgeitems<span class="op">=</span><span class="dv">3</span>, threshold<span class="op">=</span><span class="dv">1000</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="01b85192" class="cell">
+<div id="28ec307e" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Substitui emoji Unicode literal ✅ por comando"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Substitui emoji Unicode literal ✅ por comando</code></pre>
 </div>
 </div>
-<div id="ee66fa9e" class="cell">
+<div id="a86ec29e" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mm.drawImage(np.zeros((<span class="dv">5</span>, <span class="dv">5</span>))))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mm.drawImg(np.zeros((<span class="dv">5</span>, <span class="dv">5</span>))))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  0   0   0   0   0 
   0   0   0   0   0 
@@ -4310,7 +4310,7 @@ Figura&nbsp;4.24: Simulador: Distâncias Euclidiana, <em>City-block</em> e <em>C
 </code></pre>
 </div>
 </div>
-<div id="82ae3fc8" class="cell">
+<div id="24cfe95b" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>TestSuite(<span class="st">"EP02_01.py"</span>).run()</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">✔️ EP02_01.cases já existe em casos/

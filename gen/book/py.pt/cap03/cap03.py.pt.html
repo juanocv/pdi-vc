@@ -543,9 +543,9 @@ g(x,y) = \alpha\,f_1(x,y) + (1-\alpha)\,f_2(x,y), \quad \alpha \in [0,1]
 Maps: https://www.google.com/maps/search/?api=1&amp;query=-19.1402,23.814872222222224
 
 Tipo PIL  : &lt;class 'PIL.JpegImagePlugin.JpegImageFile'&gt;   | Dimensões (x,y): (1242, 1324)
-Pillow (0,0): (191, 135, 88)
+Pillow (0,0): (192, 134, 86)
 Tipo NumPy: &lt;class 'numpy.ndarray'&gt; | Dimensões [y,x,c]: (1324, 1242, 3)
-NumPy [0,0]: [191 135  88]</code></pre>
+NumPy [0,0]: [192 134  86]</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div id="fig-03-leopardo" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -1042,24 +1042,24 @@ Tabela&nbsp;3.2: Interpretação dos coeficientes do <em>kernel</em>.
 <span id="cb17-34"><a href="#cb17-34" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Patch 5×5 (intensidades):
-[[ 95  97 103 113 115]
- [107 105 103 108 115]
- [ 98 102 112 118 116]
- [ 81  91 113 123 119]
- [ 85  91 111 120 121]]
+[[ 91  95 108 116 114]
+ [106 107 108 111 114]
+ [102 103 107 112 116]
+ [ 83  90 111 125 123]
+ [ 79  88 110 126 124]]
 
 Kernel 3×3 de média:
 [[0.11111111 0.11111111 0.11111111]
  [0.11111111 0.11111111 0.11111111]
  [0.11111111 0.11111111 0.11111111]]
 
-Correlação no pixel central [1,1]:       102.4  (original: 105)
+Correlação no pixel central [1,1]:       103.0  (original: 107)
 
 Tempos na imagem (1324, 1242) (Mandrill):
-  mm.conv0 (laços Python): 8.742 s
-  mm.conv  (cv2.filter2D): 0.00206 s
-  Aceleração:              4247× mais rápido
-  Diferença máxima:        43 (bordas com padding diferente)</code></pre>
+  mm.conv0 (laços Python): 9.756 s
+  mm.conv  (cv2.filter2D): 0.00229 s
+  Aceleração:              4259× mais rápido
+  Diferença máxima:        39 (bordas com padding diferente)</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div id="fig-03-convolucao-passo" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -1083,16 +1083,16 @@ Figura&nbsp;3.10: Correlação com kernel de média 3×3: versão didática (mm.
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>B     <span class="op">=</span> np.ones((<span class="dv">3</span>,<span class="dv">3</span>), dtype<span class="op">=</span>np.uint8)</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Patch 5×5 (intensidades):"</span>)</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mm.drawImage(patch))</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mm.drawImg(patch))</span>
 <span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>mm.drawImageKernel(patch, B, x<span class="op">=</span><span class="dv">1</span>, y<span class="op">=</span><span class="dv">1</span>, scale<span class="op">=</span><span class="fl">40.0</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>mm.drawImgKernel(patch, B, x<span class="op">=</span><span class="dv">1</span>, y<span class="op">=</span><span class="dv">1</span>, scale<span class="op">=</span><span class="fl">40.0</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Patch 5×5 (intensidades):
- 95  97 103 113 115 
-107 105 103 108 115 
- 98 102 112 118 116 
- 81  91 113 123 119 
- 85  91 111 120 121 
+ 91  95 108 116 114 
+106 107 108 111 114 
+102 103 107 112 116 
+ 83  90 111 125 123 
+ 79  88 110 126 124 
 </code></pre>
 </div>
 <div class="cell-output cell-output-display">
@@ -1206,7 +1206,7 @@ G(s,t) = \frac{1}{2\pi\sigma^2}\,e^{-\frac{s^2+t^2}{2\sigma^2}}
 <span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Peso central vs. canto: </span><span class="sc">{</span>w_gauss[<span class="dv">2</span>,<span class="dv">2</span>]<span class="sc">:.4f}</span><span class="ss"> vs. </span><span class="sc">{</span>w_gauss[<span class="dv">0</span>,<span class="dv">0</span>]<span class="sc">:.4f}</span><span class="ss"> "</span></span>
 <span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>      <span class="ss">f"(</span><span class="sc">{</span>w_gauss[<span class="dv">2</span>,<span class="dv">2</span>]<span class="op">/</span>w_gauss[<span class="dv">0</span>,<span class="dv">0</span>]<span class="sc">:.1f}</span><span class="ss">× maior)"</span>)</span>
 <span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>mm.drawImagePlt((w_gauss <span class="op">*</span> <span class="dv">1000</span>).astype(np.uint8), scale<span class="op">=</span><span class="dv">40</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>mm.drawImgPlt((w_gauss <span class="op">*</span> <span class="dv">1000</span>).astype(np.uint8), scale<span class="op">=</span><span class="dv">40</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Kernel Gaussiano 5×5 (σ=1), normalizado:
   0.0030  0.0133  0.0219  0.0133  0.0030
@@ -1323,22 +1323,22 @@ w_8 = \begin{bmatrix} 1 &amp; 1 &amp; 1 \\ 1 &amp; -8 &amp; 1 \\ 1 &amp; 1 &amp;
 <span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>real_11 <span class="op">=</span> <span class="bu">int</span>(np.clip(p[<span class="dv">1</span>,<span class="dv">1</span>] <span class="op">-</span> lap_11, <span class="dv">0</span>, <span class="dv">255</span>))</span>
 <span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Patch original:"</span>)</span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mm.drawImage(patch))</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mm.drawImg(patch))</span>
 <span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Laplac. w4 em  [1,1]: </span><span class="op">\</span></span>
 <span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a><span class="ss">      </span><span class="sc">{</span>p[<span class="dv">0</span>,<span class="dv">1</span>]<span class="sc">:.0f}</span><span class="ss"> + </span><span class="sc">{</span>p[<span class="dv">1</span>,<span class="dv">0</span>]<span class="sc">:.0f}</span><span class="ss"> - 4×</span><span class="sc">{</span>p[<span class="dv">1</span>,<span class="dv">1</span>]<span class="sc">:.0f}</span><span class="ss"> + </span><span class="sc">{</span>p[<span class="dv">1</span>,<span class="dv">2</span>]<span class="sc">:.0f}</span><span class="ss"> + </span><span class="sc">{</span>p[<span class="dv">2</span>,<span class="dv">1</span>]<span class="sc">:.0f}</span><span class="ss"> = </span><span class="sc">{</span>lap_11<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Pixel realçado [1,1]: </span><span class="sc">{</span>p[<span class="dv">1</span>,<span class="dv">1</span>]<span class="sc">:.0f}</span><span class="ss"> - (</span><span class="sc">{</span>lap_11<span class="sc">}</span><span class="ss">) = </span><span class="sc">{</span>real_11<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a><span class="co"># mm.drawImageKernel(patch, B, x=1, y=1, scale=20.0)</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a><span class="co"># mm.drawImgKernel(patch, B, x=1, y=1, scale=20.0)</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Patch original:
- 95  97 103 113 115 
-107 105 103 108 115 
- 98 102 112 118 116 
- 81  91 113 123 119 
- 85  91 111 120 121 
+ 91  95 108 116 114 
+106 107 108 111 114 
+102 103 107 112 116 
+ 83  90 111 125 123 
+ 79  88 110 126 124 
 
-Laplac. w4 em  [1,1]:       97 + 107 - 4×105 + 103 + 102 = -11
-Pixel realçado [1,1]: 105 - (-11) = 116</code></pre>
+Laplac. w4 em  [1,1]:       95 + 106 - 4×107 + 108 + 103 = -16
+Pixel realçado [1,1]: 107 - (-16) = 123</code></pre>
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-03-laplaciano-patch-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1430,7 +1430,7 @@ G_y = \begin{bmatrix} -1 &amp; -2 &amp; -1 \\ 0 &amp; 0 &amp; 0 \\ 1 &amp; 2 &am
 <span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>theta <span class="op">=</span> np.degrees(np.arctan2(gy, gx))</span>
 <span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Patch 5x5:"</span>)</span>
-<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mm.drawImage(patch))</span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mm.drawImg(patch))</span>
 <span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Gx em [1,1]: (</span><span class="sc">{</span>p[<span class="dv">0</span>,<span class="dv">2</span>]<span class="sc">:.0f}</span><span class="ss"> + 2*</span><span class="sc">{</span>p[<span class="dv">1</span>,<span class="dv">2</span>]<span class="sc">:.0f}</span><span class="ss"> + </span><span class="sc">{</span>p[<span class="dv">2</span>,<span class="dv">2</span>]<span class="sc">:.0f}</span><span class="ss">) </span><span class="op">\</span></span>
 <span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a><span class="ss">      - (</span><span class="sc">{</span>p[<span class="dv">0</span>,<span class="dv">0</span>]<span class="sc">:.0f}</span><span class="ss"> + 2*</span><span class="sc">{</span>p[<span class="dv">1</span>,<span class="dv">0</span>]<span class="sc">:.0f}</span><span class="ss"> + </span><span class="sc">{</span>p[<span class="dv">2</span>,<span class="dv">0</span>]<span class="sc">:.0f}</span><span class="ss">) = </span><span class="sc">{</span>gx<span class="sc">:.1f}</span><span class="ss">"</span>)</span>
 <span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Gy em [1,1]: (</span><span class="sc">{</span>p[<span class="dv">2</span>,<span class="dv">0</span>]<span class="sc">:.0f}</span><span class="ss"> + 2*</span><span class="sc">{</span>p[<span class="dv">2</span>,<span class="dv">1</span>]<span class="sc">:.0f}</span><span class="ss"> + </span><span class="sc">{</span>p[<span class="dv">2</span>,<span class="dv">2</span>]<span class="sc">:.0f}</span><span class="ss">) </span><span class="op">\</span></span>
@@ -1441,16 +1441,16 @@ G_y = \begin{bmatrix} -1 &amp; -2 &amp; -1 \\ 0 &amp; 0 &amp; 0 \\ 1 &amp; 2 &am
 <span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Theta        = arctan(</span><span class="sc">{</span>gy<span class="sc">:.1f}</span><span class="ss">/</span><span class="sc">{</span>gx<span class="sc">:.1f}</span><span class="ss">) = </span><span class="sc">{</span>theta<span class="sc">:.1f}</span><span class="ss"> graus"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Patch 5x5:
- 95  97 103 113 115 
-107 105 103 108 115 
- 98 102 112 118 116 
- 81  91 113 123 119 
- 85  91 111 120 121 
+ 91  95 108 116 114 
+106 107 108 111 114 
+102 103 107 112 116 
+ 83  90 111 125 123 
+ 79  88 110 126 124 
 
-Gx em [1,1]: (103 + 2*103 + 112)       - (95 + 2*107 + 98) = 14.0
-Gy em [1,1]: (98 + 2*102 + 112)       - (95 + 2*97 + 103) = 22.0
-mag(Grad f)  = sqrt(14.0^2 + 22.0^2) = 26.1
-Theta        = arctan(22.0/14.0) = 57.5 graus</code></pre>
+Gx em [1,1]: (108 + 2*108 + 107)       - (91 + 2*106 + 102) = 26.0
+Gy em [1,1]: (102 + 2*103 + 107)       - (91 + 2*95 + 108) = 26.0
+mag(Grad f)  = sqrt(26.0^2 + 26.0^2) = 36.8
+Theta        = arctan(26.0/26.0) = 45.0 graus</code></pre>
 </div>
 </div>
 <p>O valor pequeno de <span class="math inline">\(|{\nabla f}|\)</span> nesse patch confirma que a região é quase uniforme — o gradiente é alto apenas nas bordas reais da imagem. A <a href="#fig-03-sobel" class="quarto-xref">Figura&nbsp;<span>3.17</span></a> aplica o operador à Mandrill completa, mostrando <span class="math inline">\(G_x\)</span>, <span class="math inline">\(G_y\)</span> e a magnitude:</p>
@@ -1582,7 +1582,7 @@ g = f + k\,(f - f*G_\sigma) = (1+k)\,f - k\,(f*G_\sigma)
 <span id="cb32-27"><a href="#cb32-27" aria-hidden="true" tabindex="-1"></a>    cols<span class="op">=</span><span class="dv">4</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">4</span>)</span>
 <span id="cb32-28"><a href="#cb32-28" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Pixel central [1,1]: original=15 suave=20.2 mascara=-5.2 realcado=9</code></pre>
+<pre><code>Pixel central [1,1]: original=16 suave=20.2 mascara=-4.2 realcado=11</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div>
@@ -1739,37 +1739,33 @@ g(x,y) = \text{med}_{(s,t) \in \mathcal{V}_{n}} \{f(x+s, y+t)\}
 <span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>viz_corr <span class="op">=</span> <span class="bu">sorted</span>(corrompido[<span class="dv">0</span>:<span class="dv">3</span>, <span class="dv">0</span>:<span class="dv">3</span>].ravel().tolist())</span>
 <span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Patch original:"</span>)</span>
-<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mm.drawImage(patch))</span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mm.drawImag(patch))</span>
 <span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Patch com pixel corrompido [1,1]=255:"</span>)</span>
-<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mm.drawImage(corrompido))</span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mm.drawImg(corrompido))</span>
 <span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Vizinhança 3×3 original (ordenada):   </span><span class="sc">{</span>viz_orig<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Mediana original:                       </span><span class="sc">{</span>viz_orig[<span class="dv">4</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Vizinhança 3×3 corrompida (ordenada): </span><span class="sc">{</span>viz_corr<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Mediana corrompida:                     </span><span class="sc">{</span>viz_corr[<span class="dv">4</span>]<span class="sc">}</span><span class="ss">  ← ignora o 255"</span>)</span>
 <span id="cb38-17"><a href="#cb38-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Média  corrompida:                  </span><span class="sc">{</span>np<span class="sc">.</span>mean(viz_corr)<span class="sc">:.1f}</span><span class="ss">  ← distorcida pelo 255"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Patch original:
- 95  97 103 113 115 
-107 105 103 108 115 
- 98 102 112 118 116 
- 81  91 113 123 119 
- 85  91 111 120 121 
+<pre><code>Patch original:</code></pre>
+</div>
+<div class="cell-output cell-output-error">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">AttributeError</span>                            Traceback (most recent call last)
+<span class="ansi-cyan-fg">Cell</span><span class="ansi-cyan-fg"> </span><span class="ansi-green-fg">In[39]</span><span class="ansi-green-fg">, line 13</span>
+<span class="ansi-green-fg">      9</span> viz_orig = sorted(patch[<span class="ansi-green-fg">0</span>:<span class="ansi-green-fg">3</span>, <span class="ansi-green-fg">0</span>:<span class="ansi-green-fg">3</span>].ravel().tolist())
+<span class="ansi-green-fg">     10</span> viz_corr = sorted(corrompido[<span class="ansi-green-fg">0</span>:<span class="ansi-green-fg">3</span>, <span class="ansi-green-fg">0</span>:<span class="ansi-green-fg">3</span>].ravel().tolist())
+<span class="ansi-green-fg">     11</span> 
+<span class="ansi-green-fg">     12</span> print(<span class="ansi-yellow-fg">"Patch original:"</span>)
+<span class="ansi-green-fg">---&gt; </span><span class="ansi-green-fg">13</span> print(mm.drawImag(patch))
+<span class="ansi-green-fg">     14</span> print(<span class="ansi-yellow-fg">"\nPatch com pixel corrompido [1,1]=255:"</span>)
+<span class="ansi-green-fg">     15</span> print(mm.drawImg(corrompido))
+<span class="ansi-green-fg">     16</span> print(<span class="ansi-yellow-fg">f"\nVizinhança 3×3 original (ordenada):   {viz_orig}"</span>)
 
-
-Patch com pixel corrompido [1,1]=255:
- 95  97 103 113 115 
-107 255 103 108 115 
- 98 102 112 118 116 
- 81  91 113 123 119 
- 85  91 111 120 121 
-
-
-Vizinhança 3×3 original (ordenada):   [95, 97, 98, 102, 103, 103, 105, 107, 112]
-Mediana original:                       103
-
-Vizinhança 3×3 corrompida (ordenada): [95, 97, 98, 102, 103, 103, 107, 112, 255]
-Mediana corrompida:                     103  ← ignora o 255
-Média  corrompida:                  119.1  ← distorcida pelo 255</code></pre>
+<span class="ansi-red-fg">AttributeError</span>: type object 'mm' has no attribute 'drawImag'</pre>
+</div>
 </div>
 </div>
 <p>O exemplo confirma: mesmo com o pixel corrompido a 255, a mediana retorna o valor central correto — o outlier ocupa a última posição na ordenação e é descartado naturalmente.</p>
@@ -1915,7 +1911,7 @@ Figura&nbsp;3.21: Pipeline de pré-processamento: CLAHE → Gaussiano → Canny.
 <li><strong>Filtros de suavização:</strong> média (kernel uniforme, borra bordas proporcionalmente ao tamanho) e Gaussiano (ponderação radial, separável, sem <em>ringing</em>, preserva melhor as bordas).</li>
 <li><strong>Filtros de realce:</strong> Laplaciano (<span class="math inline">\(w_4\)</span>/<span class="math inline">\(w_8\)</span>, segunda derivada isotrópica), Sobel (gradiente direcional de primeira ordem, com magnitude <span class="math inline">\(|\nabla f|\)</span> e direção <span class="math inline">\(\theta\)</span>) e <em>Unsharp Masking</em> (amplificação das altas frequências com parâmetro <span class="math inline">\(k\)</span>).</li>
 <li><strong>Filtro da mediana:</strong> não linear, robusto a outliers, preserva bordas — superior aos filtros lineares para ruído sal e pimenta.</li>
-<li><strong>Pipeline prático:</strong> encadeamento CLAHE → Gaussiano → Canny como estratégia de pré-processamento; <code>mm.drawImageKernel</code> para visualização didática da janela deslizante.</li>
+<li><strong>Pipeline prático:</strong> encadeamento CLAHE → Gaussiano → Canny como estratégia de pré-processamento; <code>mm.drawImgKernel</code> para visualização didática da janela deslizante.</li>
 </ul>
 <p>O Capítulo 4 abordará o <strong>processamento no domínio da frequência</strong> (Transformada de Fourier) e a <strong>morfologia matemática</strong> (erosão, dilatação, abertura, fechamento) — onde as funções <code>mm.ero</code> e <code>mm.dil</code> da biblioteca <code>morph.py</code> serão exploradas em profundidade.</p>
 </section>
