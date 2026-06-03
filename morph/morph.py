@@ -286,8 +286,8 @@ class mm:
     @staticmethod
     def drawImage(f):
         """Retorna string formatada da matriz para impressão."""
-        fmt = '%' + str(1 + len(str(f.max()))) + 'd ' if f.min() < 0 \
-              else '%' + str(len(str(f.max()))) + 'd '
+        width = max(len(str(f.max())), len(str(f.min())))  # considera sinal do negativo
+        fmt = '%' + str(width) + 'd '
         return ''.join(
             ''.join(fmt % f[i,j] for j in range(f.shape[1])) + '\n'
             for i in range(f.shape[0])
@@ -307,6 +307,9 @@ class mm:
         [plt.axhline(j+.5, 0, w, color='r') for j in range(h-1)]
 
  
+    @staticmethod
+    def drawImgKernel(f, B, x, y, scale=40):
+        return mm.drawImageKernel(f, B, x, y, scale)
 
     @staticmethod
     def drawImageKernel(f,B,x,y,scale=40):

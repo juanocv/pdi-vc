@@ -85,6 +85,22 @@ def _index_qmd(combo: Combo) -> str:
         '---\n'
     )
 
+import platform
+
+DIR_GEN = Path('gen')
+
+def _get_emoji_font() -> str:
+    """Retorna a fonte de emoji correta para o SO atual."""
+    system = platform.system()
+    if system == 'Darwin':
+        return 'TwemojiMozilla'
+    elif system == 'Linux':
+        return 'Noto Color Emoji'
+    else:
+        return 'Segoe UI Emoji'
+
+# ── Fonte de emoji dependente do SO ──────────────────────────────────────────
+EMOJI_FONT = _get_emoji_font()
 
 def _prefacio_qmd(combo: Combo) -> str:
     """
@@ -545,8 +561,6 @@ format:
     # include-before-body é processado imediatamente após \\begin{{document}},
     # antes de qualquer conteúdo gerado pelo Pandoc — ao contrário de
     # \\AtBeginDocument (que chega tarde demais no fluxo do book).
-    # **atenção** TwemojiMozilla trocou por 
-    # Noto Color Emoji
 
 
     include-in-header:
@@ -569,7 +583,7 @@ format:
           \\usepackage{{fancyvrb}}
           \\usepackage{{csquotes}}
           \\usepackage{{emoji}}
-          \\setemojifont{{Noto Color Emoji}}
+          \\setemojifont{{{EMOJI_FONT}}}
           \\usepackage{{graphicx}}
           \\usepackage{{geometry}}
           \\definecolor{{pdi-blue}}{{RGB}}{{21,101,192}}
@@ -1090,7 +1104,7 @@ def _fix_tex_cover(qdir: Path):
 \renewcommand{\partname}{Parte}
 
 \usepackage{emoji}
-\setemojifont{Noto Color Emoji}
+\setemojifont{EMOJI_FONT_PLACEHOLDER}
 
 \AtBeginDocument{
   \fvset{breaklines=true, breaksymbolleft={}}
@@ -1099,7 +1113,7 @@ def _fix_tex_cover(qdir: Path):
   \renewenvironment{verbatim}{\VerbatimEnvironment\begin{tcolorbox}[pdioutput]\begin{Verbatim}[breaklines=true,breaksymbol={}]}{\end{Verbatim}\end{tcolorbox}}
   
 }
-"""
+""".replace('EMOJI_FONT_PLACEHOLDER', EMOJI_FONT)
 
     cover_block = rf"""
 % ── Capa ─────────────────────────────────────────────────────────
@@ -1148,20 +1162,6 @@ def _fix_tex_cover(qdir: Path):
         1
     )
     print('  ✓ Preâmbulo e Capa injetados com sucesso')
-
-    # Remove qualquer duplicação indesejada de fontes de emoji
-    # content = re.sub(r'(\\setemojifont\{TwemojiMozilla\}\s*){2,}', r'\\setemojifont{TwemojiMozilla}\n', content)
-
-    # ── 4. Tradução dos Emojis via Lua Filter ─────────────────────────
-    # lua_path = qdir.parent.parent.parent / 'includes' / 'emoji-filter.lua'
-    # if lua_path.exists():
-    #     lua = lua_path.read_text(encoding='utf-8')
-    #     emoji_map = {m.group(1): m.group(2).replace('\\\\', '\\') 
-    #                  for m in re.finditer(r'\["([^"]+)"\]\s*=\s*"(\\\\[^"]+)"', lua)}
-        
-    #     for char, cmd in emoji_map.items():
-    #         content = content.replace(char, cmd)
-    #     print(f'  ✓ {len(emoji_map)} emojis substituídos')
 
     # Sobrescreve nomes em inglês do Pandoc
     content = re.sub(r'\\renewcommand\*?\\contentsname\{Table of contents\}',
