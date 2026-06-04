@@ -6,3 +6,4 @@ scikit-image>=0.21
 matplotlib>=3.7
 Pillow>=10.0
 packaging>=23.0
+pydicom>=2.3

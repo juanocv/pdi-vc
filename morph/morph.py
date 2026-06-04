@@ -35,7 +35,40 @@ class mm:
             subprocess.check_call([sys.executable, "-m", "pip", "install", p])
 
     @staticmethod
-    def read(file, pil=False):
+    def read(file, pil=False, grayscale=False):
+        """Lê imagem (local, URL ou Google Drive) → PIL.Image, ndarray 2D ou RGB 3D."""
+        import re, requests, numpy as np
+        from PIL import Image
+        from io import BytesIO
+        from urllib.request import urlopen, Request
+
+        # — fonte: URL / Google Drive —
+        if isinstance(file, str) and file.startswith(("http://", "https://", "id=")):
+            m = re.search(r"id=([\w-]+)", file) or re.search(r"/d/([\w-]+)", file)
+            url = f"https://drive.google.com/uc?export=view&id={m.group(1)}" \
+                if m and ("id=" in file or "drive.google.com" in file) else file
+            hdr = {"User-Agent": "Mozilla/5.0 AppleWebKit/537.36 Chrome/124 Safari/537.36"}
+            try:
+                r = requests.get(url, headers=hdr, timeout=20)
+                if r.status_code == 429: raise requests.exceptions.HTTPError()
+                r.raise_for_status()
+                file = BytesIO(r.content)
+            except:
+                file = BytesIO(urlopen(Request(url, headers=hdr), timeout=20).read())
+
+        img = Image.open(file)
+        img.load()
+        if pil:                    return img
+        if grayscale:              return np.array(img.convert("L"))   # (H,W)
+        if img.mode == "L":        return np.array(img)                # (H,W)
+        if img.mode == "RGBA":                                         # fundo branco
+            bg = Image.new("RGB", img.size, (255, 255, 255))
+            bg.paste(img, mask=img.split()[3])
+            return np.array(bg)
+        return np.array(img.convert("RGB"))                            # (H,W,3)
+
+    @staticmethod
+    def read_old2(file, pil=False):
         """
         Lê imagem local, URL ou Google Drive.
         pil=True → PIL.Image
