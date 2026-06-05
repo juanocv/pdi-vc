@@ -338,7 +338,7 @@ window.Quarto = {
   <li><a href="#ep02_08-cisalhamento-shear" id="toc-ep02_08-cisalhamento-shear" class="nav-link" data-scroll-target="#ep02_08-cisalhamento-shear"><span class="header-section-number">2.12.8</span> EP02_08 🔀 Cisalhamento (Shear)</a></li>
   <li><a href="#ep02_09-transformação-afim-genérica" id="toc-ep02_09-transformação-afim-genérica" class="nav-link" data-scroll-target="#ep02_09-transformação-afim-genérica"><span class="header-section-number">2.12.9</span> EP02_09 🧩 Transformação Afim Genérica</a></li>
   <li><a href="#ep02_10-correção-de-perspectiva-homografia" id="toc-ep02_10-correção-de-perspectiva-homografia" class="nav-link" data-scroll-target="#ep02_10-correção-de-perspectiva-homografia"><span class="header-section-number">2.12.10</span> EP02_10 🎯 Correção de Perspectiva (Homografia)</a></li>
-  <li><a href="#ep02_11-correção-de-perspectiva-em-imagem-real-sudoku" id="toc-ep02_11-correção-de-perspectiva-em-imagem-real-sudoku" class="nav-link" data-scroll-target="#ep02_11-correção-de-perspectiva-em-imagem-real-sudoku"><span class="header-section-number">2.12.11</span> EP02_11 🎯 Correção de Perspectiva em Imagem Real (Sudoku)</a></li>
+  <li><a href="#ep02_11-correção-de-perspectiva-homografia-em-imagem-real" id="toc-ep02_11-correção-de-perspectiva-homografia-em-imagem-real" class="nav-link" data-scroll-target="#ep02_11-correção-de-perspectiva-homografia-em-imagem-real"><span class="header-section-number">2.12.11</span> EP02_11 🎯 Correção de Perspectiva (Homografia) em Imagem Real</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -590,42 +590,37 @@ Tabela&nbsp;2.1: Convenções de escala e ordem de canais nas principais bibliot
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(inspect.getsource(mm.read))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    @staticmethod
-    def read(file, pil=False):
-        """
-        Lê imagem local, URL ou Google Drive.
-        pil=True → PIL.Image
-        padrão   → ndarray RGB uint8
-        """
+    def read(file, pil=False, grayscale=False):
+        """Lê imagem (local, URL ou Google Drive) → PIL.Image, ndarray 2D ou RGB 3D."""
         import re, requests, numpy as np
         from PIL import Image
         from io import BytesIO
         from urllib.request import urlopen, Request
+
+        # — fonte: URL / Google Drive —
         if isinstance(file, str) and file.startswith(("http://", "https://", "id=")):
-            m = (re.search(r"id=([\w-]+)", file) or
-                re.search(r"/d/([\w-]+)", file))
-            url = (
-                f"https://drive.google.com/uc?export=view&amp;id={m.group(1)}"
-                if m and ("id=" in file or "drive.google.com" in file)
-                else file
-            )
-            headers = {
-                "User-Agent":
-                "Mozilla/5.0 AppleWebKit/537.36 Chrome/124 Safari/537.36"
-            }
+            m = re.search(r"id=([\w-]+)", file) or re.search(r"/d/([\w-]+)", file)
+            url = f"https://drive.google.com/uc?export=view&amp;id={m.group(1)}" \
+                if m and ("id=" in file or "drive.google.com" in file) else file
+            hdr = {"User-Agent": "Mozilla/5.0 AppleWebKit/537.36 Chrome/124 Safari/537.36"}
             try:
-                r = requests.get(url, headers=headers, timeout=20)
-                if r.status_code == 429:
-                    raise requests.exceptions.HTTPError()
+                r = requests.get(url, headers=hdr, timeout=20)
+                if r.status_code == 429: raise requests.exceptions.HTTPError()
                 r.raise_for_status()
-                source = BytesIO(r.content)
+                file = BytesIO(r.content)
             except:
-                req = Request(url, headers=headers)
-                source = BytesIO(urlopen(req, timeout=20).read())
-        else:
-            source = file
-        img = Image.open(source)
+                file = BytesIO(urlopen(Request(url, headers=hdr), timeout=20).read())
+
+        img = Image.open(file)
         img.load()
-        return img if pil else np.array(img.convert("RGB"))
+        if pil:                    return img
+        if grayscale:              return np.array(img.convert("L"))   # (H,W)
+        if img.mode == "L":        return np.array(img)                # (H,W)
+        if img.mode == "RGBA":                                         # fundo branco
+            bg = Image.new("RGB", img.size, (255, 255, 255))
+            bg.paste(img, mask=img.split()[3])
+            return np.array(bg)
+        return np.array(img.convert("RGB"))                            # (H,W,3)
 </code></pre>
 </div>
 </div>
@@ -1447,7 +1442,7 @@ Figura&nbsp;2.11: Exemplo de cisalhamento da imagem do pássaro: horizontal (shx
 <section id="download" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="download"><em>Download</em></h4>
 <p>Baixe <code>morph.py</code> e <code>testsuite.py</code> executando a célula abaixo:</p>
-<div id="b766d6af" class="cell">
+<div id="39d0c76b" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os, sys, importlib, inspect, urllib.request</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co"># URLs do repositório</span></span>
@@ -1698,14 +1693,14 @@ Figura&nbsp;2.12: Simulador: Ajuste de Brilho e Contraste
 </figure>
 </div>
 </div>
-<div id="515ff03b" class="cell">
+<div id="2289f754" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile EP02_01.py</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="co"># sua solução</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Overwriting EP02_01.py</code></pre>
 </div>
 </div>
-<div id="c2aa0ece" class="cell">
+<div id="ecdb7a9d" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>TestSuite(<span class="st">"EP02_01.py"</span>).run()</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">✔️ EP02_01.cases já existe em casos/
@@ -1942,14 +1937,14 @@ Figura&nbsp;2.13: Simulador: Subamostragem
 </figure>
 </div>
 </div>
-<div id="f0b72977" class="cell">
+<div id="98bafabb" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile EP02_02.py</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Código Python</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Overwriting EP02_02.py</code></pre>
 </div>
 </div>
-<div id="7d304fad" class="cell">
+<div id="7e5481a2" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>TestSuite(<span class="st">"EP02_02.py"</span>).run()</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">✔️ EP02_02.cases já existe em casos/
@@ -2195,14 +2190,14 @@ Figura&nbsp;2.14: Simulador: Quantização
 </figure>
 </div>
 </div>
-<div id="de0b67f9" class="cell">
+<div id="da4c5a33" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile EP02_03.py</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Código Python</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Overwriting EP02_03.py</code></pre>
 </div>
 </div>
-<div id="5de369bc" class="cell">
+<div id="9a044d63" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>TestSuite(<span class="st">"EP02_03.py"</span>).run()</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">✔️ EP02_03.cases já existe em casos/
@@ -2296,7 +2291,8 @@ Figura&nbsp;2.14: Simulador: Quantização
 </thead>
 <tbody>
 <tr class="odd">
-<td>4 4<br>
+<td>4<br>
+4<br>
 chessboard<br>
 0 0 0 0<br>
 0 0 0 0<br>
@@ -2508,14 +2504,14 @@ Figura&nbsp;2.15: Simulador: Ajuste de Brilho e Contraste
 </figure>
 </div>
 </div>
-<div id="f6b6ddfa" class="cell">
+<div id="1ac877e2" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile EP02_04.py</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Código Python</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Overwriting EP02_04.py</code></pre>
 </div>
 </div>
-<div id="2d2182d3" class="cell">
+<div id="c7d5291e" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>TestSuite(<span class="st">"EP02_04.py"</span>).run()</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">✔️ EP02_04.cases já existe em casos/
@@ -2740,14 +2736,14 @@ Figura&nbsp;2.16: Simulador: Translação (tx, ty)
 </figure>
 </div>
 </div>
-<div id="898411dc" class="cell">
+<div id="195e42f6" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile EP02_05.py</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Código Python</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Overwriting EP02_05.py</code></pre>
 </div>
 </div>
-<div id="85cf6873" class="cell">
+<div id="b9fde025" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>TestSuite(<span class="st">"EP02_05.py"</span>).run()</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">✔️ EP02_05.cases já existe em casos/
@@ -3027,14 +3023,14 @@ Figura&nbsp;2.17: Simulador: Rotação (ângulo θ)
 </figure>
 </div>
 </div>
-<div id="a0083456" class="cell">
+<div id="adebe059" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile EP02_06.py</span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Código Python</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Overwriting EP02_06.py</code></pre>
 </div>
 </div>
-<div id="92a4cf2a" class="cell">
+<div id="7269c324" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>TestSuite(<span class="st">"EP02_06.py"</span>).run()</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">✔️ EP02_06.cases já existe em casos/
@@ -3338,14 +3334,14 @@ Figura&nbsp;2.18: Simulador: Redimensionamento (Nearest vs Bilinear)
 </figure>
 </div>
 </div>
-<div id="22f4d767" class="cell">
+<div id="7dfc74cf" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile EP02_07.py</span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Código Python</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Overwriting EP02_07.py</code></pre>
 </div>
 </div>
-<div id="3ffa774b" class="cell">
+<div id="77843aae" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>TestSuite(<span class="st">"EP02_07.py"</span>).run()</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">✔️ EP02_07.cases já existe em casos/
@@ -3609,14 +3605,14 @@ Figura&nbsp;2.19: Simulador: Cisalhamento (shx, shy)
 </figure>
 </div>
 </div>
-<div id="6addb931" class="cell">
+<div id="7cee38fa" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile EP02_08.py</span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Código Python</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Overwriting EP02_08.py</code></pre>
 </div>
 </div>
-<div id="97e3c0fa" class="cell">
+<div id="24a5e10d" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>TestSuite(<span class="st">"EP02_08.py"</span>).run()</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">✔️ EP02_08.cases já existe em casos/
@@ -3929,14 +3925,14 @@ Figura&nbsp;2.20: Simulador: Transformação Afim (matriz 2×3)
 </figure>
 </div>
 </div>
-<div id="01885943" class="cell">
+<div id="a340854b" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile EP02_09.py</span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Código Python</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Overwriting EP02_09.py</code></pre>
 </div>
 </div>
-<div id="f2db3ccb" class="cell">
+<div id="458e3480" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>TestSuite(<span class="st">"EP02_09.py"</span>).run()</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">✔️ EP02_09.cases já existe em casos/
@@ -3967,6 +3963,12 @@ Figura&nbsp;2.20: Simulador: Transformação Afim (matriz 2×3)
 <li><strong>Projeção:</strong> Após multiplicar as coordenadas pela matriz, é necessário dividir os resultados <span class="math inline">\(x'\)</span> e <span class="math inline">\(y'\)</span> pela componente homogênea <span class="math inline">\(w\)</span> para retornar ao plano 2D.</li>
 <li><strong>Uso de Bibliotecas:</strong> Para esta tarefa, você pode utilizar as funções <code>cv2.getPerspectiveTransform</code> para obter a matriz e <code>cv2.warpPerspective</code> para aplicar a transformação, ou implementar o sistema linear e o mapeamento inverso manualmente para um desafio extra.</li>
 </ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Dimensões de saída: bounding box dos pontos destino + 1</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> <span class="bu">int</span>(<span class="bu">max</span>(pts2[:, <span class="dv">0</span>])) <span class="op">+</span> <span class="dv">1</span><span class="op">;</span>&nbsp;h <span class="op">=</span> <span class="bu">int</span>(<span class="bu">max</span>(pts2[:, <span class="dv">1</span>])) <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="co"># M = cv2.getPerspectiveTransform(pts1, pts2)</span></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="co"># dst = cv2.warpPerspective(img, M, (w, h))</span></span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a><span class="co"># ou</span></span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>dst <span class="op">=</span> mm.perspective_transform(img, pts1, pts2, size<span class="op">=</span>(w, h))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 <section id="deformação-não-afim" class="level4" data-number="2.12.10.1">
 <h4 data-number="2.12.10.1" class="anchored" data-anchor-id="deformação-não-afim"><span class="header-section-number">2.12.10.1</span> 🧠 Deformação não-afim</h4>
@@ -4238,15 +4240,15 @@ Figura&nbsp;2.21: Simulador: Correção de Perspectiva (Homografia)
 </figure>
 </div>
 </div>
-<div id="07a8cbb8" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile EP02_10.py</span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Código Python</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="4ab961a3" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile EP02_10.py</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Código Python</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Overwriting EP02_10.py</code></pre>
 </div>
 </div>
-<div id="8fb36dd4" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>TestSuite(<span class="st">"EP02_10.py"</span>).run()</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="88b84298" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>TestSuite(<span class="st">"EP02_10.py"</span>).run()</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">✔️ EP02_10.cases já existe em casos/
 📋 5 caso(s) carregado(s) de casos/EP02_10.cases
@@ -4258,29 +4260,30 @@ Figura&nbsp;2.21: Simulador: Correção de Perspectiva (Homografia)
 <hr>
 </section>
 </section>
-<section id="ep02_11-correção-de-perspectiva-em-imagem-real-sudoku" class="level3" data-number="2.12.11">
-<h3 data-number="2.12.11" class="anchored" data-anchor-id="ep02_11-correção-de-perspectiva-em-imagem-real-sudoku"><span class="header-section-number">2.12.11</span> EP02_11 🎯 Correção de Perspectiva em Imagem Real (Sudoku)</h3>
-<p>Nesta atividade, o objetivo é aplicar a transformação de perspectiva (homografia) em uma fotografia real. Diferente de exemplos sintéticos, você lidará com uma imagem de jornal inclinada, onde a grade do Sudoku não está perfeitamente retangular devido ao ângulo da captura.</p>
+<section id="ep02_11-correção-de-perspectiva-homografia-em-imagem-real" class="level3" data-number="2.12.11">
+<h3 data-number="2.12.11" class="anchored" data-anchor-id="ep02_11-correção-de-perspectiva-homografia-em-imagem-real"><span class="header-section-number">2.12.11</span> EP02_11 🎯 Correção de Perspectiva (Homografia) em Imagem Real</h3>
+<p>Nesta atividade, o objetivo é aplicar a transformação de perspectiva (homografia) para “retificar” um objeto inclinado em uma fotografia real. Você lidará com a imagem de um jornal, onde a grade de um jogo de Sudoku está distorcida devido ao ângulo em que a foto foi capturada.</p>
+<p>Seu programa deve ler os parâmetros de entrada do terminal, carregar a imagem, calcular a matriz de homografia <span class="math inline">\(3 \times 3\)</span>, aplicar a transformação geométrica e exibir um indicador global de validação.</p>
 <ul>
-<li>Baixe a imagem através da URL fornecida (utilizando o cabeçalho adequado para evitar erros de acesso).</li>
-<li>Aplique uma expansão (<strong>padding</strong>) na imagem original com <code>cv2.copyMakeBorder</code> para garantir que os vértices do objeto não sejam cortados durante o processamento.</li>
-<li>Identifique os <strong>quatro pontos de canto</strong> <span class="math inline">\((x, y)\)</span> da grade do Sudoku na imagem expandida (TL, TR, BL, BR).</li>
-<li>Defina os <strong>quatro pontos de destino</strong> correspondentes para mapear o tabuleiro em uma vista frontal quadrada (ex: <span class="math inline">\(500 \times 500\)</span>).</li>
-<li>Utilize <code>cv2.getPerspectiveTransform</code> para calcular a matriz de homografia e <code>cv2.warpPerspective</code> para retificar a imagem.</li>
-<li>Exiba o resultado da imagem corrigida lado a lado com a original.</li>
-<li>Ver na <a href="#fig-02-sudoku" class="quarto-xref">Figura&nbsp;<span>2.24</span></a> uma simulação deste EP.</li>
+<li>Leia dois inteiros <strong>L</strong> e <strong>C</strong>, representando as dimensões de linhas e colunas (altura e largura) que a imagem retificada de saída deve ter.</li>
+<li>Leia <strong>quatro pares de coordenadas</strong> <span class="math inline">\((x, y)\)</span> via terminal, representando os quatro cantos do quadrilátero de origem (o Sudoku distorcido na imagem original).</li>
+<li>Calcule automaticamente os <strong>quatro pares de coordenadas de destino</strong> utilizando as dimensões <span class="math inline">\(L\)</span> e <span class="math inline">\(C\)</span> fornecidas, mapeando os cantos para as extremidades da nova imagem: <span class="math inline">\((0,0)\)</span>, <span class="math inline">\((C-1, 0)\)</span>, <span class="math inline">\((0, L-1)\)</span> e <span class="math inline">\((C-1, L-1)\)</span>.</li>
+<li>Carregue a imagem local <code>sudoku.png</code> e converta-a para tons de cinza (grayscale).</li>
+<li>Calcule a matriz de homografia e aplique a transformação espacial na imagem.</li>
+<li><strong>Saída:</strong> Calcule e imprima a <strong>soma de todos os pixels</strong> da imagem resultante.</li>
 </ul>
 <p>📌 <strong>Importante</strong>:</p>
 <ul>
-<li><strong>Arquivo de entrada:</strong> A imagem <code>sudoku.png</code> deve estar na mesma pasta do EP. Faça o download previamente e salve com esse nome exato.</li>
-<li><strong>Ponto de Transdução:</strong> Lembre-se que a formação desta imagem começou com a transdução da luz refletida pelo papel em sinais eletrônicos no sensor da câmera.</li>
-<li><strong>Mapeamento Inverso:</strong> Funções como <code>warpPerspective</code> utilizam o mapeamento inverso com interpolação (geralmente bilinear) para evitar buracos na imagem de saída, calculando qual pixel da origem corresponde a cada posição do destino.</li>
-<li><strong>Créditos:</strong> A imagem utilizada é <strong>“Sudoku en periódico”</strong> de Héctor Rodríguez, sob licença <strong>CC BY 2.0</strong>. A fonte original e dados de GPS estão disponíveis no material de apoio.</li>
+<li><strong>Arquivo de entrada:</strong> A imagem <code>sudoku.png</code> deve estar na mesma pasta do script. O programa deve lê-la diretamente do disco (ex: usando <code>mm.read("sudoku.png")</code> ou <code>cv2.imread</code>).</li>
+<li><strong>Ordem dos Pontos:</strong> Garanta que a leitura dos 4 pontos de origem e a geração dos 4 pontos de destino sigam rigorosamente a mesma ordem dos cantos: Superior-Esquerdo (TL), Superior-Direito (TR), Inferior-Esquerdo (BL) e Inferior-Direito (BR).</li>
+<li><strong>Dimensões no OpenCV:</strong> Lembre-se que funções como <code>cv2.warpPerspective</code> esperam o tamanho da imagem de saída no formato <code>(largura, altura)</code>, o que equivale a <code>(C, L)</code>.</li>
+<li><strong>Interpolação:</strong> Para garantir a consistência matemática da soma dos pixels com o corretor automático, utilize a interpolação bilinear padrão (<code>flags=cv2.INTER_LINEAR</code>).</li>
+<li><strong>Créditos:</strong> A imagem utilizada é <strong>“Sudoku en periódico”</strong> de Héctor Rodríguez, sob licença <strong>CC BY 2.0</strong>.</li>
 </ul>
 <hr>
 <section id="contexto-do-problema" class="level4" data-number="2.12.11.1">
 <h4 data-number="2.12.11.1" class="anchored" data-anchor-id="contexto-do-problema"><span class="header-section-number">2.12.11.1</span> 🧠 Contexto do Problema</h4>
-<p>A homografia é uma ferramenta poderosa na visão computacional para remover distorções de perspectiva. Ao contrário de transformações afins, ela permite que linhas que convergem para pontos de fuga sejam tornadas paralelas novamente:</p>
+<p>A homografia possui 8 graus de liberdade, exigindo no mínimo 4 correspondências de pontos para ser calculada. Ao contrário de transformações afins, ela mapeia qualquer quadrilátero em outro quadrilátero, permitindo que linhas que convergem para pontos de fuga voltem a ser paralelas:</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">
@@ -4298,17 +4301,17 @@ Figura&nbsp;2.21: Simulador: Correção de Perspectiva (Homografia)
 <tr class="odd">
 <td><strong>Homografia</strong></td>
 <td>Projeção entre planos</td>
-<td>Retificação de documentos, leitura de QR Codes.</td>
+<td>Retificação de documentos, escaneamento de placas e QR Codes.</td>
 </tr>
 <tr class="even">
-<td><strong>Padding</strong></td>
-<td>Expansão de bordas</td>
-<td>Proteção de gradientes em vértices periféricos.</td>
+<td><strong>Mapeamento Inverso</strong></td>
+<td>Varredura do destino para a origem</td>
+<td>Evita “buracos” ou pixels vazios na imagem final retificada.</td>
 </tr>
 <tr class="odd">
 <td><strong>Warping</strong></td>
 <td>Reamostragem espacial</td>
-<td>Correção de lentes e montagem de panoramas.</td>
+<td>Correção de distorção de lentes e montagem de panoramas (<em>stitching</em>).</td>
 </tr>
 </tbody>
 </table>
@@ -4331,13 +4334,23 @@ Figura&nbsp;2.21: Simulador: Correção de Perspectiva (Homografia)
 </thead>
 <tbody>
 <tr class="odd">
-<td>100 160<br>
-390 45<br>
-200 580<br>
-570 420<br>
-150</td>
-<td>150</td>
-<td>Os quatro primeiros pares de coordenadas marcam os cantos externos da grade na imagem expandida (TL, TR, BL, BR); o último valor define o tamanho da saída quadrada. O EP imprime o número de linhas da imagem retificada para validação.</td>
+<td>500<br>
+500<br>
+100 120<br>
+420 95<br>
+80 440<br>
+450 460</td>
+<td>32982820</td>
+<td>As duas primeiras entradas são as dimensões de saída (<span class="math inline">\(L\)</span> e <span class="math inline">\(C\)</span>). As 4 linhas seguintes são as coordenadas <span class="math inline">\((x, y)\)</span> dos cantos do Sudoku na imagem original + PAD. A saída é a soma total dos pixels da imagem retificada.</td>
+</tr>
+<tr class="even">
+<td>200 200<br>
+100 120<br>
+420 95<br>
+80 440<br>
+450 460</td>
+<td>5277150</td>
+<td>Mesmos pontos de origem do exemplo anterior, mas gerando uma imagem de saída menor (<span class="math inline">\(200 \times 200\)</span>). A soma dos pixels reduz proporcionalmente devido à escala.</td>
 </tr>
 </tbody>
 </table>
@@ -4360,46 +4373,46 @@ Figura&nbsp;2.22: Aquisição da imagem de um Sudoku à esquerda. À direita, co
 </div>
 </div>
 <div id="cell-fig-02-sudoku2" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cv2</span>
-<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="co"># --- 1. Carrega a imagem salva (sudoku.png) ---</span></span>
-<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>img <span class="op">=</span> mm.read(<span class="st">"sudoku.png"</span>)                <span class="co"># BGR, 500×500</span></span>
-<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a><span class="co"># --- 2. Padding para não cortar vértices ---</span></span>
-<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a>PAD <span class="op">=</span> <span class="dv">60</span></span>
-<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a>img_pad <span class="op">=</span> cv2.copyMakeBorder(</span>
-<span id="cb53-10"><a href="#cb53-10" aria-hidden="true" tabindex="-1"></a>    img, PAD, PAD, PAD, PAD,</span>
-<span id="cb53-11"><a href="#cb53-11" aria-hidden="true" tabindex="-1"></a>    cv2.BORDER_CONSTANT, value<span class="op">=</span>[<span class="dv">255</span>, <span class="dv">255</span>, <span class="dv">255</span>]</span>
-<span id="cb53-12"><a href="#cb53-12" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb53-13"><a href="#cb53-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-14"><a href="#cb53-14" aria-hidden="true" tabindex="-1"></a><span class="co"># --- 3. Pontos de origem (cantos da grade na imagem expandida) ---</span></span>
-<span id="cb53-15"><a href="#cb53-15" aria-hidden="true" tabindex="-1"></a>pts1 <span class="op">=</span> np.float32([</span>
-<span id="cb53-16"><a href="#cb53-16" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">100</span>, <span class="dv">160</span>],    <span class="co"># TL</span></span>
-<span id="cb53-17"><a href="#cb53-17" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">390</span>, <span class="dv">45</span>],    <span class="co"># TR</span></span>
-<span id="cb53-18"><a href="#cb53-18" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">200</span>, <span class="dv">580</span>],   <span class="co"># BL</span></span>
-<span id="cb53-19"><a href="#cb53-19" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">570</span>, <span class="dv">420</span>],   <span class="co"># BR</span></span>
-<span id="cb53-20"><a href="#cb53-20" aria-hidden="true" tabindex="-1"></a>])</span>
-<span id="cb53-21"><a href="#cb53-21" aria-hidden="true" tabindex="-1"></a><span class="co">#     W    H</span></span>
-<span id="cb53-22"><a href="#cb53-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-23"><a href="#cb53-23" aria-hidden="true" tabindex="-1"></a><span class="co"># --- 4. Pontos de destino (vista frontal 500×500) ---</span></span>
-<span id="cb53-24"><a href="#cb53-24" aria-hidden="true" tabindex="-1"></a>SIZE <span class="op">=</span> <span class="dv">500</span></span>
-<span id="cb53-25"><a href="#cb53-25" aria-hidden="true" tabindex="-1"></a>pts2 <span class="op">=</span> np.float32([</span>
-<span id="cb53-26"><a href="#cb53-26" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">0</span>,    <span class="dv">0</span>],</span>
-<span id="cb53-27"><a href="#cb53-27" aria-hidden="true" tabindex="-1"></a>    [SIZE, <span class="dv">0</span>],</span>
-<span id="cb53-28"><a href="#cb53-28" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">0</span>,    SIZE],</span>
-<span id="cb53-29"><a href="#cb53-29" aria-hidden="true" tabindex="-1"></a>    [SIZE, SIZE],</span>
-<span id="cb53-30"><a href="#cb53-30" aria-hidden="true" tabindex="-1"></a>])</span>
-<span id="cb53-31"><a href="#cb53-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-32"><a href="#cb53-32" aria-hidden="true" tabindex="-1"></a><span class="co"># --- 5. Homografia e retificação ---</span></span>
-<span id="cb53-33"><a href="#cb53-33" aria-hidden="true" tabindex="-1"></a>img_rect <span class="op">=</span> mm.perspective_transform(img_pad, pts1, pts2, size<span class="op">=</span>(SIZE, SIZE))</span>
-<span id="cb53-34"><a href="#cb53-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-35"><a href="#cb53-35" aria-hidden="true" tabindex="-1"></a><span class="co"># --- 6. Exibição ---</span></span>
-<span id="cb53-36"><a href="#cb53-36" aria-hidden="true" tabindex="-1"></a>mm.show(</span>
-<span id="cb53-37"><a href="#cb53-37" aria-hidden="true" tabindex="-1"></a>    [img_pad, img_rect],</span>
-<span id="cb53-38"><a href="#cb53-38" aria-hidden="true" tabindex="-1"></a>    titles<span class="op">=</span>[<span class="st">"Original (com padding)"</span>, <span class="st">"Vista frontal retificada"</span>],</span>
-<span id="cb53-39"><a href="#cb53-39" aria-hidden="true" tabindex="-1"></a>    cols<span class="op">=</span><span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>), axis<span class="op">=</span><span class="va">True</span></span>
-<span id="cb53-40"><a href="#cb53-40" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cv2</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a><span class="co"># --- 1. Carrega a imagem salva (sudoku.png) ---</span></span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>img <span class="op">=</span> mm.read(<span class="st">"sudoku.png"</span>)                <span class="co"># BGR, 500×500</span></span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a><span class="co"># --- 2. Padding para não cortar vértices ---</span></span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>PAD <span class="op">=</span> <span class="dv">60</span></span>
+<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a>img_pad <span class="op">=</span> cv2.copyMakeBorder(</span>
+<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a>    img, PAD, PAD, PAD, PAD,</span>
+<span id="cb54-11"><a href="#cb54-11" aria-hidden="true" tabindex="-1"></a>    cv2.BORDER_CONSTANT, value<span class="op">=</span>[<span class="dv">255</span>, <span class="dv">255</span>, <span class="dv">255</span>]</span>
+<span id="cb54-12"><a href="#cb54-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb54-13"><a href="#cb54-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-14"><a href="#cb54-14" aria-hidden="true" tabindex="-1"></a><span class="co"># --- 3. Pontos de origem (cantos da grade na imagem expandida) ---</span></span>
+<span id="cb54-15"><a href="#cb54-15" aria-hidden="true" tabindex="-1"></a>pts1 <span class="op">=</span> np.float32([</span>
+<span id="cb54-16"><a href="#cb54-16" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">100</span>, <span class="dv">160</span>],    <span class="co"># TL</span></span>
+<span id="cb54-17"><a href="#cb54-17" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">390</span>, <span class="dv">45</span>],    <span class="co"># TR</span></span>
+<span id="cb54-18"><a href="#cb54-18" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">200</span>, <span class="dv">580</span>],   <span class="co"># BL</span></span>
+<span id="cb54-19"><a href="#cb54-19" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">570</span>, <span class="dv">420</span>],   <span class="co"># BR</span></span>
+<span id="cb54-20"><a href="#cb54-20" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb54-21"><a href="#cb54-21" aria-hidden="true" tabindex="-1"></a><span class="co">#     W    H</span></span>
+<span id="cb54-22"><a href="#cb54-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-23"><a href="#cb54-23" aria-hidden="true" tabindex="-1"></a><span class="co"># --- 4. Pontos de destino (vista frontal 500×500) ---</span></span>
+<span id="cb54-24"><a href="#cb54-24" aria-hidden="true" tabindex="-1"></a>SIZE <span class="op">=</span> <span class="dv">500</span></span>
+<span id="cb54-25"><a href="#cb54-25" aria-hidden="true" tabindex="-1"></a>pts2 <span class="op">=</span> np.float32([</span>
+<span id="cb54-26"><a href="#cb54-26" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">0</span>,    <span class="dv">0</span>],</span>
+<span id="cb54-27"><a href="#cb54-27" aria-hidden="true" tabindex="-1"></a>    [SIZE, <span class="dv">0</span>],</span>
+<span id="cb54-28"><a href="#cb54-28" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">0</span>,    SIZE],</span>
+<span id="cb54-29"><a href="#cb54-29" aria-hidden="true" tabindex="-1"></a>    [SIZE, SIZE],</span>
+<span id="cb54-30"><a href="#cb54-30" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb54-31"><a href="#cb54-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-32"><a href="#cb54-32" aria-hidden="true" tabindex="-1"></a><span class="co"># --- 5. Homografia e retificação ---</span></span>
+<span id="cb54-33"><a href="#cb54-33" aria-hidden="true" tabindex="-1"></a>img_rect <span class="op">=</span> mm.perspective_transform(img_pad, pts1, pts2, size<span class="op">=</span>(SIZE, SIZE))</span>
+<span id="cb54-34"><a href="#cb54-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-35"><a href="#cb54-35" aria-hidden="true" tabindex="-1"></a><span class="co"># --- 6. Exibição ---</span></span>
+<span id="cb54-36"><a href="#cb54-36" aria-hidden="true" tabindex="-1"></a>mm.show(</span>
+<span id="cb54-37"><a href="#cb54-37" aria-hidden="true" tabindex="-1"></a>    [img_pad, img_rect],</span>
+<span id="cb54-38"><a href="#cb54-38" aria-hidden="true" tabindex="-1"></a>    titles<span class="op">=</span>[<span class="st">"Original (com padding)"</span>, <span class="st">"Vista frontal retificada"</span>],</span>
+<span id="cb54-39"><a href="#cb54-39" aria-hidden="true" tabindex="-1"></a>    cols<span class="op">=</span><span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>), axis<span class="op">=</span><span class="va">True</span></span>
+<span id="cb54-40"><a href="#cb54-40" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div id="fig-02-sudoku2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -4741,18 +4754,18 @@ Figura&nbsp;2.24: Simulador: correção de perspectiva do Sudoku.
 </figure>
 </div>
 </div>
-<div id="a7c297d2" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile EP02_11.py</span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Código Python</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="e754694f" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile EP02_11.py</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Código Python</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Overwriting EP02_11.py</code></pre>
 </div>
 </div>
-<div id="cc2d91f3" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>TestSuite(<span class="st">"EP02_11.py"</span>).run()</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="9562f38c" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>TestSuite(<span class="st">"EP02_11.py"</span>).run()</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">✔️ EP02_11.cases já existe em casos/
-📋 5 caso(s) carregado(s) de casos/EP02_11.cases
+📋 4 caso(s) carregado(s) de casos/EP02_11.cases
 
 🔍 Testando Python: EP02_11.py
 <span style="color:#f39c12;font-weight:500">⚠️ EP02_11.py: Arquivo sem conteúdo (menos de 3 linhas). Testes ignorados.</span></pre>
