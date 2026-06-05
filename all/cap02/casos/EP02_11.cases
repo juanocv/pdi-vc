@@ -1,39 +1,35 @@
-#### case=Caso1_Saida_100x100
-input=100 160
-390 45
-200 580
-570 420
-100
-output=100
-
-#### case=Caso2_Saida_200x200
-input=100 160
-390 45
-200 580
-570 420
+#### case=Caso2_Saida_Miniatura_200x200
+input=200
 200
-output=200
+100 120
+420 95
+80 440
+450 460
+output=5271747
 
-#### case=Caso3_Saida_300x300
-input=100 160
-390 45
-200 580
-570 420
+#### case=Caso3_Retangulo_Vertical_300x600
+input=600
 300
-output=300
+100 120
+420 95
+80 440
+450 460
+output=23741848
 
-#### case=Caso4_Saida_50x50
-input=100 160
-390 45
-200 580
-570 420
-50
-output=50
+#### case=Caso4_Foco_Apenas_Quadrante_Superior_Esquerdo
+input=400
+400
+100 120
+260 108
+80 280
+265 290
+output=20251445
 
-#### case=Caso5_Saida_150x150
-input=100 160
-390 45
-200 580
-570 420
-150
-output=150
+#### case=Caso5_Espelhamento_Horizontal (Inversão de Cantos)
+input=500
+500
+420 95
+100 120
+450 460
+80 440
+output=32982820
