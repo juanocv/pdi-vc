@@ -2,13 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>3&nbsp; Operações Espaciais: Intensidade, Histograma e Filtragem – Processamento Digital de Imagens e Visão Computacional</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -89,15 +92,14 @@ div.csl-indent {
 <link href="../cap02/cap02.py.pt.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-8b4baf804e461d9b72633f0de59a0cac.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-de63f62b328812d8e578a4d74e282472.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-30d405592781807c28f8462a6c2b07d1.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-d024cad0e32bf2110a1b02cbacc0c8bd.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -136,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -1056,9 +1058,9 @@ Kernel 3×3 de média:
 Correlação no pixel central [1,1]:       103.0  (original: 107)
 
 Tempos na imagem (1324, 1242) (Mandrill):
-  mm.conv0 (laços Python): 9.756 s
-  mm.conv  (cv2.filter2D): 0.00229 s
-  Aceleração:              4259× mais rápido
+  mm.conv0 (laços Python): 5.725 s
+  mm.conv  (cv2.filter2D): 0.00521 s
+  Aceleração:              1099× mais rápido
   Diferença máxima:        39 (bordas com padding diferente)</code></pre>
 </div>
 <div class="cell-output cell-output-display">
@@ -1739,7 +1741,7 @@ g(x,y) = \text{med}_{(s,t) \in \mathcal{V}_{n}} \{f(x+s, y+t)\}
 <span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>viz_corr <span class="op">=</span> <span class="bu">sorted</span>(corrompido[<span class="dv">0</span>:<span class="dv">3</span>, <span class="dv">0</span>:<span class="dv">3</span>].ravel().tolist())</span>
 <span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Patch original:"</span>)</span>
-<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mm.drawImag(patch))</span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mm.drawImg(patch))</span>
 <span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Patch com pixel corrompido [1,1]=255:"</span>)</span>
 <span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mm.drawImg(corrompido))</span>
 <span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Vizinhança 3×3 original (ordenada):   </span><span class="sc">{</span>viz_orig<span class="sc">}</span><span class="ss">"</span>)</span>
@@ -1748,24 +1750,28 @@ g(x,y) = \text{med}_{(s,t) \in \mathcal{V}_{n}} \{f(x+s, y+t)\}
 <span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Mediana corrompida:                     </span><span class="sc">{</span>viz_corr[<span class="dv">4</span>]<span class="sc">}</span><span class="ss">  ← ignora o 255"</span>)</span>
 <span id="cb38-17"><a href="#cb38-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Média  corrompida:                  </span><span class="sc">{</span>np<span class="sc">.</span>mean(viz_corr)<span class="sc">:.1f}</span><span class="ss">  ← distorcida pelo 255"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Patch original:</code></pre>
-</div>
-<div class="cell-output cell-output-error">
-<div class="ansi-escaped-output">
-<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">AttributeError</span>                            Traceback (most recent call last)
-<span class="ansi-cyan-fg">Cell</span><span class="ansi-cyan-fg"> </span><span class="ansi-green-fg">In[39]</span><span class="ansi-green-fg">, line 13</span>
-<span class="ansi-green-fg">      9</span> viz_orig = sorted(patch[<span class="ansi-green-fg">0</span>:<span class="ansi-green-fg">3</span>, <span class="ansi-green-fg">0</span>:<span class="ansi-green-fg">3</span>].ravel().tolist())
-<span class="ansi-green-fg">     10</span> viz_corr = sorted(corrompido[<span class="ansi-green-fg">0</span>:<span class="ansi-green-fg">3</span>, <span class="ansi-green-fg">0</span>:<span class="ansi-green-fg">3</span>].ravel().tolist())
-<span class="ansi-green-fg">     11</span> 
-<span class="ansi-green-fg">     12</span> print(<span class="ansi-yellow-fg">"Patch original:"</span>)
-<span class="ansi-green-fg">---&gt; </span><span class="ansi-green-fg">13</span> print(mm.drawImag(patch))
-<span class="ansi-green-fg">     14</span> print(<span class="ansi-yellow-fg">"\nPatch com pixel corrompido [1,1]=255:"</span>)
-<span class="ansi-green-fg">     15</span> print(mm.drawImg(corrompido))
-<span class="ansi-green-fg">     16</span> print(<span class="ansi-yellow-fg">f"\nVizinhança 3×3 original (ordenada):   {viz_orig}"</span>)
+<pre><code>Patch original:
+ 91  95 108 116 114 
+106 107 108 111 114 
+102 103 107 112 116 
+ 83  90 111 125 123 
+ 79  88 110 126 124 
 
-<span class="ansi-red-fg">AttributeError</span>: type object 'mm' has no attribute 'drawImag'</pre>
-</div>
+
+Patch com pixel corrompido [1,1]=255:
+ 91  95 108 116 114 
+106 255 108 111 114 
+102 103 107 112 116 
+ 83  90 111 125 123 
+ 79  88 110 126 124 
+
+
+Vizinhança 3×3 original (ordenada):   [91, 95, 102, 103, 106, 107, 107, 108, 108]
+Mediana original:                       106
+
+Vizinhança 3×3 corrompida (ordenada): [91, 95, 102, 103, 106, 107, 108, 108, 255]
+Mediana corrompida:                     106  ← ignora o 255
+Média  corrompida:                  119.4  ← distorcida pelo 255</code></pre>
 </div>
 </div>
 <p>O exemplo confirma: mesmo com o pixel corrompido a 255, a mediana retorna o valor central correto — o outlier ocupa a última posição na ordenação e é descartado naturalmente.</p>
@@ -1823,12 +1829,12 @@ g(x,y) = \text{med}_{(s,t) \in \mathcal{V}_{n}} \{f(x+s, y+t)\}
 <div class="cell-output cell-output-stdout">
 <pre><code>Filtro                      MSE
 --------------------------------
-Gaussiano 5×5            264.73
-Média 5×5                876.54
-Mediana 3×3               33.43
-Mediana 5×5               70.11
-Bilateral               1012.00
-Morf. open+close          67.84</code></pre>
+Gaussiano 5×5            260.84
+Média 5×5                872.57
+Mediana 3×3               31.26
+Mediana 5×5               65.86
+Bilateral               1001.22
+Morf. open+close          65.16</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div id="fig-03-ruido-filtros" class="quarto-float quarto-figure quarto-figure-center anchored">
