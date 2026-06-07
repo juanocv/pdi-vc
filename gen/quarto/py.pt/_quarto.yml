@@ -2,7 +2,7 @@
 
 project:
   type: book
-  output-dir: "/Users/fz/VSCode/pdi-vc/gen/book/py.pt"
+  output-dir: "/home/fz/fz/VSCode/pdi-vc/gen/book/py.pt"
 
 book:
   title: "Processamento Digital de Imagens e Visão Computacional"
@@ -29,11 +29,11 @@ book:
     - referencias.qmd
 
 
-bibliography: "/Users/fz/VSCode/pdi-vc/references.bib"
-csl: "/Users/fz/VSCode/pdi-vc/includes/abnt.csl"
+bibliography: "/home/fz/fz/VSCode/pdi-vc/references.bib"
+csl: "/home/fz/fz/VSCode/pdi-vc/includes/abnt.csl"
 
 filters:
-  - "/Users/fz/VSCode/pdi-vc/includes/emoji-filter.lua"
+  - "/home/fz/fz/VSCode/pdi-vc/includes/emoji-filter.lua"
 
 format:
   html:
@@ -113,7 +113,7 @@ format:
           \usepackage{fancyvrb}
           \usepackage{csquotes}
           \usepackage{emoji}
-          \setemojifont{TwemojiMozilla}
+          \setemojifont{Noto Color Emoji}
           \usepackage{graphicx}
           \usepackage{geometry}
           \definecolor{pdi-blue}{RGB}{21,101,192}

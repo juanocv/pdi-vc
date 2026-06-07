@@ -54,4 +54,4 @@ gen/
 patch_simuladores.py
 
 # Notebooks com outputs pesados (opcional)
-# *.ipynb  # descomente se quiser versionar só os fontes sem outputs
+# *.ipynb  # descomente se quiser versionar só os fontes sem outputs.quarto-version

@@ -402,7 +402,9 @@ object-fit: cover;
 \renewbibmacro*{finentry}{\finentry}
 \renewcommand{\printbibliography}{\printbibliography[title=Referências]}
 
-\usepackage[brazilian]{babel}
+%\usepackage[brazilian]{babel}
+\usepackage[portuguese]{babel}
+\babelprovide[main, import]{portuguese}
 \usepackage{csquotes}
 ''', encoding='utf-8')
             print('  ✓ Criado includes/preamble.tex')
@@ -994,6 +996,18 @@ def _fix_tex_cover(qdir: Path):
     tex_path = tex_files[0]
     content = tex_path.read_text(encoding='utf-8')
 
+    # Remove babel do Pandoc para evitar conflito com o nosso
+    content = re.sub(
+        r'\\usepackage\[.*?babel.*?\]\{babel\}|\\usepackage\{babel\}',
+        '',
+        content
+    )
+    content = re.sub(
+        r'\\babelprovide\[.*?\]\{.*?\}',
+        '',
+        content
+    )
+
     # ── 1. Ajusta a Classe do Documento e Remove Lixo do KOMA ──────────
     # Substitui qualquer documentclass antigo pelo padrão correto diretamente
     content = re.sub(
@@ -1094,7 +1108,9 @@ def _fix_tex_cover(qdir: Path):
 % ─────────────────────────────────────────────────────────────
 % Idioma e Tradução Global
 % ─────────────────────────────────────────────────────────────
-\usepackage[brazil]{babel}
+%\usepackage[brazilian]{babel}
+\usepackage[portuguese]{babel}
+\babelprovide[main, import]{portuguese}
 \renewcommand{\contentsname}{Sumário}
 \renewcommand{\listfigurename}{Lista de Figuras}
 \renewcommand{\listtablename}{Lista de Tabelas}

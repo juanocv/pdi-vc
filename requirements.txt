@@ -7,3 +7,4 @@ matplotlib>=3.7
 Pillow>=10.0
 packaging>=23.0
 pydicom>=2.3
+requests>=2.31
