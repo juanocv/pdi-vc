@@ -873,8 +873,8 @@ def _patch_html_cells_for_pdf(qdir: Path, all_root: Path = Path('all')):
                 cell.execution_count = None
                 new_cells.append(cell)
                 cap_str = fig_cap or label
+                new_cells.append(nbformat.v4.new_markdown_cell(':::'))
                 new_cells.append(nbformat.v4.new_markdown_cell(
-                    f':::\n\n'
                     f'::: {{.content-visible when-format="pdf"}}\n'
                     f'![ {cap_str} ]({png_rel}){{#fig-{label[4:]}}}\n'
                     f':::'
@@ -1212,6 +1212,26 @@ def render_quarto(qdir: Path, fmt: str, all_root: Path = Path('all'), verbose: b
     # Cria arquivo sentinela para testsuite.py detectar ambiente Quarto
     sentinela = qdir / '.quarto_render'
     sentinela.write_text('1', encoding='utf-8')
+
+    def _fix_spurious_closing_div(qdir: Path, combo_name: str):
+        """
+        Corrige </main></div> espúrio gerado pelo Quarto/Pandoc no meio do documento.
+        Causa: células com HTML grande (>~20KB) podem confundir o parser,
+        que fecha </main> prematuramente dentro de uma figura.
+        Fix: remove o </main></div> espúrio e reinsere </main> no lugar correto.
+        """
+        book_dir = qdir.parent.parent / 'book' / combo_name
+        for html_path in book_dir.rglob('*.html'):
+            text = html_path.read_text(encoding='utf-8')
+            if '</main></div>' not in text or '<!-- /main -->' not in text:
+                continue
+            # 1. Remove </main></div> espúrio no meio do documento
+            fixed = re.sub(r'((?:</section>)+)</main></div>', r'\1', text, count=1)
+            # 2. Insere </main> antes de <!-- /main -->
+            fixed = fixed.replace('<!-- /main -->', '</main>\n\n <!-- /main -->', 1)
+            if fixed != text:
+                html_path.write_text(fixed, encoding='utf-8')
+                print(f'  ✓ Fix </main> espúrio: {html_path.name}')
     
     try:
         
@@ -1262,7 +1282,9 @@ def render_quarto(qdir: Path, fmt: str, all_root: Path = Path('all'), verbose: b
                   if f == 'pdf':
                       _rename_pdf(qdir, combo_name, file_key)
                   else:
-                      print(f'  ✓ html → gen/book/{combo_name}/')
+                    print(f'  ✓ html → gen/book/{combo_name}/')
+                    _fix_spurious_closing_div(qdir, combo_name)
+
 
           except FileNotFoundError:
               print('  ⚠ quarto não encontrado no PATH')
