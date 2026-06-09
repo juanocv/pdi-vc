@@ -409,7 +409,7 @@ window.Quarto = {
 </section>
 <section id="transformada-de-fourier-discreta-2d" class="level2" data-number="5.3">
 <h2 data-number="5.3" class="anchored" data-anchor-id="transformada-de-fourier-discreta-2d"><span class="header-section-number">5.3</span> Transformada de Fourier Discreta 2D</h2>
-<p>A análise de Fourier fundamenta-se em um princípio poderoso: qualquer sinal periódico admite representação como soma de senoides com diferentes frequências, amplitudes e fases. Ver exemplo em uma dimensão na <a href="#fig-decomposicao-1d" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-decomposicao-1d</span></a>.</p>
+<p>A análise de Fourier fundamenta-se em um princípio poderoso: qualquer sinal periódico admite representação como soma de senoides com diferentes frequências, amplitudes e fases. Ver exemplo em uma dimensão na <a href="#fig-decomposicao-1d" class="quarto-xref">Figura&nbsp;<span>5.1</span></a>.</p>
 <div id="cell-fig-decomposicao-1d" class="cell">
 <div class="cell-output cell-output-display">
 <div id="fig-decomposicao-1d" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -611,7 +611,7 @@ Figura&nbsp;5.3: Diagrama conceitual do espectro de Fourier 2D centrado.
 <li><strong>A fase carrega a estrutura semântica</strong> — contornos, posição dos objetos, geometria da cena;</li>
 <li><strong>A magnitude carrega o conteúdo energético e textural</strong> — contraste, iluminação geral.</li>
 </ul>
-<p>Quando reconstruímos uma imagem com a <strong>magnitude de A</strong> mas a <strong>fase de B</strong>, o resultado se parece com B — mesmo usando a “energia” de A. A fase possui papel predominante na preservação da estrutura geométrica e organização espacial da imagem, enquanto a magnitude controla a distribuição energética, contraste e textura. Ver um exemplo na <a href="#fig-05-dft-intro" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-05-dft-intro</span></a>.</p>
+<p>Quando reconstruímos uma imagem com a <strong>magnitude de A</strong> mas a <strong>fase de B</strong>, o resultado se parece com B — mesmo usando a “energia” de A. A fase possui papel predominante na preservação da estrutura geométrica e organização espacial da imagem, enquanto a magnitude controla a distribuição energética, contraste e textura. Ver um exemplo na <a href="#fig-05-dft-intro" class="quarto-xref">Figura&nbsp;<span>5.4</span></a>.</p>
 <blockquote class="blockquote">
 <p><strong>Analogia auditiva:</strong> no áudio, a fase determina a percepção de posição (esquerda/direita). Na imagem, ela determina a posição e forma dos objetos. Inverter a fase de uma música torna-a irreconhecível mesmo que a magnitude (timbre) permaneça intacta.</p>
 </blockquote>
@@ -671,7 +671,7 @@ Figura&nbsp;5.4: Experimento de troca de fase: Imagem A (moedas) e Imagem B (pad
 </section>
 <section id="simulador-reconstruindo-sinais-com-senoides" class="level3" data-number="5.3.6">
 <h3 data-number="5.3.6" class="anchored" data-anchor-id="simulador-reconstruindo-sinais-com-senoides"><span class="header-section-number">5.3.6</span> Simulador: Reconstruindo Sinais com Senoides</h3>
-<p>Antes de prosseguir para imagens 2D, o simulador interativo da <a href="#fig-05-simulador-freq" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-05-simulador-freq</span></a> permite explorar a essência da análise de Fourier 1D: <strong>qualquer forma de onda pode ser reconstruída somando-se senoides simples</strong>.</p>
+<p>Antes de prosseguir para imagens 2D, o simulador interativo da <a href="#fig-05-simulador-freq" class="quarto-xref">Figura&nbsp;<span>5.5</span></a> permite explorar a essência da análise de Fourier 1D: <strong>qualquer forma de onda pode ser reconstruída somando-se senoides simples</strong>.</p>
 <p>Observe como, ao adicionar mais termos, a soma (curva preta) converge progressivamente para a forma alvo (tracejada). O espectro abaixo mostra as amplitudes de cada frequência — é a “receita” da forma de onda.</p>
 <blockquote class="blockquote">
 <p><strong>Explore ativamente:</strong> <em>(i)</em> Com quantos termos a onda quadrada fica visualmente aceitável? <em>(ii)</em> Qual das três formas converge mais rapidamente — por quê? <em>(iii)</em> O que acontece com o espectro ao trocar de onda quadrada para triangular?</p>
@@ -938,7 +938,7 @@ f(x,y) \circledast h(x,y) \;\overset{\mathcal{F}}{\longleftrightarrow}\; F(u,v)\
 </section>
 <section id="análise-de-eficiência-computacional-em-alta-resolução" class="level3" data-number="5.4.2">
 <h3 data-number="5.4.2" class="anchored" data-anchor-id="análise-de-eficiência-computacional-em-alta-resolução"><span class="header-section-number">5.4.2</span> Análise de Eficiência Computacional em Alta Resolução</h3>
-<p>Para uma imagem de dimensões <span class="math inline">\(M \times N\)</span> (como o caso de <span class="math inline">\(2560 \times 1920\)</span> para a imagem das moedas) e um filtro quadrado de tamanho <span class="math inline">\(K \times K\)</span>, o impacto de cada abordagem na complexidade algorítmica e no tempo de execução é drástico, ver <a href="#tbl-05-fft-complexity-expanded" class="quarto-xref">Tabela&nbsp;<span class="quarto-unresolved-ref">tbl-05-fft-complexity-expanded</span></a>.</p>
+<p>Para uma imagem de dimensões <span class="math inline">\(M \times N\)</span> (como o caso de <span class="math inline">\(2560 \times 1920\)</span> para a imagem das moedas) e um filtro quadrado de tamanho <span class="math inline">\(K \times K\)</span>, o impacto de cada abordagem na complexidade algorítmica e no tempo de execução é drástico, ver <a href="#tbl-05-fft-complexity-expanded" class="quarto-xref">Tabela&nbsp;<span>5.1</span></a>.</p>
 <div id="tbl-05-fft-complexity-expanded" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-05-fft-complexity-expanded-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -987,7 +987,7 @@ Tabela&nbsp;5.1: Comparação de complexidade entre convolução direta, separá
 </section>
 <section id="discussão-do-gráfico-experimental" class="level3" data-number="5.4.3">
 <h3 data-number="5.4.3" class="anchored" data-anchor-id="discussão-do-gráfico-experimental"><span class="header-section-number">5.4.3</span> Discussão do Gráfico Experimental</h3>
-<p>O gráfico obtido no ensaio experimental utilizando a imagem das moedas (<span class="math inline">\(2560 \times 1920\)</span>), apresentado na <a href="#fig-05-conv-eficiencia" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-05-conv-eficiencia</span></a>, traduz de forma consistente a teoria da complexidade computacional para cenários reais de processamento intensivo. Os tempos medidos (em milissegundos) variam conforme o hardware, a implementação da biblioteca e os mecanismos de paralelização disponíveis no computador utilizado.</p>
+<p>O gráfico obtido no ensaio experimental utilizando a imagem das moedas (<span class="math inline">\(2560 \times 1920\)</span>), apresentado na <a href="#fig-05-conv-eficiencia" class="quarto-xref">Figura&nbsp;<span>5.6</span></a>, traduz de forma consistente a teoria da complexidade computacional para cenários reais de processamento intensivo. Os tempos medidos (em milissegundos) variam conforme o hardware, a implementação da biblioteca e os mecanismos de paralelização disponíveis no computador utilizado.</p>
 <ol type="1">
 <li><strong>O Colapso da Convolução Não Separável (<span class="math inline">\(\mathcal{O}(M \cdot N \cdot K^2)\)</span> ):</strong> Como previsto pela curva laranja, a abordagem direta bidimensional sofre uma penalidade severa. Para um <em>kernel</em> pequeno de <span class="math inline">\(5 \times 5\)</span>, o tempo é desprezível, mas ao atingir um <em>kernel</em> de <span class="math inline">\(51 \times 51\)</span>, o tempo de execução ultrapassa a marca dos <strong>25.000 ms (25 segundos)</strong> para processar apenas três iterações. Ela se torna proibitiva para <em>pipelines</em> de tempo real.</li>
 <li><strong>A Consistência Absoluta da FFT (<span class="math inline">\(\mathcal{O}(M \cdot N \log(M \cdot N))\)</span>):</strong> A linha roxa demonstra a independência da FFT em relação ao tamanho do filtro. Uma vez mapeados a imagem e o <em>kernel</em> expandido para o domínio da frequência, a operação passa a ser uma multiplicação ponto a ponto de complexidade fixa. O tempo flutua estavelmente em torno de <strong>1.500 ms</strong>, independentemente de o <em>kernel</em> ser <span class="math inline">\(5 \times 5\)</span> ou <span class="math inline">\(51 \times 51\)</span>. A FFT cruza a curva não separável por volta de <span class="math inline">\(K = 11\)</span>.</li>
@@ -1127,7 +1127,7 @@ Figura&nbsp;5.8: Verificação do Teorema da Convolução: a diferença pixel a 
 <section id="filtros-no-domínio-da-frequência" class="level2" data-number="5.5">
 <h2 data-number="5.5" class="anchored" data-anchor-id="filtros-no-domínio-da-frequência"><span class="header-section-number">5.5</span> Filtros no Domínio da Frequência</h2>
 <p>Um filtro no domínio da frequência é, essencialmente, uma <strong>máscara aplicada ao espectro</strong>: valores próximos de 1 deixam a frequência passar; valores próximos de 0 a atenuam. A forma dessa máscara determina o comportamento visual do filtro.</p>
-<p><strong>O dilema do corte abrupto:</strong> um filtro ideal (corte perfeito em <span class="math inline">\(D_0\)</span>) parece ótimo na teoria, mas causa o <strong>fenômeno de <em>Ringing</em></strong> — oscilações próximas às bordas dos objetos. Isso ocorre porque um corte abrupto no espectro corresponde, no domínio espacial, a uma convolução com uma função <em>sinc</em> de suporte infinito — que produz os anéis visíveis, ver <a href="#fig-05-conv-teorema-zoom" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-05-conv-teorema-zoom</span></a>.</p>
+<p><strong>O dilema do corte abrupto:</strong> um filtro ideal (corte perfeito em <span class="math inline">\(D_0\)</span>) parece ótimo na teoria, mas causa o <strong>fenômeno de <em>Ringing</em></strong> — oscilações próximas às bordas dos objetos. Isso ocorre porque um corte abrupto no espectro corresponde, no domínio espacial, a uma convolução com uma função <em>sinc</em> de suporte infinito — que produz os anéis visíveis, ver <a href="#fig-05-conv-teorema-zoom" class="quarto-xref">Figura&nbsp;<span>5.9</span></a>.</p>
 <p><strong>A solução:</strong> filtros com transição suave — Gaussiano ou Butterworth — eliminam o <em>ringing</em> ao custo de uma fronteira de corte menos precisa.</p>
 <div id="cell-fig-05-conv-teorema-zoom" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulando o Filtro Ideal na Frequência (Cilindro) e sua representação Espacial (Sinc)</span></span>
@@ -1181,7 +1181,7 @@ H_{\text{gauss}}(u,v) = e^{-D^2(u,v)/\left(2\sigma^2\right)}
 <p><strong>Filtro Butterworth (LPFB) de ordem <span class="math inline">\(n\)</span>:</strong> <span id="eq-05-lpf-butterworth"><span class="math display">\[
 H_{\text{BW}}(u,v) = \frac{1}{1 + \left[D(u,v)/D_0\right]^{2n}}
 \tag{5.8}\]</span></span></p>
-<p>O parâmetro <span class="math inline">\(n\)</span> controla a inclinação da transição: valores baixos (<span class="math inline">\(n=1,2\)</span>) produzem transições suaves (sem <em>ringing</em>); valores altos (<span class="math inline">\(n \geq 5\)</span>) aproximam o comportamento do filtro ideal. Ver exemplos na <a href="#fig-05-filtros-passa-baixa" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-05-filtros-passa-baixa</span></a>.</p>
+<p>O parâmetro <span class="math inline">\(n\)</span> controla a inclinação da transição: valores baixos (<span class="math inline">\(n=1,2\)</span>) produzem transições suaves (sem <em>ringing</em>); valores altos (<span class="math inline">\(n \geq 5\)</span>) aproximam o comportamento do filtro ideal. Ver exemplos na <a href="#fig-05-filtros-passa-baixa" class="quarto-xref">Figura&nbsp;<span>5.10</span></a>.</p>
 <div id="cell-fig-05-filtros-passa-baixa" class="cell">
 <div id="fig-05-filtros-passa-baixa" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="11">
 <figure class="quarto-float quarto-float-fig figure">
@@ -1254,7 +1254,7 @@ Figura&nbsp;5.10: Filtros passa-baixa.
 <h3 data-number="5.5.2" class="anchored" data-anchor-id="filtros-passa-alta-e-passa-banda"><span class="header-section-number">5.5.2</span> Filtros Passa-Alta e Passa-Banda</h3>
 <p><strong>Filtros passa-alta</strong> são obtidos pelo complemento de qualquer filtro passa-baixa: <span class="math inline">\(H_{\text{HP}} = 1 - H_{\text{LP}}\)</span>. O efeito visual é o inverso — preserva bordas e detalhes, atenua regiões uniformes.</p>
 <p><strong>Filtros passa-banda</strong> combinam um corte inferior <span class="math inline">\(D_L\)</span> e um corte superior <span class="math inline">\(D_H\)</span>, preservando apenas as frequências entre eles: <span class="math inline">\(H_{\text{BP}} = H_{\text{HP}}^{(D_L)} \cdot H_{\text{LP}}^{(D_H)}\)</span>.</p>
-<p>São especialmente úteis na <strong>remoção de ruído periódico</strong>: padrões regulares (interferência elétrica, grade de scanner) aparecem como picos no espectro de magnitude e podem ser suprimidos com um filtro rejeita-banda (<em>notch filter</em>) posicionado sobre esses picos. Ver exemplos de aplicações de filtros passa baixa na <a href="#fig-05-filtros-freq" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-05-filtros-freq</span></a> e passa alta na <a href="#fig-05-filtros-passa-alta" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-05-filtros-passa-alta</span></a>.</p>
+<p>São especialmente úteis na <strong>remoção de ruído periódico</strong>: padrões regulares (interferência elétrica, grade de scanner) aparecem como picos no espectro de magnitude e podem ser suprimidos com um filtro rejeita-banda (<em>notch filter</em>) posicionado sobre esses picos. Ver exemplos de aplicações de filtros passa baixa na <a href="#fig-05-filtros-freq" class="quarto-xref">Figura&nbsp;<span>5.12</span></a> e passa alta na <a href="#fig-05-filtros-passa-alta" class="quarto-xref">Figura&nbsp;<span>5.13</span></a>.</p>
 <div id="cell-fig-05-filtros-simulador" class="cell">
 <div id="fig-05-filtros-simulador" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -2900,7 +2900,7 @@ Tabela&nbsp;5.3: Comparação entre os principais formatos de imagem rasterizado
 <p><span id="eq-05-ssim"><span class="math display">\[
 \text{SSIM}(f,g) = \frac{(2\mu_f\mu_g + c_1)(2\sigma_{fg} + c_2)}{(\mu_f^2+\mu_g^2+c_1)(\sigma_f^2+\sigma_g^2+c_2)}
 \tag{5.11}\]</span></span></p>
-<p>O SSIM combina três fatores medidos em janelas locais: <strong>luminância</strong> (<span class="math inline">\(\mu_f, \mu_g\)</span>), <strong>contraste</strong> (<span class="math inline">\(\sigma_f, \sigma_g\)</span>) e <strong>estrutura</strong> (<span class="math inline">\(\sigma_{fg}\)</span>), ponderados por constantes de estabilidade <span class="math inline">\(c_1, c_2\)</span>. O resultado varia em <span class="math inline">\([-1, 1]\)</span>, com 1 indicando identidade perfeita. Diferentemente do PSNR, o SSIM é sensível à organização espacial dos erros, sendo mais alinhado com a percepção humana — consulte <span class="citation" data-cites="gonzalez2018digital">Gonzalez; Woods (<a href="#ref-gonzalez2018digital" role="doc-biblioref">2018</a>)</span> para a formulação completa.</p>
+<p>O SSIM combina três fatores medidos em janelas locais: <strong>luminância</strong> (<span class="math inline">\(\mu_f, \mu_g\)</span>), <strong>contraste</strong> (<span class="math inline">\(\sigma_f, \sigma_g\)</span>) e <strong>estrutura</strong> (<span class="math inline">\(\sigma_{fg}\)</span>), ponderados por constantes de estabilidade <span class="math inline">\(c_1, c_2\)</span>. O resultado varia em <span class="math inline">\([-1, 1]\)</span>, com 1 indicando identidade perfeita. Diferentemente do PSNR, o SSIM é sensível à organização espacial dos erros, sendo mais alinhado com a percepção humana — consulte <span class="citation" data-cites="gonzalez2018digital">Gonzalez; Woods (<a href="../referencias.html#ref-gonzalez2018digital" role="doc-biblioref">2018</a>)</span> para a formulação completa.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -3237,7 +3237,7 @@ Figura&nbsp;5.28: Pipeline completo de remoção de ruído misto: (1) ruído gau
 </section>
 <section id="resumo-do-capítulo" class="level2" data-number="5.10">
 <h2 data-number="5.10" class="anchored" data-anchor-id="resumo-do-capítulo"><span class="header-section-number">5.10</span> Resumo do Capítulo</h2>
-<p>A transição do <strong>domínio espacial</strong> para o <strong>domínio da frequência</strong> revela a distribuição de energia da imagem, estabelecendo a base matemática para filtragem avançada e compressão de dados. Ver um mapa conceitual do domínio da frequência na <a href="#fig-05-mapa-conceitual" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-05-mapa-conceitual</span></a>.</p>
+<p>A transição do <strong>domínio espacial</strong> para o <strong>domínio da frequência</strong> revela a distribuição de energia da imagem, estabelecendo a base matemática para filtragem avançada e compressão de dados. Ver um mapa conceitual do domínio da frequência na <a href="#fig-05-mapa-conceitual" class="quarto-xref">Figura&nbsp;<span>5.29</span></a>.</p>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div id="fig-05-mapa-conceitual" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -3310,7 +3310,7 @@ Figura&nbsp;5.29: Mapa conceitual do domínio da frequência.
 <section id="lista-de-exercícios" class="level2" data-number="5.12">
 <h2 data-number="5.12" class="anchored" data-anchor-id="lista-de-exercícios"><span class="header-section-number">5.12</span> Lista de Exercícios</h2>
 <ol type="1">
-<li><p><strong>(10%)</strong> Implemente a DFT 2D manualmente (sem <code>np.fft.fft2</code>) usando a definição da <a href="#eq-05-dft" class="quarto-xref">Equação&nbsp;<span class="quarto-unresolved-ref">eq-05-dft</span></a> para uma imagem <span class="math inline">\(16 \times 16\)</span>. Compare com <code>np.fft.fft2</code> e verifique que as diferenças absolutas são menores que <span class="math inline">\(10^{-8}\)</span>. Meça o tempo de execução de ambas as implementações e explique a diferença.</p></li>
+<li><p><strong>(10%)</strong> Implemente a DFT 2D manualmente (sem <code>np.fft.fft2</code>) usando a definição da <a href="#eq-05-dft" class="quarto-xref">Equação&nbsp;<span>5.1</span></a> para uma imagem <span class="math inline">\(16 \times 16\)</span>. Compare com <code>np.fft.fft2</code> e verifique que as diferenças absolutas são menores que <span class="math inline">\(10^{-8}\)</span>. Meça o tempo de execução de ambas as implementações e explique a diferença.</p></li>
 <li><p><strong>(15%)</strong> Adicione ruído senoidal com frequências <span class="math inline">\((u_0, v_0) \in \{(5,10), (20,5), (30,30)\}\)</span> à imagem de moedas. Para cada frequência, projete um filtro notch e remova o ruído. Avalie quantitativamente a restauração com PSNR e SSIM. Discuta o compromisso entre remoção de ruído e preservação de detalhes.</p></li>
 <li><p><strong>(15%)</strong> Compare os filtros passa-baixa Ideal, Gaussiano e Butterworth (ordens <span class="math inline">\(n = 1, 2, 4\)</span>) com <span class="math inline">\(D_0 = 20, 40, 60\)</span> pixels. Para cada combinação, calcule o PSNR e o SSIM da imagem filtrada em relação à original. Apresente os resultados em uma tabela e plote as curvas de resposta em frequência <span class="math inline">\(H(u, 0)\)</span>.</p></li>
 <li><p><strong>(15%)</strong> Implemente a decomposição wavelet 2D manualmente usando a wavelet Haar: calcule os filtros <span class="math inline">\(h\)</span> (passa-baixa) e <span class="math inline">\(g\)</span> (passa-alta) de Haar, aplique-os por separabilidade em linhas e colunas, e subamostreie por 2. Compare o resultado com <code>pywt.dwt2(img, 'haar')</code> e verifique a equivalência numérica.</p></li>
@@ -3323,15 +3323,15 @@ Figura&nbsp;5.29: Mapa conceitual do domínio da frequência.
 <h2 class="unnumbered anchored" data-anchor-id="referências-do-capítulo">Referências do Capítulo</h2>
 <p>A fundamentação teórica deste capítulo baseia-se nas seguintes obras:</p>
 <ul>
-<li><span class="citation" data-cites="gonzalez2018digital">Gonzalez; Woods (<a href="#ref-gonzalez2018digital" role="doc-biblioref">2018</a>)</span> para os conceitos de DFT 2D, filtros no domínio da frequência, DCT e fundamentos de compressão de imagens.</li>
-<li><span class="citation" data-cites="oppenheim1999discrete">Oppenheim (<a href="#ref-oppenheim1999discrete" role="doc-biblioref">1999</a>)</span> para a teoria de sinais e sistemas no domínio discreto, incluindo o Teorema da Convolução e propriedades da DFT.</li>
-<li><span class="citation" data-cites="mallat1999wavelet">Mallat (<a href="#ref-mallat1999wavelet" role="doc-biblioref">1999</a>)</span> para a teoria de wavelets, análise multirresolução e bancos de filtros.</li>
-<li><span class="citation" data-cites="wallace1991jpeg">Wallace (<a href="#ref-wallace1991jpeg" role="doc-biblioref">1991</a>)</span> para o padrão de compressão JPEG original e o fundamento da quantização DCT.</li>
-<li><span class="citation" data-cites="szeliski2022">Szeliski (<a href="#ref-szeliski2022" role="doc-biblioref">2022</a>)</span> para métricas de qualidade (PSNR, SSIM) e comparação de formatos de imagem modernos.</li>
+<li><span class="citation" data-cites="gonzalez2018digital">Gonzalez; Woods (<a href="../referencias.html#ref-gonzalez2018digital" role="doc-biblioref">2018</a>)</span> para os conceitos de DFT 2D, filtros no domínio da frequência, DCT e fundamentos de compressão de imagens.</li>
+<li><span class="citation" data-cites="oppenheim1999discrete">Oppenheim (<a href="../referencias.html#ref-oppenheim1999discrete" role="doc-biblioref">1999</a>)</span> para a teoria de sinais e sistemas no domínio discreto, incluindo o Teorema da Convolução e propriedades da DFT.</li>
+<li><span class="citation" data-cites="mallat1999wavelet">Mallat (<a href="../referencias.html#ref-mallat1999wavelet" role="doc-biblioref">1999</a>)</span> para a teoria de wavelets, análise multirresolução e bancos de filtros.</li>
+<li><span class="citation" data-cites="wallace1991jpeg">Wallace (<a href="../referencias.html#ref-wallace1991jpeg" role="doc-biblioref">1991</a>)</span> para o padrão de compressão JPEG original e o fundamento da quantização DCT.</li>
+<li><span class="citation" data-cites="szeliski2022">Szeliski (<a href="../referencias.html#ref-szeliski2022" role="doc-biblioref">2022</a>)</span> para métricas de qualidade (PSNR, SSIM) e comparação de formatos de imagem modernos.</li>
 </ul>
 
 
-<div id="refs" class="references csl-bib-body" data-entry-spacing="1" role="list">
+<div id="refs" class="references csl-bib-body" data-entry-spacing="1" role="list" style="display: none">
 <div id="ref-gonzalez2018digital" class="csl-entry" role="listitem">
 GONZALEZ, R. C.; WOODS, R. E. <strong>Digital Image Processing</strong>. 4th. ed. New York: Pearson, 2018.
 </div>

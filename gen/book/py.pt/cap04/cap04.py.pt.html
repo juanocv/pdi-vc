@@ -424,7 +424,7 @@ T^* =
 </div>
 <section id="imagem-de-moedas" class="level3" data-number="4.2.1">
 <h3 data-number="4.2.1" class="anchored" data-anchor-id="imagem-de-moedas"><span class="header-section-number">4.2.1</span> Imagem de Moedas</h3>
-<p>A imagem utilizada para praticar a segmentação é uma fotografia de coleção de moedas de diferentes países e épocas (<a href="#fig-04-coins" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-04-coins</span></a>). Crédito: GAZI.MD.AHAD (CC BY-SA 4.0). Ela apresenta objetos circulares com bordas bem definidas, sendo ideal para demonstrar limiarização, operadores morfológicos, transformada de distância, <em>watershed</em> e descritores de forma.</p>
+<p>A imagem utilizada para praticar a segmentação é uma fotografia de coleção de moedas de diferentes países e épocas (<a href="#fig-04-coins" class="quarto-xref">Figura&nbsp;<span>4.1</span></a>). Crédito: GAZI.MD.AHAD (CC BY-SA 4.0). Ela apresenta objetos circulares com bordas bem definidas, sendo ideal para demonstrar limiarização, operadores morfológicos, transformada de distância, <em>watershed</em> e descritores de forma.</p>
 <div id="cell-fig-04-coins" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -581,7 +581,7 @@ Figura&nbsp;4.2: Comparação dos pré-processamentos: imagem | histograma+T* | 
 </section>
 <section id="resultado-clahe-como-melhor-pré-processamento" class="level3" data-number="4.2.3">
 <h3 data-number="4.2.3" class="anchored" data-anchor-id="resultado-clahe-como-melhor-pré-processamento"><span class="header-section-number">4.2.3</span> Resultado: CLAHE como Melhor Pré-processamento</h3>
-<p>A análise da <a href="#fig-04-otsu-comparacao-histogramas" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-04-otsu-comparacao-histogramas</span></a> mostra que o <strong>CLAHE</strong> produz a maior separação bimodal (<span class="math inline">\(\sigma_B^2 \approx 2{,}47 \times 10^3\)</span>, <span class="math inline">\(T^* = 122\)</span>), superando até mesmo a combinação CLAHE+Gaussiano. O filtro Gaussiano, embora suavize ruídos de textura, reduz levemente a separação inter-classe ao homogeneizar intensidades próximas ao limiar.</p>
+<p>A análise da <a href="#fig-04-otsu-comparacao-histogramas" class="quarto-xref">Figura&nbsp;<span>4.2</span></a> mostra que o <strong>CLAHE</strong> produz a maior separação bimodal (<span class="math inline">\(\sigma_B^2 \approx 2{,}47 \times 10^3\)</span>, <span class="math inline">\(T^* = 122\)</span>), superando até mesmo a combinação CLAHE+Gaussiano. O filtro Gaussiano, embora suavize ruídos de textura, reduz levemente a separação inter-classe ao homogeneizar intensidades próximas ao limiar.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -606,7 +606,7 @@ Figura&nbsp;4.2: Comparação dos pré-processamentos: imagem | histograma+T* | 
 \]</span></p>
 <p>A interseção com <span class="math inline">\(\mathbb{E}\)</span> garante que apenas as posições dentro do domínio da imagem sejam consideradas — quando <span class="math inline">\(x\)</span> está próximo à borda, parte de <span class="math inline">\(\mathbb{B}_x\)</span> pode cair fora de <span class="math inline">\(\mathbb{E}\)</span> e é simplesmente descartada.</p>
 <p>Quando o elemento estruturante associa pesos a seus elementos — isto é, <span class="math inline">\(b: \mathbb{B} \to \mathbb{Z}\)</span> — ele é denominado <strong>função estruturante</strong> ou <strong>elemento estruturante não plano</strong>.</p>
-<p>Desenvolvida por Matheron e Serra na década de 1960 para imagens binárias e posteriormente estendida a tons de cinza, a morfologia matemática fundamenta operadores como gradiente morfológico, <em>top-hat</em>, <em>watershed</em> e transformada de distância, todos derivados de dois primitivos: <strong>erosão</strong> e <strong>dilatação</strong> <span class="citation" data-cites="matheron1975random serra1982image">(<a href="#ref-matheron1975random" role="doc-biblioref">Matheron, 1975</a>; <a href="#ref-serra1982image" role="doc-biblioref">Serra, 1982</a>)</span>.</p>
+<p>Desenvolvida por Matheron e Serra na década de 1960 para imagens binárias e posteriormente estendida a tons de cinza, a morfologia matemática fundamenta operadores como gradiente morfológico, <em>top-hat</em>, <em>watershed</em> e transformada de distância, todos derivados de dois primitivos: <strong>erosão</strong> e <strong>dilatação</strong> <span class="citation" data-cites="matheron1975random serra1982image">(<a href="../referencias.html#ref-matheron1975random" role="doc-biblioref">Matheron, 1975</a>; <a href="../referencias.html#ref-serra1982image" role="doc-biblioref">Serra, 1982</a>)</span>.</p>
 <section id="erosão-e-dilatação" class="level3" data-number="4.3.1">
 <h3 data-number="4.3.1" class="anchored" data-anchor-id="erosão-e-dilatação"><span class="header-section-number">4.3.1</span> Erosão e Dilatação</h3>
 <p>Os dois operadores primitivos são definidos de forma unificada para imagens em tons de cinza (<span class="math inline">\(f: \mathbb{E} \to \mathbb{Z}\)</span>) e, por restrição ao domínio <span class="math inline">\(\{0,1\}\)</span>, também para imagens binárias.</p>
@@ -672,7 +672,7 @@ A \oplus B = \{\, z \in \mathbb{E} \mid \hat{\mathbb{B}}_z \cap A \neq \varnothi
 </section>
 </div>
 </div>
-<p>Para ilustrar numericamente os operadores morfológicos e a dualidade erosão–dilatação, a <a href="#fig-04-ero-dil-didatico" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-04-ero-dil-didatico</span></a> apresenta uma imagem binária 10×10 processada com um elemento estruturante em formato de “L”. Na implementação de <code>morph.py</code>, a origem de <span class="math inline">\(B\)</span> é fixada no centro geométrico da máscara — posição <span class="math inline">\((1,1)\)</span> para um <em>kernel</em> 3×3 — e deve ser um elemento ativo para que a erosão se comporte corretamente (conforme discutido anteriormente). O <span class="math inline">\(B_L\)</span> definido a seguir satisfaz essa condição. A <a href="#fig-04-erosao" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-04-erosao</span></a> complementa a análise com um simulador interativo da erosão, permitindo visualizar o deslocamento do elemento estruturante sobre a imagem e identificar as posições em que ele permanece completamente contido no objeto.</p>
+<p>Para ilustrar numericamente os operadores morfológicos e a dualidade erosão–dilatação, a <a href="#fig-04-ero-dil-didatico" class="quarto-xref">Figura&nbsp;<span>4.3</span></a> apresenta uma imagem binária 10×10 processada com um elemento estruturante em formato de “L”. Na implementação de <code>morph.py</code>, a origem de <span class="math inline">\(B\)</span> é fixada no centro geométrico da máscara — posição <span class="math inline">\((1,1)\)</span> para um <em>kernel</em> 3×3 — e deve ser um elemento ativo para que a erosão se comporte corretamente (conforme discutido anteriormente). O <span class="math inline">\(B_L\)</span> definido a seguir satisfaz essa condição. A <a href="#fig-04-erosao" class="quarto-xref">Figura&nbsp;<span>4.4</span></a> complementa a análise com um simulador interativo da erosão, permitindo visualizar o deslocamento do elemento estruturante sobre a imagem e identificar as posições em que ele permanece completamente contido no objeto.</p>
 <div id="cell-fig-04-ero-dil-didatico" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> np.array([</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>],</span>
@@ -1187,7 +1187,7 @@ Tabela&nbsp;4.2: Sequências do filtro sequencial alternado <code>mm.asf</code>.
 </div>
 </figure>
 </div>
-<p>O parâmetro <code>n</code> controla o número de iterações — a cada iteração <span class="math inline">\(i\)</span>, o elemento estruturante cresce por soma de Minkowski (<code>mm.sesum</code>), o que equivale a aplicar filtros progressivamente maiores. O resultado é uma suavização morfológica multiescala que preserva melhor as estruturas relevantes do que uma única abertura ou fechamento com kernel grande. Ver na <a href="#fig-04-open-close" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-04-open-close</span></a> um exemplo de uso da abertura e fechamento na imagem das moedas.</p>
+<p>O parâmetro <code>n</code> controla o número de iterações — a cada iteração <span class="math inline">\(i\)</span>, o elemento estruturante cresce por soma de Minkowski (<code>mm.sesum</code>), o que equivale a aplicar filtros progressivamente maiores. O resultado é uma suavização morfológica multiescala que preserva melhor as estruturas relevantes do que uma única abertura ou fechamento com kernel grande. Ver na <a href="#fig-04-open-close" class="quarto-xref">Figura&nbsp;<span>4.5</span></a> um exemplo de uso da abertura e fechamento na imagem das moedas.</p>
 <div id="cell-fig-04-open-close" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>img_bin    <span class="op">=</span> mm.threshold(img_clahe)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>B_disk     <span class="op">=</span> mm.sedisk(<span class="dv">19</span>)</span>
@@ -1234,7 +1234,7 @@ R_g^\delta(f) = (f \oplus_g b)^\infty, \quad \text{onde } (f \oplus_g b)^{(k)} =
 \tag{4.7}\]</span></span></p>
 <p>A iteração é repetida até estabilidade, isto é, até que duas iterações consecutivas produzam o mesmo resultado.</p>
 <p>Em <code>morph.py</code>: <code>mm.infrec(f, g, b)</code> dilata <span class="math inline">\(f\)</span> dentro de <span class="math inline">\(g\)</span> até convergir.</p>
-<p>A reconstrução morfológica é significativamente mais robusta que a abertura convencional porque filtra estruturas indesejadas <strong>sem alterar a morfologia</strong> dos objetos preservados. Enquanto a abertura suaviza cantos e deforma contornos devido à aplicação irrestrita do elemento estruturante, a reconstrução geodésica resgata os limites exatos dos objetos que interceptam o marcador, conforme ilustrado na <a href="#fig-04-reconstrucao-didatica" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-04-reconstrucao-didatica</span></a> com o elemento estruturante em cruz da <a href="#fig-04-elemento-cruz" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-04-elemento-cruz</span></a>.</p>
+<p>A reconstrução morfológica é significativamente mais robusta que a abertura convencional porque filtra estruturas indesejadas <strong>sem alterar a morfologia</strong> dos objetos preservados. Enquanto a abertura suaviza cantos e deforma contornos devido à aplicação irrestrita do elemento estruturante, a reconstrução geodésica resgata os limites exatos dos objetos que interceptam o marcador, conforme ilustrado na <a href="#fig-04-reconstrucao-didatica" class="quarto-xref">Figura&nbsp;<span>4.7</span></a> com o elemento estruturante em cruz da <a href="#fig-04-elemento-cruz" class="quarto-xref">Figura&nbsp;<span>4.6</span></a>.</p>
 <div id="cell-fig-04-elemento-cruz" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>B_cruz <span class="op">=</span> mm.secross()</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>mm.drawImgPlt(B_cruz, scale<span class="op">=</span><span class="dv">20</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1359,7 +1359,7 @@ Figura&nbsp;4.7: Pipeline de Reconstrução Morfológica por Dilatação Condici
 </table>
 </div>
 </div>
-<p>A evolução passo a passo dessas transformações geodésicas pode ser acompanhada nas figuras a seguir. A <a href="#fig-04-clohole-didatico" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-04-clohole-didatico</span></a> ilustra o mecanismo de inundação controlada do operador <code>mm.clohole</code>, evidenciando como a frente de onda preenche o plano de fundo externo e deixa isoladas apenas as cavidades internas. Em contrapartida, a <a href="#fig-04-edgeoff-didatico" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-04-edgeoff-didatico</span></a> detalha a dinâmica do operador <code>mm.edgeoff</code>, onde os objetos ancorados nas extremidades da matriz são integralmente mapeados a partir do <em>frame</em> limítrofe e, em seguida, eliminados por meio da subtração morfológica, restando exclusivamente os elementos totalmente contidos no domínio interno da imagem. A conectividade da propagação geodésica é controlada pelo elemento estruturante: <code>mm.sebox()</code> (vizinhança de 8) inclui componentes diagonais, enquanto <code>mm.secross()</code> (vizinhança de 4) os exclui — o que afeta quais objetos são atingidos pelo <em>frame</em> e, portanto, quais são preservados ou removidos.</p>
+<p>A evolução passo a passo dessas transformações geodésicas pode ser acompanhada nas figuras a seguir. A <a href="#fig-04-clohole-didatico" class="quarto-xref">Figura&nbsp;<span>4.8</span></a> ilustra o mecanismo de inundação controlada do operador <code>mm.clohole</code>, evidenciando como a frente de onda preenche o plano de fundo externo e deixa isoladas apenas as cavidades internas. Em contrapartida, a <a href="#fig-04-edgeoff-didatico" class="quarto-xref">Figura&nbsp;<span>4.9</span></a> detalha a dinâmica do operador <code>mm.edgeoff</code>, onde os objetos ancorados nas extremidades da matriz são integralmente mapeados a partir do <em>frame</em> limítrofe e, em seguida, eliminados por meio da subtração morfológica, restando exclusivamente os elementos totalmente contidos no domínio interno da imagem. A conectividade da propagação geodésica é controlada pelo elemento estruturante: <code>mm.sebox()</code> (vizinhança de 8) inclui componentes diagonais, enquanto <code>mm.secross()</code> (vizinhança de 4) os exclui — o que afeta quais objetos são atingidos pelo <em>frame</em> e, portanto, quais são preservados ou removidos.</p>
 <div id="cell-fig-04-clohole-didatico" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Função auxiliar unificada para gerar o pipeline iterativo com realce visual</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> gerar_pipeline_reconstrucao(marcador, mascara, kernel, passos<span class="op">=</span><span class="dv">4</span>, fator<span class="op">=</span><span class="dv">80</span>):</span>
@@ -1452,7 +1452,7 @@ Figura&nbsp;4.9: Pipeline de eliminação de estruturas de borda (<em>edgeoff</e
 </section>
 <section id="pipeline-de-limpeza-binária-com-clahe" class="level3" data-number="4.3.5">
 <h3 data-number="4.3.5" class="anchored" data-anchor-id="pipeline-de-limpeza-binária-com-clahe"><span class="header-section-number">4.3.5</span> Pipeline de Limpeza Binária com CLAHE</h3>
-<p>Com base na análise anterior — em que o CLAHE fornece a melhor separação bimodal (<span class="math inline">\(\sigma_B^2 \approx 2{,}47 \times 10^3\)</span>) e o operador <code>mm.clohole</code> preenche satisfatoriamente as cavidades internas das moedas —, o <em>pipeline</em> final de segmentação, ilustrado na <a href="#fig-04-pipeline-clahe" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-04-pipeline-clahe</span></a>, é estruturado pelo seguinte fluxo computacional:</p>
+<p>Com base na análise anterior — em que o CLAHE fornece a melhor separação bimodal (<span class="math inline">\(\sigma_B^2 \approx 2{,}47 \times 10^3\)</span>) e o operador <code>mm.clohole</code> preenche satisfatoriamente as cavidades internas das moedas —, o <em>pipeline</em> final de segmentação, ilustrado na <a href="#fig-04-pipeline-clahe" class="quarto-xref">Figura&nbsp;<span>4.10</span></a>, é estruturado pelo seguinte fluxo computacional:</p>
 <p><span class="math display">\[
 \text{gray} \xrightarrow{\text{CLAHE}} \xrightarrow{\text{Otsu}} \xrightarrow{\text{open}} \xrightarrow{\text{clohole}} \xrightarrow{\text{open}} \xrightarrow{\text{edgeoff}} \text{segmentação}
 \]</span></p>
@@ -1512,7 +1512,7 @@ Figura&nbsp;4.10: Pipeline completo de segmentação com CLAHE: Otsu → fechame
 </section>
 <section id="morfologia-em-tons-de-cinza" class="level3" data-number="4.3.6">
 <h3 data-number="4.3.6" class="anchored" data-anchor-id="morfologia-em-tons-de-cinza"><span class="header-section-number">4.3.6</span> Morfologia em Tons de Cinza</h3>
-<p>Os operadores morfológicos estendem-se para imagens em tons de cinza substituindo as operações de conjunto por <strong>mínimo</strong> (erosão) e <strong>máximo</strong> (dilatação), conforme definido nas <a href="#eq-04-erosao" class="quarto-xref">Equação&nbsp;<span class="quarto-unresolved-ref">eq-04-erosao</span></a> e <a href="#eq-04-dilatacao" class="quarto-xref">Equação&nbsp;<span class="quarto-unresolved-ref">eq-04-dilatacao</span></a>. Para elemento estruturante plano (<span class="math inline">\(b \equiv 0\)</span>), erosão reduz-se ao <strong>mínimo local</strong> e dilatação ao <strong>máximo local</strong>.</p>
+<p>Os operadores morfológicos estendem-se para imagens em tons de cinza substituindo as operações de conjunto por <strong>mínimo</strong> (erosão) e <strong>máximo</strong> (dilatação), conforme definido nas <a href="#eq-04-erosao" class="quarto-xref">Equação&nbsp;<span>4.3</span></a> e <a href="#eq-04-dilatacao" class="quarto-xref">Equação&nbsp;<span>4.4</span></a>. Para elemento estruturante plano (<span class="math inline">\(b \equiv 0\)</span>), erosão reduz-se ao <strong>mínimo local</strong> e dilatação ao <strong>máximo local</strong>.</p>
 <p>Três operadores derivados são especialmente úteis:</p>
 <p><strong>Gradiente morfológico</strong> — destaca bordas como a diferença entre dilatação e erosão: <span id="eq-04-gradiente-morf"><span class="math display">\[
 \text{grad}_B(f) = (f \oplus B) - (f \ominus B)
@@ -1524,7 +1524,7 @@ Figura&nbsp;4.10: Pipeline completo de segmentação com CLAHE: Otsu → fechame
 \text{black-hat}_B(f) = (f \bullet B) - f
 \tag{4.12}\]</span></span></p>
 <p><em>Top-hat</em> extrai elementos brilhantes que são menores que o elemento estruturante <span class="math inline">\(B\)</span>, enquanto o <em>Black-hat</em> extrai elementos escuros menores que <span class="math inline">\(B\)</span>.</p>
-<p>Os três operadores, ilustrados na <a href="#fig-04-morf-gc-histogramas" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-04-morf-gc-histogramas</span></a>, estão disponíveis em <code>mm.gradm</code>, <code>mm.tophat</code> e <code>mm.blackhat</code>.</p>
+<p>Os três operadores, ilustrados na <a href="#fig-04-morf-gc-histogramas" class="quarto-xref">Figura&nbsp;<span>4.11</span></a>, estão disponíveis em <code>mm.gradm</code>, <code>mm.tophat</code> e <code>mm.blackhat</code>.</p>
 <div id="cell-fig-04-morf-gc-histogramas" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> io</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -1584,7 +1584,7 @@ Figura&nbsp;4.11: Morfologia em tons de cinza emparelhada com seus respectivos h
 <p><span id="eq-04-particao"><span class="math display">\[
 \bigcup_{i=1}^{n} R_i = \Omega, \quad \text{onde} \quad R_i \cap R_j = \emptyset \quad \forall \quad i \neq j
 \tag{4.13}\]</span></span></p>
-<p>Cada sub-região <span class="math inline">\(R_i\)</span> deve constituir um domínio <strong>homogêneo</strong> segundo um predicado de similaridade definido sobre propriedades locais — intensidade, cor ou textura — e, concomitantemente, ser <strong>distinta</strong> em relação às regiões adjacentes. As abordagens para a obtenção dessa partição organizam-se em três famílias, fundamentadas em critérios de continuidade, conectividade e similaridade estatística, conforme sintetizado na <a href="#tbl-04-segmentacao" class="quarto-xref">Tabela&nbsp;<span class="quarto-unresolved-ref">tbl-04-segmentacao</span></a>.</p>
+<p>Cada sub-região <span class="math inline">\(R_i\)</span> deve constituir um domínio <strong>homogêneo</strong> segundo um predicado de similaridade definido sobre propriedades locais — intensidade, cor ou textura — e, concomitantemente, ser <strong>distinta</strong> em relação às regiões adjacentes. As abordagens para a obtenção dessa partição organizam-se em três famílias, fundamentadas em critérios de continuidade, conectividade e similaridade estatística, conforme sintetizado na <a href="#tbl-04-segmentacao" class="quarto-xref">Tabela&nbsp;<span>4.3</span></a>.</p>
 <div id="tbl-04-segmentacao" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-04-segmentacao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1626,7 +1626,7 @@ Tabela&nbsp;4.3: Taxonomia dos métodos de segmentação baseados em propriedade
 </figure>
 </div>
 <p>Até este ponto do capítulo, o desenvolvimento prático abordou a <em>Limiarização</em> — mediante o acoplamento entre equalização adaptativa CLAHE e o limiar global de Otsu — estendida por operadores de <em>Crescimento de Regiões</em> aplicados ao confinamento geodésico, materializados pelas funções <code>mm.infrec</code>, <code>mm.clohole</code> e <code>mm.edgeoff</code>. O resultado desse <em>pipeline</em> é uma máscara binária livre de ruídos isolados.</p>
-<p>Contudo, em cenários onde os objetos segmentados encontram-se sobrepostos ou vinculados por junções estreitas de pixels, técnicas baseadas em limiarização são insuficientes para satisfazer a condição de disjunção imposta pela <a href="#eq-04-particao" class="quarto-xref">Equação&nbsp;<span class="quarto-unresolved-ref">eq-04-particao</span></a>. Para resolver essa limitação topológica, as próximas seções introduzem três operadores que atuam em sinergia morfológica: a <strong>Rotulação</strong>, a <strong>Transformada de Distância</strong> e o algoritmo de segmentação por <strong><em>Watershed</em></strong> baseado em marcadores.</p>
+<p>Contudo, em cenários onde os objetos segmentados encontram-se sobrepostos ou vinculados por junções estreitas de pixels, técnicas baseadas em limiarização são insuficientes para satisfazer a condição de disjunção imposta pela <a href="#eq-04-particao" class="quarto-xref">Equação&nbsp;<span>4.13</span></a>. Para resolver essa limitação topológica, as próximas seções introduzem três operadores que atuam em sinergia morfológica: a <strong>Rotulação</strong>, a <strong>Transformada de Distância</strong> e o algoritmo de segmentação por <strong><em>Watershed</em></strong> baseado em marcadores.</p>
 <section id="rotulação" class="level3" data-number="4.4.1">
 <h3 data-number="4.4.1" class="anchored" data-anchor-id="rotulação"><span class="header-section-number">4.4.1</span> Rotulação</h3>
 <p>A <strong>rotulação de componentes conexas</strong> (<em>connected component labeling</em>) é o operador que atribui um identificador inteiro e único a cada conjunto de pixels pertencentes à mesma componente conexa em uma imagem binária. Formalmente:</p>
@@ -1638,7 +1638,7 @@ Tabela&nbsp;4.3: Taxonomia dos métodos de segmentação baseados em propriedade
 <li><strong>Conectividade-4:</strong> apenas os 4 vizinhos ortogonais (norte, sul, leste, oeste).</li>
 <li><strong>Conectividade-8:</strong> os 4 ortogonais mais os 4 diagonais, totalizando 8 vizinhos.</li>
 </ul>
-<p>A escolha da conectividade afeta diretamente quais regiões são fundidas em uma mesma componente, como ilustrado na <a href="#fig-04-rotulacao-didatico" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-04-rotulacao-didatico</span></a>. Ver outro exemplo no simulador da <a href="#fig-04-rotulacao" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-04-rotulacao</span></a>.</p>
+<p>A escolha da conectividade afeta diretamente quais regiões são fundidas em uma mesma componente, como ilustrado na <a href="#fig-04-rotulacao-didatico" class="quarto-xref">Figura&nbsp;<span>4.13</span></a>. Ver outro exemplo no simulador da <a href="#fig-04-rotulacao" class="quarto-xref">Figura&nbsp;<span>4.12</span></a>.</p>
 <p><strong>Algoritmo (<em>flood-fill</em> com pilha):</strong></p>
 <ol type="1">
 <li>Criar a imagem de saída <span class="math inline">\(g\)</span> inicializada com zeros, de mesma dimensão que <span class="math inline">\(f\)</span>.</li>
@@ -2236,7 +2236,7 @@ D(x,y) = \min_{(x',y') \,:\, f(x',y')=0} \; d\bigl((x,y),\,(x',y')\bigr)
 <span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> np.array_equal(f, g): <span class="cf">break</span></span>
 <span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> g</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <p><code>dist1</code> é funcionalmente equivalente à TD na métrica induzida por <code>b</code>: com o elemento cruz (<code>secross</code>), a métrica resultante é a <strong><em>Manhattan</em></strong> (<span class="math inline">\(L_1\)</span>); com o quadrado (<code>sebox</code>), aproxima-se da distância de <strong><em>Chebyshev</em></strong> (<span class="math inline">\(L_\infty\)</span>). Por ser iterativa com varredura completa a cada passo, <code>dist1</code> é impraticável em imagens grandes — seu uso é restrito a fins didáticos e verificação em imagens pequenas.</p>
-<p>A <a href="#fig-04-distancia" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-04-distancia</span></a> apresenta um simulador interativo da TD: dado um pixel do objeto, é possível mover o cursor sobre a imagem binária e observar, em tempo real, o valor da TD naquela posição — isto é, a TD ao pixel de fundo mais próximo. A <a href="#fig-04-distancia-didatico" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-04-distancia-didatico</span></a> apresenta um exemplo prático em Python da TD.</p>
+<p>A <a href="#fig-04-distancia" class="quarto-xref">Figura&nbsp;<span>4.14</span></a> apresenta um simulador interativo da TD: dado um pixel do objeto, é possível mover o cursor sobre a imagem binária e observar, em tempo real, o valor da TD naquela posição — isto é, a TD ao pixel de fundo mais próximo. A <a href="#fig-04-distancia-didatico" class="quarto-xref">Figura&nbsp;<span>4.15</span></a> apresenta um exemplo prático em Python da TD.</p>
 <p><strong>Exemplo didático — TD iterativa vs.&nbsp;direta em imagem 10×10:</strong></p>
 <div id="cell-fig-04-distancia" class="cell">
 <div id="fig-04-distancia" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="16">
@@ -2890,7 +2890,7 @@ Figura&nbsp;4.15: Transformada de Distância em imagem binária 10×10. Esquerda
 <span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> np.array((w<span class="op">-</span>cv2.erode(w.astype(<span class="st">'uint16'</span>),mm.sebox()))<span class="op">&gt;</span><span class="dv">0</span>,dtype<span class="op">=</span><span class="st">'uint16'</span>)</span>
 <span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> w</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <p>A função <code>watershed0</code> ilustra o princípio da colisão de bacias propagando rótulos puramente por proximidade espacial (uma aproximação plana semelhante a um Diagrama de Voronoi). Já o <code>cv2.watershed</code> implementa o verdadeiro modelo topográfico: ele inunda a imagem respeitando os valores de intensidade/gradiente dos pixels, garantindo que as linhas de fronteira se formem exatamente sobre as cristas do relevo.</p>
-<p>O <em>pipeline</em> morfológico típico do <em>watershed</em> baseado em marcadores segue as etapas resumidas na <a href="#tbl-04-watershed-pipeline" class="quarto-xref">Tabela&nbsp;<span class="quarto-unresolved-ref">tbl-04-watershed-pipeline</span></a>.</p>
+<p>O <em>pipeline</em> morfológico típico do <em>watershed</em> baseado em marcadores segue as etapas resumidas na <a href="#tbl-04-watershed-pipeline" class="quarto-xref">Tabela&nbsp;<span>4.4</span></a>.</p>
 <div id="tbl-04-watershed-pipeline" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-04-watershed-pipeline-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -2946,7 +2946,7 @@ Tabela&nbsp;4.4: Pipeline morfológico típico do <em>watershed</em> baseado em 
 </div>
 </figure>
 </div>
-<p>A <a href="#fig-04-watershed" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-04-watershed</span></a> apresenta um simulador iterativo que ilustra essa dinâmica: os marcadores comportam-se como fontes de inundação que se expandem progressivamente pela máscara correspondente à região incerta. Quando duas bacias tentam ocupar simultaneamente o mesmo pixel, esse ponto passa a ser classificado como fronteira (<code>-1</code>). A <a href="#fig-04-watershed-didatico" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-04-watershed-didatico</span></a> apresenta um exemplo completo do algoritmo <em>watershed</em> em Python utilizando <code>morph.py</code>, enquanto a <a href="#fig-04-watershed-moedas" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-04-watershed-moedas</span></a> ilustra sua aplicação na separação de moedas adjacentes em uma imagem binária.</p>
+<p>A <a href="#fig-04-watershed" class="quarto-xref">Figura&nbsp;<span>4.16</span></a> apresenta um simulador iterativo que ilustra essa dinâmica: os marcadores comportam-se como fontes de inundação que se expandem progressivamente pela máscara correspondente à região incerta. Quando duas bacias tentam ocupar simultaneamente o mesmo pixel, esse ponto passa a ser classificado como fronteira (<code>-1</code>). A <a href="#fig-04-watershed-didatico" class="quarto-xref">Figura&nbsp;<span>4.17</span></a> apresenta um exemplo completo do algoritmo <em>watershed</em> em Python utilizando <code>morph.py</code>, enquanto a <a href="#fig-04-watershed-moedas" class="quarto-xref">Figura&nbsp;<span>4.18</span></a> ilustra sua aplicação na separação de moedas adjacentes em uma imagem binária.</p>
 <div id="cell-fig-04-watershed" class="cell">
 <div id="fig-04-watershed" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="18">
 <figure class="quarto-float quarto-float-fig figure">
@@ -3614,7 +3614,7 @@ Figura&nbsp;4.18: Pipeline Watershed para separação de moedas sobrepostas: da 
 </table>
 <section id="connectedcomponentswithstats" class="level3" data-number="4.5.1">
 <h3 data-number="4.5.1" class="anchored" data-anchor-id="connectedcomponentswithstats"><span class="header-section-number">4.5.1</span> connectedComponentsWithStats</h3>
-<p>A <a href="#fig-04-componentes" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-04-componentes</span></a> demonstra a extração na imagem de moedas.</p>
+<p>A <a href="#fig-04-componentes" class="quarto-xref">Figura&nbsp;<span>4.19</span></a> demonstra a extração na imagem de moedas.</p>
 <div id="cell-fig-04-componentes" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Rotulagem e estatísticas</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>n, labels, stats, centroids <span class="op">=</span> cv2.connectedComponentsWithStats(</span>
@@ -3692,7 +3692,7 @@ Figura&nbsp;4.19: Componentes conexos extraídos após o pipeline CLAHE → Otsu
 </li>
 <li><strong>Hierarquia</strong> — relação pai/filho entre contornos (objeto com buraco interno)</li>
 </ul>
-<p>A <a href="#fig-04-contornos" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-04-contornos</span></a> exibe os mesmos objetos com circularidade anotada.</p>
+<p>A <a href="#fig-04-contornos" class="quarto-xref">Figura&nbsp;<span>4.20</span></a> exibe os mesmos objetos com circularidade anotada.</p>
 <div id="cell-fig-04-contornos" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>contornos, hierarquia <span class="op">=</span> cv2.findContours(</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    img_final, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE</span>
@@ -3762,8 +3762,8 @@ Figura&nbsp;4.20: Contornos extraídos com findContours. Cada moeda é anotada c
 <section id="conexão-com-detecção-de-objetos-moderna" class="level3" data-number="4.5.3">
 <h3 data-number="4.5.3" class="anchored" data-anchor-id="conexão-com-detecção-de-objetos-moderna"><span class="header-section-number">4.5.3</span> Conexão com Detecção de Objetos Moderna</h3>
 <p>Os descritores extraídos acima — <strong><em>bounding box</em></strong>, <strong>centróide</strong>, <strong>área</strong> e <strong>circularidade</strong> — constituem a ponte entre a segmentação morfológica clássica e os modelos modernos de detecção de objetos.</p>
-<p>Detectores baseados em aprendizado profundo, como a família <strong>YOLO</strong> (<em>You Only Look Once</em>) <span class="citation" data-cites="redmon2016you">(<a href="#ref-redmon2016you" role="doc-biblioref">Redmon et al., 2016</a>)</span>, operam diretamente sobre imagens coloridas e produzem, para cada objeto detectado, uma <strong>caixa delimitadora</strong> (<em>bounding box</em>) com coordenadas <span class="math inline">\((x, y, w, h)\)</span> e uma <strong>pontuação de confiança</strong> — a mesma representação gerada por <code>connectedComponentsWithStats</code>. A diferença fundamental é que o YOLO aprende a detectar e classificar objetos simultaneamente, sem etapa de segmentação prévia, generalizando para categorias arbitrárias a partir de dados anotados.</p>
-<p>A <a href="#fig-04-bbox" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-04-bbox</span></a> ilustra como as <em>bounding boxes</em> obtidas por morfologia podem ser exportadas no formato YOLO para treinar ou avaliar um detector:</p>
+<p>Detectores baseados em aprendizado profundo, como a família <strong>YOLO</strong> (<em>You Only Look Once</em>) <span class="citation" data-cites="redmon2016you">(<a href="../referencias.html#ref-redmon2016you" role="doc-biblioref">Redmon et al., 2016</a>)</span>, operam diretamente sobre imagens coloridas e produzem, para cada objeto detectado, uma <strong>caixa delimitadora</strong> (<em>bounding box</em>) com coordenadas <span class="math inline">\((x, y, w, h)\)</span> e uma <strong>pontuação de confiança</strong> — a mesma representação gerada por <code>connectedComponentsWithStats</code>. A diferença fundamental é que o YOLO aprende a detectar e classificar objetos simultaneamente, sem etapa de segmentação prévia, generalizando para categorias arbitrárias a partir de dados anotados.</p>
+<p>A <a href="#fig-04-bbox" class="quarto-xref">Figura&nbsp;<span>4.21</span></a> ilustra como as <em>bounding boxes</em> obtidas por morfologia podem ser exportadas no formato YOLO para treinar ou avaliar um detector:</p>
 <div id="cell-fig-04-bbox" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>H_img, W_img <span class="op">=</span> img_coins_gray.shape</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>img_bbox <span class="op">=</span> cv2.cvtColor(img_coins_gray, cv2.COLOR_GRAY2BGR)</span>
@@ -3843,7 +3843,7 @@ Figura&nbsp;4.21: <em>Bounding boxes</em> derivadas dos componentes conexos sobr
 J = \sum_{i=1}^{k}\sum_{x \in C_i} \|x - \mu_i\|^2
 \tag{4.14}\]</span></span></p>
 <p>O algoritmo itera entre dois passos até que os centróides variem muito pouco ou seja atingido o número máximo de iterações: <strong>(1) atribuição</strong> — cada pixel ao centróide mais próximo; <strong>(2) atualização</strong> — cada centróide recalculado como média dos pixels atribuídos. A escolha de <span class="math inline">\(k\)</span> é auxiliada pelo <strong>método do cotovelo</strong>: plota-se <span class="math inline">\(J\)</span> em função de <span class="math inline">\(k\)</span> e identifica-se o ponto de inflexão (cotovelo), a partir do qual o aumento de <span class="math inline">\(k\)</span> traz reduções apenas marginais na inércia, evitando o sobreajuste (<em>overfitting</em>).</p>
-<p>A <a href="#fig-04-kmeans-cotovelo" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-04-kmeans-cotovelo</span></a> mostra o método do cotovelo e a <a href="#fig-04-kmeans" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-04-kmeans</span></a> a segmentação resultante:</p>
+<p>A <a href="#fig-04-kmeans-cotovelo" class="quarto-xref">Figura&nbsp;<span>4.22</span></a> mostra o método do cotovelo e a <a href="#fig-04-kmeans" class="quarto-xref">Figura&nbsp;<span>4.23</span></a> a segmentação resultante:</p>
 <div id="cell-fig-04-kmeans-cotovelo" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>pixels   <span class="op">=</span> img_coins_gray.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>).astype(np.float32)</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>inercias <span class="op">=</span> []</span>
@@ -3970,11 +3970,11 @@ Figura&nbsp;4.23: Segmentação * da imagem das moedas com k=2, 4 e 6 clusters. 
 <h2 class="unnumbered anchored" data-anchor-id="referências-do-capítulo">Referências do Capítulo</h2>
 <p>A fundamentação teórica deste capítulo baseia-se nas seguintes obras:</p>
 <ul>
-<li><span class="citation" data-cites="gonzalez2018digital">Gonzalez; Woods (<a href="#ref-gonzalez2018digital" role="doc-biblioref">2018</a>)</span> para os conceitos de segmentação, limiarização de Otsu, morfologia matemática e descritores de forma.</li>
-<li><span class="citation" data-cites="matheron1975random">Matheron (<a href="#ref-matheron1975random" role="doc-biblioref">1975</a>)</span> e <span class="citation" data-cites="serra1982image">Serra (<a href="#ref-serra1982image" role="doc-biblioref">1982</a>)</span> para a fundamentação teórica original, formulação algébrica e desenvolvimento da Morfologia Matemática.</li>
-<li><span class="citation" data-cites="szeliski2022">Szeliski (<a href="#ref-szeliski2022" role="doc-biblioref">2022</a>)</span> para <em>watershed</em>, <em>k-means</em> aplicado a imagens e avaliação quantitativa com a métrica IoU.</li>
-<li><span class="citation" data-cites="bradski2008learning">Bradski; Kaehler (<a href="#ref-bradski2008learning" role="doc-biblioref">2008</a>)</span> para a implementação prática com a biblioteca OpenCV (<code>cv2.watershed</code>, <code>cv2.connectedComponentsWithStats</code>) e o pacote didático <code>morph.py</code>.</li>
-<li><span class="citation" data-cites="redmon2016you">Redmon et al. (<a href="#ref-redmon2016you" role="doc-biblioref">2016</a>)</span> para a introdução ao formato de anotação YOLO e sua conexão com os descritores de <em>bounding box</em> extraídos por morfologia.</li>
+<li><span class="citation" data-cites="gonzalez2018digital">Gonzalez; Woods (<a href="../referencias.html#ref-gonzalez2018digital" role="doc-biblioref">2018</a>)</span> para os conceitos de segmentação, limiarização de Otsu, morfologia matemática e descritores de forma.</li>
+<li><span class="citation" data-cites="matheron1975random">Matheron (<a href="../referencias.html#ref-matheron1975random" role="doc-biblioref">1975</a>)</span> e <span class="citation" data-cites="serra1982image">Serra (<a href="../referencias.html#ref-serra1982image" role="doc-biblioref">1982</a>)</span> para a fundamentação teórica original, formulação algébrica e desenvolvimento da Morfologia Matemática.</li>
+<li><span class="citation" data-cites="szeliski2022">Szeliski (<a href="../referencias.html#ref-szeliski2022" role="doc-biblioref">2022</a>)</span> para <em>watershed</em>, <em>k-means</em> aplicado a imagens e avaliação quantitativa com a métrica IoU.</li>
+<li><span class="citation" data-cites="bradski2008learning">Bradski; Kaehler (<a href="../referencias.html#ref-bradski2008learning" role="doc-biblioref">2008</a>)</span> para a implementação prática com a biblioteca OpenCV (<code>cv2.watershed</code>, <code>cv2.connectedComponentsWithStats</code>) e o pacote didático <code>morph.py</code>.</li>
+<li><span class="citation" data-cites="redmon2016you">Redmon et al. (<a href="../referencias.html#ref-redmon2016you" role="doc-biblioref">2016</a>)</span> para a introdução ao formato de anotação YOLO e sua conexão com os descritores de <em>bounding box</em> extraídos por morfologia.</li>
 </ul>
 <hr>
 <p><a href="https://colab.research.google.com/github/fzampirolli/pdi-vc/blob/master/notebooks_alunos/cap04/cap04.EPs_aluno.ipynb"><img src="imagens/colab-badge.png" class="img-fluid" style="width:16.0%"></a> <a href="https://github.com/fzampirolli/pdi-vc"><img src="imagens/github-badge.png" class="img-fluid" style="width:20.0%"></a></p>
@@ -3988,7 +3988,7 @@ Figura&nbsp;4.23: Segmentação * da imagem das moedas com k=2, 4 e 6 clusters. 
 <section id="download" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="download">Download</h4>
 <p>Baixe <code>morph.py</code> e <code>testsuite.py</code> executando a célula abaixo:</p>
-<div id="b5c94e2e" class="cell">
+<div id="6f52ce3f" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os, sys, importlib, inspect, urllib.request</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="co"># URLs do repositório</span></span>
@@ -4265,7 +4265,7 @@ Figura&nbsp;4.24: Simulador: Distâncias Euclidiana, <em>City-block</em> e <em>C
 </figure>
 </div>
 </div>
-<div id="0d9590cd" class="cell">
+<div id="f321c9df" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile EP02_01.py</span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Código Python</span></span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>x1,y1,x2,y2 <span class="op">=</span> <span class="bu">int</span>(<span class="bu">input</span>()), <span class="bu">int</span>(<span class="bu">input</span>()), <span class="bu">int</span>(<span class="bu">input</span>()), <span class="bu">int</span>(<span class="bu">input</span>())</span>
@@ -4290,17 +4290,17 @@ Figura&nbsp;4.24: Simulador: Distâncias Euclidiana, <em>City-block</em> e <em>C
 <pre><code>Writing EP02_01.py</code></pre>
 </div>
 </div>
-<div id="56343951" class="cell">
+<div id="18018c9a" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>np.set_printoptions(linewidth<span class="op">=</span><span class="dv">100</span>, edgeitems<span class="op">=</span><span class="dv">3</span>, threshold<span class="op">=</span><span class="dv">1000</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="91aed8b7" class="cell">
+<div id="5e15fcd2" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Substitui emoji Unicode literal ✅ por comando"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Substitui emoji Unicode literal ✅ por comando</code></pre>
 </div>
 </div>
-<div id="402fe13c" class="cell">
+<div id="5f138f4f" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mm.drawImg(np.zeros((<span class="dv">5</span>, <span class="dv">5</span>))))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -4312,7 +4312,7 @@ Figura&nbsp;4.24: Simulador: Distâncias Euclidiana, <em>City-block</em> e <em>C
 </code></pre>
 </div>
 </div>
-<div id="d1a26563" class="cell">
+<div id="e5147826" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>TestSuite(<span class="st">"EP02_01.py"</span>).run()</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">✔️ EP02_01.cases já existe em casos/
@@ -4423,7 +4423,7 @@ Figura&nbsp;4.24: Simulador: Distâncias Euclidiana, <em>City-block</em> e <em>C
 </div>
 
 
-<div id="refs" class="references csl-bib-body" data-entry-spacing="1" role="list">
+<div id="refs" class="references csl-bib-body" data-entry-spacing="1" role="list" style="display: none">
 <div id="ref-bradski2008learning" class="csl-entry" role="listitem">
 BRADSKI, Gary; KAEHLER, Adrian. <strong>Learning OpenCV: Computer vision with the OpenCV library</strong>. <em>[S.l.]</em>: " O’Reilly Media, Inc.", 2008.
 </div>
