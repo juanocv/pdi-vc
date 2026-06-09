@@ -261,16 +261,15 @@ python dev.py --once --langs py --locales pt,en,de --render html
 
 ## 🔄 Git Workflow (Para Co-autores)
 
-**Importante:** Nunca trabalhe diretamente na pasta `si-md1`. Todo o desenvolvimento ocorre em `si-md2`.
+**Importante:** Nunca trabalhe diretamente na pasta `pdi-vc`. Todo o desenvolvimento ocorre em `si-md2`.
 
-1. **Início:** `git pull origin main`
+1. **Início:** 
 
 ```bash
-# Desfaz todas as alterações locais em arquivos rastreados
-git reset --hard HEAD
-
-# Agora o pull vai rodar perfeitamente
-git pull origin master
+# Para deixar o repositório exatamente igual ao GitHub, faça:
+git fetch origin
+git reset --hard origin/master
+git clean -fd
 ```
 
 2. **Desenvolvimento:** Edite os arquivos `.ipynb` ou `.qmd`.
