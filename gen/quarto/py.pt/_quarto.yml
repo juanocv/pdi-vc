@@ -2,7 +2,7 @@
 
 project:
   type: book
-  output-dir: "/home/fz/VSCode/pdi-vc/gen/book/py.pt"
+  output-dir: "/home/fz/fz/VSCode/pdi-vc/gen/book/py.pt"
 
 book:
   title: "Processamento Digital de Imagens e Visão Computacional"
@@ -21,19 +21,15 @@ book:
     - prefacio.qmd
     - part: "Parte I — Fundamentos de PDI"
       chapters:
-        - cap01/cap01.py.pt.ipynb
-        - cap02/cap02.py.pt.ipynb
         - cap03/cap03.py.pt.ipynb
-        - cap04/cap04.py.pt.ipynb
-        - cap05/cap05.py.pt.ipynb
     - referencias.qmd
 
 
-bibliography: "/home/fz/VSCode/pdi-vc/references.bib"
-csl: "/home/fz/VSCode/pdi-vc/includes/abnt.csl"
+bibliography: "/home/fz/fz/VSCode/pdi-vc/references.bib"
+csl: "/home/fz/fz/VSCode/pdi-vc/includes/abnt.csl"
 
 filters:
-  - "/home/fz/VSCode/pdi-vc/includes/emoji-filter.lua"
+  - "/home/fz/fz/VSCode/pdi-vc/includes/emoji-filter.lua"
 
 format:
   html:

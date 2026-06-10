@@ -438,9 +438,14 @@ class mm:
     # ── HISTOGRAMA / EQUALIZAÇÃO ─────────────────────────────────────────────
 
     @staticmethod
-    def hist(img):
+    def hist_old(img):
         """Histograma da imagem."""
         H = np.zeros(int(img.max()) + 1, dtype=int)
+        for v in img.flatten(): H[v] += 1
+        return H
+
+    def hist(img, B=8):
+        H = np.zeros(2**B, dtype=int)
         for v in img.flatten(): H[v] += 1
         return H
 
