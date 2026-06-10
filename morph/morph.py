@@ -583,6 +583,22 @@ class mm:
     # ── FILTROS ───────────────────────────────────────────────────
 
     @staticmethod
+    def blur0(f, N=3):
+        """Filtro de média N×N (Python pura): borda copiada."""
+        L, C = f.shape
+        r = N // 2
+        g = f.copy().astype(int)
+        for i in range(r, L-r):
+            for j in range(r, C-r):
+                g[i,j] = round(f[i-r:i+r+1, j-r:j+r+1].mean())
+        return g.astype('uint8')
+
+    @staticmethod
+    def blur(f, N=3):
+        """Filtro de média N×N via cv2: borda copiada."""
+        return cv2.blur(f, (N, N))
+
+    @staticmethod
     def laplacian0(f, B=np.array([[0,1,0],[1,-4,1],[0,1,0]], dtype=np.float32)):
         """Realce por Laplaciano (Python pura): g = clip(f - conv(f,B)), borda copiada."""
         g = f.copy().astype(int)
