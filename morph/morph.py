@@ -479,13 +479,21 @@ class mm:
         return np.array(plt.imread(buf))
 
     @staticmethod
-    def equalize(image):
+    def equalize_old(image):
         """Equalização de histograma pela CDF: s_k = (L-1) * CDF(r_k)."""
         import numpy as np
         h    = mm.hist(image)
         cdf  = np.cumsum(h / h.sum())          # CDF normalizada
         lut  = np.round(cdf * 255).astype(np.uint8)  # mapeamento para [0,255]
         return lut[image]                      # aplica LUT pixel a pixel
+
+    def equalize(image, B=8):
+        """Equalização de histograma pela CDF: s_k = (L-1) * CDF(r_k)."""
+        Lmax = 2**B
+        h = mm.hist(image, B)
+        cdf = np.cumsum(h / h.sum())
+        lut = np.round(cdf * (Lmax - 1)).astype(np.uint8)
+        return lut[image]
 
     @staticmethod
     def equalizacao(image): # old
