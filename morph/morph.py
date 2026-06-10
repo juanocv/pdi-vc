@@ -580,6 +580,37 @@ class mm:
         return np.clip(g, 0, 255).astype(np.uint8)
 
 
+    # ── FILTROS ───────────────────────────────────────────────────
+
+    @staticmethod
+    def laplacian(f):
+        """Realce por Laplaciano w4: g = clip(f - (vizinhos - 4f)), borda copiada."""
+        import numpy as np
+        L, C = f.shape
+        out = f.copy().astype(int)
+        for i in range(1, L-1):
+            for j in range(1, C-1):
+                lap = (int(f[i-1,j]) + int(f[i+1,j]) +
+                    int(f[i,j-1]) + int(f[i,j+1]) - 4*int(f[i,j]))
+                out[i,j] = max(0, min(255, int(f[i,j]) - lap))
+        return out.astype('uint8')
+
+    @staticmethod
+    def sobel(f):
+        """Magnitude do gradiente de Sobel: clip(round(sqrt(Gx²+Gy²))), borda zero."""
+        import numpy as np
+        L, C = f.shape
+        out = np.zeros((L, C), dtype='uint8')
+        for i in range(1, L-1):
+            for j in range(1, C-1):
+                gx = (int(f[i-1,j+1]) + 2*int(f[i,j+1]) + int(f[i+1,j+1])) - \
+                    (int(f[i-1,j-1]) + 2*int(f[i,j-1]) + int(f[i+1,j-1]))
+                gy = (int(f[i+1,j-1]) + 2*int(f[i+1,j]) + int(f[i+1,j+1])) - \
+                    (int(f[i-1,j-1]) + 2*int(f[i-1,j]) + int(f[i-1,j+1]))
+                out[i,j] = max(0, min(255, round((gx**2 + gy**2)**0.5)))
+        return out
+
+
     # ── EROSÃO / DILATAÇÃO ───────────────────────────────────────────────────
 
     @staticmethod
