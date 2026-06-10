@@ -610,14 +610,14 @@ class mm:
         Bx = np.array([[-1,0,1],[-2,0,2],[-1,0,1]], dtype=np.float32)
         By = np.array([[-1,-2,-1],[0,0,0],[1,2,1]], dtype=np.float32)
         g = np.zeros(f.shape, dtype='uint8')
-        for y in range(f.shape[0]):
-            for x in range(f.shape[1]):
-                vx = list(mm._viz(f, Bx, y, x))
-                vy = list(mm._viz(f, By, y, x))
-                if len(vx) == Bx.size:  # só pixels totalmente internos
-                    gx = sum(int(f[vy_,vx_]) * bv for vy_,vx_,bv in vx)
-                    gy = sum(int(f[vy_,vx_]) * bv for vy_,vx_,bv in vy)
-                    g[y,x] = max(0, min(255, round((gx**2 + gy**2)**0.5)))
+        H, W = f.shape
+        for y in range(1, H-1):
+            for x in range(1, W-1):
+                gx = sum(float(f[y+dy, x+dx]) * Bx[dy+1, dx+1]
+                        for dy in [-1,0,1] for dx in [-1,0,1])
+                gy = sum(float(f[y+dy, x+dx]) * By[dy+1, dx+1]
+                        for dy in [-1,0,1] for dx in [-1,0,1])
+                g[y,x] = max(0, min(255, round((gx**2 + gy**2)**0.5)))
         return g
 
     @staticmethod
