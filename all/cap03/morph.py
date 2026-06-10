@@ -628,13 +628,13 @@ class mm:
         return np.clip(np.round(np.sqrt(gx**2 + gy**2)), 0, 255).astype('uint8')
 
     @staticmethod
-    def median0(f, B=np.zeros((3,3), dtype='uint8'), border='copy'):
-        """border: 'copy' (padrão) ou 'zero'."""
-        g = f.copy() if border == 'copy' else np.zeros_like(f)
+    def median0(f, B=np.zeros((3,3), dtype='uint8')):
+        """Filtro da mediana (Python pura): borda copiada, tamanho configurável."""
+        g = f.copy()
         for y in range(f.shape[0]):
             for x in range(f.shape[1]):
                 viz = list(mm._viz(f, B, y, x))
-                if len(viz) == B.size:
+                if len(viz) == B.size:  # só pixels totalmente internos
                     vals = sorted(int(f[vy,vx]) for vy,vx,_ in viz)
                     g[y,x] = vals[len(vals) // 2]
         return g.astype('uint8')
