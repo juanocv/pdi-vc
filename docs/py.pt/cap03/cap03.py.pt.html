@@ -772,51 +772,49 @@ Tabela&nbsp;3.1: Algoritmo de equalização de histograma.
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>L <span class="op">=</span> <span class="dv">8</span>  <span class="co"># 3 bits: níveis 0..7</span></span>
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Histograma com tamanho garantido até L</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>h_raw <span class="op">=</span> mm.hist(img5)</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>h <span class="op">=</span> np.zeros(L, dtype<span class="op">=</span><span class="bu">int</span>)</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>h[:<span class="bu">len</span>(h_raw)] <span class="op">=</span> h_raw  <span class="co"># h[k] = nº pixels com intensidade k</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>h <span class="op">=</span> mm.hist(img5, <span class="dv">3</span>)  <span class="co"># B=3 → 2³=8 níveis, tamanho garantido</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>p   <span class="op">=</span> h <span class="op">/</span> h.<span class="bu">sum</span>()  <span class="co"># 2. Probabilidade de cada nível p[k] = h[k] / MN</span></span>
 <span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>p   <span class="op">=</span> h <span class="op">/</span> h.<span class="bu">sum</span>()  <span class="co"># 2. Probabilidade de cada nível p[k] = h[k] / MN</span></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>cdf <span class="op">=</span> np.cumsum(p) <span class="co"># 3. CDF normalizada ou</span></span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="co"># cdf = np.zeros(len(p))</span></span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="co"># cdf[0] = p[0]</span></span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="co"># for k in range(1, len(p)):</span></span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="co">#     cdf[k] = cdf[k-1] + p[k] # cdf[k] = Σ p[j], j=0..k</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>cdf <span class="op">=</span> np.cumsum(p) <span class="co"># 3. CDF normalizada ou</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co"># cdf = np.zeros(len(p))</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="co"># cdf[0] = p[0]</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="co"># for k in range(1, len(p)):</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="co">#     cdf[k] = cdf[k-1] + p[k] # cdf[k] = Σ p[j], j=0..k</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>lut <span class="op">=</span> np.<span class="bu">round</span>(cdf <span class="op">*</span> (L <span class="op">-</span> <span class="dv">1</span>)).astype(np.uint8)  <span class="co"># 4. LUT: mapeamento para [0, L-1]</span></span>
 <span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>lut <span class="op">=</span> np.<span class="bu">round</span>(cdf <span class="op">*</span> (L <span class="op">-</span> <span class="dv">1</span>)).astype(np.uint8)  <span class="co"># 4. LUT: mapeamento para [0, L-1]</span></span>
-<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>img5_eq <span class="op">=</span> lut[img5] <span class="co"># 5. Aplica LUT pixel a pixel ou, equivalente a:</span></span>
-<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a><span class="co"># l, c = img5.shape</span></span>
-<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a><span class="co"># img5_eq = np.zeros((l, c), dtype=np.uint8)</span></span>
-<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a><span class="co"># for i in range(l):</span></span>
-<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a><span class="co">#     for j in range(c):</span></span>
-<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a><span class="co">#         img5_eq[i, j] = lut[img5[i, j]]      # g[i,j] = lut[f[i,j]]</span></span>
-<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Imagem original (5×5, 3 bits):"</span>)</span>
-<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(img5)</span>
-<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
-<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>header <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span><span class="st">'k'</span><span class="sc">:&gt;3}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'h[k]'</span><span class="sc">:&gt;6}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'p[k]'</span><span class="sc">:&gt;7}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'CDF[k]'</span><span class="sc">:&gt;8}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'lut[k]'</span><span class="sc">:&gt;7}</span><span class="ss">"</span></span>
-<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(header)</span>
-<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"-"</span> <span class="op">*</span> <span class="bu">len</span>(header))</span>
-<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(L):</span>
-<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>k<span class="sc">:&gt;3}</span><span class="ss"> </span><span class="sc">{</span>h[k]<span class="sc">:&gt;6}</span><span class="ss"> </span><span class="sc">{</span>p[k]<span class="sc">:&gt;7.4f}</span><span class="ss"> </span><span class="sc">{</span>cdf[k]<span class="sc">:&gt;8.4f}</span><span class="ss"> </span><span class="sc">{</span>lut[k]<span class="sc">:&gt;7}</span><span class="ss">"</span>)</span>
-<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
-<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Imagem equalizada (5×5):"</span>)</span>
-<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(img5_eq)</span>
-<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-42"><a href="#cb13-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Conta tons distintos</span></span>
-<span id="cb13-43"><a href="#cb13-43" aria-hidden="true" tabindex="-1"></a>tons_orig <span class="op">=</span> <span class="bu">len</span>(np.unique(img5))</span>
-<span id="cb13-44"><a href="#cb13-44" aria-hidden="true" tabindex="-1"></a>tons_eq   <span class="op">=</span> <span class="bu">len</span>(np.unique(img5_eq))</span>
-<span id="cb13-45"><a href="#cb13-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-46"><a href="#cb13-46" aria-hidden="true" tabindex="-1"></a>mm.show(</span>
-<span id="cb13-47"><a href="#cb13-47" aria-hidden="true" tabindex="-1"></a>    [img5, img5_eq, mm.histImg(img5, L<span class="op">-</span><span class="dv">1</span>), mm.histImg(img5_eq, L<span class="op">-</span><span class="dv">1</span>)],</span>
-<span id="cb13-48"><a href="#cb13-48" aria-hidden="true" tabindex="-1"></a>    titles<span class="op">=</span>[<span class="ss">f"Original (</span><span class="sc">{</span>tons_orig<span class="sc">}</span><span class="ss"> tons: </span><span class="sc">{</span><span class="bu">sorted</span>(np.unique(img5).tolist())<span class="sc">}</span><span class="ss">)"</span>,</span>
-<span id="cb13-49"><a href="#cb13-49" aria-hidden="true" tabindex="-1"></a>            <span class="ss">f"Equalizada (</span><span class="sc">{</span>tons_eq<span class="sc">}</span><span class="ss"> tons: </span><span class="sc">{</span><span class="bu">sorted</span>(np.unique(img5_eq).tolist())<span class="sc">}</span><span class="ss">)"</span>,</span>
-<span id="cb13-50"><a href="#cb13-50" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Histograma — Original"</span>,</span>
-<span id="cb13-51"><a href="#cb13-51" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Histograma — Equalizada"</span>],</span>
-<span id="cb13-52"><a href="#cb13-52" aria-hidden="true" tabindex="-1"></a>    rows<span class="op">=</span><span class="dv">2</span>, cols<span class="op">=</span><span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">4</span>), dpi<span class="op">=</span><span class="dv">100</span></span>
-<span id="cb13-53"><a href="#cb13-53" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>img5_eq <span class="op">=</span> lut[img5] <span class="co"># 5. Aplica LUT pixel a pixel ou, equivalente a:</span></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a><span class="co"># l, c = img5.shape</span></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a><span class="co"># img5_eq = np.zeros((l, c), dtype=np.uint8)</span></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a><span class="co"># for i in range(l):</span></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a><span class="co">#     for j in range(c):</span></span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a><span class="co">#         img5_eq[i, j] = lut[img5[i, j]]      # g[i,j] = lut[f[i,j]]</span></span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Imagem original (5×5, 3 bits):"</span>)</span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(img5)</span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>header <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span><span class="st">'k'</span><span class="sc">:&gt;3}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'h[k]'</span><span class="sc">:&gt;6}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'p[k]'</span><span class="sc">:&gt;7}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'CDF[k]'</span><span class="sc">:&gt;8}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'lut[k]'</span><span class="sc">:&gt;7}</span><span class="ss">"</span></span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(header)</span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"-"</span> <span class="op">*</span> <span class="bu">len</span>(header))</span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(L):</span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>k<span class="sc">:&gt;3}</span><span class="ss"> </span><span class="sc">{</span>h[k]<span class="sc">:&gt;6}</span><span class="ss"> </span><span class="sc">{</span>p[k]<span class="sc">:&gt;7.4f}</span><span class="ss"> </span><span class="sc">{</span>cdf[k]<span class="sc">:&gt;8.4f}</span><span class="ss"> </span><span class="sc">{</span>lut[k]<span class="sc">:&gt;7}</span><span class="ss">"</span>)</span>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
+<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Imagem equalizada (5×5):"</span>)</span>
+<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(img5_eq)</span>
+<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a><span class="co"># Conta tons distintos</span></span>
+<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a>tons_orig <span class="op">=</span> <span class="bu">len</span>(np.unique(img5))</span>
+<span id="cb13-42"><a href="#cb13-42" aria-hidden="true" tabindex="-1"></a>tons_eq   <span class="op">=</span> <span class="bu">len</span>(np.unique(img5_eq))</span>
+<span id="cb13-43"><a href="#cb13-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-44"><a href="#cb13-44" aria-hidden="true" tabindex="-1"></a>mm.show(</span>
+<span id="cb13-45"><a href="#cb13-45" aria-hidden="true" tabindex="-1"></a>    [img5, img5_eq, mm.histImg(img5, L<span class="op">-</span><span class="dv">1</span>), mm.histImg(img5_eq, L<span class="op">-</span><span class="dv">1</span>)],</span>
+<span id="cb13-46"><a href="#cb13-46" aria-hidden="true" tabindex="-1"></a>    titles<span class="op">=</span>[<span class="ss">f"Original (</span><span class="sc">{</span>tons_orig<span class="sc">}</span><span class="ss"> tons: </span><span class="sc">{</span><span class="bu">sorted</span>(np.unique(img5).tolist())<span class="sc">}</span><span class="ss">)"</span>,</span>
+<span id="cb13-47"><a href="#cb13-47" aria-hidden="true" tabindex="-1"></a>            <span class="ss">f"Equalizada (</span><span class="sc">{</span>tons_eq<span class="sc">}</span><span class="ss"> tons: </span><span class="sc">{</span><span class="bu">sorted</span>(np.unique(img5_eq).tolist())<span class="sc">}</span><span class="ss">)"</span>,</span>
+<span id="cb13-48"><a href="#cb13-48" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Histograma — Original"</span>,</span>
+<span id="cb13-49"><a href="#cb13-49" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Histograma — Equalizada"</span>],</span>
+<span id="cb13-50"><a href="#cb13-50" aria-hidden="true" tabindex="-1"></a>    rows<span class="op">=</span><span class="dv">2</span>, cols<span class="op">=</span><span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">4</span>), dpi<span class="op">=</span><span class="dv">100</span></span>
+<span id="cb13-51"><a href="#cb13-51" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Imagem original (5×5, 3 bits):
 [[3 4 2 3 4]
@@ -1334,9 +1332,9 @@ Kernel 3×3 de média:
 Correlação no pixel central [1,1]:       103.0  (original: 107)
 
 Tempos na imagem 1324x1242:
-  mm.conv0 (laços Python): 6.933 s
-  mm.conv  (cv2.filter2D): 0.00253 s
-  Aceleração:              2738× mais rápido
+  mm.conv0 (laços Python): 7.383 s
+  mm.conv  (cv2.filter2D): 0.00219 s
+  Aceleração:              3364× mais rápido
   Diferença máxima:        39 (bordas com padding diferente)</code></pre>
 </div>
 <div class="cell-output cell-output-display">
