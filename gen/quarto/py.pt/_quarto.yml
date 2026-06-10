@@ -21,7 +21,11 @@ book:
     - prefacio.qmd
     - part: "Parte I — Fundamentos de PDI"
       chapters:
+        - cap01/cap01.py.pt.ipynb
+        - cap02/cap02.py.pt.ipynb
         - cap03/cap03.py.pt.ipynb
+        - cap04/cap04.py.pt.ipynb
+        - cap05/cap05.py.pt.ipynb
     - referencias.qmd
 
 

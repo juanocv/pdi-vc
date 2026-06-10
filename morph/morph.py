@@ -2,11 +2,11 @@
 Morph – Operações morfológicas para Processamento de Imagens.
 Copyright 2024 Francisco de Assis Zampirolli, UFABC. License MIT.
 https://github.com/fzampirolli/morph - version 1.0
-https://github.com/fzampirolli/pdi-vc/blob/master/morph/morph.py - version 1.2 - compacto
-Last update: May 2026
+https://github.com/fzampirolli/pdi-vc/blob/master/morph/morph.py - version 1.1 - compacto
+Last update: Jun 2026
 """
 
-__version__ = "1.1.0"
+__version__ = "1.1.1"
 
 import sys, subprocess
 import numpy as np
