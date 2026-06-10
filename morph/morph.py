@@ -583,32 +583,66 @@ class mm:
     # ── FILTROS ───────────────────────────────────────────────────
 
     @staticmethod
-    def laplacian(f):
-        """Realce por Laplaciano w4: g = clip(f - (vizinhos - 4f)), borda copiada."""
-        import numpy as np
-        L, C = f.shape
-        out = f.copy().astype(int)
-        for i in range(1, L-1):
-            for j in range(1, C-1):
-                lap = (int(f[i-1,j]) + int(f[i+1,j]) +
-                    int(f[i,j-1]) + int(f[i,j+1]) - 4*int(f[i,j]))
-                out[i,j] = max(0, min(255, int(f[i,j]) - lap))
-        return out.astype('uint8')
+    def laplacian0(f, B=np.array([[0,1,0],[1,-4,1],[0,1,0]], dtype=np.float32)):
+        """Realce por Laplaciano (Python pura): g = clip(f - conv(f,B)), borda copiada."""
+        g = f.copy().astype(int)
+        for y in range(f.shape[0]):
+            for x in range(f.shape[1]):
+                viz = list(mm._viz(f, B, y, x))
+                if len(viz) == B.size:  # só pixels totalmente internos
+                    lap = sum(int(f[vy,vx]) * bv for vy,vx,bv in viz)
+                    g[y,x] = max(0, min(255, int(f[y,x]) - lap))
+        return g.astype('uint8')
+
+    @staticmethod
+    def laplacian(f, B=np.array([[0,1,0],[1,-4,1],[0,1,0]], dtype=np.float32)):
+        """Realce por Laplaciano via cv2: borda copiada."""
+        lap = cv2.filter2D(f.astype(np.float32), -1, B, borderType=cv2.BORDER_REPLICATE)
+        out = np.clip(f.astype(np.float32) - lap, 0, 255).astype('uint8')
+        r = B.shape[0] // 2
+        out[:r,:] = f[:r,:]; out[-r:,:] = f[-r:,:]
+        out[:,:r] = f[:,:r]; out[:,-r:] = f[:,-r:]
+        return out
+
+    @staticmethod
+    def sobel0(f):
+        """Magnitude do gradiente de Sobel (Python pura): borda zero."""
+        Bx = np.array([[-1,0,1],[-2,0,2],[-1,0,1]], dtype=np.float32)
+        By = np.array([[-1,-2,-1],[0,0,0],[1,2,1]], dtype=np.float32)
+        g = np.zeros(f.shape, dtype='uint8')
+        for y in range(f.shape[0]):
+            for x in range(f.shape[1]):
+                vx = list(mm._viz(f, Bx, y, x))
+                vy = list(mm._viz(f, By, y, x))
+                if len(vx) == Bx.size:  # só pixels totalmente internos
+                    gx = sum(int(f[vy_,vx_]) * bv for vy_,vx_,bv in vx)
+                    gy = sum(int(f[vy_,vx_]) * bv for vy_,vx_,bv in vy)
+                    g[y,x] = max(0, min(255, round((gx**2 + gy**2)**0.5)))
+        return g
 
     @staticmethod
     def sobel(f):
-        """Magnitude do gradiente de Sobel: clip(round(sqrt(Gx²+Gy²))), borda zero."""
-        import numpy as np
-        L, C = f.shape
-        out = np.zeros((L, C), dtype='uint8')
-        for i in range(1, L-1):
-            for j in range(1, C-1):
-                gx = (int(f[i-1,j+1]) + 2*int(f[i,j+1]) + int(f[i+1,j+1])) - \
-                    (int(f[i-1,j-1]) + 2*int(f[i,j-1]) + int(f[i+1,j-1]))
-                gy = (int(f[i+1,j-1]) + 2*int(f[i+1,j]) + int(f[i+1,j+1])) - \
-                    (int(f[i-1,j-1]) + 2*int(f[i-1,j]) + int(f[i-1,j+1]))
-                out[i,j] = max(0, min(255, round((gx**2 + gy**2)**0.5)))
-        return out
+        """Magnitude do gradiente de Sobel via cv2: borda zero."""
+        gx = cv2.Sobel(f, cv2.CV_32F, 1, 0, ksize=3, borderType=cv2.BORDER_ISOLATED)
+        gy = cv2.Sobel(f, cv2.CV_32F, 0, 1, ksize=3, borderType=cv2.BORDER_ISOLATED)
+        return np.clip(np.round(np.sqrt(gx**2 + gy**2)), 0, 255).astype('uint8')
+
+    @staticmethod
+    def median0(f, B=np.zeros((3,3), dtype='uint8')):
+        """Filtro da mediana (Python pura): borda copiada, tamanho configurável."""
+        g = f.copy()
+        for y in range(f.shape[0]):
+            for x in range(f.shape[1]):
+                viz = list(mm._viz(f, B, y, x))
+                if len(viz) == B.size:  # só pixels totalmente internos
+                    vals = sorted(int(f[vy,vx]) for vy,vx,_ in viz)
+                    g[y,x] = vals[len(vals) // 2]
+        return g.astype('uint8')
+
+    @staticmethod
+    def median(f, ksize=3):
+        """Filtro da mediana via cv2: tamanho configurável (ímpar)."""
+        return cv2.medianBlur(f, ksize)
 
 
     # ── EROSÃO / DILATAÇÃO ───────────────────────────────────────────────────
