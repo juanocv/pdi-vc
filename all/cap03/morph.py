@@ -610,14 +610,14 @@ class mm:
         Bx = np.array([[-1,0,1],[-2,0,2],[-1,0,1]], dtype=np.float32)
         By = np.array([[-1,-2,-1],[0,0,0],[1,2,1]], dtype=np.float32)
         g = np.zeros(f.shape, dtype='uint8')
-        H, W = f.shape
-        for y in range(1, H-1):
-            for x in range(1, W-1):
-                gx = sum(float(f[y+dy, x+dx]) * Bx[dy+1, dx+1]
-                        for dy in [-1,0,1] for dx in [-1,0,1])
-                gy = sum(float(f[y+dy, x+dx]) * By[dy+1, dx+1]
-                        for dy in [-1,0,1] for dx in [-1,0,1])
-                g[y,x] = max(0, min(255, round((gx**2 + gy**2)**0.5)))
+        for y in range(f.shape[0]):
+            for x in range(f.shape[1]):
+                vx = list(mm._viz(f, Bx, y, x))
+                vy = list(mm._viz(f, By, y, x))
+                if len(vx) == Bx.size:  # só pixels totalmente internos
+                    gx = sum(int(f[vy_,vx_]) * bv for vy_,vx_,bv in vx)
+                    gy = sum(int(f[vy_,vx_]) * bv for vy_,vx_,bv in vy)
+                    g[y,x] = max(0, min(255, round((gx**2 + gy**2)**0.5)))
         return g
 
     @staticmethod
@@ -643,32 +643,6 @@ class mm:
     def median(f, ksize=3):
         """Filtro da mediana via cv2: tamanho configurável (ímpar)."""
         return cv2.medianBlur(f, ksize)
-
-
-    @staticmethod
-    def usm0(f, k=1.0):
-        """Unsharp Masking (Python pura): g = clip(round(f + k*(f - mean3x3))), borda copiada."""
-        L, C = f.shape
-        fbar = f.copy().astype(float)
-        for i in range(1, L-1):
-            for j in range(1, C-1):
-                fbar[i,j] = f[i-1:i+2, j-1:j+2].mean()
-        m = f.astype(float) - fbar
-        g = f.copy().astype(float)
-        for i in range(1, L-1):
-            for j in range(1, C-1):
-                g[i,j] = max(0, min(255, round(float(f[i,j]) + k * m[i,j])))
-        return g.astype('uint8')
-
-    @staticmethod
-    def usm(f, k=1.0):
-        """Unsharp Masking via cv2: g = clip(round(f + k*(f - mean3x3))), borda copiada."""
-        fbar = cv2.blur(f, (3,3))
-        m = f.astype(np.float32) - fbar.astype(np.float32)
-        g = np.clip(np.round(f.astype(np.float32) + k * m), 0, 255).astype('uint8')
-        g[:1,:] = f[:1,:]; g[-1:,:] = f[-1:,:]
-        g[:,:1] = f[:,:1]; g[:,-1:] = f[:,-1:]
-        return g
 
 
     # ── EROSÃO / DILATAÇÃO ───────────────────────────────────────────────────
