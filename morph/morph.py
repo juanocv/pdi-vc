@@ -706,7 +706,7 @@ class mm:
     def prewitt(f,
                 Bx=np.array([[-1,0,1],[-1,0,1],[-1,0,1]], dtype=np.float32),
                 By=np.array([[-1,-1,-1],[0,0,0],[1,1,1]], dtype=np.float32)):
-        """Magnitude do gradiente de Prewitt via cv2: borda zero."""
+        """Magnitude do gradiente de Prewitt via cv2: borda zero. """
         gx = cv2.filter2D(f.astype(np.float32), -1, Bx,
                         borderType=cv2.BORDER_ISOLATED)
         gy = cv2.filter2D(f.astype(np.float32), -1, By,
