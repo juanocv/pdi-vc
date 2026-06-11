@@ -960,7 +960,7 @@ def _render_pdf_with_patched_tex(qdir: Path, env: dict):
             from pypdf import PdfReader, PdfWriter
             reader = PdfReader(str(pdf_path))
             writer = PdfWriter()
-            for page in reader.pages[2:]:  # pula 2 páginas (em branco)
+            for page in reader.pages[1:]:  # pula 1 página (em branco)
                 writer.add_page(page)
             with open(str(pdf_path), 'wb') as f:
                 writer.write(f)
