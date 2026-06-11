@@ -4949,80 +4949,259 @@ Figura&nbsp;3.31: Simulador: Gradiente de Sobel: Gx e Gy
 </tbody>
 </table>
 <div id="cell-fig-03-median-simulador" class="cell">
-<div id="fig-03-median-simulador" class="cell-output cell-output-display quarto-figure quarto-figure-center quarto-float anchored" data-execution_count="26">
+<div id="fig-03-median-simulador" class="cell-output cell-output-display quarto-figure quarto-figure-center quarto-float anchored" data-execution_count="8">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-03-median-simulador-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 
-<div id="sim-ep0309" style="background-color:#fef9ef;border-radius:18px;border:1px solid #ede6d8;overflow:hidden;margin-top:20px;font-family:sans-serif;">
-  <div style="background:#f3efe6;padding:8px 16px;font-size:12px;color:#5e5a4a;border-bottom:1px solid #e9dfcf;display:flex;justify-content:space-between;align-items:center;">
-    <span>🎮 Simulador: Filtro da Mediana 3×3</span>
-    <span style="background:#e8e0cf;border-radius:40px;padding:2px 10px;font-weight:600;font-size:10px;">📡 g = mediana(vizinhança 3×3)</span>
+<style>
+.ep0309-cell{width:38px;height:38px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:500;border-radius:5px;transition:background 0.1s,transform 0.12s,box-shadow 0.1s;}
+.ep0309-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:14px;text-align:center;}
+.ep0309-label{font-size:10px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.05em;margin:0 0 3px;}
+.ep0309-sublabel{font-size:10px;margin:0 0 8px;}
+.ep0309-grid{display:grid;grid-template-columns:repeat(5,38px);gap:3px;justify-content:center;margin-top:8px;}
+.ep0309-vitem{display:inline-flex;align-items:center;justify-content:center;width:32px;height:24px;border-radius:4px;font-size:10px;font-weight:500;font-family:var(--font-mono);margin:2px;}
+</style>
+
+<div id="ep0309-sim-mediana" style="max-width:960px;margin:0 auto;padding:4px 0 16px;">
+
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap;">
+    <button id="ep0309-btn-new" style="font-size:12px;padding:6px 14px;">
+      🎲 Injetar ruído impulsivo
+    </button>
+    <span style="font-size:11px;color:var(--color-text-secondary);">Ruído sal (255) e pimenta (0) — ~30% dos pixels internos afetados</span>
   </div>
-  <div style="padding:20px;background:white;">
-    <div style="background:#fafafa;border:1px solid #ddd;border-radius:12px;padding:14px;margin-bottom:14px;">
-      <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
-        <label style="font-size:12px;font-weight:bold;color:#c62828;">Densidade de Ruído Sal&amp;Pimenta (%)</label>
-        <span id="ep0309_vl_noise" style="font-family:monospace;font-weight:bold;color:#c62828;">20%</span>
-      </div>
-      <input id="ep0309_sl_noise" style="width:100%;accent-color:#c62828;" max="50" min="0" step="5" type="range" value="20">
+
+  <!-- Grades f e g -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:12px;">
+
+    <div class="ep0309-card">
+      <p class="ep0309-label">Imagem f — com ruído</p>
+      <p class="ep0309-sublabel" style="color:var(--color-text-secondary);">sal (255) e pimenta (0) visíveis</p>
+      <div id="ep0309-grid-f" class="ep0309-grid"></div>
     </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
-      <div style="text-align:center;background:white;border:1px solid #eee;padding:12px;border-radius:12px;">
-        <p style="font-size:10px;font-weight:600;color:#888;text-transform:uppercase;margin-bottom:8px;">Imagem Limpa</p>
-        <div id="ep0309_grid_clean" style="display:grid;grid-template-columns:repeat(5,36px);gap:3px;justify-content:center;"></div>
-        <button id="ep0309_btn_new" style="margin-top:10px;font-size:11px;padding:4px 8px;border-radius:4px;border:1px solid #ccc;background:white;cursor:pointer;">🎲 Nova</button>
-      </div>
-      <div style="text-align:center;background:white;border:1px solid #eee;padding:12px;border-radius:12px;">
-        <p style="font-size:10px;font-weight:600;color:#888;text-transform:uppercase;margin-bottom:8px;">Com Ruído S&amp;P</p>
-        <div id="ep0309_grid_noisy" style="display:grid;grid-template-columns:repeat(5,36px);gap:3px;justify-content:center;"></div>
-      </div>
-      <div style="text-align:center;background:white;border:1px solid #eee;padding:12px;border-radius:12px;">
-        <p style="font-size:10px;font-weight:600;color:#888;text-transform:uppercase;margin-bottom:8px;">Após Mediana</p>
-        <div id="ep0309_grid_med" style="display:grid;grid-template-columns:repeat(5,36px);gap:3px;justify-content:center;"></div>
-      </div>
+
+    <div class="ep0309-card" style="border:2px solid #185FA5;">
+      <p class="ep0309-label" style="color:#185FA5;">Resultado g — sem ruído</p>
+      <p class="ep0309-sublabel" style="color:#185FA5;">passe o mouse para inspecionar</p>
+      <div id="ep0309-grid-result" class="ep0309-grid"></div>
     </div>
-    <div id="ep0309_debug" style="margin-top:16px;background:#ffebee;border-radius:8px;padding:10px;border:1px solid #ef9a9a;font-family:monospace;font-size:11px;color:#b71c1c;text-align:center;">Mediana remove outliers preservando bordas — ruído 20%</div>
+  </div>
+
+  <!-- Vetor ordenado -->
+  <div class="ep0309-card" style="margin-bottom:12px;">
+    <p class="ep0309-label">Vetor de vizinhança 3×3 — ordenado</p>
+    <p class="ep0309-sublabel" style="color:var(--color-text-secondary);">passe o mouse num pixel interno do resultado para ver</p>
+    <div id="ep0309-vector" style="display:flex;flex-wrap:wrap;justify-content:center;gap:2px;min-height:32px;padding:4px 0;align-items:center;">
+      <span style="font-size:11px;color:var(--color-text-secondary);font-style:italic;">—</span>
+    </div>
+  </div>
+
+  <!-- Legenda -->
+  <div style="background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:10px 14px;display:flex;gap:18px;align-items:center;flex-wrap:wrap;justify-content:center;margin-bottom:10px;">
+    <span style="font-size:11px;font-weight:500;color:var(--color-text-secondary);">Legenda</span>
+    <div style="display:flex;align-items:center;gap:6px;">
+      <div style="width:18px;height:18px;background:#FAEEDA;border:2px dashed #BA7517;border-radius:3px;"></div>
+      <span style="font-size:11px;color:var(--color-text-secondary);">Janela 3×3 capturada</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;">
+      <div style="width:18px;height:18px;background:#E6F1FB;border:1.5px solid #185FA5;border-radius:3px;"></div>
+      <span style="font-size:11px;color:var(--color-text-secondary);">Pixel central inspecionado</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;">
+      <div style="width:18px;height:18px;background:#E1F5EE;border:1.5px solid #1D9E75;border-radius:3px;"></div>
+      <span style="font-size:11px;color:var(--color-text-secondary);">Borda — copiada sem filtro</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;">
+      <div style="width:18px;height:18px;background:#E0F5EF;border:2px solid #0F6E56;border-radius:3px;"></div>
+      <span style="font-size:11px;color:var(--color-text-secondary);">Mediana (posição central)</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;">
+      <div style="width:18px;height:18px;background:#2C2C2A;border:1.5px solid #B54030;border-radius:3px;"></div>
+      <span style="font-size:11px;color:var(--color-text-secondary);">Ruído (0 ou 255) — eliminado</span>
+    </div>
+  </div>
+
+  <!-- Debug -->
+  <div id="ep0309-debug" style="background:#E6F1FB;border:0.5px solid #B5D4F4;border-radius:var(--border-radius-md);padding:10px 14px;font-family:var(--font-mono);font-size:11px;color:#0C447C;text-align:center;min-height:38px;line-height:1.7;">
+    Passe o mouse sobre um pixel interno do resultado para ver o processo de ordenação.
   </div>
 </div>
+
 <script>
-setTimeout(function(){
-  var slN=document.getElementById('ep0309_sl_noise');
-  var vlN=document.getElementById('ep0309_vl_noise');
-  var gC=document.getElementById('ep0309_grid_clean');
-  var gNo=document.getElementById('ep0309_grid_noisy');
-  var gMed=document.getElementById('ep0309_grid_med');
-  var db=document.getElementById('ep0309_debug');
-  if(!slN||!gC)return;
-  var ROWS=5,COLS=5; var clean=[];
-  function gen_0309(){clean=Array.from({length:ROWS*COLS},function(){return Math.floor(Math.random()*200)+30;});}
-  function mk_0309(v){
-    var c=document.createElement('div');
-    c.style.cssText='width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:bold;border-radius:3px;border:1px solid #eee;';
-    c.style.background='rgb('+v+','+v+','+v+')'; c.style.color=v>128?'black':'white'; c.innerText=v; return c;
+(function(){
+  const EP0309_ROWS=5,EP0309_COLS=5,EP0309_N=25,EP0309_RADIUS=1;
+  let ep0309Pixels=[],ep0309Result=[];
+
+  function ep0309Gen(){
+    ep0309Pixels=Array.from({length:EP0309_N},()=>{
+      let v=110+Math.floor(Math.random()*30);
+      const rnd=Math.random();
+      if(rnd>0.82) v=255;
+      else if(rnd<0.18) v=0;
+      return v;
+    });
+    ep0309Calc();
   }
-  function render_0309(){
-    var dens=parseInt(slN.value)/100;
-    vlN.innerText=parseInt(slN.value)+'%';
-    db.innerHTML='Mediana remove outliers preservando bordas &mdash; ruído '+parseInt(slN.value)+'%';
-    var noisy=clean.slice();
-    for(var i=0;i<ROWS*COLS;i++){if(Math.random()<dens){noisy[i]=Math.random()<0.5?0:255;}}
-    var med=noisy.slice();
-    for(var i=1;i<ROWS-1;i++){
-      for(var j=1;j<COLS-1;j++){
-        var win=[];
-        for(var s=-1;s<=1;s++){for(var t=-1;t<=1;t++){win.push(noisy[(i+s)*COLS+(j+t)]);}}
-        win.sort(function(a,b){return a-b;});
-        med[i*COLS+j]=win[4];
+
+  function ep0309Calc(){
+    ep0309Result=[...ep0309Pixels];
+    for(let r=0;r<EP0309_ROWS;r++){
+      for(let c=0;c<EP0309_COLS;c++){
+        if(r>=EP0309_RADIUS&&r<EP0309_ROWS-EP0309_RADIUS&&c>=EP0309_RADIUS&&c<EP0309_COLS-EP0309_RADIUS){
+          const win=[];
+          for(let s=-EP0309_RADIUS;s<=EP0309_RADIUS;s++)
+            for(let t=-EP0309_RADIUS;t<=EP0309_RADIUS;t++)
+              win.push(ep0309Pixels[(r+s)*EP0309_COLS+(c+t)]);
+          win.sort((a,b)=>a-b);
+          ep0309Result[r*EP0309_COLS+c]=win[4];
+        }
       }
     }
-    gC.innerHTML=''; gNo.innerHTML=''; gMed.innerHTML='';
-    for(var i=0;i<ROWS*COLS;i++){gC.appendChild(mk_0309(clean[i]));gNo.appendChild(mk_0309(noisy[i]));gMed.appendChild(mk_0309(med[i]));}
   }
-  slN.oninput=render_0309;
-  document.getElementById('ep0309_btn_new').onclick=function(){gen_0309();render_0309();};
-  gen_0309(); render_0309();
-},100);
+
+  function ep0309TC(g){return g>140?'#111':'#eee';}
+
+  function ep0309IsNoise(v){return v===0||v===255;}
+
+  function ep0309Highlight(tr,tc,on){
+    const cells=document.getElementById('ep0309-grid-f').children;
+    for(let i=0;i<EP0309_N;i++){
+      if(!cells[i]) continue;
+      const p=ep0309Pixels[i];
+      const r=Math.floor(i/EP0309_COLS),c=i%EP0309_COLS;
+      if(on&&Math.abs(r-tr)<=1&&Math.abs(c-tc)<=1){
+        if(r===tr&&c===tc){
+          cells[i].style.background='#E6F1FB';cells[i].style.color='#0C447C';cells[i].style.boxShadow='0 0 0 2px #185FA5 inset';
+        } else {
+          cells[i].style.background='#FAEEDA';cells[i].style.color='#633806';cells[i].style.boxShadow='0 0 0 2px #BA7517 inset';
+        }
+      } else {
+        cells[i].style.background=`rgb(${p},${p},${p})`;cells[i].style.color=ep0309TC(p);cells[i].style.boxShadow='none';
+      }
+    }
+  }
+
+  function ep0309ShowVector(raw,sorted,median){
+    const el=document.getElementById('ep0309-vector');
+    el.innerHTML='';
+    // raw label
+    const rawLabel=document.createElement('span');
+    rawLabel.style.cssText='font-size:10px;color:var(--color-text-secondary);margin-right:4px;';
+    rawLabel.innerText='Bruto:';
+    el.appendChild(rawLabel);
+    raw.forEach(v=>{
+      const d=document.createElement('div');d.className='ep0309-vitem';
+      const isN=ep0309IsNoise(v);
+      d.style.background=isN?'#2C2C2A':'var(--color-background-secondary)';
+      d.style.color=isN?'#E57373':'var(--color-text-primary)';
+      d.style.border=isN?'1.5px solid #B54030':'0.5px solid var(--color-border-tertiary)';
+      d.innerText=v;el.appendChild(d);
+    });
+    // arrow
+    const arr=document.createElement('span');
+    arr.style.cssText='font-size:16px;margin:0 6px;color:var(--color-text-secondary);';
+    arr.innerText='→';el.appendChild(arr);
+    // sorted label
+    const sortLabel=document.createElement('span');
+    sortLabel.style.cssText='font-size:10px;color:var(--color-text-secondary);margin-right:4px;';
+    sortLabel.innerText='Ordenado:';
+    el.appendChild(sortLabel);
+    sorted.forEach((v,i)=>{
+      const d=document.createElement('div');d.className='ep0309-vitem';
+      const isMedian=(i===4);
+      const isN=ep0309IsNoise(v);
+      if(isMedian){
+        d.style.background='#E0F5EF';d.style.color='#0A4A36';
+        d.style.border='2px solid #0F6E56';d.style.fontWeight='700';
+      } else if(isN){
+        d.style.background='#2C2C2A';d.style.color='#E57373';
+        d.style.border='1.5px solid #B54030';
+      } else {
+        d.style.background='var(--color-background-secondary)';
+        d.style.color='var(--color-text-primary)';
+        d.style.border='0.5px solid var(--color-border-tertiary)';
+      }
+      d.innerText=v;el.appendChild(d);
+    });
+    // result
+    const eq=document.createElement('span');
+    eq.style.cssText='font-size:11px;margin-left:6px;font-family:var(--font-mono);color:#0F6E56;font-weight:500;';
+    eq.innerHTML=`→ mediana = <b>${median}</b>`;
+    el.appendChild(eq);
+  }
+
+  function ep0309ResetVector(){
+    document.getElementById('ep0309-vector').innerHTML=
+      '<span style="font-size:11px;color:var(--color-text-secondary);font-style:italic;">—</span>';
+  }
+
+  function ep0309ResetDebug(){
+    document.getElementById('ep0309-debug').innerText=
+      'Passe o mouse sobre um pixel interno do resultado para ver o processo de ordenação.';
+  }
+
+  function ep0309Render(){
+    const gf=document.getElementById('ep0309-grid-f');
+    const gr=document.getElementById('ep0309-grid-result');
+    gf.innerHTML='';gr.innerHTML='';
+
+    for(let i=0;i<EP0309_N;i++){
+      const r=Math.floor(i/EP0309_COLS),c=i%EP0309_COLS;
+      const p=ep0309Pixels[i],res=ep0309Result[i];
+      const isBorder=(r<EP0309_RADIUS||r>=EP0309_ROWS-EP0309_RADIUS||c<EP0309_RADIUS||c>=EP0309_COLS-EP0309_RADIUS);
+      const isNoise=ep0309IsNoise(p);
+
+      // f
+      const cf=document.createElement('div');cf.className='ep0309-cell';
+      if(isNoise){
+        cf.style.cssText=`background:${p===255?'#fff':'#111'};color:${p===255?'#C0392B':'#E57373'};border:2px solid ${p===255?'#E74C3C':'#922B21'};font-weight:700;`;
+      } else {
+        cf.style.cssText=`background:rgb(${p},${p},${p});color:${ep0309TC(p)};border:0.5px solid rgba(128,128,128,0.15);`;
+      }
+      cf.innerText=p;gf.appendChild(cf);
+
+      // result
+      const crr=document.createElement('div');crr.className='ep0309-cell';
+      if(isBorder){
+        crr.style.cssText=`background:#E1F5EE;color:#085041;border:1.5px solid #1D9E75;`;
+        crr.onmouseenter=()=>{
+          document.getElementById('ep0309-debug').innerHTML=`Pixel borda (${r},${c}): copiado sem filtro → <b>${res}</b>`;
+          ep0309ResetVector();
+        };
+        crr.onmouseleave=()=>{ep0309ResetDebug();};
+      } else {
+        crr.style.cssText=`background:rgb(${res},${res},${res});color:${ep0309TC(res)};border:0.5px solid var(--color-border-tertiary);cursor:pointer;`;
+        const _r=r,_c=c,_p=p,_res=res;
+        crr.onmouseenter=()=>{
+          ep0309Highlight(_r,_c,true);
+          crr.style.transform='scale(1.12)';crr.style.boxShadow='0 0 0 2px #185FA5 inset';
+          crr.style.background='#E6F1FB';crr.style.color='#0C447C';
+          const raw=[];
+          for(let s=-EP0309_RADIUS;s<=EP0309_RADIUS;s++)
+            for(let t=-EP0309_RADIUS;t<=EP0309_RADIUS;t++)
+              raw.push(ep0309Pixels[(_r+s)*EP0309_COLS+(_c+t)]);
+          const sorted=[...raw].sort((a,b)=>a-b);
+          ep0309ShowVector(raw,sorted,_res);
+          const noiseCount=raw.filter(ep0309IsNoise).length;
+          document.getElementById('ep0309-debug').innerHTML=
+            `Pixel (${_r},${_c}): ${noiseCount} vizinho(s) com ruído na janela &nbsp;→&nbsp; mediana = posição [4] = <b>${_res}</b>`;
+        };
+        crr.onmouseleave=()=>{
+          ep0309Highlight(_r,_c,false);
+          crr.style.transform='scale(1)';crr.style.boxShadow='none';
+          crr.style.background=`rgb(${_res},${_res},${_res})`;crr.style.color=ep0309TC(_res);
+          ep0309ResetDebug();ep0309ResetVector();
+        };
+      }
+      crr.innerText=res;gr.appendChild(crr);
+    }
+  }
+
+  document.getElementById('ep0309-btn-new').onclick=()=>{ep0309Gen();ep0309Render();};
+  ep0309Gen();ep0309Render();
+})();
 </script>
+
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-03-median-simulador-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figura&nbsp;3.32: Simulador: Filtro da Mediana 3×3
@@ -5176,87 +5355,251 @@ Figura&nbsp;3.32: Simulador: Filtro da Mediana 3×3
 </tbody>
 </table>
 <div id="cell-fig-03-unsharp-simulador" class="cell">
-<div id="fig-03-unsharp-simulador" class="cell-output cell-output-display quarto-figure quarto-figure-center quarto-float anchored" data-execution_count="29">
+<div id="fig-03-unsharp-simulador" class="cell-output cell-output-display quarto-figure quarto-figure-center quarto-float anchored" data-execution_count="7">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-03-unsharp-simulador-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 
-<div id="sim-ep0310" style="background-color:#fef9ef;border-radius:18px;border:1px solid #ede6d8;overflow:hidden;margin-top:20px;font-family:sans-serif;">
-  <div style="background:#f3efe6;padding:8px 16px;font-size:12px;color:#5e5a4a;border-bottom:1px solid #e9dfcf;display:flex;justify-content:space-between;align-items:center;">
-    <span>🎮 Simulador: Unsharp Masking (USM)</span>
-    <span style="background:#e8e0cf;border-radius:40px;padding:2px 10px;font-weight:600;font-size:10px;">✨ g = clip(f + k·(f - f̄))</span>
+<style>
+.ep0310-cell{width:38px;height:38px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:500;border-radius:5px;transition:background 0.1s,transform 0.12s,box-shadow 0.1s;}
+.ep0310-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:14px;text-align:center;}
+.ep0310-label{font-size:10px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.05em;margin:0 0 3px;}
+.ep0310-sublabel{font-size:10px;margin:0 0 8px;}
+.ep0310-grid{display:grid;grid-template-columns:repeat(5,38px);gap:3px;justify-content:center;margin-top:8px;}
+.ep0310-arrow{display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--color-text-secondary);padding-top:40px;}
+</style>
+
+<div id="ep0310-sim-usm" style="max-width:960px;margin:0 auto;padding:4px 0 16px;">
+
+  <!-- Slider k -->
+  <div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:14px 20px;margin-bottom:14px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+    <span style="font-size:13px;font-weight:500;color:var(--color-text-primary);">Fator de ganho <em>k</em>:</span>
+    <input id="ep0310-slider-k" style="cursor:pointer;width:220px;accent-color:#185FA5;" max="3.0" min="0.0" step="0.5" type="range" value="1.0">
+    <span id="ep0310-label-k" style="font-family:var(--font-mono);font-size:14px;font-weight:500;background:#185FA5;color:#fff;padding:2px 10px;border-radius:var(--border-radius-sm);">k = 1.0</span>
+    <span style="font-size:11px;color:var(--color-text-secondary);font-family:var(--font-mono);">k=0 → sem realce &nbsp;·&nbsp; k=1 → USM padrão &nbsp;·&nbsp; k&gt;1 → hiperrealce</span>
+    <button id="ep0310-btn-new" style="margin-left:auto;font-size:12px;padding:6px 14px;">🎲 Nova imagem</button>
   </div>
-  <div style="padding:20px;background:white;">
-    <div style="background:#fafafa;border:1px solid #ddd;border-radius:12px;padding:16px;margin-bottom:16px;">
-      <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
-        <label style="font-size:12px;font-weight:bold;color:#6a1b9a;">k (Intensidade do Realce)</label>
-        <span id="ep0310_vl_k" style="font-family:monospace;font-weight:bold;color:#6a1b9a;">1.0</span>
-      </div>
-      <input id="ep0310_sl_k" style="width:100%;accent-color:#6a1b9a;" max="4" min="0" step="0.1" type="range" value="1">
+
+  <!-- Pipeline: 4 grades + setas -->
+  <div style="display:grid;grid-template-columns:1fr 24px 1fr 24px 1fr 24px 1fr;gap:6px;align-items:start;margin-bottom:12px;">
+
+    <div class="ep0310-card">
+      <p class="ep0310-label">① Imagem f</p>
+      <p class="ep0310-sublabel" style="color:var(--color-text-secondary);">original (5×5)</p>
+      <div id="ep0310-grid-f" class="ep0310-grid"></div>
     </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;">
-      <div style="text-align:center;background:white;border:1px solid #eee;padding:10px;border-radius:12px;">
-        <p style="font-size:9px;font-weight:600;color:#888;text-transform:uppercase;margin-bottom:8px;">Original f</p>
-        <div id="ep0310_grid_f" style="display:grid;grid-template-columns:repeat(5,30px);gap:2px;justify-content:center;"></div>
-        <button id="ep0310_btn_new" style="margin-top:8px;font-size:10px;padding:3px 6px;border-radius:4px;border:1px solid #ccc;background:white;cursor:pointer;">🎲 Nova</button>
-      </div>
-      <div style="text-align:center;background:white;border:1px solid #eee;padding:10px;border-radius:12px;">
-        <p style="font-size:9px;font-weight:600;color:#888;text-transform:uppercase;margin-bottom:8px;">Suavizado f̄</p>
-        <div id="ep0310_grid_smooth" style="display:grid;grid-template-columns:repeat(5,30px);gap:2px;justify-content:center;"></div>
-      </div>
-      <div style="text-align:center;background:white;border:1px solid #eee;padding:10px;border-radius:12px;">
-        <p style="font-size:9px;font-weight:600;color:#888;text-transform:uppercase;margin-bottom:8px;">Máscara m+128</p>
-        <div id="ep0310_grid_mask" style="display:grid;grid-template-columns:repeat(5,30px);gap:2px;justify-content:center;"></div>
-      </div>
-      <div style="text-align:center;background:white;border:1px solid #eee;padding:10px;border-radius:12px;">
-        <p style="font-size:9px;font-weight:600;color:#888;text-transform:uppercase;margin-bottom:8px;">Realçado g</p>
-        <div id="ep0310_grid_g" style="display:grid;grid-template-columns:repeat(5,30px);gap:2px;justify-content:center;"></div>
-      </div>
+
+    <div class="ep0310-arrow">→</div>
+
+    <div class="ep0310-card" style="border:2px solid #BA7517;">
+      <p class="ep0310-label" style="color:#BA7517;">② Desfocado f̄</p>
+      <p class="ep0310-sublabel" style="color:#BA7517;">média 3×3</p>
+      <div id="ep0310-grid-blur" class="ep0310-grid"></div>
     </div>
-    <div id="ep0310_debug" style="margin-top:16px;background:#ede7f6;border-radius:8px;padding:10px;border:1px solid #b39ddb;font-family:monospace;font-size:11px;color:#4527a0;text-align:center;">Fórmula: clip(round(f + 1.0 × (f - f̄)))</div>
+
+    <div class="ep0310-arrow">→</div>
+
+    <div class="ep0310-card" style="border:2px solid #993556;">
+      <p class="ep0310-label" style="color:#993556;">③ Máscara m</p>
+      <p class="ep0310-sublabel" style="color:#993556;">m = f − f̄ (altas freq.)</p>
+      <div id="ep0310-grid-mask" class="ep0310-grid"></div>
+    </div>
+
+    <div class="ep0310-arrow">→</div>
+
+    <div class="ep0310-card" style="border:2px solid #185FA5;">
+      <p class="ep0310-label" style="color:#185FA5;">④ Resultado g</p>
+      <p class="ep0310-sublabel" style="color:#185FA5;" id="ep0310-formula-label">g = f + 1.0·m</p>
+      <div id="ep0310-grid-result" class="ep0310-grid"></div>
+    </div>
+  </div>
+
+  <!-- Legenda -->
+  <div style="background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:10px 14px;display:flex;gap:18px;align-items:center;flex-wrap:wrap;justify-content:center;margin-bottom:10px;">
+    <span style="font-size:11px;font-weight:500;color:var(--color-text-secondary);">Legenda</span>
+    <div style="display:flex;align-items:center;gap:6px;">
+      <div style="width:18px;height:18px;background:#FAEEDA;border:2px dashed #BA7517;border-radius:3px;"></div>
+      <span style="font-size:11px;color:var(--color-text-secondary);">Vizinhança 3×3 do kernel</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;">
+      <div style="width:18px;height:18px;background:#E6F1FB;border:1.5px solid #185FA5;border-radius:3px;"></div>
+      <span style="font-size:11px;color:var(--color-text-secondary);">Pixel central inspecionado</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;">
+      <div style="width:18px;height:18px;background:#E1F5EE;border:1.5px solid #1D9E75;border-radius:3px;"></div>
+      <span style="font-size:11px;color:var(--color-text-secondary);">Borda — copiada sem filtro</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;">
+      <div style="width:18px;height:18px;background:#FBEAF0;border:1.5px solid #993556;border-radius:3px;"></div>
+      <span style="font-size:11px;color:var(--color-text-secondary);">Máscara positiva (realça)</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;">
+      <div style="width:18px;height:18px;background:#E6F1FB;border:1.5px solid #185FA5;border-radius:3px;"></div>
+      <span style="font-size:11px;color:var(--color-text-secondary);">Máscara negativa (atenua)</span>
+    </div>
+  </div>
+
+  <!-- Debug -->
+  <div id="ep0310-debug" style="background:#E6F1FB;border:0.5px solid #B5D4F4;border-radius:var(--border-radius-md);padding:10px 14px;font-family:var(--font-mono);font-size:11px;color:#0C447C;text-align:center;min-height:38px;line-height:1.7;">
+    Passe o mouse sobre um pixel interno do resultado para rastrear o pipeline completo.
   </div>
 </div>
+
 <script>
-setTimeout(function(){
-  var slK=document.getElementById('ep0310_sl_k');
-  var vlK=document.getElementById('ep0310_vl_k');
-  var gF=document.getElementById('ep0310_grid_f');
-  var gS=document.getElementById('ep0310_grid_smooth');
-  var gMask=document.getElementById('ep0310_grid_mask');
-  var gG=document.getElementById('ep0310_grid_g');
-  var db=document.getElementById('ep0310_debug');
-  if(!slK||!gF)return;
-  var ROWS=5,COLS=5; var pixels=[];
-  function gen_0310(){pixels=Array.from({length:ROWS*COLS},function(){return Math.floor(Math.random()*256);});}
-  function mk_0310(v){
-    var c=document.createElement('div');
-    c.style.cssText='width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:bold;border-radius:2px;border:1px solid #eee;';
-    c.style.background='rgb('+v+','+v+','+v+')'; c.style.color=v>128?'black':'white'; c.innerText=v; return c;
+(function(){
+  const EP0310_ROWS=5,EP0310_COLS=5,EP0310_N=25,EP0310_RADIUS=1;
+  let ep0310Pixels=[],ep0310Blur=[],ep0310Mask=[],ep0310Result=[];
+  let ep0310K=1.0;
+
+  function ep0310Gen(){
+    ep0310Pixels=Array.from({length:EP0310_N},(_,i)=>{
+      const r=Math.floor(i/EP0310_COLS),c=i%EP0310_COLS;
+      let v=(r>=2&&c>=2)?170:70;
+      v+=Math.floor(Math.random()*16)-8;
+      return Math.max(0,Math.min(255,v));
+    });
+    ep0310Calc();
   }
-  function render_0310(){
-    var k=parseFloat(slK.value);
-    vlK.innerText=k.toFixed(1);
-    db.innerHTML='Fórmula: <b>clip(round(f + '+k.toFixed(1)+' × (f - f̄)))</b>';
-    var smooth=pixels.slice();
-    for(var i=1;i<ROWS-1;i++){
-      for(var j=1;j<COLS-1;j++){
-        var sum=0;
-        for(var s=-1;s<=1;s++){for(var t=-1;t<=1;t++){sum+=pixels[(i+s)*COLS+(j+t)];}}
-        smooth[i*COLS+j]=sum/9;
+
+  function ep0310Calc(){
+    ep0310Blur=new Array(EP0310_N).fill(0);
+    ep0310Mask=new Array(EP0310_N).fill(0);
+    ep0310Result=new Array(EP0310_N).fill(0);
+    for(let r=0;r<EP0310_ROWS;r++){
+      for(let c=0;c<EP0310_COLS;c++){
+        const idx=r*EP0310_COLS+c;
+        if(r>=EP0310_RADIUS&&r<EP0310_ROWS-EP0310_RADIUS&&c>=EP0310_RADIUS&&c<EP0310_COLS-EP0310_RADIUS){
+          let sum=0;
+          for(let s=-EP0310_RADIUS;s<=EP0310_RADIUS;s++)
+            for(let t=-EP0310_RADIUS;t<=EP0310_RADIUS;t++)
+              sum+=ep0310Pixels[(r+s)*EP0310_COLS+(c+t)];
+          const blur=sum/9.0;
+          const mask=ep0310Pixels[idx]-blur;
+          ep0310Blur[idx]=blur;
+          ep0310Mask[idx]=mask;
+          ep0310Result[idx]=Math.max(0,Math.min(255,Math.round(ep0310Pixels[idx]+ep0310K*mask)));
+        } else {
+          ep0310Blur[idx]=ep0310Pixels[idx];
+          ep0310Mask[idx]=0;
+          ep0310Result[idx]=ep0310Pixels[idx];
+        }
       }
     }
-    gF.innerHTML=''; gS.innerHTML=''; gMask.innerHTML=''; gG.innerHTML='';
-    for(var i=0;i<ROWS*COLS;i++){
-      var p=pixels[i]; var s=Math.round(smooth[i]);
-      var mask=Math.max(0,Math.min(255,Math.round(p-smooth[i])+128));
-      var g=Math.max(0,Math.min(255,Math.round(p+k*(p-smooth[i]))));
-      gF.appendChild(mk_0310(p)); gS.appendChild(mk_0310(s)); gMask.appendChild(mk_0310(mask)); gG.appendChild(mk_0310(g));
+  }
+
+  function ep0310TC(g){return g>140?'#111':'#eee';}
+
+  function ep0310ColorMask(v){
+    // positivo → rosa/magenta, negativo → azul, zero → neutro
+    if(Math.abs(v)<2) return 'var(--color-background-secondary)';
+    if(v>0){const t=Math.min(1,v/80);return `rgb(${Math.round(230+t*20)},${Math.round(210-t*60)},${Math.round(220-t*60)})`;}
+    else{const t=Math.min(1,-v/80);return `rgb(${Math.round(210-t*60)},${Math.round(220-t*40)},${Math.round(230+t*20)})`;}
+  }
+
+  function ep0310Highlight(tr,tc,on){
+    const cells=document.getElementById('ep0310-grid-f').children;
+    for(let i=0;i<EP0310_N;i++){
+      if(!cells[i]) continue;
+      const p=ep0310Pixels[i];
+      const r=Math.floor(i/EP0310_COLS),c=i%EP0310_COLS;
+      if(on&&Math.abs(r-tr)<=1&&Math.abs(c-tc)<=1){
+        if(r===tr&&c===tc){
+          cells[i].style.background='#E6F1FB';cells[i].style.color='#0C447C';cells[i].style.boxShadow='0 0 0 2px #185FA5 inset';
+        } else {
+          cells[i].style.background='#FAEEDA';cells[i].style.color='#633806';cells[i].style.boxShadow='0 0 0 2px #BA7517 inset';
+        }
+      } else {
+        cells[i].style.background=`rgb(${p},${p},${p})`;cells[i].style.color=ep0310TC(p);cells[i].style.boxShadow='none';
+      }
     }
   }
-  slK.oninput=render_0310;
-  document.getElementById('ep0310_btn_new').onclick=function(){gen_0310();render_0310();};
-  gen_0310(); render_0310();
-},100);
+
+  function ep0310ResetDebug(){
+    document.getElementById('ep0310-debug').innerText=
+      'Passe o mouse sobre um pixel interno do resultado para rastrear o pipeline completo.';
+  }
+
+  function ep0310Render(){
+    const gf=document.getElementById('ep0310-grid-f');
+    const gb=document.getElementById('ep0310-grid-blur');
+    const gm=document.getElementById('ep0310-grid-mask');
+    const gr=document.getElementById('ep0310-grid-result');
+    gf.innerHTML='';gb.innerHTML='';gm.innerHTML='';gr.innerHTML='';
+
+    document.getElementById('ep0310-formula-label').innerText=`g = f + ${ep0310K.toFixed(1)}·m`;
+
+    for(let i=0;i<EP0310_N;i++){
+      const r=Math.floor(i/EP0310_COLS),c=i%EP0310_COLS;
+      const p=ep0310Pixels[i],blur=ep0310Blur[i],mask=ep0310Mask[i],res=ep0310Result[i];
+      const isBorder=(r<EP0310_RADIUS||r>=EP0310_ROWS-EP0310_RADIUS||c<EP0310_RADIUS||c>=EP0310_COLS-EP0310_RADIUS);
+
+      // ① f
+      const cf=document.createElement('div');cf.className='ep0310-cell';
+      cf.style.cssText=`background:rgb(${p},${p},${p});color:${ep0310TC(p)};border:0.5px solid rgba(128,128,128,0.15);`;
+      cf.innerText=p;gf.appendChild(cf);
+
+      // ② blur
+      const cb=document.createElement('div');cb.className='ep0310-cell';
+      if(isBorder){
+        cb.style.cssText=`background:var(--color-background-secondary);color:var(--color-text-secondary);border:0.5px solid var(--color-border-tertiary);`;cb.innerText='—';
+      } else {
+        const bv=Math.round(blur);
+        cb.style.cssText=`background:rgb(${bv},${bv},${bv});color:${ep0310TC(bv)};border:0.5px solid rgba(128,128,128,0.1);`;
+        cb.innerText=blur.toFixed(1);
+      }
+      gb.appendChild(cb);
+
+      // ③ mask
+      const cm=document.createElement('div');cm.className='ep0310-cell';
+      if(isBorder){
+        cm.style.cssText=`background:var(--color-background-secondary);color:var(--color-text-secondary);border:0.5px solid var(--color-border-tertiary);`;cm.innerText='0';
+      } else {
+        const mSign=mask>=0?'+':'';
+        cm.style.cssText=`background:${ep0310ColorMask(mask)};color:#333;border:0.5px solid rgba(128,128,128,0.1);`;
+        cm.innerText=mSign+mask.toFixed(1);
+      }
+      gm.appendChild(cm);
+
+      // ④ result
+      const crr=document.createElement('div');crr.className='ep0310-cell';
+      if(isBorder){
+        crr.style.cssText=`background:#E1F5EE;color:#085041;border:1.5px solid #1D9E75;`;
+        crr.onmouseenter=()=>{document.getElementById('ep0310-debug').innerHTML=`Pixel borda (${r},${c}): copiado sem alteração → <b>${res}</b>`;};
+        crr.onmouseleave=ep0310ResetDebug;
+      } else {
+        crr.style.cssText=`background:rgb(${res},${res},${res});color:${ep0310TC(res)};border:0.5px solid var(--color-border-tertiary);cursor:pointer;`;
+        const _r=r,_c=c,_p=p,_blur=blur,_mask=mask,_res=res;
+        crr.onmouseenter=()=>{
+          ep0310Highlight(_r,_c,true);
+          crr.style.transform='scale(1.12)';crr.style.boxShadow='0 0 0 2px #185FA5 inset';
+          crr.style.background='#E6F1FB';crr.style.color='#0C447C';
+          const mSign=_mask>=0?'+':'';
+          const rawG=_p+ep0310K*_mask;
+          document.getElementById('ep0310-debug').innerHTML=
+            `① f=${_p} &nbsp;→&nbsp; ② f̄=${_blur.toFixed(1)} &nbsp;→&nbsp; ③ m=f−f̄=${mSign}${_mask.toFixed(1)} &nbsp;→&nbsp; ④ g = clip(round(${_p} + ${ep0310K.toFixed(1)}·(${mSign}${_mask.toFixed(1)}))) = clip(${rawG.toFixed(1)}) = <b>${_res}</b>`;
+        };
+        crr.onmouseleave=()=>{
+          ep0310Highlight(_r,_c,false);
+          crr.style.transform='scale(1)';crr.style.boxShadow='none';
+          crr.style.background=`rgb(${_res},${_res},${_res})`;crr.style.color=ep0310TC(_res);
+          ep0310ResetDebug();
+        };
+      }
+      crr.innerText=res;
+      gr.appendChild(crr);
+    }
+  }
+
+  document.getElementById('ep0310-slider-k').oninput=e=>{
+    ep0310K=parseFloat(e.target.value);
+    document.getElementById('ep0310-label-k').innerText=`k = ${ep0310K.toFixed(1)}`;
+    ep0310Calc();ep0310Render();
+  };
+  document.getElementById('ep0310-btn-new').onclick=()=>{ep0310Gen();ep0310Render();};
+
+  ep0310Gen();ep0310Render();
+})();
 </script>
+
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-03-unsharp-simulador-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figura&nbsp;3.33: Simulador: <em>Unsharp Masking</em> (USM)
