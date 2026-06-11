@@ -399,7 +399,7 @@ g(x,y) = T[f(x,y)]
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>version <span class="op">=</span> <span class="bu">getattr</span>(morph, <span class="st">"__version__"</span>, <span class="st">"local_file"</span>)</span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"✅ Ambiente pronto. Módulo 'morph' carregado (versão: </span><span class="sc">{</span>version<span class="sc">}</span><span class="ss">)."</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>✅ Ambiente pronto. Módulo 'morph' carregado (versão: 1.1.0).</code></pre>
+<pre><code>✅ Ambiente pronto. Módulo 'morph' carregado (versão: 1.1.1).</code></pre>
 </div>
 </div>
 <p>Como objeto de estudo ao longo deste capítulo, utilizaremos as imagens de vida selvagem apresentadas nas <a href="#fig-03-mandrill" class="quarto-xref">Figura&nbsp;<span>3.1</span></a> e <a href="#fig-03-leopardo" class="quarto-xref">Figura&nbsp;<span>3.3</span></a>. A partir delas, exploraremos operações espaciais sobre intensidade, histogramas e filtragem, analisando seus efeitos no realce, na suavização, na redução de ruído e na detecção de bordas, de modo a compreender os fundamentos matemáticos e computacionais do PDI.</p>
@@ -1332,9 +1332,9 @@ Kernel 3×3 de média:
 Correlação no pixel central [1,1]:       103.0  (original: 107)
 
 Tempos na imagem 1324x1242:
-  mm.conv0 (laços Python): 7.095 s
-  mm.conv  (cv2.filter2D): 0.00216 s
-  Aceleração:              3284× mais rápido
+  mm.conv0 (laços Python): 7.210 s
+  mm.conv  (cv2.filter2D): 0.00215 s
+  Aceleração:              3346× mais rápido
   Diferença máxima:        39 (bordas com padding diferente)</code></pre>
 </div>
 <div class="cell-output cell-output-display">
@@ -1415,7 +1415,7 @@ w_{\text{média}} = \frac{1}{n^2}
 \end{bmatrix}_{n \times n}
 \tag{3.13}\]</span></span></p>
 <p>Cada pixel de saída é a média aritmética dos <span class="math inline">\(n^2\)</span> pixels de sua vizinhança. Note que a soma dos coeficientes é sempre 1 — o brilho médio da imagem é preservado. <em>Kernels</em> maiores produzem suavização mais agressiva, mas borram progressivamente as bordas.</p>
-<p>A <a href="#fig-03-media" class="quarto-xref">Figura&nbsp;<span>3.12</span></a> mostra o efeito do filtro de média com <em>kernels</em> 3$, <span class="math inline">\(7\times7\)</span> e <span class="math inline">\(15\times15\)</span> sobre um detalhe da imagem do leopardo. Os resultados foram obtidos com <code>mm.blur</code>, que implementa o filtro de média por meio da função <code>cv2.blur</code>, equivalente à convolução da imagem com um <em>kernel</em> uniforme cujos coeficientes são <span class="math inline">\(h(x,y)=1/N^2\)</span>; de forma equivalente, o mesmo resultado pode ser obtido com <code>mm.conv</code>, calculando (<span class="math inline">\(g=f*h\)</span>). À medida que o <em>kernel</em> aumenta, mais pixels contribuem para cada valor de saída, intensificando a suavização, reduzindo o ruído e tornando detalhes finos e bordas progressivamente mais borrados.</p>
+<p>A <a href="#fig-03-media" class="quarto-xref">Figura&nbsp;<span>3.12</span></a> mostra o efeito do filtro de média com <em>kernels</em> <span class="math inline">\(3\times3\)</span>, <span class="math inline">\(7\times7\)</span> e <span class="math inline">\(15\times15\)</span> sobre um detalhe da imagem do leopardo. Os resultados foram obtidos com <code>mm.blur</code>, que implementa o filtro de média por meio da função <code>cv2.blur</code>, equivalente à convolução da imagem com um <em>kernel</em> uniforme cujos coeficientes são <span class="math inline">\(h(x,y)=1/N^2\)</span>; de forma equivalente, o mesmo resultado pode ser obtido com <code>mm.conv</code>, calculando (<span class="math inline">\(g=f*h\)</span>). À medida que o <em>kernel</em> aumenta, mais pixels contribuem para cada valor de saída, intensificando a suavização, reduzindo o ruído e tornando detalhes finos e bordas progressivamente mais borrados.</p>
 <div id="cell-fig-03-media" class="cell">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Detalhe da região do olho</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>y0, y1, x0, x1 <span class="op">=</span> <span class="dv">580</span>, <span class="dv">740</span>, <span class="dv">680</span>, <span class="dv">900</span></span>
@@ -1511,23 +1511,25 @@ Vantagem computacional da separabilidade
 <li><strong>É controlado por <span class="math inline">\(\sigma\)</span></strong> — aumentar <span class="math inline">\(\sigma\)</span> equivale a aumentar o raio de suavização de forma contínua e previsível.</li>
 </ul>
 <p>A <a href="#fig-03-gauss" class="quarto-xref">Figura&nbsp;<span>3.14</span></a> compara os filtros de média e Gaussiano aplicados à imagem do leopardo usando uma janela <span class="math inline">\(9\times9\)</span>. O filtro de média foi implementado por convolução com um <em>kernel</em> uniforme, em que todos os <span class="math inline">\(81\)</span> pixels da vizinhança possuem o mesmo peso (<span class="math inline">\(1/81\)</span>), enquanto o filtro Gaussiano foi obtido com <code>cv2.GaussianBlur</code>, utilizando pesos definidos por uma distribuição Gaussiana. Ambos reduzem ruído e suavizam a imagem, porém o filtro Gaussiano preserva melhor as bordas e os detalhes locais, como pode ser observado na região ampliada do olho.</p>
+<p>A <a href="#fig-03-gauss" class="quarto-xref">Figura&nbsp;<span>3.14</span></a> compara os filtros de média e Gaussiano aplicados a um detalhe da imagem do leopardo com <em>kernels</em> <span class="math inline">\(9\times 9\)</span>. O filtro de média foi obtido com <code>mm.blur</code>, equivalente à convolução com um <em>kernel</em> uniforme cujos coeficientes valem <span class="math inline">\(1/81\)</span>, enquanto o filtro Gaussiano foi obtido com <code>mm.gaussian</code>, equivalente à convolução com um <em>kernel</em> gerado a partir de uma distribuição Gaussiana. Ambos promovem suavização e redução de ruído, porém o filtro Gaussiano atribui maior peso aos pixels centrais da vizinhança, preservando melhor as bordas e os detalhes locais, como pode ser observado na região ampliada do olho.</p>
 <div id="cell-fig-03-gauss" class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>w_media9 <span class="op">=</span> np.ones((<span class="dv">9</span>,<span class="dv">9</span>), dtype<span class="op">=</span>np.float32) <span class="op">/</span> <span class="fl">81.0</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>img_media9 <span class="op">=</span> mm.conv(img_gray, w_media9)</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>img_gauss9 <span class="op">=</span> cv2.GaussianBlur(img_gray, (<span class="dv">9</span>,<span class="dv">9</span>), <span class="dv">0</span>)</span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Detalhe da região do olho</span></span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>y0, y1, x0, x1 <span class="op">=</span> <span class="dv">580</span>, <span class="dv">740</span>, <span class="dv">680</span>, <span class="dv">900</span></span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>crop <span class="op">=</span> <span class="kw">lambda</span> img: img[y0:y1, x0:x1]</span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>img_gray_crop <span class="op">=</span> crop(img_gray)</span>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># w_media9 = np.ones((9,9), dtype=np.float32) / 81.0</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="co"># img_media9 = mm.conv(img_gray, w_media9) # ou</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>img_media9 <span class="op">=</span> mm.blur(img_gray, <span class="dv">9</span>) </span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="co"># img_gauss9 = cv2.GaussianBlur(img_gray, (9,9), 0) # ou</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>img_gauss9 <span class="op">=</span> mm.gaussian(img_gray, <span class="dv">9</span>, <span class="dv">0</span>) </span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Detalhe da região do olho</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>y0, y1, x0, x1 <span class="op">=</span> <span class="dv">580</span>, <span class="dv">740</span>, <span class="dv">680</span>, <span class="dv">900</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>crop <span class="op">=</span> <span class="kw">lambda</span> img: img[y0:y1, x0:x1]</span>
 <span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>mm.show(</span>
-<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>    [crop(img_gray),  crop(img_media9),  crop(img_gauss9)],</span>
-<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>    titles<span class="op">=</span>[<span class="st">"Detalhe: Original"</span>, <span class="st">"Média 9×9"</span>, <span class="st">"Gaussiano 9×9"</span>],</span>
-<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>    cols<span class="op">=</span><span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">8</span>)</span>
-<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>img_gray_crop <span class="op">=</span> crop(img_gray)</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>mm.show(</span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>    [crop(img_gray),  crop(img_media9),  crop(img_gauss9)],</span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>    titles<span class="op">=</span>[<span class="st">"Detalhe: Original"</span>, <span class="st">"Média 9×9"</span>, <span class="st">"Gaussiano 9×9"</span>],</span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>    cols<span class="op">=</span><span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">8</span>)</span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div id="fig-03-gauss" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -1550,7 +1552,238 @@ Figura&nbsp;3.14: Comparação entre filtro de média e Gaussiano (<em>kernel</e
 <p><span id="eq-03-realce-intuitivo"><span class="math display">\[
 g = f + k\,(f - f_{\text{suave}}), \quad k &gt; 0
 \tag{3.15}\]</span></span></p>
+<p>O <a href="#fig-03-filtrage1d" class="quarto-xref">Figura&nbsp;<span>3.15</span></a> ilustra esse processo em um sinal 1D sintético com três estruturas distintas: um degrau largo, um pico fino e uma rampa suave. No painel ①, o sinal original <span class="math inline">\(f(x)\)</span>; no ②, a versão suavizada <span class="math inline">\(f_{\text{suave}}(x)\)</span> obtida por média móvel — note como o pico fino é atenuado. O painel ③ exibe o resíduo <span class="math inline">\(f - f_{\text{suave}}\)</span>, que retém apenas as transições abruptas. Por fim, o painel ④ mostra <span class="math inline">\(g(x)\)</span>: o pico, antes atenuado, é restaurado e amplificado em relação ao original. Ajuste <span class="math inline">\(k\)</span> e o tamanho da janela para observar o <em>trade-off</em> entre nitidez e amplificação de ruído.</p>
 <p>Os filtros de realce formalizam essa ideia diretamente no <em>kernel</em>, sem precisar de duas etapas separadas.</p>
+<div id="cell-fig-03-filtrage1d" class="cell">
+<div id="fig-03-filtrage1d" class="cell-output cell-output-display quarto-figure quarto-figure-center quarto-float anchored" data-execution_count="60">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-03-filtrage1d-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+
+<div id="filt1D_container" style="background-color:#fef9ef;border-radius:18px;border:1px solid #ede6d8;overflow:hidden;margin-top:20px;font-family:sans-serif;">
+  <div style="background:#f3efe6;padding:8px 16px;font-size:12px;color:#5e5a4a;border-bottom:1px solid #e9dfcf;display:flex;justify-content:space-between;align-items:center;">
+    <span>🎮 Simulador: Filtragem Espacial de Realce 1D</span>
+    <span style="background:#e8e0cf;border-radius:40px;padding:2px 10px;font-weight:600;font-size:10px;">g = f + k·(f − f_suave)</span>
+  </div>
+  <div style="padding:20px;background:white;">
+
+    <!-- Controles -->
+    <div style="display:flex;flex-wrap:wrap;gap:24px;margin-bottom:20px;align-items:flex-end;">
+      <div style="display:flex;flex-direction:column;gap:4px;">
+        <label style="font-size:11px;color:#666;">Parâmetro <b>k</b> (força do realce)</label>
+        <input id="filt1D_k_slider" type="range" min="0" max="5" step="0.1" value="1.5" style="width:160px;">
+        <span style="font-size:12px;font-weight:600;color:#333;">k = <span id="filt1D_k_val">1.5</span></span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:4px;">
+        <label style="font-size:11px;color:#666;">Janela de suavização (pts)</label>
+        <input id="filt1D_win_slider" type="range" min="3" max="31" step="2" value="9" style="width:160px;">
+        <span style="font-size:12px;font-weight:600;color:#333;">janela = <span id="filt1D_win_val">9</span></span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:4px;">
+        <label style="font-size:11px;color:#666;">Nível de ruído σ</label>
+        <input id="filt1D_noise_slider" type="range" min="0" max="0.3" step="0.01" value="0.04" style="width:160px;">
+        <span style="font-size:12px;font-weight:600;color:#333;">σ = <span id="filt1D_noise_val">0.04</span></span>
+      </div>
+    </div>
+
+    <!-- Gráficos -->
+    <div style="display:flex;flex-direction:column;gap:4px;">
+
+      <div style="background:#EBF4FD;border-radius:8px;padding:8px 10px;">
+        <div style="font-size:11px;font-weight:700;color:#1a5fa8;margin-bottom:3px;">① f(x) — sinal original</div>
+        <canvas id="filt1D_c1" height="80" style="width:100%;display:block;"></canvas>
+      </div>
+
+      <div style="text-align:center;font-size:18px;color:#bbb;line-height:1;">↓ filtro passa-baixa (média móvel)</div>
+
+      <div style="background:#EAF7F2;border-radius:8px;padding:8px 10px;">
+        <div style="font-size:11px;font-weight:700;color:#0d6b4f;margin-bottom:3px;">② f_suave(x) — pico atenuado pelo filtro</div>
+        <canvas id="filt1D_c2" height="80" style="width:100%;display:block;"></canvas>
+      </div>
+
+      <div style="text-align:center;font-size:18px;color:#bbb;line-height:1;">↓ subtração: f − f_suave</div>
+
+      <div style="background:#FEF0EB;border-radius:8px;padding:8px 10px;">
+        <div style="font-size:11px;font-weight:700;color:#a03010;margin-bottom:3px;">③ resíduo f − f_suave — só as bordas e picos sobram</div>
+        <canvas id="filt1D_c3" height="80" style="width:100%;display:block;"></canvas>
+      </div>
+
+      <div style="text-align:center;font-size:18px;color:#bbb;line-height:1;">↓ soma: f + k · resíduo</div>
+
+      <div style="background:#F2F0FD;border-radius:8px;padding:8px 10px;">
+        <div style="font-size:11px;font-weight:700;color:#4a3faa;margin-bottom:3px;">④ g(x) — pico realçado (compare com ① original)</div>
+        <canvas id="filt1D_c4" height="80" style="width:100%;display:block;"></canvas>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<script>
+setTimeout(function(){
+
+  // --- sinal sintético limpo e didático ---
+  // 3 features bem distintas:
+  //   A: degrau largo  (x 30..80)
+  //   B: pico fino     (x 110..120)  <- protagonista da demo
+  //   C: rampa suave   (x 150..190)
+  var filt1D_N = 250;
+
+  function filt1D_make_signal(noise) {
+    var seed = 42;
+    function rand() { seed=(seed*9301+49297)%233280; return seed/233280; }
+    function randn() { return Math.sqrt(-2*Math.log(rand()+1e-9))*Math.cos(2*Math.PI*rand()); }
+    var f = [];
+    for (var i = 0; i < filt1D_N; i++) {
+      var v = 0.2;                                           // baseline
+      if (i >= 30  && i <= 80)  v += 0.7;                   // A: degrau
+      if (i >= 110 && i <= 120) v += 1.0;                   // B: pico fino
+      if (i >= 150 && i <= 190) v += 0.5*(i-150)/40;        // C: rampa
+      v += noise * randn();
+      f.push(v);
+    }
+    return f;
+  }
+
+  function filt1D_moving_avg(f, win) {
+    var half = Math.floor(win/2);
+    return f.map(function(_,i){
+      var s=0,c=0;
+      for(var j=Math.max(0,i-half);j<=Math.min(f.length-1,i+half);j++){s+=f[j];c++;}
+      return s/c;
+    });
+  }
+
+  // índice do pico fino (centro de B)
+  var filt1D_peak_i = 115;
+
+  // --- desenho Canvas 2D ---
+  function filt1D_draw(canvasId, datasets, annotations) {
+    var canvas = document.getElementById(canvasId);
+    if (!canvas) return;
+    canvas.width = canvas.offsetWidth || 800;
+    var ctx = canvas.getContext('2d');
+    var W = canvas.width, H = canvas.height;
+    ctx.clearRect(0, 0, W, H);
+
+    var padL=8, padR=8, padT=6, padB=6;
+    var allVals = [].concat.apply([], datasets.map(function(d){return d.data;}));
+    var mn = Math.min.apply(null,allVals), mx = Math.max.apply(null,allVals);
+    var rng = mx - mn || 1;
+    var drawH = H - padT - padB, drawW = W - padL - padR;
+
+    function toY(v){ return H - padB - (v-mn)/rng*drawH; }
+    function toX(i){ return padL + i/(filt1D_N-1)*drawW; }
+
+    // faixa de destaque do pico (B: 110..120)
+    var xA = toX(108), xB = toX(122);
+    ctx.fillStyle = 'rgba(255,200,50,0.13)';
+    ctx.fillRect(xA, padT, xB-xA, drawH);
+
+    // grade leve
+    ctx.strokeStyle='rgba(0,0,0,0.06)'; ctx.lineWidth=0.5;
+    for(var g=0;g<=3;g++){
+      var gy=padT+g/3*drawH;
+      ctx.beginPath();ctx.moveTo(padL,gy);ctx.lineTo(W-padR,gy);ctx.stroke();
+    }
+
+    // linha zero se necessário
+    if(mn<0&&mx>0){
+      ctx.strokeStyle='rgba(0,0,0,0.18)';ctx.lineWidth=0.8;ctx.setLineDash([4,3]);
+      var y0=toY(0);
+      ctx.beginPath();ctx.moveTo(padL,y0);ctx.lineTo(W-padR,y0);ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
+    // desenha cada série
+    datasets.forEach(function(ds){
+      ctx.strokeStyle = ds.color;
+      ctx.lineWidth   = ds.width || 1.8;
+      ctx.globalAlpha = ds.alpha || 1;
+      if(ds.dash) ctx.setLineDash(ds.dash); else ctx.setLineDash([]);
+      ctx.beginPath();
+      ds.data.forEach(function(v,i){ i===0?ctx.moveTo(toX(i),toY(v)):ctx.lineTo(toX(i),toY(v)); });
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.globalAlpha=1;
+    });
+
+    // anotações
+    if(annotations) annotations.forEach(function(an){
+      var xi = toX(an.i), yi = toY(an.v);
+      // linha vertical pontilhada
+      ctx.strokeStyle=an.color||'#888'; ctx.lineWidth=1; ctx.setLineDash([3,3]);
+      ctx.beginPath();ctx.moveTo(xi,padT);ctx.lineTo(xi,H-padB);ctx.stroke();
+      ctx.setLineDash([]);
+      // ponto
+      ctx.fillStyle=an.color||'#888';
+      ctx.beginPath();ctx.arc(xi,yi,4,0,2*Math.PI);ctx.fill();
+      // label
+      ctx.fillStyle=an.color||'#555';
+      ctx.font='bold 10px sans-serif';
+      ctx.fillText(an.label, xi+6, Math.max(padT+12, Math.min(H-padB-4, yi-6)));
+    });
+  }
+
+  function filt1D_update(){
+    var k     = parseFloat(document.getElementById('filt1D_k_slider').value);
+    var win   = parseInt(document.getElementById('filt1D_win_slider').value);
+    var noise = parseFloat(document.getElementById('filt1D_noise_slider').value);
+
+    document.getElementById('filt1D_k_val').innerText    = k.toFixed(1);
+    document.getElementById('filt1D_win_val').innerText  = win;
+    document.getElementById('filt1D_noise_val').innerText= noise.toFixed(2);
+
+    var f       = filt1D_make_signal(noise);
+    var f_suave = filt1D_moving_avg(f, win);
+    var residuo = f.map(function(v,i){return v-f_suave[i];});
+    var g       = f.map(function(v,i){return v+k*residuo[i];});
+
+    var pk = filt1D_peak_i;
+    var peakF = f[pk], peakS = f_suave[pk], peakR = residuo[pk], peakG = g[pk];
+
+    // ① original — marca o pico
+    filt1D_draw('filt1D_c1',
+      [{data:f, color:'#378ADD'}],
+      [{i:pk, v:peakF, color:'#1a5fa8', label:'pico'}]
+    );
+
+    // ② suavizado — mostra o pico atenuado vs original (tracejado)
+    filt1D_draw('filt1D_c2',
+      [{data:f,       color:'#378ADD', width:1, alpha:0.35, dash:[4,3]},
+       {data:f_suave, color:'#1D9E75', width:2}],
+      [{i:pk, v:peakS, color:'#0d6b4f', label:'atenuado'}]
+    );
+
+    // ③ resíduo — destaca onde o pico voltou como alta freq
+    filt1D_draw('filt1D_c3',
+      [{data:residuo, color:'#D85A30'}],
+      [{i:pk, v:peakR, color:'#a03010', label:'borda detectada'}]
+    );
+
+    // ④ realçado — overlay do original + resultado
+    filt1D_draw('filt1D_c4',
+      [{data:f, color:'#378ADD', width:1, alpha:0.35, dash:[4,3]},
+       {data:g, color:'#7F77DD', width:2.2}],
+      [{i:pk, v:peakG, color:'#4a3faa', label:'pico realçado'}]
+    );
+  }
+
+  ['filt1D_k_slider','filt1D_win_slider','filt1D_noise_slider'].forEach(function(id){
+    document.getElementById(id).addEventListener('input', filt1D_update);
+  });
+
+  filt1D_update();
+
+}, 300);
+</script>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-03-filtrage1d-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3.15: Simulador: Filtragem Espacial de Realce 1D.
+</figcaption>
+</figure>
+</div>
+</div>
 <section id="laplaciano" class="level3" data-number="3.6.1">
 <h3 data-number="3.6.1" class="anchored" data-anchor-id="laplaciano"><span class="header-section-number">3.6.1</span> Laplaciano</h3>
 <p>O Laplaciano é um operador de <strong>segunda derivada</strong> isotrópico, ou seja, responde igualmente a variações em todas as direções, ao contrário de operadores de primeira derivada, como Sobel e Prewitt, que são direcionais:</p>
@@ -1580,7 +1813,7 @@ Soma zero e centro negativo
 </div>
 </div>
 <p>No exemplo, o pixel central <span class="math inline">\([1,1]=107\)</span> possui vizinhos <span class="math inline">\(\{95, 106, 108, 103\}\)</span>. Como esses valores são próximos entre si, a região é quase uniforme e o Laplaciano retorna um valor baixo, produzindo pouco realce. Em regiões de borda, onde há diferenças maiores entre o pixel central e seus vizinhos, o Laplaciano assume valores mais elevados (positivos ou negativos), e a operação de <a href="#eq-03-realce-lap" class="quarto-xref">Equação&nbsp;<span>3.17</span></a> intensifica essas transições.</p>
-<p>A <a href="#fig-03-laplaciano-patch" class="quarto-xref">Figura&nbsp;<span>3.15</span></a> ilustra o cálculo do Laplaciano com o <em>kernel</em> <span class="math inline">\(w_4\)</span> em uma vizinhança <span class="math inline">\(3\times3\)</span> destacada dentro de um <em>patch</em> <span class="math inline">\(5\times5\)</span>. O exemplo mostra o valor obtido pelo operador e o correspondente pixel realçado na imagem de saída.</p>
+<p>A <a href="#fig-03-laplaciano-patch" class="quarto-xref">Figura&nbsp;<span>3.16</span></a> ilustra o cálculo do Laplaciano com o <em>kernel</em> <span class="math inline">\(w_4\)</span> em uma vizinhança <span class="math inline">\(3\times3\)</span> destacada dentro de um <em>patch</em> <span class="math inline">\(5\times5\)</span>. O exemplo mostra o valor obtido pelo operador e o correspondente pixel realçado na imagem de saída.</p>
 <div id="cell-fig-03-laplaciano-patch" class="cell">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>patch  <span class="op">=</span> img_gray[<span class="dv">250</span>:<span class="dv">255</span>, <span class="dv">250</span>:<span class="dv">255</span>]</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>w4     <span class="op">=</span> np.array([[<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>],</span>
@@ -1617,13 +1850,13 @@ Pixel realçado [1,1]: 107 - (-16) = 123</code></pre>
 <img src="cap03.py.pt_files/figure-html/fig-03-laplaciano-patch-output-2.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-03-laplaciano-patch-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;3.15: <em>Kernel</em> Laplaciano w4 aplicado ao <em>patch</em> 5×5: a janela amarela destaca a vizinhança 3×3 onde o operador de segunda derivada é calculado.
+Figura&nbsp;3.16: <em>Kernel</em> Laplaciano w4 aplicado ao <em>patch</em> 5×5: a janela amarela destaca a vizinhança 3×3 onde o operador de segunda derivada é calculado.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>A <a href="#fig-03-laplaciano" class="quarto-xref">Figura&nbsp;<span>3.16</span></a> compara a aplicação dos <em>kernels</em> Laplacianos <span class="math inline">\(w_4\)</span> e <span class="math inline">\(w_8\)</span> em um recorte da imagem do leopardo. Para cada caso, são mostradas a resposta bruta do operador, que evidencia as bordas e transições de intensidade, e a imagem obtida após o realce por subtração do Laplaciano. Observa-se que o <em>kernel</em> <span class="math inline">\(w_8\)</span>, por considerar também os vizinhos diagonais, produz uma resposta mais intensa e detecta variações em mais direções, resultando em um realce ligeiramente mais acentuado.</p>
+<p>A <a href="#fig-03-laplaciano" class="quarto-xref">Figura&nbsp;<span>3.17</span></a> compara a aplicação dos <em>kernels</em> Laplacianos <span class="math inline">\(w_4\)</span> e <span class="math inline">\(w_8\)</span> em um recorte da imagem do leopardo. Para cada caso, são mostradas a resposta bruta do operador, que evidencia as bordas e transições de intensidade, e a imagem obtida após o realce por subtração do Laplaciano. Observa-se que o <em>kernel</em> <span class="math inline">\(w_8\)</span>, por considerar também os vizinhos diagonais, produz uma resposta mais intensa e detecta variações em mais direções, resultando em um realce ligeiramente mais acentuado.</p>
 <div id="cell-fig-03-laplaciano" class="cell">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>w4 <span class="op">=</span> np.array([[<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>],</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>               [<span class="dv">1</span>,<span class="op">-</span><span class="dv">4</span>, <span class="dv">1</span>],</span>
@@ -1655,7 +1888,7 @@ Figura&nbsp;3.15: <em>Kernel</em> Laplaciano w4 aplicado ao <em>patch</em> 5×5:
 <img src="cap03.py.pt_files/figure-html/fig-03-laplaciano-output-1.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-03-laplaciano-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;3.16: Laplaciano aplicado à imagem do leopardo: resposta bruta (bordas detectadas) com w4 e w8, e imagens realçadas pela subtração do Laplaciano. w8 é mais sensível às diagonais.
+Figura&nbsp;3.17: Laplaciano aplicado à imagem do leopardo: resposta bruta (bordas detectadas) com w4 e w8, e imagens realçadas pela subtração do Laplaciano. w8 é mais sensível às diagonais.
 </figcaption>
 </figure>
 </div>
@@ -1729,7 +1962,7 @@ mag(Grad f)  = sqrt(26.0^2 + 26.0^2) = 36.8
 Theta        = arctan(26.0/26.0) = 45.0 graus</code></pre>
 </div>
 </div>
-<p>O valor reduzido de <span class="math inline">\(|{\nabla f}|\)</span> nesse <em>patch</em> confirma que a região é quase uniforme, pois o gradiente assume valores elevados apenas onde há mudanças significativas de intensidade. A <a href="#fig-03-sobel" class="quarto-xref">Figura&nbsp;<span>3.17</span></a> aplica o operador de Sobel a um recorte maior da imagem do leopardo. São apresentadas as respostas horizontal (<span class="math inline">\(G_x\)</span>) e vertical (<span class="math inline">\(G_y\)</span>), obtidas por convolução com os respectivos <em>kernels</em> de Sobel, além da magnitude <span class="math inline">\(|{\nabla f}|\)</span>, calculada a partir da combinação de ambas. Enquanto <span class="math inline">\(G_x\)</span> destaca bordas verticais e <span class="math inline">\(G_y\)</span> bordas horizontais, a magnitude evidencia bordas em qualquer direção.</p>
+<p>O valor reduzido de <span class="math inline">\(|{\nabla f}|\)</span> nesse <em>patch</em> confirma que a região é quase uniforme, pois o gradiente assume valores elevados apenas onde há mudanças significativas de intensidade. A <a href="#fig-03-sobel" class="quarto-xref">Figura&nbsp;<span>3.18</span></a> aplica o operador de Sobel a um recorte maior da imagem do leopardo. São apresentadas as respostas horizontal (<span class="math inline">\(G_x\)</span>) e vertical (<span class="math inline">\(G_y\)</span>), obtidas por convolução com os respectivos <em>kernels</em> de Sobel, além da magnitude <span class="math inline">\(|{\nabla f}|\)</span>, calculada a partir da combinação de ambas. Enquanto <span class="math inline">\(G_x\)</span> destaca bordas verticais e <span class="math inline">\(G_y\)</span> bordas horizontais, a magnitude evidencia bordas em qualquer direção.</p>
 <div id="cell-fig-03-sobel" class="cell">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> norm255(img):</span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>    mn, mx <span class="op">=</span> img.<span class="bu">min</span>(), img.<span class="bu">max</span>()</span>
@@ -1754,7 +1987,7 @@ Theta        = arctan(26.0/26.0) = 45.0 graus</code></pre>
 <img src="cap03.py.pt_files/figure-html/fig-03-sobel-output-1.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-03-sobel-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;3.17: Operador de Sobel na imagem do leopardo: Gx detecta bordas verticais, Gy detecta bordas horizontais, e a magnitude |∇f| combina ambos, revelando todas as bordas independente de direção.
+Figura&nbsp;3.18: Operador de Sobel na imagem do leopardo: Gx detecta bordas verticais, Gy detecta bordas horizontais, e a magnitude |∇f| combina ambos, revelando todas as bordas independente de direção.
 </figcaption>
 </figure>
 </div>
@@ -1827,7 +2060,7 @@ Amplificação de ruído
 <p>O USM não distingue bordas de ruído — ambos são componentes de alta frequência. Para <span class="math inline">\(k\)</span> elevado, o ruído presente na imagem é amplificado junto com as bordas. Por isso, é recomendável aplicar uma leve suavização antes do USM em imagens ruidosas, ou usar <span class="math inline">\(\sigma\)</span> pequeno na Gaussiana.</p>
 </div>
 </div>
-<p>Para ilustrar as etapas do USM, a <a href="#fig-03-usm2" class="quarto-xref">Figura&nbsp;<span>3.18</span></a> aplica o método a um <em>patch</em> <span class="math inline">\(30\times30\)</span> da imagem do leopardo, utilizando <span class="math inline">\(\sigma=1\)</span> e <span class="math inline">\(k=1\)</span>. Inicialmente, a imagem é suavizada por um filtro Gaussiano. Em seguida, a máscara de alta frequência é obtida pela diferença entre a imagem original e a suavizada. Por fim, essa máscara é somada à imagem original, reforçando bordas e detalhes. A figura apresenta as três etapas do processo e o resultado final do realce.</p>
+<p>Para ilustrar as etapas do USM, a <a href="#fig-03-usm2" class="quarto-xref">Figura&nbsp;<span>3.19</span></a> aplica o método a um <em>patch</em> <span class="math inline">\(30\times30\)</span> da imagem do leopardo, utilizando <span class="math inline">\(\sigma=1\)</span> e <span class="math inline">\(k=1\)</span>. Inicialmente, a imagem é suavizada por um filtro Gaussiano. Em seguida, a máscara de alta frequência é obtida pela diferença entre a imagem original e a suavizada. Por fim, essa máscara é somada à imagem original, reforçando bordas e detalhes. A figura apresenta as três etapas do processo e o resultado final do realce.</p>
 <div id="cell-fig-03-usm2" class="cell">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>patch  <span class="op">=</span> img_gray_crop[<span class="dv">35</span>:<span class="dv">65</span>, <span class="dv">45</span>:<span class="dv">75</span>]</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>p      <span class="op">=</span> patch.astype(np.float32)</span>
@@ -1867,13 +2100,13 @@ Amplificação de ruído
 <img src="cap03.py.pt_files/figure-html/fig-03-usm2-output-2.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-03-usm2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;3.18: Realce de nitidez por <em>Unsharp Masking</em> na imagem do leopardo: a imagem suavizada é subtraída da original para gerar a máscara de alta frequência, que é então reintroduzida para realçar bordas e detalhes.
+Figura&nbsp;3.19: Realce de nitidez por <em>Unsharp Masking</em> na imagem do leopardo: a imagem suavizada é subtraída da original para gerar a máscara de alta frequência, que é então reintroduzida para realçar bordas e detalhes.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>A <a href="#fig-03-usm" class="quarto-xref">Figura&nbsp;<span>3.19</span></a> aplica o método UM a um recorte da imagem do leopardo utilizando <span class="math inline">\(\sigma=1\)</span> e diferentes valores do fator de ganho <span class="math inline">\(k\)</span>. Em todos os casos, a máscara de alta frequência é obtida pela diferença entre a imagem original e sua versão suavizada por filtro Gaussiano. O parâmetro <span class="math inline">\(k\)</span> controla a intensidade do realce: valores menores produzem um aumento sutil de nitidez, enquanto valores maiores reforçam progressivamente bordas e detalhes. Observa-se que, para valores elevados de <span class="math inline">\(k\)</span>, surgem halos ao redor das bordas e o ruído presente na imagem passa a ser amplificado.</p>
+<p>A <a href="#fig-03-usm" class="quarto-xref">Figura&nbsp;<span>3.20</span></a> aplica o método UM a um recorte da imagem do leopardo utilizando <span class="math inline">\(\sigma=1\)</span> e diferentes valores do fator de ganho <span class="math inline">\(k\)</span>. Em todos os casos, a máscara de alta frequência é obtida pela diferença entre a imagem original e sua versão suavizada por filtro Gaussiano. O parâmetro <span class="math inline">\(k\)</span> controla a intensidade do realce: valores menores produzem um aumento sutil de nitidez, enquanto valores maiores reforçam progressivamente bordas e detalhes. Observa-se que, para valores elevados de <span class="math inline">\(k\)</span>, surgem halos ao redor das bordas e o ruído presente na imagem passa a ser amplificado.</p>
 <div id="cell-fig-03-usm" class="cell">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> usm(img, sigma<span class="op">=</span><span class="fl">1.0</span>, k<span class="op">=</span><span class="fl">1.0</span>):</span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>    ksize  <span class="op">=</span> <span class="bu">int</span>(<span class="dv">6</span> <span class="op">*</span> sigma <span class="op">+</span> <span class="dv">1</span>) <span class="op">|</span> <span class="dv">1</span></span>
@@ -1893,7 +2126,7 @@ Figura&nbsp;3.18: Realce de nitidez por <em>Unsharp Masking</em> na imagem do le
 <img src="cap03.py.pt_files/figure-html/fig-03-usm-output-1.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-03-usm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;3.19: <em>Unsharp Masking</em> na imagem do leopardo com σ=1 e k variando de 0.5 a 3.0. Para k&gt;2 surgem artefatos nas bordas (halos) e o ruído de fundo começa a ser visível.
+Figura&nbsp;3.20: <em>Unsharp Masking</em> na imagem do leopardo com σ=1 e k variando de 0.5 a 3.0. Para k&gt;2 surgem artefatos nas bordas (halos) e o ruído de fundo começa a ser visível.
 </figcaption>
 </figure>
 </div>
@@ -1969,7 +2202,7 @@ Mediana:    101    (ignora o outlier)
 Valor original:  ~100</code></pre>
 </div>
 </div>
-<p>A <a href="#fig-03-ruido" class="quarto-xref">Figura&nbsp;<span>3.20</span></a> apresenta o efeito do ruído sal e pimenta em diferentes densidades. O ruído foi gerado substituindo aleatoriamente uma fração dos pixels por valores mínimos (0, pimenta) e máximos (255, sal). À medida que a densidade aumenta de 2% para 10%, cresce a quantidade de pixels corrompidos, tornando a degradação visual mais evidente e dificultando a percepção de detalhes da imagem.</p>
+<p>A <a href="#fig-03-ruido" class="quarto-xref">Figura&nbsp;<span>3.21</span></a> apresenta o efeito do ruído sal e pimenta em diferentes densidades. O ruído foi gerado substituindo aleatoriamente uma fração dos pixels por valores mínimos (0, pimenta) e máximos (255, sal). À medida que a densidade aumenta de 2% para 10%, cresce a quantidade de pixels corrompidos, tornando a degradação visual mais evidente e dificultando a percepção de detalhes da imagem.</p>
 <div id="cell-fig-03-ruido" class="cell">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> add_salt_pepper(img, prob<span class="op">=</span><span class="fl">0.05</span>, seed<span class="op">=</span><span class="dv">42</span>):</span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Adiciona ruído sal e pimenta com probabilidade total prob."""</span></span>
@@ -1996,7 +2229,7 @@ Valor original:  ~100</code></pre>
 <img src="cap03.py.pt_files/figure-html/fig-03-ruido-output-1.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-03-ruido-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;3.20: Ruído sal e pimenta com densidades crescentes (2%, 5%, 10%). O parâmetro prob indica a fração total de pixels corrompidos, metade sal (255) e metade pimenta (0).
+Figura&nbsp;3.21: Ruído sal e pimenta com densidades crescentes (2%, 5%, 10%). O parâmetro prob indica a fração total de pixels corrompidos, metade sal (255) e metade pimenta (0).
 </figcaption>
 </figure>
 </div>
@@ -2061,7 +2294,7 @@ Média  corrompida:                  119.4  ← distorcida pelo 255</code></pre>
 <li><strong>Preservadora de bordas</strong> — transições abruptas de intensidade são mantidas, pois a mediana seleciona um valor que já existe na vizinhança, sem criar novos níveis intermediários;</li>
 <li><strong>Não linear</strong> — não pode ser expressa como convolução, portanto <code>mm.conv</code> não se aplica; usa-se <code>cv2.medianBlur</code>.</li>
 </ul>
-<p>A <a href="#fig-03-ruido-filtros" class="quarto-xref">Figura&nbsp;<span>3.21</span></a> compara diferentes técnicas de remoção de ruído sal e pimenta aplicadas a uma imagem com 10% de pixels corrompidos. Foram avaliados os filtros Gaussiano, Média, Mediana, Bilateral e Morfológico (próximo capítulo), permitindo observar o compromisso entre remoção de ruído e preservação de detalhes. Em geral, os filtros de média e Gaussiano reduzem o ruído, mas tendem a borrar as bordas, enquanto a mediana apresenta melhor desempenho para ruído impulsivo. O filtro bilateral preserva melhor as bordas, e o filtro morfológico remove boa parte dos pixels corrompidos sem degradar excessivamente a estrutura da imagem.</p>
+<p>A <a href="#fig-03-ruido-filtros" class="quarto-xref">Figura&nbsp;<span>3.22</span></a> compara diferentes técnicas de remoção de ruído sal e pimenta aplicadas a uma imagem com 10% de pixels corrompidos. Foram avaliados os filtros Gaussiano, Média, Mediana, Bilateral e Morfológico (próximo capítulo), permitindo observar o compromisso entre remoção de ruído e preservação de detalhes. Em geral, os filtros de média e Gaussiano reduzem o ruído, mas tendem a borrar as bordas, enquanto a mediana apresenta melhor desempenho para ruído impulsivo. O filtro bilateral preserva melhor as bordas, e o filtro morfológico remove boa parte dos pixels corrompidos sem degradar excessivamente a estrutura da imagem.</p>
 <div id="cell-fig-03-ruido-filtros" class="cell">
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 10% de ruído para evidenciar diferenças entre filtros</span></span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>noisy_5, _ <span class="op">=</span> add_salt_pepper(img_gray_crop, prob<span class="op">=</span><span class="fl">0.1</span>) </span>
@@ -2123,7 +2356,7 @@ Morf. open+close          65.16</code></pre>
 <img src="cap03.py.pt_files/figure-html/fig-03-ruido-filtros-output-2.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-03-ruido-filtros-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;3.21: Comparação de filtros para remoção de ruído sal e pimenta (10%): Gaussiano, Média, Mediana, Bilateral e Morfológico. Linha superior: imagens completas; linha inferior: crop da região de interesse.
+Figura&nbsp;3.22: Comparação de filtros para remoção de ruído sal e pimenta (10%): Gaussiano, Média, Mediana, Bilateral e Morfológico. Linha superior: imagens completas; linha inferior: crop da região de interesse.
 </figcaption>
 </figure>
 </div>
@@ -2133,7 +2366,7 @@ Figura&nbsp;3.21: Comparação de filtros para remoção de ruído sal e pimenta
 </section>
 <section id="aplicação-prática-pré-processamento-para-segmentação" class="level2" data-number="3.8">
 <h2 data-number="3.8" class="anchored" data-anchor-id="aplicação-prática-pré-processamento-para-segmentação"><span class="header-section-number">3.8</span> Aplicação Prática: Pré-processamento para Segmentação</h2>
-<p>Na prática, as técnicas deste capítulo raramente são usadas isoladamente. Um <strong><em>pipeline</em> de pré-processamento</strong> típico combina várias etapas em sequência, adaptando-se ao tipo de imagem e à aplicação. A <a href="#fig-03-pipeline" class="quarto-xref">Figura&nbsp;<span>3.22</span></a> ilustra um <em>pipeline</em> completo:</p>
+<p>Na prática, as técnicas deste capítulo raramente são usadas isoladamente. Um <strong><em>pipeline</em> de pré-processamento</strong> típico combina várias etapas em sequência, adaptando-se ao tipo de imagem e à aplicação. A <a href="#fig-03-pipeline" class="quarto-xref">Figura&nbsp;<span>3.23</span></a> ilustra um <em>pipeline</em> completo:</p>
 <ol type="1">
 <li><strong>Equalização de histograma (CLAHE):</strong> normaliza o contraste independente das condições de iluminação;</li>
 <li><strong>Filtro Gaussiano:</strong> suaviza ruído de aquisição sem destruir bordas;</li>
@@ -2178,7 +2411,7 @@ Ordem importa
 <img src="cap03.py.pt_files/figure-html/fig-03-pipeline-output-1.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-03-pipeline-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;3.22: <em>Pipeline</em> de pré-processamento: CLAHE → Gaussiano → Canny. Cada etapa prepara a imagem para a seguinte, resultando em bordas limpas e bem definidas.
+Figura&nbsp;3.23: <em>Pipeline</em> de pré-processamento: CLAHE → Gaussiano → Canny. Cada etapa prepara a imagem para a seguinte, resultando em bordas limpas e bem definidas.
 </figcaption>
 </figure>
 </div>
@@ -2288,7 +2521,7 @@ Figura&nbsp;3.22: <em>Pipeline</em> de pré-processamento: CLAHE → Gaussiano �
 <section id="ep03_01-adição-saturada-de-constante" class="level3" data-number="3.12.1">
 <h3 data-number="3.12.1" class="anchored" data-anchor-id="ep03_01-adição-saturada-de-constante"><span class="header-section-number">3.12.1</span> EP03_01 ➕ Adição Saturada de Constante</h3>
 <p>Em sistemas de vigilância por vídeo, câmeras em ambientes com iluminação variável produzem imagens subexpostas. O ajuste de brilho por <strong>adição saturada de uma constante</strong> é a operação mais simples para correção imediata, sendo aplicada em tempo real nos <em>chips</em> de câmeras embarcadas e em <em>pipelines</em> de pré-processamento de robôs móveis.</p>
-<p>Ver na <a href="#fig-03-sim-adicao" class="quarto-xref">Figura&nbsp;<span>3.23</span></a> uma simulação deste EP.</p>
+<p>Ver na <a href="#fig-03-sim-adicao" class="quarto-xref">Figura&nbsp;<span>3.24</span></a> uma simulação deste EP.</p>
 <section id="diretrizes-de-implementação" class="level4" data-number="3.12.1.1">
 <h4 data-number="3.12.1.1" class="anchored" data-anchor-id="diretrizes-de-implementação"><span class="header-section-number">3.12.1.1</span> 📋 Diretrizes de Implementação</h4>
 <ol type="1">
@@ -2467,7 +2700,7 @@ setTimeout(function(){
 </script>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-03-sim-adicao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;3.23: Simulador: Adição Saturada de Constante
+Figura&nbsp;3.24: Simulador: Adição Saturada de Constante
 </figcaption>
 </figure>
 </div>
@@ -2495,7 +2728,7 @@ Figura&nbsp;3.23: Simulador: Adição Saturada de Constante
 <section id="ep03_02-alpha-blending-de-duas-imagens" class="level3" data-number="3.12.2">
 <h3 data-number="3.12.2" class="anchored" data-anchor-id="ep03_02-alpha-blending-de-duas-imagens"><span class="header-section-number">3.12.2</span> EP03_02 🔀 Alpha <em>Blending</em> de Duas Imagens</h3>
 <p>Em medicina nuclear, imagens de diferentes modalidades (tomografia computadorizada e ressonância magnética) são fundidas para auxiliar no diagnóstico. A <strong>mistura ponderada</strong> (<em>alpha blending</em>) é a operação fundamental desse processo, permitindo ao radiologista controlar interativamente o peso de cada modalidade na imagem exibida.</p>
-<p>Ver na <a href="#fig-03-sim-blending" class="quarto-xref">Figura&nbsp;<span>3.24</span></a> uma simulação deste EP.</p>
+<p>Ver na <a href="#fig-03-sim-blending" class="quarto-xref">Figura&nbsp;<span>3.25</span></a> uma simulação deste EP.</p>
 <section id="diretrizes-de-implementação-1" class="level4" data-number="3.12.2.1">
 <h4 data-number="3.12.2.1" class="anchored" data-anchor-id="diretrizes-de-implementação-1"><span class="header-section-number">3.12.2.1</span> 📋 Diretrizes de Implementação</h4>
 <ol type="1">
@@ -2671,7 +2904,7 @@ setTimeout(function(){
 </script>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-03-sim-blending-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;3.24: Simulador: Alpha <em>Blending</em> de Duas Imagens
+Figura&nbsp;3.25: Simulador: Alpha <em>Blending</em> de Duas Imagens
 </figcaption>
 </figure>
 </div>
@@ -2699,7 +2932,7 @@ Figura&nbsp;3.24: Simulador: Alpha <em>Blending</em> de Duas Imagens
 <section id="ep03_03-inversão-de-imagem-negativo-fotográfico" class="level3" data-number="3.12.3">
 <h3 data-number="3.12.3" class="anchored" data-anchor-id="ep03_03-inversão-de-imagem-negativo-fotográfico"><span class="header-section-number">3.12.3</span> EP03_03 🎭 Inversão de Imagem (Negativo Fotográfico)</h3>
 <p>Em radiologia, as imagens de raio-X são tradicionalmente visualizadas em negativo: ossos aparecem em preto sobre fundo branco. A operação de <strong>negativo fotográfico</strong> é aplicada rotineiramente em PACS (<em>Picture Archiving and Communication Systems</em>) para facilitar a detecção de fraturas e densidades ósseas.</p>
-<p>Ver na <a href="#fig-03-inversao" class="quarto-xref">Figura&nbsp;<span>3.25</span></a> uma simulação deste EP.</p>
+<p>Ver na <a href="#fig-03-inversao" class="quarto-xref">Figura&nbsp;<span>3.26</span></a> uma simulação deste EP.</p>
 <section id="diretrizes-de-implementação-2" class="level4" data-number="3.12.3.1">
 <h4 data-number="3.12.3.1" class="anchored" data-anchor-id="diretrizes-de-implementação-2"><span class="header-section-number">3.12.3.1</span> 📋 Diretrizes de Implementação</h4>
 <ol type="1">
@@ -2795,7 +3028,7 @@ Figura&nbsp;3.24: Simulador: Alpha <em>Blending</em> de Duas Imagens
 </tbody>
 </table>
 <div id="cell-fig-03-inversao" class="cell">
-<div id="fig-03-inversao" class="cell-output cell-output-display quarto-figure quarto-figure-center quarto-float anchored" data-execution_count="8">
+<div id="fig-03-inversao" class="cell-output cell-output-display quarto-figure quarto-figure-center quarto-float anchored" data-execution_count="5">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-03-inversao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 
@@ -2848,7 +3081,7 @@ setTimeout(function(){
 </script>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-03-inversao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;3.25: Simulador: Inversão de Imagem (Negativo Fotográfico)
+Figura&nbsp;3.26: Simulador: Inversão de Imagem (Negativo Fotográfico)
 </figcaption>
 </figure>
 </div>
@@ -2876,7 +3109,7 @@ Figura&nbsp;3.25: Simulador: Inversão de Imagem (Negativo Fotográfico)
 <section id="ep03_04-equalização-de-histograma-l-bits" class="level3" data-number="3.12.4">
 <h3 data-number="3.12.4" class="anchored" data-anchor-id="ep03_04-equalização-de-histograma-l-bits"><span class="header-section-number">3.12.4</span> EP03_04 📊 Equalização de Histograma (L bits)</h3>
 <p>Em imagens de satélite de sensoriamento remoto, a variação de iluminação ao longo do dia produz imagens de baixo contraste. A <strong>equalização de histograma</strong> é aplicada automaticamente em satélites como o Landsat para redistribuir os tons, revelando detalhes de vegetação, relevo e zonas urbanas invisíveis na imagem original.</p>
-<p>Ver na <a href="#fig-03-equalizacao-simulador" class="quarto-xref">Figura&nbsp;<span>3.26</span></a> uma simulação deste EP.</p>
+<p>Ver na <a href="#fig-03-equalizacao-simulador" class="quarto-xref">Figura&nbsp;<span>3.27</span></a> uma simulação deste EP.</p>
 <section id="diretrizes-de-implementação-3" class="level4" data-number="3.12.4.1">
 <h4 data-number="3.12.4.1" class="anchored" data-anchor-id="diretrizes-de-implementação-3"><span class="header-section-number">3.12.4.1</span> 📋 Diretrizes de Implementação</h4>
 <ol type="1">
@@ -3166,7 +3399,7 @@ Figura&nbsp;3.25: Simulador: Inversão de Imagem (Negativo Fotográfico)
 
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-03-equalizacao-simulador-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;3.26: Simulador: Equalização de Histograma (L bits)
+Figura&nbsp;3.27: Simulador: Equalização de Histograma (L bits)
 </figcaption>
 </figure>
 </div>
@@ -3194,7 +3427,7 @@ Figura&nbsp;3.26: Simulador: Equalização de Histograma (L bits)
 <section id="ep03_05-aplicação-de-máscara-and-binária" class="level3" data-number="3.12.5">
 <h3 data-number="3.12.5" class="anchored"><span class="header-section-number">3.12.5</span> EP03_05 🔲 Aplicação de Máscara AND Binária</h3>
 <p>Em sistemas de inspeção industrial por visão computacional, é necessário isolar regiões de interesse (ROI) em imagens de peças para verificar defeitos de fabricação. A operação <strong>AND bit a bit com uma máscara binária</strong> é o mecanismo fundamental para recortar exatamente a área de inspeção, zerando todos os pixels fora dela.</p>
-<p>Ver na <a href="#fig-03-mascara-and" class="quarto-xref">Figura&nbsp;<span>3.27</span></a> uma simulação deste EP.</p>
+<p>Ver na <a href="#fig-03-mascara-and" class="quarto-xref">Figura&nbsp;<span>3.28</span></a> uma simulação deste EP.</p>
 <section id="diretrizes-de-implementação-4" class="level4" data-number="3.12.5.1">
 <h4 data-number="3.12.5.1" class="anchored" data-anchor-id="diretrizes-de-implementação-4"><span class="header-section-number">3.12.5.1</span> 📋 Diretrizes de Implementação</h4>
 <ol type="1">
@@ -3479,7 +3712,7 @@ g(i,j) = f(i,j) \;\text{AND}\; m(i,j)
 
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-03-mascara-and-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;3.27: Simulador: Aplicação de Máscara AND Binária
+Figura&nbsp;3.28: Simulador: Aplicação de Máscara AND Binária
 </figcaption>
 </figure>
 </div>
@@ -3508,7 +3741,7 @@ Figura&nbsp;3.27: Simulador: Aplicação de Máscara AND Binária
 <h3 data-number="3.12.6" class="anchored"><span class="header-section-number">3.12.6</span> EP03_06 🌫️ Filtro de Média com <em>Kernel</em> N×N</h3>
 <p>Em câmeras de veículos autônomos, imagens capturadas sob chuva ou névoa apresentam ruído gaussiano. O <strong>filtro de média</strong> é amplamente utilizado para sua redução em tempo real, sendo implementado diretamente no <strong>ISP</strong> (<em>Image Signal Processor</em>) de sensores <strong>CMOS</strong> (<em>Complementary Metal-Oxide-Semiconductor</em>).</p>
 <p>Os sensores CMOS são os sensores de imagem usados na maioria das câmeras modernas (<em>smartphones</em>, <em>webcams</em>, câmeras automotivas etc.). Eles convertem a luz em sinais elétricos, e o ISP processa esses sinais em tempo real — aplicando operações como redução de ruído, balanço de branco e outros ajustes de imagem.</p>
-<p>Ver na <a href="#fig-03-filtro-media-simulador" class="quarto-xref">Figura&nbsp;<span>3.28</span></a> uma simulação deste EP.</p>
+<p>Ver na <a href="#fig-03-filtro-media-simulador" class="quarto-xref">Figura&nbsp;<span>3.29</span></a> uma simulação deste EP.</p>
 <section id="diretrizes-de-implementação-5" class="level4" data-number="3.12.6.1">
 <h4 data-number="3.12.6.1" class="anchored" data-anchor-id="diretrizes-de-implementação-5"><span class="header-section-number">3.12.6.1</span> 📋 Diretrizes de Implementação</h4>
 <ol type="1">
@@ -3829,7 +4062,7 @@ Figura&nbsp;3.27: Simulador: Aplicação de Máscara AND Binária
 
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-03-filtro-media-simulador-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;3.28: Simulador: Filtro de Média com <em>Kernel</em> N×N
+Figura&nbsp;3.29: Simulador: Filtro de Média com <em>Kernel</em> N×N
 </figcaption>
 </figure>
 </div>
@@ -3855,9 +4088,9 @@ Figura&nbsp;3.28: Simulador: Filtro de Média com <em>Kernel</em> N×N
 </section>
 </section>
 <section id="ep03_07-operador-laplaciano-w4-para-realce-de-bordas" class="level3" data-number="3.12.7">
-<h3 data-number="3.12.7" class="anchored" data-anchor-id="ep03_07-operador-laplaciano-w4-para-realce-de-bordas"><span class="header-section-number">3.12.7</span> EP03_07 🔍 Operador Laplaciano (w4) para Realce de Bordas</h3>
+<h3 data-number="3.12.7" class="anchored"><span class="header-section-number">3.12.7</span> EP03_07 🔍 Operador Laplaciano (w4) para Realce de Bordas</h3>
 <p>Em tomografias de alta resolução, a nitidez das bordas entre tecidos é crítica para diagnóstico. O <strong>operador Laplaciano</strong> é amplamente utilizado em <em>pipelines</em> de pré-processamento de imagens médicas para realçar automaticamente os contornos anatômicos antes da segmentação, evitando intervenção manual do radiologista.</p>
-<p>Ver na <a href="#fig-03-laplaciano-simulador" class="quarto-xref">Figura&nbsp;<span>3.29</span></a> uma simulação deste EP.</p>
+<p>Ver na <a href="#fig-03-laplaciano-simulador" class="quarto-xref">Figura&nbsp;<span>3.30</span></a> uma simulação deste EP.</p>
 <section id="diretrizes-de-implementação-6" class="level4" data-number="3.12.7.1">
 <h4 data-number="3.12.7.1" class="anchored" data-anchor-id="diretrizes-de-implementação-6"><span class="header-section-number">3.12.7.1</span> 📋 Diretrizes de Implementação</h4>
 <ol type="1">
@@ -3929,7 +4162,7 @@ Figura&nbsp;3.28: Simulador: Filtro de Média com <em>Kernel</em> N×N
 </ul>
 </section>
 <section id="exemplos-6" class="level4" data-number="3.12.7.5">
-<h4 data-number="3.12.7.5" class="anchored" data-anchor-id="exemplos-6"><span class="header-section-number">3.12.7.5</span> 📌 Exemplos</h4>
+<h4 data-number="3.12.7.5" class="anchored"><span class="header-section-number">3.12.7.5</span> 📌 Exemplos</h4>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 32%">
@@ -3969,66 +4202,245 @@ Figura&nbsp;3.28: Simulador: Filtro de Média com <em>Kernel</em> N×N
 </tbody>
 </table>
 <div id="cell-fig-03-laplaciano-simulador" class="cell">
-<div id="fig-03-laplaciano-simulador" class="cell-output cell-output-display quarto-figure quarto-figure-center quarto-float anchored" data-execution_count="20">
+<div id="fig-03-laplaciano-simulador" class="cell-output cell-output-display quarto-figure quarto-figure-center quarto-float anchored" data-execution_count="4">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-03-laplaciano-simulador-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 
-<div id="sim-ep0307" style="background-color:#fef9ef;border-radius:18px;border:1px solid #ede6d8;overflow:hidden;margin-top:20px;font-family:sans-serif;">
-  <div style="background:#f3efe6;padding:8px 16px;font-size:12px;color:#5e5a4a;border-bottom:1px solid #e9dfcf;display:flex;justify-content:space-between;align-items:center;">
-    <span>🎮 Simulador: Laplaciano w4 — Realce de Bordas</span>
-    <span style="background:#e8e0cf;border-radius:40px;padding:2px 10px;font-weight:600;font-size:10px;">🔍 g = clip(f - ∇²f)</span>
+<style>
+.ep0307-cell{width:42px;height:42px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;border-radius:6px;transition:background 0.1s,transform 0.12s,box-shadow 0.1s;}
+.ep0307-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:16px;text-align:center;}
+.ep0307-label{font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.05em;margin:0 0 4px;}
+.ep0307-grid{display:grid;grid-template-columns:repeat(5,42px);gap:4px;justify-content:center;margin-top:12px;}
+.ep0307-kbtn{padding:6px 16px;font-size:12px;border-radius:var(--border-radius-md);cursor:pointer;border:2px solid var(--color-border-secondary);background:var(--color-background-primary);color:var(--color-text-secondary);transition:all 0.15s;}
+.ep0307-kbtn.active{background:#FBEAF0;border-color:#993556;color:#72243E;font-weight:500;}
+</style>
+
+<h2 class="sr-only anchored" data-anchor-id="exemplos-6">Simulador do filtro de nitidez laplaciano: passe o mouse nas células do resultado para ver o cálculo dos 4-vizinhos e o realce de borda.</h2>
+
+<div id="ep0307-sim-lap-03" style="max-width:900px;margin:0 auto;padding:4px 0 16px;">
+
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap;">
+    <span style="font-size:13px;font-weight:500;color:var(--color-text-secondary);">Variante do laplaciano:</span>
+    <button class="ep0307-kbtn active" id="ep0307-btn-v1" onclick="ep0307SetVariant('subtract')">g = f − ∇²f &nbsp;<span style="font-weight:400;font-size:11px;">(realce padrão)</span></button>
+    <button class="ep0307-kbtn" id="ep0307-btn-v2" onclick="ep0307SetVariant('add')">g = f + ∇²f &nbsp;<span style="font-weight:400;font-size:11px;">(inverte sinal)</span></button>
+    <button id="ep0307-btn-new" style="margin-left:auto;font-size:12px;padding:6px 14px;">
+      <i class="ti ti-dice" aria-hidden="true"></i> Novo degrau
+    </button>
   </div>
-  <div style="padding:20px;background:white;">
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
-      <div style="text-align:center;background:white;border:1px solid #eee;padding:12px;border-radius:12px;">
-        <p style="font-size:10px;font-weight:600;color:#888;text-transform:uppercase;margin-bottom:8px;">Original f</p>
-        <div id="ep0307_grid_f" style="display:grid;grid-template-columns:repeat(5,36px);gap:3px;justify-content:center;"></div>
-        <button id="ep0307_btn_new" style="margin-top:10px;font-size:11px;padding:4px 8px;border-radius:4px;border:1px solid #ccc;background:white;cursor:pointer;">🎲 Nova</button>
-      </div>
-      <div style="text-align:center;background:white;border:1px solid #eee;padding:12px;border-radius:12px;">
-        <p style="font-size:10px;font-weight:600;color:#888;text-transform:uppercase;margin-bottom:8px;">Laplaciano |∇²f|</p>
-        <div id="ep0307_grid_lap" style="display:grid;grid-template-columns:repeat(5,36px);gap:3px;justify-content:center;"></div>
-      </div>
-      <div style="text-align:center;background:white;border:1px solid #eee;padding:12px;border-radius:12px;">
-        <p style="font-size:10px;font-weight:600;color:#888;text-transform:uppercase;margin-bottom:8px;">Realçado g</p>
-        <div id="ep0307_grid_g" style="display:grid;grid-template-columns:repeat(5,36px);gap:3px;justify-content:center;"></div>
-      </div>
+
+  <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:14px;">
+
+    <div class="ep0307-card">
+      <p class="ep0307-label">Imagem f (5×5)</p>
+      <p style="font-size:11px;color:var(--color-text-secondary);margin:0;">degrau com ruído leve</p>
+      <div id="ep0307-grid-f" class="ep0307-grid"></div>
     </div>
-    <div id="ep0307_debug" style="margin-top:16px;background:#e8eaf6;border-radius:8px;padding:10px;border:1px solid #9fa8da;font-family:monospace;font-size:11px;color:#283593;text-align:center;">Kernel w4: vizinhos N,S,L,O com peso 1; centro com peso -4</div>
+
+    <div class="ep0307-card" style="border:2px solid #993556;">
+      <p class="ep0307-label" style="color:#993556;">Laplaciano ∇²f</p>
+      <p style="font-size:11px;color:#993556;margin:0;">bordas detectadas</p>
+      <div id="ep0307-grid-lap" class="ep0307-grid"></div>
+    </div>
+
+    <div class="ep0307-card" style="border:2px solid #185FA5;">
+      <p class="ep0307-label" style="color:#185FA5;">Resultado g</p>
+      <p style="font-size:11px;color:#185FA5;margin:0;" id="ep0307-formula-label">g = f − ∇²f</p>
+      <div id="ep0307-grid-result" class="ep0307-grid"></div>
+    </div>
+  </div>
+
+  <div style="background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:12px;display:flex;gap:20px;align-items:center;flex-wrap:wrap;justify-content:center;margin-bottom:12px;">
+    <span style="font-size:12px;font-weight:500;color:var(--color-text-secondary);">Legenda</span>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div style="width:20px;height:20px;background:#FAEEDA;border:2px dashed #BA7517;border-radius:4px;"></div>
+      <span style="font-size:12px;color:var(--color-text-secondary);">4-vizinhos do kernel</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div style="width:20px;height:20px;background:#FAECE7;border:2px solid #993C1D;border-radius:4px;"></div>
+      <span style="font-size:12px;color:var(--color-text-secondary);">Pixel central inspecionado</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div style="width:20px;height:20px;background:#E1F5EE;border:1.5px solid #1D9E75;border-radius:4px;"></div>
+      <span style="font-size:12px;color:var(--color-text-secondary);">Borda — copiada sem filtro</span>
+    </div>
+  </div>
+
+  <div id="ep0307-debug" style="background:#E6F1FB;border:0.5px solid #B5D4F4;border-radius:var(--border-radius-md);padding:10px 14px;font-family:var(--font-mono);font-size:12px;color:#0C447C;text-align:center;min-height:38px;line-height:1.7;">
+    Passe o mouse sobre um pixel interno do resultado para detalhar a equação.
   </div>
 </div>
+
 <script>
-setTimeout(function(){
-  var gF=document.getElementById('ep0307_grid_f');
-  var gL=document.getElementById('ep0307_grid_lap');
-  var gG=document.getElementById('ep0307_grid_g');
-  if(!gF)return;
-  var ROWS=5,COLS=5; var pixels=[];
-  function gen_0307(){pixels=Array.from({length:ROWS*COLS},function(){return Math.floor(Math.random()*256);});}
-  function mk_0307(v){
-    var c=document.createElement('div');
-    c.style.cssText='width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:bold;border-radius:3px;border:1px solid #eee;';
-    c.style.background='rgb('+v+','+v+','+v+')'; c.style.color=v>128?'black':'white'; c.innerText=v; return c;
+(function(){
+  const EP0307_ROWS=5, EP0307_COLS=5, EP0307_N=25;
+  let ep0307Pixels=[], ep0307LapVals=[], ep0307LapAbs=[], ep0307Result=[];
+  let ep0307Variant='subtract';
+
+  function ep0307GenPixels(){
+    const splitCol = 2 + Math.floor(Math.random()*2);
+    const dark = 40 + Math.floor(Math.random()*30);
+    const light = 160 + Math.floor(Math.random()*40);
+    ep0307Pixels = Array.from({length:EP0307_N},(_,i)=>{
+      const c=i%EP0307_COLS;
+      let v = c < splitCol ? dark : light;
+      v += Math.floor(Math.random()*14)-7;
+      return Math.max(0,Math.min(255,v));
+    });
+    ep0307CalcLap();
   }
-  function render_0307(){
-    gF.innerHTML=''; gL.innerHTML=''; gG.innerHTML='';
-    var lap=pixels.slice(); var realc=pixels.slice();
-    for(var i=1;i<ROWS-1;i++){
-      for(var j=1;j<COLS-1;j++){
-        var l=pixels[(i-1)*COLS+j]+pixels[(i+1)*COLS+j]+pixels[i*COLS+(j-1)]+pixels[i*COLS+(j+1)]-4*pixels[i*COLS+j];
-        lap[i*COLS+j]=Math.min(255,Math.abs(l));
-        realc[i*COLS+j]=Math.max(0,Math.min(255,pixels[i*COLS+j]-l));
+
+  function ep0307CalcLap(){
+    ep0307LapVals = new Array(EP0307_N).fill(0);
+    ep0307LapAbs  = new Array(EP0307_N).fill(0);
+    ep0307Result  = [...ep0307Pixels];
+    for(let r=0;r<EP0307_ROWS;r++){
+      for(let c=0;c<EP0307_COLS;c++){
+        const idx=r*EP0307_COLS+c;
+        if(r>=1&&r<EP0307_ROWS-1&&c>=1&&c<EP0307_COLS-1){
+          const t=ep0307Pixels[(r-1)*EP0307_COLS+c];
+          const b=ep0307Pixels[(r+1)*EP0307_COLS+c];
+          const l=ep0307Pixels[r*EP0307_COLS+(c-1)];
+          const ri=ep0307Pixels[r*EP0307_COLS+(c+1)];
+          const f=ep0307Pixels[idx];
+          const lap=t+b+l+ri-4*f;
+          ep0307LapVals[idx]=lap;
+          ep0307LapAbs[idx]=Math.max(0,Math.min(255,lap+128));
+          const g = ep0307Variant==='subtract' ? f-lap : f+lap;
+          ep0307Result[idx]=Math.max(0,Math.min(255,g));
+        }
       }
     }
-    for(var i=0;i<ROWS*COLS;i++){gF.appendChild(mk_0307(pixels[i]));gL.appendChild(mk_0307(lap[i]));gG.appendChild(mk_0307(realc[i]));}
   }
-  document.getElementById('ep0307_btn_new').onclick=function(){gen_0307();render_0307();};
-  gen_0307(); render_0307();
-},100);
+
+  function ep0307TC(g){return g>140?'#111':'#eee';}
+
+  function ep0307HighlightCross(tr,tc,on){
+    const cells=document.getElementById('ep0307-grid-f').children;
+    for(let i=0;i<EP0307_N;i++){
+      if(!cells[i]) continue;
+      const p=ep0307Pixels[i];
+      cells[i].style.background=`rgb(${p},${p},${p})`;
+      cells[i].style.color=ep0307TC(p);
+      cells[i].style.boxShadow='none';
+    }
+    if(on){
+      const center=tr*EP0307_COLS+tc;
+      const neighbors=[[tr-1,tc],[tr+1,tc],[tr,tc-1],[tr,tc+1]];
+      if(cells[center]){
+        cells[center].style.background='#FAECE7';
+        cells[center].style.color='#712B13';
+        cells[center].style.boxShadow='0 0 0 2px #993C1D inset';
+      }
+      neighbors.forEach(([nr,nc])=>{
+        if(nr>=0&&nr<EP0307_ROWS&&nc>=0&&nc<EP0307_COLS){
+          const ni=nr*EP0307_COLS+nc;
+          if(cells[ni]){
+            cells[ni].style.background='#FAEEDA';
+            cells[ni].style.color='#633806';
+            cells[ni].style.boxShadow='0 0 0 2px #BA7517 inset';
+          }
+        }
+      });
+    }
+  }
+
+  function ep0307ResetDebug(){
+    document.getElementById('ep0307-debug').innerText=
+      'Passe o mouse sobre um pixel interno do resultado para detalhar a equação.';
+  }
+
+  function ep0307Render(){
+    const gf=document.getElementById('ep0307-grid-f');
+    const gl=document.getElementById('ep0307-grid-lap');
+    const gr=document.getElementById('ep0307-grid-result');
+    gf.innerHTML=''; gl.innerHTML=''; gr.innerHTML='';
+
+    for(let i=0;i<EP0307_N;i++){
+      const r=Math.floor(i/EP0307_COLS), c=i%EP0307_COLS;
+      const p=ep0307Pixels[i];
+      const lap=ep0307LapVals[i];
+      const lapV=ep0307LapAbs[i];
+      const res=ep0307Result[i];
+      const isBorder=(r===0||r===EP0307_ROWS-1||c===0||c===EP0307_COLS-1);
+
+      const cf=document.createElement('div');
+      cf.className='ep0307-cell';
+      cf.style.cssText=`background:rgb(${p},${p},${p});color:${ep0307TC(p)};border:0.5px solid rgba(128,128,128,0.15);`;
+      cf.innerText=p;
+      gf.appendChild(cf);
+
+      const cl=document.createElement('div');
+      cl.className='ep0307-cell';
+      if(isBorder){
+        cl.style.cssText=`background:var(--color-background-secondary);color:var(--color-text-secondary);border:0.5px solid var(--color-border-tertiary);`;
+        cl.innerText='—';
+      } else {
+        const lapNorm=lapV;
+        cl.style.cssText=`background:rgb(${lapNorm},${lapNorm},${lapNorm});color:${ep0307TC(lapNorm)};border:0.5px solid rgba(128,128,128,0.15);`;
+        cl.innerText=lap;
+      }
+      gl.appendChild(cl);
+
+      const cr=document.createElement('div');
+      cr.className='ep0307-cell';
+      if(isBorder){
+        cr.style.cssText=`background:#E1F5EE;color:#085041;border:1.5px solid #1D9E75;`;
+        cr.onmouseenter=()=>{
+          document.getElementById('ep0307-debug').innerHTML=
+            `Pixel borda (${r},${c}): valor herdado sem cálculo &nbsp;→&nbsp; <b>${res}</b>`;
+        };
+        cr.onmouseleave=ep0307ResetDebug;
+      } else {
+        cr.style.cssText=`background:rgb(${res},${res},${res});color:${ep0307TC(res)};border:0.5px solid var(--color-border-tertiary);cursor:pointer;`;
+        const _r=r,_c=c,_p=p,_lap=lap,_res=res;
+        const t=ep0307Pixels[(_r-1)*EP0307_COLS+_c];
+        const b=ep0307Pixels[(_r+1)*EP0307_COLS+_c];
+        const l=ep0307Pixels[_r*EP0307_COLS+(_c-1)];
+        const ri=ep0307Pixels[_r*EP0307_COLS+(_c+1)];
+        cr.onmouseenter=()=>{
+          ep0307HighlightCross(_r,_c,true);
+          cr.style.transform='scale(1.12)';
+          cr.style.boxShadow='0 0 0 2px #185FA5 inset';
+          cr.style.background='#E6F1FB';
+          cr.style.color='#0C447C';
+          const sign=ep0307Variant==='subtract'?'−':'+';
+          document.getElementById('ep0307-debug').innerHTML=
+            `∇²f = (${t}+${b}+${l}+${ri}) − 4·${_p} = <b>${_lap}</b> &nbsp;|&nbsp; g = clip(${_p} ${sign} ${_lap}) = <b>${_res}</b>`;
+        };
+        cr.onmouseleave=()=>{
+          ep0307HighlightCross(_r,_c,false);
+          cr.style.transform='scale(1)';
+          cr.style.boxShadow='none';
+          cr.style.background=`rgb(${_res},${_res},${_res})`;
+          cr.style.color=ep0307TC(_res);
+          ep0307ResetDebug();
+        };
+      }
+      cr.innerText=isBorder?res:res;
+      gr.appendChild(cr);
+    }
+  }
+
+  window.ep0307SetVariant=function(v){
+    ep0307Variant=v;
+    document.getElementById('ep0307-btn-v1').classList.toggle('active',v==='subtract');
+    document.getElementById('ep0307-btn-v2').classList.toggle('active',v==='add');
+    document.getElementById('ep0307-formula-label').innerText=
+      v==='subtract'?'g = f − ∇²f':'g = f + ∇²f';
+    ep0307CalcLap();
+    ep0307Render();
+  };
+
+  document.getElementById('ep0307-btn-new').onclick=()=>{ep0307GenPixels();ep0307Render();};
+
+  ep0307GenPixels();
+  ep0307Render();
+})();
 </script>
+
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-03-laplaciano-simulador-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;3.29: Simulador: Operador Laplaciano (w4) para Realce de Bordas
+Figura&nbsp;3.30: Simulador: Operador Laplaciano (w4) para Realce de Bordas
 </figcaption>
 </figure>
 </div>
@@ -4056,7 +4468,7 @@ Figura&nbsp;3.29: Simulador: Operador Laplaciano (w4) para Realce de Bordas
 <section id="ep03_08-gradiente-de-sobel-gx-e-gy" class="level3" data-number="3.12.8">
 <h3 data-number="3.12.8" class="anchored" data-anchor-id="ep03_08-gradiente-de-sobel-gx-e-gy"><span class="header-section-number">3.12.8</span> EP03_08 🧭 Gradiente de Sobel: Gx e Gy</h3>
 <p>Em robôs exploradores de Marte (como o Perseverance), a detecção de obstáculos é realizada em tempo real por câmeras estereoscópicas. O <strong>operador de Sobel</strong> calcula o gradiente direcional da cena e é utilizado no algoritmo de detecção de bordas para identificar rochas, fissuras e desníveis do terreno que possam comprometer a navegação.</p>
-<p>Ver na <a href="#fig-03-sobel-simulador" class="quarto-xref">Figura&nbsp;<span>3.30</span></a> uma simulação deste EP.</p>
+<p>Ver na <a href="#fig-03-sobel-simulador" class="quarto-xref">Figura&nbsp;<span>3.31</span></a> uma simulação deste EP.</p>
 <section id="diretrizes-de-implementação-7" class="level4" data-number="3.12.8.1">
 <h4 data-number="3.12.8.1" class="anchored" data-anchor-id="diretrizes-de-implementação-7"><span class="header-section-number">3.12.8.1</span> 📋 Diretrizes de Implementação</h4>
 <ol type="1">
@@ -4235,7 +4647,7 @@ setTimeout(function(){
 </script>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-03-sobel-simulador-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;3.30: Simulador: Gradiente de Sobel: Gx e Gy
+Figura&nbsp;3.31: Simulador: Gradiente de Sobel: Gx e Gy
 </figcaption>
 </figure>
 </div>
@@ -4263,7 +4675,7 @@ Figura&nbsp;3.30: Simulador: Gradiente de Sobel: Gx e Gy
 <section id="ep03_09-filtro-da-mediana-33" class="level3" data-number="3.12.9">
 <h3 data-number="3.12.9" class="anchored" data-anchor-id="ep03_09-filtro-da-mediana-33"><span class="header-section-number">3.12.9</span> EP03_09 📡 Filtro da Mediana 3×3</h3>
 <p>Imagens de radar de abertura sintética (SAR) usadas em monitoramento ambiental e militar sofrem de um tipo específico de ruído chamado <em>speckle</em>, que possui características similares ao ruído sal e pimenta. O <strong>filtro da mediana</strong> é o método padrão de remoção desse ruído porque preserva as bordas das estruturas enquanto elimina os pontos espúrios.</p>
-<p>Ver na <a href="#fig-03-median-simulador" class="quarto-xref">Figura&nbsp;<span>3.31</span></a> uma simulação deste EP.</p>
+<p>Ver na <a href="#fig-03-median-simulador" class="quarto-xref">Figura&nbsp;<span>3.32</span></a> uma simulação deste EP.</p>
 <section id="diretrizes-de-implementação-8" class="level4" data-number="3.12.9.1">
 <h4 data-number="3.12.9.1" class="anchored" data-anchor-id="diretrizes-de-implementação-8"><span class="header-section-number">3.12.9.1</span> 📋 Diretrizes de Implementação</h4>
 <ol type="1">
@@ -4453,7 +4865,7 @@ setTimeout(function(){
 </script>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-03-median-simulador-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;3.31: Simulador: Filtro da Mediana 3×3
+Figura&nbsp;3.32: Simulador: Filtro da Mediana 3×3
 </figcaption>
 </figure>
 </div>
@@ -4481,7 +4893,7 @@ Figura&nbsp;3.31: Simulador: Filtro da Mediana 3×3
 <section id="ep03_10-unsharp-masking-usm" class="level3" data-number="3.12.10">
 <h3 data-number="3.12.10" class="anchored" data-anchor-id="ep03_10-unsharp-masking-usm"><span class="header-section-number">3.12.10</span> EP03_10 ✨ <em>Unsharp Masking</em> (USM)</h3>
 <p>Em sistemas de digitalização de documentos históricos e obras de arte, a nitidez das imagens é fundamental para leitura de textos manuscritos e detalhes ornamentais. O <strong><em>Unsharp Masking</em> (USM)</strong> é o algoritmo de realce de nitidez padrão utilizado em <em>scanners</em> profissionais e softwares como Adobe Photoshop, controlado pelo parâmetro <span class="math inline">\(k\)</span> que determina a intensidade do realce.</p>
-<p>Ver na <a href="#fig-03-unsharp-simulador" class="quarto-xref">Figura&nbsp;<span>3.32</span></a> uma simulação deste EP.</p>
+<p>Ver na <a href="#fig-03-unsharp-simulador" class="quarto-xref">Figura&nbsp;<span>3.33</span></a> uma simulação deste EP.</p>
 <section id="diretrizes-de-implementação-9" class="level4" data-number="3.12.10.1">
 <h4 data-number="3.12.10.1" class="anchored" data-anchor-id="diretrizes-de-implementação-9"><span class="header-section-number">3.12.10.1</span> 📋 Diretrizes de Implementação</h4>
 <ol type="1">
@@ -4687,7 +5099,7 @@ setTimeout(function(){
 </script>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-03-unsharp-simulador-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;3.32: Simulador: <em>Unsharp Masking</em> (USM)
+Figura&nbsp;3.33: Simulador: <em>Unsharp Masking</em> (USM)
 </figcaption>
 </figure>
 </div>

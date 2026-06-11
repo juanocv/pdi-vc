@@ -634,6 +634,12 @@ class mm:
         return g.astype('uint8')
 
     @staticmethod
+    def laplacian_viz(f, B=np.array([[0,1,0],[1,-4,1],[0,1,0]], dtype=np.float32)):
+        """Retorna visualização normalizada do Laplaciano bruto."""
+        lap = cv2.filter2D(f.astype(np.float32), -1, B, borderType=cv2.BORDER_REPLICATE)
+        return np.clip(np.abs(lap) / np.abs(lap).max() * 255, 0, 255).astype(np.uint8)
+
+    @staticmethod
     def laplacian(f, B=np.array([[0,1,0],[1,-4,1],[0,1,0]], dtype=np.float32)):
         """Realce por Laplaciano via cv2: borda copiada."""
         lap = cv2.filter2D(f.astype(np.float32), -1, B, borderType=cv2.BORDER_REPLICATE)
