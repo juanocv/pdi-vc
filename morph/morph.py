@@ -687,6 +687,78 @@ class mm:
         return np.clip(np.round(np.sqrt(gx**2 + gy**2)), 0, 255).astype('uint8')
 
     @staticmethod
+    def prewitt0(f,
+                Bx=np.array([[-1,0,1],[-1,0,1],[-1,0,1]], dtype=np.float32),
+                By=np.array([[-1,-1,-1],[0,0,0],[1,1,1]], dtype=np.float32)):
+        """Magnitude do gradiente de Prewitt (Python pura): borda zero."""
+        g = np.zeros(f.shape, dtype='uint8')
+        H, W = f.shape
+        for y in range(1, H-1):
+            for x in range(1, W-1):
+                gx = sum(float(f[y+dy, x+dx]) * Bx[dy+1, dx+1]
+                        for dy in [-1,0,1] for dx in [-1,0,1])
+                gy = sum(float(f[y+dy, x+dx]) * By[dy+1, dx+1]
+                        for dy in [-1,0,1] for dx in [-1,0,1])
+                g[y,x] = max(0, min(255, round((gx**2 + gy**2)**0.5)))
+        return g
+
+    @staticmethod
+    def prewitt(f,
+                Bx=np.array([[-1,0,1],[-1,0,1],[-1,0,1]], dtype=np.float32),
+                By=np.array([[-1,-1,-1],[0,0,0],[1,1,1]], dtype=np.float32)):
+        """Magnitude do gradiente de Prewitt via cv2: borda zero."""
+        gx = cv2.filter2D(f.astype(np.float32), -1, Bx,
+                        borderType=cv2.BORDER_ISOLATED)
+        gy = cv2.filter2D(f.astype(np.float32), -1, By,
+                        borderType=cv2.BORDER_ISOLATED)
+        return np.clip(np.round(np.sqrt(gx**2 + gy**2)), 0, 255).astype('uint8')
+
+    @staticmethod
+    def canny0(f, t_low=50, t_high=150, ksize=3, sigma=0):
+        """Detector de Canny (Python pura, didático): Gaussiano → Sobel → NMS → histerese."""
+        from scipy.ndimage import convolve, label
+
+        # 1. suavização
+        k = cv2.getGaussianKernel(ksize, sigma)
+        s = convolve(f.astype(np.float32), k @ k.T)
+
+        # 2. gradiente
+        Bx = np.array([[-1,0,1],[-2,0,2],[-1,0,1]], dtype=np.float32)
+        By = np.array([[-1,-2,-1],[0,0,0],[1,2,1]], dtype=np.float32)
+        gx, gy = convolve(s, Bx), convolve(s, By)
+        mag    = np.sqrt(gx**2 + gy**2)
+        angle  = np.degrees(np.arctan2(gy, gx)) % 180
+
+        # 3. supressão de não-máximos (laço inevitável — acesso por direção)
+        nms = np.zeros_like(mag)
+        H, W = f.shape
+        for y in range(1, H-1):
+            for x in range(1, W-1):
+                a = angle[y, x]
+                if   a < 22.5 or a >= 157.5: n1, n2 = mag[y, x-1],   mag[y, x+1]
+                elif a < 67.5:               n1, n2 = mag[y-1, x+1],  mag[y+1, x-1]
+                elif a < 112.5:              n1, n2 = mag[y-1, x],     mag[y+1, x]
+                else:                        n1, n2 = mag[y-1, x-1],   mag[y+1, x+1]
+                if mag[y, x] >= n1 and mag[y, x] >= n2:
+                    nms[y, x] = mag[y, x]
+
+        # 4. histerese via flood-fill em componentes conectados
+        strong = nms >= t_high
+        weak   = (nms >= t_low) & ~strong
+        labeled, _ = label(weak | strong)
+        keep   = {labeled[y, x] for y, x in zip(*np.where(strong))}
+        out    = np.zeros((H, W), dtype=np.uint8)
+        out[(strong | weak) & np.isin(labeled, list(keep))] = 255
+        return out
+
+    @staticmethod
+    def canny(f, t_low=50, t_high=150, ksize=5, sigma=0):
+        """Detector de Canny via cv2."""
+        blurred = cv2.GaussianBlur(f, (ksize, ksize), sigma)
+        return cv2.Canny(blurred, t_low, t_high)
+
+
+    @staticmethod
     def median0(f, B=np.zeros((3,3), dtype='uint8'), border='copy'):
         """border: 'copy' (padrão) ou 'zero'."""
         g = f.copy() if border == 'copy' else np.zeros_like(f)
