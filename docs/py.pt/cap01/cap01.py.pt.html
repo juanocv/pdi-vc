@@ -1094,7 +1094,7 @@ Figura&nbsp;1.10: Acesso a um pixel específico (r, c) e a representação de su
 <li><strong>Análise de Dados (Tabela de Dados)</strong>: Organização de dados extraídos do texto em tabelas estruturadas, auxiliando na compreensão de exemplos práticos, como a comparação entre diferentes valores de limiar.</li>
 <li><strong><em>Chat</em> Contextualizado</strong>: Permite o questionamento direto sobre o código e a teoria, como: <em>“Como implementar a conversão de RGB para tons de cinza usando os pesos do padrão ITU‑R BT.601?”</em> ou <em>“O que acontece com a imagem binária se eu escolher um limiar T=200 em vez de T=128?”</em>.</li>
 </ul>
-<div id="fig-01-notebooklm" class="lightbox quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" alt="Estúdio do NotebookLM." width="80%">
+<div id="fig-01-notebooklm" class="lightbox quarto-figure quarto-figure-center quarto-float anchored" alt="Estúdio do NotebookLM." width="80%" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-01-notebooklm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="imagens/fig-01-notebooklm.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%">
@@ -1170,7 +1170,7 @@ Figura&nbsp;1.11: Estúdio do NotebookLM.
 <section id="download" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="download"><em>Download</em></h4>
 <p>Baixe <code>morph.py</code> e <code>testsuite.py</code> executando a célula abaixo:</p>
-<div id="02f61d8d" class="cell">
+<div id="65d8a306" class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os, sys, importlib, inspect, urllib.request</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co"># URLs do repositório</span></span>
@@ -1373,7 +1373,7 @@ Três linhas, cada uma com um número real de duas casas decimais (Euclidiana, C
 </table>
 <hr>
 <p><strong>Exemplo de teste de <code>sqrt</code> em Python, com <code>timeit</code> isolando cada operação:</strong></p>
-<div id="2f9ac3c0" class="cell">
+<div id="494517ff" class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> timeit</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1707,7 +1707,7 @@ Figura&nbsp;1.12: Simulador: Distâncias Euclidiana, <em>City-block</em> e <em>C
 <h4 data-number="1.16.1.4" class="anchored" data-anchor-id="python"><span class="header-section-number">1.16.1.4</span> 🐍 Python</h4>
 <p>Basta criar uma célula de código normal e inserir o código Python. A entrada pode ser simulada usando <code>input()</code>, que funciona normalmente.</p>
 <p>Exemplo de célula:</p>
-<div id="dc2c9f24" class="cell">
+<div id="4c2b7334" class="cell">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile EP01_01.py</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Código Python</span></span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>x1,y1,x2,y2 <span class="op">=</span> <span class="bu">int</span>(<span class="bu">input</span>()), <span class="bu">int</span>(<span class="bu">input</span>()), <span class="bu">int</span>(<span class="bu">input</span>()), <span class="bu">int</span>(<span class="bu">input</span>())</span>
@@ -1732,14 +1732,14 @@ Figura&nbsp;1.12: Simulador: Distâncias Euclidiana, <em>City-block</em> e <em>C
 <pre><code>Writing EP01_01.py</code></pre>
 </div>
 </div>
-<div id="01f26090" class="cell">
+<div id="80db8d81" class="cell">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Espera que você digite 4 números inteiros ao executar esta célula.</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co"># No Jupyter ou Google Colab, a mágica %run -i permite que o script leia do teclado.</span></span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co"># No terminal comum, você usaria: python3 EP01_01.py (sem o '!' e sem '%run').</span></span>
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="co"># %run -i EP01_01.py</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="7ef7ca6f" class="cell">
+<div id="54902b65" class="cell">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Envia 4 inteiros como entrada padrão (stdin) para o script EP01_01.py usando um pipe</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>echo <span class="op">-</span>e <span class="st">"0</span><span class="ch">\n</span><span class="st">0</span><span class="ch">\n</span><span class="st">4</span><span class="ch">\n</span><span class="st">4"</span> <span class="op">|</span> python3 EP01_01.py</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1748,7 +1748,7 @@ Figura&nbsp;1.12: Simulador: Distâncias Euclidiana, <em>City-block</em> e <em>C
 4.00</code></pre>
 </div>
 </div>
-<div id="0e3e9b24" class="cell">
+<div id="48b4c234" class="cell">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>TestSuite(<span class="st">"EP01_01.py"</span>).run()</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">✔️ EP01_01.cases já existe em casos/
@@ -1770,7 +1770,7 @@ Figura&nbsp;1.12: Simulador: Distâncias Euclidiana, <em>City-block</em> e <em>C
 <section id="java" class="level4" data-number="1.16.1.5">
 <h4 data-number="1.16.1.5" class="anchored" data-anchor-id="java"><span class="header-section-number">1.16.1.5</span> ☕ Java</h4>
 <p>Para executar Java no Colab, você precisa usar uma célula com o prefixo <code>%%writefile</code> para salvar o código em arquivo, compilar e executar.</p>
-<div id="c5a19be5" class="cell">
+<div id="a4988d3c" class="cell">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile EP01_01.java</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> java.util.Scanner<span class="op">;</span></span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1793,7 +1793,7 @@ Figura&nbsp;1.12: Simulador: Distâncias Euclidiana, <em>City-block</em> e <em>C
 <pre><code>Writing EP01_01.java</code></pre>
 </div>
 </div>
-<div id="d27a6e78" class="cell">
+<div id="1e530a0f" class="cell">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>javac EP01_01.java</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>echo <span class="op">-</span>e <span class="st">"0</span><span class="ch">\n</span><span class="st">0</span><span class="ch">\n</span><span class="st">4</span><span class="ch">\n</span><span class="st">4"</span> <span class="op">|</span> java EP01_01</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1802,7 +1802,7 @@ Figura&nbsp;1.12: Simulador: Distâncias Euclidiana, <em>City-block</em> e <em>C
 4,00</code></pre>
 </div>
 </div>
-<div id="2de6b606" class="cell">
+<div id="992bb1b1" class="cell">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>TestSuite(<span class="st">"EP01_01.java"</span>).run()</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">✔️ EP01_01.cases já existe em casos/
@@ -1824,7 +1824,7 @@ Figura&nbsp;1.12: Simulador: Distâncias Euclidiana, <em>City-block</em> e <em>C
 <section id="c" class="level4" data-number="1.16.1.6">
 <h4 data-number="1.16.1.6" class="anchored" data-anchor-id="c"><span class="header-section-number">1.16.1.6</span> 💻 C</h4>
 <p>De forma similar, use <code>%%writefile</code> para salvar o código, depois compile e execute. Para C, utilizamos o compilador <strong>GCC</strong>.</p>
-<div id="991c8f58" class="cell">
+<div id="e74fba5b" class="cell">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Instalar o compilador GCC e ferramentas de build</span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="co"># O build-essential inclui gcc, g++, make, etc.</span></span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1846,7 +1846,7 @@ W: Problema ao remover o arquivo /var/cache/apt/srcpkgcache.bin - RemoveCaches (
 ✅ Ambiente C/C++ pronto.</code></pre>
 </div>
 </div>
-<div id="cf174391" class="cell">
+<div id="42947ea1" class="cell">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile EP01_01.c</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="co">#include &lt;stdio.h&gt;</span></span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="co">#include &lt;math.h&gt;</span></span>
@@ -1869,7 +1869,7 @@ W: Problema ao remover o arquivo /var/cache/apt/srcpkgcache.bin - RemoveCaches (
 <pre><code>Writing EP01_01.c</code></pre>
 </div>
 </div>
-<div id="417179cf" class="cell">
+<div id="e59e0993" class="cell">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compila o arquivo .c gerando o executável EP01_01</span></span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="co"># -lm é usado para linkar a biblioteca matemática (math.h) se necessário</span></span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1881,7 +1881,7 @@ W: Problema ao remover o arquivo /var/cache/apt/srcpkgcache.bin - RemoveCaches (
 4.00</code></pre>
 </div>
 </div>
-<div id="2994dd47" class="cell">
+<div id="f7301295" class="cell">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>TestSuite(<span class="st">"EP01_01.c"</span>).run()</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">✔️ EP01_01.cases já existe em casos/
@@ -1903,7 +1903,7 @@ W: Problema ao remover o arquivo /var/cache/apt/srcpkgcache.bin - RemoveCaches (
 <section id="c-1" class="level4" data-number="1.16.1.7">
 <h4 data-number="1.16.1.7" class="anchored" data-anchor-id="c-1"><span class="header-section-number">1.16.1.7</span> 💻 C++</h4>
 <p>De forma similar ao Java, use <code>%%writefile</code> para salvar o código, depois compile e execute. Lembre-se de que, no Colab, também é necessário instalar o seguinte:</p>
-<div id="32ec884b" class="cell">
+<div id="942a9e76" class="cell">
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Instalar o compilador G++ para C++</span></span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="co"># O build-essential inclui o g++, make, etc.</span></span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1924,7 +1924,7 @@ W: Problema ao remover o arquivo /var/cache/apt/srcpkgcache.bin - RemoveCaches (
 ✅ Compilador C++ pronto.</code></pre>
 </div>
 </div>
-<div id="a7bd4391" class="cell">
+<div id="a9151c11" class="cell">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile EP01_01.cpp</span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="co">#include &lt;iostream&gt;</span></span>
 <span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="co">#include &lt;iomanip&gt;</span></span>
@@ -1951,7 +1951,7 @@ W: Problema ao remover o arquivo /var/cache/apt/srcpkgcache.bin - RemoveCaches (
 <pre><code>Writing EP01_01.cpp</code></pre>
 </div>
 </div>
-<div id="6b5feb2a" class="cell">
+<div id="4c67c71d" class="cell">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>g<span class="op">++</span> EP01_01.cpp <span class="op">-</span>o EP01_01</span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>echo <span class="op">-</span>e <span class="st">"0</span><span class="ch">\n</span><span class="st">0</span><span class="ch">\n</span><span class="st">4</span><span class="ch">\n</span><span class="st">4"</span> <span class="op">|</span> .<span class="op">/</span>EP01_01</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1960,7 +1960,7 @@ W: Problema ao remover o arquivo /var/cache/apt/srcpkgcache.bin - RemoveCaches (
 4.00</code></pre>
 </div>
 </div>
-<div id="f7b933fb" class="cell">
+<div id="c7276f37" class="cell">
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>TestSuite(<span class="st">"EP01_01.cpp"</span>).run()</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">✔️ EP01_01.cases já existe em casos/
@@ -1982,7 +1982,7 @@ W: Problema ao remover o arquivo /var/cache/apt/srcpkgcache.bin - RemoveCaches (
 <section id="javascript-node.js" class="level4" data-number="1.16.1.8">
 <h4 data-number="1.16.1.8" class="anchored" data-anchor-id="javascript-node.js"><span class="header-section-number">1.16.1.8</span> 🌐 JavaScript (Node.js)</h4>
 <p>Para JavaScript, use <code>%%writefile</code> para criar o arquivo e execute com Node:</p>
-<div id="b327d8b4" class="cell">
+<div id="b97a001e" class="cell">
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile EP01_01.js</span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>function escreva(s) { <span class="cf">try</span> { document.write(s <span class="op">+</span> <span class="st">"&lt;br&gt;"</span>)<span class="op">;</span> } catch(e) { console.log(s)<span class="op">;</span> } }</span>
 <span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -2005,7 +2005,7 @@ W: Problema ao remover o arquivo /var/cache/apt/srcpkgcache.bin - RemoveCaches (
 <pre><code>Writing EP01_01.js</code></pre>
 </div>
 </div>
-<div id="abcfd482" class="cell">
+<div id="6416c412" class="cell">
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>TestSuite(<span class="st">"EP01_01.js"</span>).run()</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">✔️ EP01_01.cases já existe em casos/
@@ -2034,7 +2034,7 @@ O programa deve ler <strong>quatro números</strong> (x1, y1, x2, y2) e exibir a
 <span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> dados[<span class="dv">1</span>]; y1 <span class="ot">&lt;-</span> dados[<span class="dv">2</span>]; x2 <span class="ot">&lt;-</span> dados[<span class="dv">3</span>]; y2 <span class="ot">&lt;-</span> dados[<span class="dv">4</span>]</span>
 <span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>dist <span class="ot">&lt;-</span> <span class="fu">sqrt</span>((x2 <span class="sc">-</span> x1)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (y2 <span class="sc">-</span> y1)<span class="sc">^</span><span class="dv">2</span>)</span>
 <span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">"%.2f"</span>, dist))</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="a2697764" class="cell">
+<div id="a238e1f5" class="cell">
 <div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Instalar o R e o Rscript</span></span>
 <span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="co"># O r-base instala o ambiente R completo, incluindo o Rscript</span></span>
 <span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -2057,7 +2057,7 @@ W: Problema ao remover o arquivo /var/cache/apt/srcpkgcache.bin - RemoveCaches (
 </div>
 </div>
 <p>Para testar da mesma forma que nos exemplos anteriores, deve-se usar a entrada padrão (stdin) no terminal ou adaptar o código conforme abaixo:</p>
-<div id="338858db" class="cell">
+<div id="c451927f" class="cell">
 <div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile EP01_01.r</span>
 <span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>dados <span class="op">&lt;-</span> scan(<span class="bu">file</span> <span class="op">=</span> <span class="st">"stdin"</span>, n <span class="op">=</span> <span class="dv">4</span>, quiet <span class="op">=</span> TRUE)</span>
 <span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>dx <span class="op">&lt;-</span> <span class="bu">abs</span>(dados[<span class="dv">3</span>] <span class="op">-</span> dados[<span class="dv">1</span>])</span>
@@ -2072,7 +2072,7 @@ W: Problema ao remover o arquivo /var/cache/apt/srcpkgcache.bin - RemoveCaches (
 <pre><code>Writing EP01_01.r</code></pre>
 </div>
 </div>
-<div id="7f9fe8f8" class="cell">
+<div id="1717297c" class="cell">
 <div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>echo <span class="op">-</span>e <span class="st">"0</span><span class="ch">\n</span><span class="st">0</span><span class="ch">\n</span><span class="st">4</span><span class="ch">\n</span><span class="st">4"</span> <span class="op">|</span> Rscript EP01_01.r</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>5.66
@@ -2080,7 +2080,7 @@ W: Problema ao remover o arquivo /var/cache/apt/srcpkgcache.bin - RemoveCaches (
 4.00</code></pre>
 </div>
 </div>
-<div id="870fb6a5" class="cell">
+<div id="6e3ec1df" class="cell">
 <div class="sourceCode cell-code" id="cb57"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>TestSuite(<span class="st">"EP01_01.r"</span>).run()</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">✔️ EP01_01.cases já existe em casos/
@@ -2386,14 +2386,14 @@ Figura&nbsp;1.13: Simulador: Desempenho Preditivo — Métricas de ML
 </figure>
 </div>
 </div>
-<div id="539b8fcb" class="cell">
+<div id="32d861d8" class="cell">
 <div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile EP01_02.py</span>
 <span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="co"># sua solução</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Writing EP01_02.py</code></pre>
 </div>
 </div>
-<div id="2aedfa3f" class="cell">
+<div id="6204e6ad" class="cell">
 <div class="sourceCode cell-code" id="cb60"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>TestSuite(<span class="st">"EP01_02.py"</span>).run()</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">✔️ EP01_02.cases já existe em casos/
@@ -3141,14 +3141,14 @@ Figura&nbsp;1.14: Simulador: Mean Average Precision (mAP) - Curva P.S
 
 
 
-<div id="890fcbaa" class="cell">
+<div id="f9bd21b4" class="cell">
 <div class="sourceCode cell-code" id="cb63"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile EP01_03.py</span>
 <span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a><span class="co"># sua solução</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Writing EP01_03.py</code></pre>
 </div>
 </div>
-<div id="baf579ac" class="cell">
+<div id="288e0bc8" class="cell">
 <div class="sourceCode cell-code" id="cb65"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>TestSuite(<span class="st">"EP01_03.py"</span>).run()</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">✔️ EP01_03.cases já existe em casos/
@@ -3353,14 +3353,14 @@ Figura&nbsp;1.15: Simulador: Estatísticas de Pixels
 </figure>
 </div>
 </div>
-<div id="552086f3" class="cell">
+<div id="9339b885" class="cell">
 <div class="sourceCode cell-code" id="cb66"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile EP01_04.py</span>
 <span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="co"># sua solução</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Writing EP01_04.py</code></pre>
 </div>
 </div>
-<div id="efa05fd4" class="cell">
+<div id="4391ab03" class="cell">
 <div class="sourceCode cell-code" id="cb68"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>TestSuite(<span class="st">"EP01_04.py"</span>).run()</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">✔️ EP01_04.cases já existe em casos/
@@ -3543,14 +3543,14 @@ Figura&nbsp;1.16: Simulador: Transformação de Negativo
 </figure>
 </div>
 </div>
-<div id="24a28cde" class="cell">
+<div id="2bdf9119" class="cell">
 <div class="sourceCode cell-code" id="cb69"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile EP01_05.py</span>
 <span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="co"># sua solução</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Writing EP01_05.py</code></pre>
 </div>
 </div>
-<div id="3d948a82" class="cell">
+<div id="0b96e638" class="cell">
 <div class="sourceCode cell-code" id="cb71"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>TestSuite(<span class="st">"EP01_05.py"</span>).run()</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">✔️ EP01_05.cases já existe em casos/
@@ -3773,14 +3773,14 @@ Figura&nbsp;1.17: Simulador: Percepção de Cor e Pesos ITU-R
 </figure>
 </div>
 </div>
-<div id="9e890dba" class="cell">
+<div id="b5c6fb2c" class="cell">
 <div class="sourceCode cell-code" id="cb72"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile EP01_06.py</span>
 <span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a><span class="co"># sua solução</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Writing EP01_06.py</code></pre>
 </div>
 </div>
-<div id="b63636a3" class="cell">
+<div id="a8275c9a" class="cell">
 <div class="sourceCode cell-code" id="cb74"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>TestSuite(<span class="st">"EP01_06.py"</span>).run()</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">✔️ EP01_06.cases já existe em casos/
@@ -3973,14 +3973,14 @@ Figura&nbsp;1.18: Simulador: Limiarização Interativa
 </figure>
 </div>
 </div>
-<div id="46c17fb7" class="cell">
+<div id="9416a17d" class="cell">
 <div class="sourceCode cell-code" id="cb75"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile EP01_07.py</span>
 <span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a><span class="co"># sua solução</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Writing EP01_07.py</code></pre>
 </div>
 </div>
-<div id="d823d962" class="cell">
+<div id="5459567d" class="cell">
 <div class="sourceCode cell-code" id="cb77"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>TestSuite(<span class="st">"EP01_07.py"</span>).run()</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">✔️ EP01_07.cases já existe em casos/
@@ -4225,14 +4225,14 @@ Figura&nbsp;1.19: Simulador: Ajuste de Brilho e Contraste
 </figure>
 </div>
 </div>
-<div id="bd6dea18" class="cell">
+<div id="49584f2f" class="cell">
 <div class="sourceCode cell-code" id="cb78"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile EP01_08.py</span>
 <span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a><span class="co"># sua solução</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Writing EP01_08.py</code></pre>
 </div>
 </div>
-<div id="c842d770" class="cell">
+<div id="9deabf24" class="cell">
 <div class="sourceCode cell-code" id="cb80"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>TestSuite(<span class="st">"EP01_08.py"</span>).run()</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">✔️ EP01_08.cases já existe em casos/
@@ -4416,14 +4416,14 @@ Figura&nbsp;1.20: Simulador: Gerador de Xadrez
 </figure>
 </div>
 </div>
-<div id="68f4ae3d" class="cell">
+<div id="a05050d7" class="cell">
 <div class="sourceCode cell-code" id="cb81"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile EP01_09.py</span>
 <span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a><span class="co"># sua solução</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Writing EP01_09.py</code></pre>
 </div>
 </div>
-<div id="b419aff4" class="cell">
+<div id="85b9b9ef" class="cell">
 <div class="sourceCode cell-code" id="cb83"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>TestSuite(<span class="st">"EP01_09.py"</span>).run()</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">✔️ EP01_09.cases já existe em casos/
@@ -4624,7 +4624,7 @@ Nota
 <p>O arquivo necessário para este EP será baixado automaticamente do repositório por meio do seguinte código:</p>
 </div>
 </div>
-<div id="a8654ba4" class="cell">
+<div id="78a8e181" class="cell">
 <div class="sourceCode cell-code" id="cb84"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os, urllib.request</span>
 <span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a>BASE_URL <span class="op">=</span> <span class="st">"https://raw.githubusercontent.com/fzampirolli/pdi-vc/master/all/cap01/imagens"</span></span>
@@ -4646,14 +4646,14 @@ Nota
 <pre><code>✅ Arquivo baixado: aula01fig03b.pgm</code></pre>
 </div>
 </div>
-<div id="eafde1f4" class="cell">
+<div id="8842225e" class="cell">
 <div class="sourceCode cell-code" id="cb86"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile EP01_10.py</span>
 <span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a><span class="co"># sua solução</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Writing EP01_10.py</code></pre>
 </div>
 </div>
-<div id="d2b4622e" class="cell">
+<div id="654a8814" class="cell">
 <div class="sourceCode cell-code" id="cb88"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>TestSuite(<span class="st">"EP01_10.py"</span>).run()</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">✔️ EP01_10.cases já existe em casos/
@@ -4879,14 +4879,14 @@ Figura&nbsp;1.22: Simulador: Filtro de Máximo Local 1D
 </figure>
 </div>
 </div>
-<div id="43da44b9" class="cell">
+<div id="2a011e9d" class="cell">
 <div class="sourceCode cell-code" id="cb89"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile EP01_11.py</span>
 <span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a><span class="co"># sua solução</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Writing EP01_11.py</code></pre>
 </div>
 </div>
-<div id="eef81aa5" class="cell">
+<div id="619edc5d" class="cell">
 <div class="sourceCode cell-code" id="cb91"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a>TestSuite(<span class="st">"EP01_11.py"</span>).run()</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">✔️ EP01_11.cases já existe em casos/
