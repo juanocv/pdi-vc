@@ -1334,9 +1334,9 @@ Kernel 3×3 de média:
 Correlação no pixel central [1,1]:       103.0  (original: 107)
 
 Tempos na imagem 1324x1242:
-  mm.conv0 (laços Python): 5.738 s
-  mm.conv  (cv2.filter2D): 0.00214 s
-  Aceleração:              2680× mais rápido
+  mm.conv0 (laços Python): 5.963 s
+  mm.conv  (cv2.filter2D): 0.00213 s
+  Aceleração:              2796× mais rápido
   Diferença máxima:        39 (bordas com padding diferente)</code></pre>
 </div>
 <div class="cell-output cell-output-display">
@@ -1557,7 +1557,7 @@ g = f + k\,(f - f_{\text{suave}}), \quad k &gt; 0
 <p>O <a href="#fig-03-filtrage1d" class="quarto-xref">Figura&nbsp;<span>3.15</span></a> ilustra esse processo em um sinal 1D sintético com três estruturas distintas: um degrau largo, um pico fino e uma rampa suave. No painel ①, o sinal original <span class="math inline">\(f(x)\)</span>; no ②, a versão suavizada <span class="math inline">\(f_{\text{suave}}(x)\)</span> obtida por média móvel — note como o pico fino é atenuado. O painel ③ exibe o resíduo <span class="math inline">\(f - f_{\text{suave}}\)</span>, que retém apenas as transições abruptas. Por fim, o painel ④ mostra <span class="math inline">\(g(x)\)</span>: o pico, antes atenuado, é restaurado e amplificado em relação ao original. Ajuste <span class="math inline">\(k\)</span> e o tamanho da janela para observar o <em>trade-off</em> entre nitidez e amplificação de ruído.</p>
 <p>Os filtros de realce formalizam essa ideia diretamente no <em>kernel</em>, sem precisar de duas etapas separadas.</p>
 <div id="cell-fig-03-filtrage1d" class="cell">
-<div id="fig-03-filtrage1d" class="cell-output cell-output-display quarto-figure quarto-figure-center quarto-float anchored" data-execution_count="19">
+<div id="fig-03-filtrage1d" class="cell-output cell-output-display quarto-figure quarto-figure-center quarto-float anchored" data-execution_count="149">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-03-filtrage1d-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 
@@ -1998,19 +1998,18 @@ G_y = \begin{bmatrix} -1 &amp; -1 &amp; -1 \\ 0 &amp; 0 &amp; 0 \\ 1 &amp; 1 &am
 \tag{3.22}\]</span></span></p>
 <p>A magnitude e a direção do gradiente seguem as mesmas equações do Sobel (<a href="#eq-03-gradiente" class="quarto-xref">Equação&nbsp;<span>3.20</span></a> e <a href="#eq-03-direcao" class="quarto-xref">Equação&nbsp;<span>3.21</span></a>). A diferença prática é que o Prewitt é ligeiramente mais sensível ao ruído — a suavização perpendicular uniforme pondera menos o pixel central da linha — mas computacionalmente mais simples. Em imagens com baixo ruído os resultados são equivalentes.</p>
 <div id="cell-fig-03-prewitt" class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>Kx <span class="op">=</span> np.array([[<span class="op">-</span><span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>],[<span class="op">-</span><span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>],[<span class="op">-</span><span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>]], dtype<span class="op">=</span>np.float64)</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>Ky <span class="op">=</span> np.array([[<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>],[<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>],[<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>]], dtype<span class="op">=</span>np.float64)</span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>prewittx <span class="op">=</span> cv2.filter2D(img_gray_crop.astype(np.float64), <span class="op">-</span><span class="dv">1</span>, Kx)</span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>prewitty <span class="op">=</span> cv2.filter2D(img_gray_crop.astype(np.float64), <span class="op">-</span><span class="dv">1</span>, Ky)</span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>magnitude_p <span class="op">=</span> np.sqrt(prewittx<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> prewitty<span class="op">**</span><span class="dv">2</span>)</span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>mm.show(</span>
-<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>    [img_gray_crop, norm255(np.<span class="bu">abs</span>(prewittx)),</span>
-<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>     norm255(np.<span class="bu">abs</span>(prewitty)), norm255(magnitude_p)],</span>
-<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>    titles<span class="op">=</span>[<span class="st">"Original"</span>, <span class="st">"Gx"</span>, <span class="st">"Gy"</span>, <span class="st">"Magnitude |∇f|"</span>],</span>
-<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>    cols<span class="op">=</span><span class="dv">4</span></span>
-<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>Kx <span class="op">=</span> np.array([[<span class="op">-</span><span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>],[<span class="op">-</span><span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>],[<span class="op">-</span><span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>]], dtype<span class="op">=</span>np.float32)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>Ky <span class="op">=</span> np.array([[<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>],[<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>],[<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>]], dtype<span class="op">=</span>np.float32)</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>f  <span class="op">=</span> img_gray_crop.astype(np.float32)</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>mm.show(</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>    [img_gray_crop,</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>     norm255(np.<span class="bu">abs</span>(cv2.filter2D(f, <span class="op">-</span><span class="dv">1</span>, Kx))),</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>     norm255(np.<span class="bu">abs</span>(cv2.filter2D(f, <span class="op">-</span><span class="dv">1</span>, Ky))),</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>     mm.prewitt(img_gray_crop)],</span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>    titles<span class="op">=</span>[<span class="st">"Original"</span>, <span class="st">"Gx"</span>, <span class="st">"Gy"</span>, <span class="st">"Magnitude |∇f|"</span>],</span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>    cols<span class="op">=</span><span class="dv">4</span></span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div id="fig-03-prewitt" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -2165,27 +2164,17 @@ Figura&nbsp;3.21: <em>Unsharp Masking</em> na imagem do leopardo com σ=1 e k va
 </section>
 <section id="detector-de-canny" class="level3" data-number="3.6.5">
 <h3 data-number="3.6.5" class="anchored" data-anchor-id="detector-de-canny"><span class="header-section-number">3.6.5</span> Detector de Canny</h3>
-<p>O Canny é um detector de bordas em múltiplos estágios que produz bordas <strong>finas, conectadas e com baixa taxa de falsos positivos</strong>. O pipeline é:</p>
-<ol type="1">
-<li><strong>Suavização Gaussiana</strong> — atenua ruído antes da diferenciação;</li>
-<li><strong>Gradiente de Sobel</strong> — calcula magnitude e direção em cada pixel;</li>
-<li><strong>Supressão de não-máximos</strong> — afina bordas mantendo apenas o pixel de maior magnitude ao longo da direção do gradiente;</li>
-<li><strong>Histerese por duplo limiar</strong> — pixels acima de <span class="math inline">\(T_{high}\)</span> são bordas certas; pixels entre <span class="math inline">\(T_{low}\)</span> e <span class="math inline">\(T_{high}\)</span> são bordas apenas se conectados a uma borda certa; abaixo de <span class="math inline">\(T_{low}\)</span> são descartados.</li>
-</ol>
-<p>O resultado é uma máscara binária com bordas de espessura 1 pixel, o que o distingue fundamentalmente de Sobel e Prewitt (que retornam mapas de gradiente contínuos).</p>
+<p>O Canny combina quatro etapas em sequência — suavização Gaussiana, gradiente de Sobel, supressão de não-máximos e histerese por duplo limiar — para produzir bordas <strong>finas, binárias e conectadas</strong>. Diferente de Sobel e Prewitt, o resultado não é um mapa de gradiente contínuo, mas uma máscara onde cada pixel é borda ou não.</p>
+<p>O parâmetro central é o par de limiares <span class="math inline">\((T_{low}, T_{high})\)</span>. Pixels com gradiente acima de <span class="math inline">\(T_{high}\)</span> são bordas certas; abaixo de <span class="math inline">\(T_{low}\)</span>, descartados. Os pixels ambíguos — entre os dois limiares — são decididos por <strong>histerese</strong>: tornam-se borda se estiverem conectados a uma borda certa, e descartados caso contrário. Isso evita tanto a perda de trechos fracos de bordas reais quanto a inclusão de ruído isolado. Uma heurística comum é <span class="math inline">\(T_{high} = 3 \times T_{low}\)</span>.</p>
 <div id="cell-fig-03-canny" class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pré-suavização opcional — Canny já suaviza internamente</span></span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>img_blur <span class="op">=</span> cv2.GaussianBlur(img_gray_crop, (<span class="dv">5</span>,<span class="dv">5</span>), <span class="dv">0</span>)</span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>canny_low  <span class="op">=</span> cv2.Canny(img_blur, threshold1<span class="op">=</span><span class="dv">30</span>,  threshold2<span class="op">=</span><span class="dv">90</span>)</span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>canny_mid  <span class="op">=</span> cv2.Canny(img_blur, threshold1<span class="op">=</span><span class="dv">60</span>,  threshold2<span class="op">=</span><span class="dv">180</span>)</span>
-<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>canny_high <span class="op">=</span> cv2.Canny(img_blur, threshold1<span class="op">=</span><span class="dv">120</span>, threshold2<span class="op">=</span><span class="dv">240</span>)</span>
-<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>mm.show(</span>
-<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>    [img_gray_crop, canny_low, canny_mid, canny_high],</span>
-<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>    titles<span class="op">=</span>[<span class="st">"Original"</span>, <span class="st">"Canny (30/90)"</span>, <span class="st">"Canny (60/180)"</span>, <span class="st">"Canny (120/240)"</span>],</span>
-<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>    cols<span class="op">=</span><span class="dv">4</span></span>
-<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>mm.show(</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>    [img_gray_crop,</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>     mm.canny(img_gray_crop, <span class="dv">30</span>,  <span class="dv">90</span>),</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>     mm.canny(img_gray_crop, <span class="dv">60</span>,  <span class="dv">180</span>),</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>     mm.canny(img_gray_crop, <span class="dv">120</span>, <span class="dv">240</span>)],</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>    titles<span class="op">=</span>[<span class="st">"Original"</span>, <span class="st">"Canny (30/90)"</span>, <span class="st">"Canny (60/180)"</span>, <span class="st">"Canny (120/240)"</span>],</span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>    cols<span class="op">=</span><span class="dv">4</span></span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div id="fig-03-canny" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
