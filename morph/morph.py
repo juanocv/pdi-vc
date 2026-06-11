@@ -634,26 +634,36 @@ class mm:
         return g.astype('uint8')
 
     @staticmethod
+    def laplacian_viz0(f, B=np.array([[0,1,0],[1,-4,1],[0,1,0]], dtype=np.float32)):
+        """Visualização do Laplaciano bruto (Python pura): normaliza |lap| para [0,255]."""
+        g = np.zeros_like(f, dtype=np.float32)
+        r = B.shape[0] // 2
+        for y in range(r, f.shape[0]-r):
+            for x in range(r, f.shape[1]-r):
+                viz = list(mm._viz(f, B, y, x))
+                if len(viz) == B.size:
+                    g[y,x] = sum(int(f[vy,vx]) * bv for vy,vx,bv in viz)
+        mx = np.abs(g).max() or 1
+        return np.clip(np.abs(g) / mx * 255, 0, 255).astype(np.uint8)
+                                                            
+    @staticmethod
     def laplacian_viz(f, B=np.array([[0,1,0],[1,-4,1],[0,1,0]], dtype=np.float32)):
-        """Retorna visualização normalizada do Laplaciano bruto."""
-        lap = cv2.filter2D(f.astype(np.float32), -1, B, borderType=cv2.BORDER_REPLICATE)
+        """Visualização do Laplaciano bruto via cv2: normaliza |lap| para [0,255]."""
+        lap = cv2.filter2D(f.astype(np.float32), -1, B)
         return np.clip(np.abs(lap) / np.abs(lap).max() * 255, 0, 255).astype(np.uint8)
 
     @staticmethod
     def laplacian(f, B=np.array([[0,1,0],[1,-4,1],[0,1,0]], dtype=np.float32)):
         """Realce por Laplaciano via cv2: borda copiada."""
-        lap = cv2.filter2D(f.astype(np.float32), -1, B, borderType=cv2.BORDER_REPLICATE)
+        lap = cv2.filter2D(f.astype(np.float32), -1, B)
         out = np.clip(f.astype(np.float32) - lap, 0, 255).astype('uint8')
-        r = B.shape[0] // 2
-        out[:r,:] = f[:r,:]; out[-r:,:] = f[-r:,:]
-        out[:,:r] = f[:,:r]; out[:,-r:] = f[:,-r:]
         return out
 
     @staticmethod
-    def sobel0(f):
+    def sobel0(f,
+            Bx=np.array([[-1,0,1],[-2,0,2],[-1,0,1]], dtype=np.float32),
+            By=np.array([[-1,-2,-1],[0,0,0],[1,2,1]], dtype=np.float32)):
         """Magnitude do gradiente de Sobel (Python pura): borda zero."""
-        Bx = np.array([[-1,0,1],[-2,0,2],[-1,0,1]], dtype=np.float32)
-        By = np.array([[-1,-2,-1],[0,0,0],[1,2,1]], dtype=np.float32)
         g = np.zeros(f.shape, dtype='uint8')
         H, W = f.shape
         for y in range(1, H-1):
@@ -666,10 +676,14 @@ class mm:
         return g
 
     @staticmethod
-    def sobel(f):
+    def sobel(f,
+            Bx=np.array([[-1,0,1],[-2,0,2],[-1,0,1]], dtype=np.float32),
+            By=np.array([[-1,-2,-1],[0,0,0],[1,2,1]], dtype=np.float32)):
         """Magnitude do gradiente de Sobel via cv2: borda zero."""
-        gx = cv2.Sobel(f, cv2.CV_32F, 1, 0, ksize=3, borderType=cv2.BORDER_ISOLATED)
-        gy = cv2.Sobel(f, cv2.CV_32F, 0, 1, ksize=3, borderType=cv2.BORDER_ISOLATED)
+        gx = cv2.filter2D(f.astype(np.float32), -1, Bx,
+                        borderType=cv2.BORDER_ISOLATED)
+        gy = cv2.filter2D(f.astype(np.float32), -1, By,
+                        borderType=cv2.BORDER_ISOLATED)
         return np.clip(np.round(np.sqrt(gx**2 + gy**2)), 0, 255).astype('uint8')
 
     @staticmethod
@@ -691,29 +705,39 @@ class mm:
 
 
     @staticmethod
-    def usm0(f, k=1.0):
-        """Unsharp Masking (Python pura): g = clip(round(f + k*(f - mean3x3))), borda copiada."""
+    def usm0(f, k=1.0, w=None):
+        """Unsharp Masking (Python pura): g = clip(round(f + k*(f - mean))), borda copiada."""
+        if w is None:
+            a, b = 1, 1
+            def blur_pixel(f, i, j):
+                return f[i-1:i+2, j-1:j+2].mean()
+        else:
+            a, b = w.shape[0] // 2, w.shape[1] // 2
+            def blur_pixel(f, i, j):
+                return (w * f[i-a:i+a+1, j-b:j+b+1]).sum()
+
         L, C = f.shape
         fbar = f.copy().astype(float)
-        for i in range(1, L-1):
-            for j in range(1, C-1):
-                fbar[i,j] = f[i-1:i+2, j-1:j+2].mean()
+        for i in range(a, L-a):
+            for j in range(b, C-b):
+                fbar[i,j] = blur_pixel(f, i, j)
+
         m = f.astype(float) - fbar
         g = f.copy().astype(float)
-        for i in range(1, L-1):
-            for j in range(1, C-1):
+        for i in range(a, L-a):
+            for j in range(b, C-b):
                 g[i,j] = max(0, min(255, round(float(f[i,j]) + k * m[i,j])))
         return g.astype('uint8')
 
     @staticmethod
-    def usm(f, k=1.0):
-        """Unsharp Masking via cv2: g = clip(round(f + k*(f - mean3x3))), borda copiada."""
-        fbar = cv2.blur(f, (3,3))
-        m = f.astype(np.float32) - fbar.astype(np.float32)
-        g = np.clip(np.round(f.astype(np.float32) + k * m), 0, 255).astype('uint8')
-        g[:1,:] = f[:1,:]; g[-1:,:] = f[-1:,:]
-        g[:,:1] = f[:,:1]; g[:,-1:] = f[:,-1:]
-        return g
+    def usm(f, k=1.0, w=None):
+        """Unsharp Masking via cv2: g = clip(round(f + k*(f - blur))), borda copiada.
+        w: kernel de desfoque opcional (padrão: média 3×3)."""
+        if w is None:
+            w = np.ones((3, 3), dtype=np.float32) / 9.0
+        fbar = cv2.filter2D(f.astype(np.float32), -1, w)
+        m = f.astype(np.float32) - fbar
+        return np.clip(np.round(f.astype(np.float32) + k * m), 0, 255).astype('uint8')
 
 
     # ── EROSÃO / DILATAÇÃO ───────────────────────────────────────────────────
