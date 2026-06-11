@@ -749,7 +749,7 @@ Tabela&nbsp;3.1: Algoritmo de equalização de histograma.
 </tr>
 <tr class="even">
 <td style="text-align: center;">4</td>
-<td style="text-align: left;"><strong>Mapeamento (LUT)</strong></td>
+<td style="text-align: left;"><strong><em>Look-Up Table</em> (mapeamento)</strong></td>
 <td style="text-align: left;"><span class="math inline">\(\text{lut}[k] \leftarrow \text{round}(\text{cdf}[k] \times (L-1))\)</span></td>
 </tr>
 <tr class="odd">
@@ -1277,7 +1277,7 @@ Desempenho: laços Python vs.&nbsp;operações vetorizadas
 <div class="callout-body-container callout-body">
 <p>A função <code>mm.conv0</code> implementa a correlação diretamente em Python por meio de laços aninhados. Embora essa abordagem seja adequada para fins didáticos, ela executa um grande número de operações e torna-se lenta para imagens maiores.</p>
 <p>Já <code>mm.conv</code> utiliza <code>cv2.filter2D</code>, implementado em C++ e otimizado para operações matriciais. No exemplo apresentado, a versão vetorizada foi mais de <strong>3000 vezes mais rápida</strong> que a implementação didática, produzindo um resultado visualmente equivalente.</p>
-<p>As diferenças numéricas observadas concentram-se principalmente nas bordas da imagem. Em <code>mm.conv0</code>, os pixels da borda permanecem inalterados, enquanto <code>cv2.filter2D</code> utiliza uma estratégia de reflexão das bordas (<code>cv2.BORDER_REFLECT_101</code>).</p>
+<p>As diferenças numéricas observadas concentram-se principalmente nas bordas da imagem. Em <code>mm.conv0</code>, os pixels da borda permanecem inalterados, enquanto <code>mm.conv</code> utiliza uma estratégia de reflexão das bordas (<code>cv2.BORDER_REFLECT_101</code>, padrão do <code>cv2.filter2D</code>).</p>
 <p>Por isso, <code>mm.conv0</code> deve ser utilizado para compreender o algoritmo, enquanto <code>mm.conv</code> é a opção recomendada para aplicações práticas.</p>
 </div>
 </div>
@@ -1332,9 +1332,9 @@ Kernel 3×3 de média:
 Correlação no pixel central [1,1]:       103.0  (original: 107)
 
 Tempos na imagem 1324x1242:
-  mm.conv0 (laços Python): 7.383 s
-  mm.conv  (cv2.filter2D): 0.00219 s
-  Aceleração:              3364× mais rápido
+  mm.conv0 (laços Python): 7.095 s
+  mm.conv  (cv2.filter2D): 0.00216 s
+  Aceleração:              3284× mais rápido
   Diferença máxima:        39 (bordas com padding diferente)</code></pre>
 </div>
 <div class="cell-output cell-output-display">
@@ -1344,7 +1344,7 @@ Tempos na imagem 1324x1242:
 <img src="cap03.py.pt_files/figure-html/fig-03-convolucao-passo-output-2.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-03-convolucao-passo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;3.10: Correlação com kernel de média 3×3: versão didática (mm.conv0) vs.&nbsp;vetorizada (mm.conv via cv2.filter2D). A diferença máxima de 39 ocorre nas bordas.
+Figura&nbsp;3.10: Correlação com <em>kernel</em> de média 3×3: versão didática (mm.conv0) vs.&nbsp;vetorizada (mm.conv via cv2.filter2D). A diferença máxima de 39 ocorre nas bordas.
 </figcaption>
 </figure>
 </div>
@@ -1415,7 +1415,7 @@ w_{\text{média}} = \frac{1}{n^2}
 \end{bmatrix}_{n \times n}
 \tag{3.13}\]</span></span></p>
 <p>Cada pixel de saída é a média aritmética dos <span class="math inline">\(n^2\)</span> pixels de sua vizinhança. Note que a soma dos coeficientes é sempre 1 — o brilho médio da imagem é preservado. <em>Kernels</em> maiores produzem suavização mais agressiva, mas borram progressivamente as bordas.</p>
-<p>A <a href="#fig-03-media" class="quarto-xref">Figura&nbsp;<span>3.12</span></a> compara o efeito de filtros de média com <em>kernels</em> de tamanhos <span class="math inline">\(3\times3\)</span>, <span class="math inline">\(7\times7\)</span> e <span class="math inline">\(15\times15\)</span> aplicados a um detalhe da imagem do leopardo. Em todos os casos, a filtragem foi realizada por convolução com <em>kernels</em> uniformes, nos quais todos os pixels da vizinhança possuem o mesmo peso. À medida que o tamanho do <em>kernel</em> aumenta, um número maior de pixels contribui para o cálculo de cada saída, resultando em uma suavização mais intensa. Consequentemente, o ruído é reduzido, mas detalhes finos e bordas tornam-se progressivamente mais borrados.</p>
+<p>A <a href="#fig-03-media" class="quarto-xref">Figura&nbsp;<span>3.12</span></a> mostra o efeito do filtro de média com <em>kernels</em> 3$, <span class="math inline">\(7\times7\)</span> e <span class="math inline">\(15\times15\)</span> sobre um detalhe da imagem do leopardo. Os resultados foram obtidos com <code>mm.blur</code>, que implementa o filtro de média por meio da função <code>cv2.blur</code>, equivalente à convolução da imagem com um <em>kernel</em> uniforme cujos coeficientes são <span class="math inline">\(h(x,y)=1/N^2\)</span>; de forma equivalente, o mesmo resultado pode ser obtido com <code>mm.conv</code>, calculando (<span class="math inline">\(g=f*h\)</span>). À medida que o <em>kernel</em> aumenta, mais pixels contribuem para cada valor de saída, intensificando a suavização, reduzindo o ruído e tornando detalhes finos e bordas progressivamente mais borrados.</p>
 <div id="cell-fig-03-media" class="cell">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Detalhe da região do olho</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>y0, y1, x0, x1 <span class="op">=</span> <span class="dv">580</span>, <span class="dv">740</span>, <span class="dv">680</span>, <span class="dv">900</span></span>
@@ -1425,10 +1425,11 @@ w_{\text{média}} = \frac{1}{n^2}
 <span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>sizes <span class="op">=</span> [<span class="dv">3</span>, <span class="dv">7</span>, <span class="dv">15</span>]</span>
 <span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>imgs  <span class="op">=</span> [img_gray_crop] <span class="op">+</span> <span class="op">\</span></span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>    [mm.conv(img_gray_crop, np.ones((k,k), dtype<span class="op">=</span>np.float32)<span class="op">/</span>(k<span class="op">*</span>k)) <span class="cf">for</span> k <span class="kw">in</span> sizes]</span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>titles <span class="op">=</span> [<span class="st">"Original"</span>] <span class="op">+</span> [<span class="ss">f"Média </span><span class="sc">{</span>k<span class="sc">}</span><span class="ss">×</span><span class="sc">{</span>k<span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> k <span class="kw">in</span> sizes]</span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>mm.show(imgs, titles<span class="op">=</span>titles, cols<span class="op">=</span><span class="dv">4</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>    [mm.blur(img_gray_crop, k) <span class="cf">for</span> k <span class="kw">in</span> sizes] <span class="co"># ou</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">#[mm.conv(img_gray_crop, np.ones((k,k), dtype=np.float32)/(k*k)) for k in sizes]</span></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>titles <span class="op">=</span> [<span class="st">"Original"</span>] <span class="op">+</span> [<span class="ss">f"Média </span><span class="sc">{</span>k<span class="sc">}</span><span class="ss">×</span><span class="sc">{</span>k<span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> k <span class="kw">in</span> sizes]</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>mm.show(imgs, titles<span class="op">=</span>titles, cols<span class="op">=</span><span class="dv">4</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div id="fig-03-media" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -1436,7 +1437,7 @@ w_{\text{média}} = \frac{1}{n^2}
 <img src="cap03.py.pt_files/figure-html/fig-03-media-output-1.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-03-media-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;3.12: Filtro de média com <em>kernels</em> de tamanho crescente (3×3, 7×7, 15×15). O borramento das bordas aumenta com o tamanho do kernel.
+Figura&nbsp;3.12: Filtro de média com <em>kernels</em> de tamanho crescente (3×3, 7×7, 15×15). O borramento das bordas aumenta com o tamanho do <em>kernel</em>.
 </figcaption>
 </figure>
 </div>
@@ -2397,7 +2398,7 @@ Figura&nbsp;3.22: <em>Pipeline</em> de pré-processamento: CLAHE → Gaussiano �
 </tbody>
 </table>
 <div id="cell-fig-03-sim-adicao" class="cell">
-<div id="fig-03-sim-adicao" class="cell-output cell-output-display quarto-figure quarto-figure-center quarto-float anchored" data-execution_count="216">
+<div id="fig-03-sim-adicao" class="cell-output cell-output-display quarto-figure quarto-figure-center quarto-float anchored" data-execution_count="2">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-03-sim-adicao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 
@@ -2475,7 +2476,7 @@ Figura&nbsp;3.23: Simulador: Adição Saturada de Constante
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile EP03_01.py</span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Código Python</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Overwriting EP03_01.py</code></pre>
+<pre><code>Writing EP03_01.py</code></pre>
 </div>
 </div>
 <div id="ep0301_test" class="cell">
@@ -2596,7 +2597,7 @@ Figura&nbsp;3.23: Simulador: Adição Saturada de Constante
 </tbody>
 </table>
 <div id="cell-fig-03-sim-blending" class="cell">
-<div id="fig-03-sim-blending" class="cell-output cell-output-display quarto-figure quarto-figure-center quarto-float anchored" data-execution_count="219">
+<div id="fig-03-sim-blending" class="cell-output cell-output-display quarto-figure quarto-figure-center quarto-float anchored" data-execution_count="5">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-03-sim-blending-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 
@@ -2679,7 +2680,7 @@ Figura&nbsp;3.24: Simulador: Alpha <em>Blending</em> de Duas Imagens
 <div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile EP03_02.py</span>
 <span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Código Python</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Overwriting EP03_02.py</code></pre>
+<pre><code>Writing EP03_02.py</code></pre>
 </div>
 </div>
 <div id="ep0302_test" class="cell">
@@ -2794,7 +2795,7 @@ Figura&nbsp;3.24: Simulador: Alpha <em>Blending</em> de Duas Imagens
 </tbody>
 </table>
 <div id="cell-fig-03-inversao" class="cell">
-<div id="fig-03-inversao" class="cell-output cell-output-display quarto-figure quarto-figure-center quarto-float anchored" data-execution_count="222">
+<div id="fig-03-inversao" class="cell-output cell-output-display quarto-figure quarto-figure-center quarto-float anchored" data-execution_count="8">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-03-inversao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 
@@ -2856,7 +2857,7 @@ Figura&nbsp;3.25: Simulador: Inversão de Imagem (Negativo Fotográfico)
 <div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile EP03_03.py</span>
 <span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Código Python</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Overwriting EP03_03.py</code></pre>
+<pre><code>Writing EP03_03.py</code></pre>
 </div>
 </div>
 <div id="ep0303_test" class="cell">
@@ -2883,8 +2884,8 @@ Figura&nbsp;3.25: Simulador: Inversão de Imagem (Negativo Fotográfico)
 <li><strong>Dados:</strong> Ler a matriz de pixels <span class="math inline">\(f\)</span> com valores em <span class="math inline">\([0, 2^B - 1]\)</span>.</li>
 <li><strong>Histograma:</strong> Calcular <span class="math inline">\(h[k]\)</span> = número de pixels com intensidade <span class="math inline">\(k\)</span>, para <span class="math inline">\(k = 0 \ldots 2^B-1\)</span>.</li>
 <li><strong>Probabilidade:</strong> <span class="math inline">\(p[k] = h[k] / (L \cdot C)\)</span>.</li>
-<li><strong>CDF:</strong> <span class="math inline">\(\text{cdf}[k] = \sum_{j=0}^{k} p[j]\)</span>.</li>
-<li><strong>LUT:</strong> <span class="math inline">\(\text{lut}[k] = \text{round}\left(\text{cdf}[k] \cdot (2^B - 1)\right)\)</span>.</li>
+<li><strong>CDF:</strong> <span class="math inline">\(\text{cdf}[k] = \sum_{j=0}^{k} p[j]\)</span>; função de distribuição acumulada.</li>
+<li><strong>LUT:</strong> <span class="math inline">\(\text{lut}[k] = \text{round}\left(\text{cdf}[k] \cdot (2^B - 1)\right)\)</span>; <em>Look-Up Table</em> (tabela de consulta).</li>
 <li><strong>Aplicação:</strong> <span class="math inline">\(g[i,j] = \text{lut}[f[i,j]]\)</span>.</li>
 <li><strong>Saída:</strong> Exibir a matriz equalizada <span class="math inline">\(L \times C\)</span>.</li>
 </ol>
@@ -2933,7 +2934,7 @@ Figura&nbsp;3.25: Simulador: Inversão de Imagem (Negativo Fotográfico)
 <tr class="even">
 <td style="text-align: center;">4</td>
 <td style="text-align: left;">LUT</td>
-<td style="text-align: left;"><span class="math inline">\(\text{lut}[k] = \text{round}(\text{cdf}[k] \cdot (2^B-1))\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\text{lut}[Look-Up Table (tabela de consulta)k] = \text{round}(\text{cdf}[k] \cdot (2^B-1))\)</span></td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">5</td>
@@ -3001,66 +3002,168 @@ Figura&nbsp;3.25: Simulador: Inversão de Imagem (Negativo Fotográfico)
 </tbody>
 </table>
 <div id="cell-fig-03-equalizacao-simulador" class="cell">
-<div id="fig-03-equalizacao-simulador" class="cell-output cell-output-display quarto-figure quarto-figure-center quarto-float anchored" data-execution_count="225">
+<div id="fig-03-equalizacao-simulador" class="cell-output cell-output-display quarto-figure quarto-figure-center quarto-float anchored" data-execution_count="32">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-03-equalizacao-simulador-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 
-<div id="sim-ep0304" style="background-color:#fef9ef;border-radius:18px;border:1px solid #ede6d8;overflow:hidden;margin-top:20px;font-family:sans-serif;">
-  <div style="background:#f3efe6;padding:8px 16px;font-size:12px;color:#5e5a4a;border-bottom:1px solid #e9dfcf;display:flex;justify-content:space-between;align-items:center;">
-    <span>🎮 Simulador: Equalização de Histograma (3 bits)</span>
-    <span style="background:#e8e0cf;border-radius:40px;padding:2px 10px;font-weight:600;font-size:10px;">📊 lut[k] = round(cdf[k] × 7)</span>
-  </div>
-  <div style="padding:20px;background:white;">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:16px;">
-      <div style="text-align:center;background:white;border:1px solid #eee;padding:15px;border-radius:12px;">
-        <p style="font-size:10px;font-weight:600;color:#888;text-transform:uppercase;margin-bottom:12px;">Original (3 bits, 0-7)</p>
-        <div id="ep0304_grid_orig" style="display:grid;grid-template-columns:repeat(4,42px);gap:4px;justify-content:center;"></div>
-        <button id="ep0304_btn_new" style="margin-top:12px;font-size:11px;padding:5px 10px;border-radius:4px;border:1px solid #ccc;background:white;cursor:pointer;">🎲 Nova Imagem</button>
-      </div>
-      <div style="text-align:center;background:white;border:1px solid #eee;padding:15px;border-radius:12px;">
-        <p style="font-size:10px;font-weight:600;color:#888;text-transform:uppercase;margin-bottom:12px;">Equalizada</p>
-        <div id="ep0304_grid_eq" style="display:grid;grid-template-columns:repeat(4,42px);gap:4px;justify-content:center;"></div>
-      </div>
+<div id="ep0304-sim-eq-03" style="display:block;font-family:sans-serif;line-height:1.4;color:var(--color-text-primary);max-width:900px;margin:24px auto;border:0.5px solid var(--color-border-tertiary);padding:20px;border-radius:var(--border-radius-lg);background:var(--color-background-secondary);">
+  <p style="font-size:18px;font-weight:500;margin:0 0 4px;">Simulador: Equalização de Histograma</p>
+  <p style="font-size:13px;color:var(--color-text-secondary);margin:0 0 20px;">Escolha o número de bits e gere uma imagem para ver a equalização em tempo real.</p>
+
+  <div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:20px;margin-bottom:20px;">
+    <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+      <label style="font-size:13px;font-weight:500;color:#16a085;">B (Bits)</label>
+      <span id="ep0304-vl-bits" style="font-family:monospace;font-weight:500;color:#16a085;">3 bits → 8 níveis</span>
     </div>
-    <div id="ep0304_lut" style="background:#e3f2fd;border-radius:8px;padding:10px;border:1px solid #90caf9;font-family:monospace;font-size:10px;color:#0d47a1;text-align:center;">LUT: calculando...</div>
+    <input id="ep0304-sl-bits" style="width:100%;accent-color:#16a085;" max="8" min="1" step="1" type="range" value="3">
+    <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:11px;color:var(--color-text-secondary);">
+      <span>1 bit (2 níveis)</span><span>4 bits (16 níveis)</span><span>8 bits (256 níveis)</span>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;">
+    <div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:15px;text-align:center;">
+      <p style="font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;margin-bottom:12px;">Entrada Original</p>
+      <div id="ep0304-grid-orig" style="display:grid;grid-template-columns:repeat(4,42px);gap:4px;justify-content:center;"></div>
+      <button id="ep0304-btn-new" style="margin-top:15px;font-size:11px;padding:5px 10px;border-radius:4px;">Nova Imagem</button>
+    </div>
+    <div style="background:var(--color-background-primary);border:2px solid #16a085;border-radius:var(--border-radius-lg);padding:15px;text-align:center;">
+      <p style="font-size:11px;font-weight:500;color:#16a085;text-transform:uppercase;margin-bottom:12px;">Resultado Equalizado</p>
+      <div id="ep0304-grid-eq" style="display:grid;grid-template-columns:repeat(4,42px);gap:4px;justify-content:center;"></div>
+      <button id="ep0304-btn-reset" style="margin-top:15px;font-size:11px;padding:5px 10px;border-radius:4px;">↩ Resetar</button>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:16px;">
+    <div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:15px;">
+      <p style="font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;margin-bottom:10px;text-align:center;">Histograma Original</p>
+      <canvas id="ep0304-hist-orig" style="width:100%;height:80px;" width="340" height="80"></canvas>
+    </div>
+    <div style="background:var(--color-background-primary);border:1px solid #16a085;border-radius:var(--border-radius-lg);padding:15px;">
+      <p style="font-size:11px;font-weight:500;color:#16a085;text-transform:uppercase;margin-bottom:10px;text-align:center;">Histograma Equalizado</p>
+      <canvas id="ep0304-hist-eq" style="width:100%;height:80px;" width="340" height="80"></canvas>
+    </div>
+  </div>
+
+  <div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:12px;margin-bottom:16px;overflow-x:auto;">
+    <p style="font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;margin:0 0 8px;">LUT (Tabela de Remapeamento)</p>
+    <div id="ep0304-lut-table" style="font-family:monospace;font-size:11px;color:var(--color-text-primary);white-space:nowrap;"></div>
+  </div>
+
+  <div id="ep0304-debug-info" style="margin-top:15px;background:#e8f8f5;border-radius:8px;padding:10px;border:1px solid #a3d9cc;font-family:monospace;font-size:11px;color:#0e6655;text-align:center;">
+    lut[k] = round( cdf[k] × 7 ) | B=3, níveis=8
   </div>
 </div>
+
 <script>
-setTimeout(function(){
-  var gO=document.getElementById('ep0304_grid_orig');
-  var gE=document.getElementById('ep0304_grid_eq');
-  var lutDiv=document.getElementById('ep0304_lut');
-  if(!gO)return;
-  var pixels=[];
-  var L_bits=3; var L_max=Math.pow(2,L_bits);
-  function gen_0304(){pixels=Array.from({length:16},function(){return Math.floor(Math.random()*L_max);});}
-  function render_0304(){
-    var h=new Array(L_max).fill(0);
-    pixels.forEach(function(p){h[p]++;});
-    var total=pixels.length;
-    var cdf=0; var lut=[];
-    for(var k=0;k<L_max;k++){cdf+=h[k]/total;lut.push(Math.round(cdf*(L_max-1)));}
-    lutDiv.innerHTML='LUT: ['+lut.join(', ')+']';
-    gO.innerHTML=''; gE.innerHTML='';
-    pixels.forEach(function(p){
-      var sc=Math.round(p/7*255);
-      var cO=document.createElement('div');
-      cO.style.cssText='width:42px;height:42px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold;border-radius:4px;border:1px solid #eee;';
-      cO.style.background='rgb('+sc+','+sc+','+sc+')';
-      cO.style.color=sc>128?'black':'white';
-      cO.innerText=p; gO.appendChild(cO);
-      var r=lut[p]; var sr=Math.round(r/7*255);
-      var cE=document.createElement('div');
-      cE.style.cssText='width:42px;height:42px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold;border-radius:4px;border:1px solid #ddd;';
-      cE.style.background='rgb('+sr+','+sr+','+sr+')';
-      cE.style.color=sr>128?'black':'white';
-      cE.innerText=r; gE.appendChild(cE);
+(function ep0304Init() {
+  const ep0304Container = document.getElementById('ep0304-sim-eq-03');
+  if (!ep0304Container) { setTimeout(ep0304Init, 100); return; }
+
+  const ep0304SlBits      = document.getElementById('ep0304-sl-bits');
+  const ep0304VlBits      = document.getElementById('ep0304-vl-bits');
+  const ep0304Debug       = document.getElementById('ep0304-debug-info');
+  const ep0304GridOrig    = document.getElementById('ep0304-grid-orig');
+  const ep0304GridEq      = document.getElementById('ep0304-grid-eq');
+  const ep0304LutTable    = document.getElementById('ep0304-lut-table');
+  const ep0304HistOrig    = document.getElementById('ep0304-hist-orig');
+  const ep0304HistEq      = document.getElementById('ep0304-hist-eq');
+
+  const EP0304_ROWS = 4, EP0304_COLS = 4;
+  let ep0304Pixels = [];
+
+  function ep0304GeneratePixels() {
+    const ep0304B = parseInt(ep0304SlBits.value);
+    const ep0304Levels = Math.pow(2, ep0304B);
+    const ep0304Lo = Math.floor(ep0304Levels * 0.2);
+    const ep0304Hi = Math.floor(ep0304Levels * 0.5);
+    ep0304Pixels = Array.from(
+      { length: EP0304_ROWS * EP0304_COLS },
+      () => ep0304Lo + Math.floor(Math.random() * (ep0304Hi - ep0304Lo + 1))
+    );
+  }
+
+  function ep0304ComputeEqualization(ep0304PixArr, ep0304B) {
+    const ep0304Levels = Math.pow(2, ep0304B);
+    const ep0304N = ep0304PixArr.length;
+    const ep0304H = new Array(ep0304Levels).fill(0);
+    ep0304PixArr.forEach(p => ep0304H[p]++);
+    const ep0304Cdf = new Array(ep0304Levels).fill(0);
+    ep0304Cdf[0] = ep0304H[0] / ep0304N;
+    for (let k = 1; k < ep0304Levels; k++) ep0304Cdf[k] = ep0304Cdf[k - 1] + ep0304H[k] / ep0304N;
+    const ep0304Lut = ep0304Cdf.map(c => Math.round(c * (ep0304Levels - 1)));
+    const ep0304Result = ep0304PixArr.map(p => ep0304Lut[p]);
+    return { h: ep0304H, cdf: ep0304Cdf, lut: ep0304Lut, result: ep0304Result };
+  }
+
+  function ep0304DrawHistogram(ep0304Canvas, ep0304Counts, ep0304Levels, ep0304Color) {
+    const ep0304Ctx = ep0304Canvas.getContext('2d');
+    const ep0304W = ep0304Canvas.width, ep0304H = ep0304Canvas.height;
+    ep0304Ctx.clearRect(0, 0, ep0304W, ep0304H);
+    const ep0304MaxVal = Math.max(...ep0304Counts, 1);
+    const ep0304BarW = ep0304W / ep0304Levels;
+    ep0304Counts.forEach((c, i) => {
+      const ep0304BarH = (c / ep0304MaxVal) * (ep0304H - 6);
+      ep0304Ctx.fillStyle = ep0304Color;
+      ep0304Ctx.fillRect(i * ep0304BarW + 1, ep0304H - ep0304BarH, ep0304BarW - 2, ep0304BarH);
     });
   }
-  document.getElementById('ep0304_btn_new').onclick=function(){gen_0304();render_0304();};
-  gen_0304(); render_0304();
-},100);
+
+  function ep0304ToGray(ep0304Val, ep0304Levels) {
+    return Math.round((ep0304Val / (ep0304Levels - 1)) * 255);
+  }
+
+  function ep0304Render() {
+    const ep0304B = parseInt(ep0304SlBits.value);
+    const ep0304Levels = Math.pow(2, ep0304B);
+    ep0304VlBits.innerText = `${ep0304B} bit${ep0304B > 1 ? 's' : ''} → ${ep0304Levels} níveis`;
+
+    const { h: ep0304H, lut: ep0304Lut, result: ep0304Result } = ep0304ComputeEqualization(ep0304Pixels, ep0304B);
+
+    const ep0304HEq = new Array(ep0304Levels).fill(0);
+    ep0304Result.forEach(p => ep0304HEq[p]++);
+
+    ep0304LutTable.innerHTML = ep0304Lut.map((v, k) =>
+      `<span style="display:inline-block;margin-right:8px;color:var(--color-text-secondary)">${k}→<b style="color:#16a085">${v}</b></span>`
+    ).join('');
+
+    ep0304Debug.innerHTML = `<b>lut[k] = round( cdf[k] × ${ep0304Levels - 1} )</b> &nbsp;|&nbsp; B=${ep0304B}, níveis=${ep0304Levels}`;
+
+    ep0304GridOrig.innerHTML = '';
+    ep0304GridEq.innerHTML = '';
+
+    ep0304Pixels.forEach((p, i) => {
+      const ep0304Gray = ep0304ToGray(p, ep0304Levels);
+      const ep0304CellO = document.createElement('div');
+      ep0304CellO.style.cssText = 'width:42px;height:42px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:bold;border-radius:4px;border:1px solid #eee;';
+      ep0304CellO.style.background = `rgb(${ep0304Gray},${ep0304Gray},${ep0304Gray})`;
+      ep0304CellO.style.color = ep0304Gray > 128 ? '#000' : '#fff';
+      ep0304CellO.innerText = p;
+      ep0304GridOrig.appendChild(ep0304CellO);
+
+      const ep0304R = ep0304Result[i];
+      const ep0304GrayR = ep0304ToGray(ep0304R, ep0304Levels);
+      const ep0304CellN = document.createElement('div');
+      ep0304CellN.style.cssText = 'width:42px;height:42px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:bold;border-radius:4px;border:1px solid #ddd;';
+      ep0304CellN.style.background = `rgb(${ep0304GrayR},${ep0304GrayR},${ep0304GrayR})`;
+      ep0304CellN.style.color = ep0304GrayR > 128 ? '#000' : '#fff';
+      ep0304CellN.innerText = ep0304R;
+      ep0304GridEq.appendChild(ep0304CellN);
+    });
+
+    ep0304DrawHistogram(ep0304HistOrig, ep0304H, ep0304Levels, '#95a5a6');
+    ep0304DrawHistogram(ep0304HistEq, ep0304HEq, ep0304Levels, '#16a085');
+  }
+
+  ep0304SlBits.oninput = () => { ep0304GeneratePixels(); ep0304Render(); };
+  document.getElementById('ep0304-btn-new').onclick = () => { ep0304GeneratePixels(); ep0304Render(); };
+  document.getElementById('ep0304-btn-reset').onclick = () => { ep0304GeneratePixels(); ep0304Render(); };
+
+  ep0304GeneratePixels();
+  ep0304Render();
+})();
 </script>
+
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-03-equalizacao-simulador-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figura&nbsp;3.26: Simulador: Equalização de Histograma (L bits)
@@ -3072,7 +3175,7 @@ Figura&nbsp;3.26: Simulador: Equalização de Histograma (L bits)
 <div class="sourceCode cell-code" id="cb59"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile EP03_04.py</span>
 <span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Código Python</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Overwriting EP03_04.py</code></pre>
+<pre><code>Writing EP03_04.py</code></pre>
 </div>
 </div>
 <div id="ep0304_test" class="cell">
@@ -3089,7 +3192,7 @@ Figura&nbsp;3.26: Simulador: Equalização de Histograma (L bits)
 </section>
 </section>
 <section id="ep03_05-aplicação-de-máscara-and-binária" class="level3" data-number="3.12.5">
-<h3 data-number="3.12.5" class="anchored" data-anchor-id="ep03_05-aplicação-de-máscara-and-binária"><span class="header-section-number">3.12.5</span> EP03_05 🔲 Aplicação de Máscara AND Binária</h3>
+<h3 data-number="3.12.5" class="anchored"><span class="header-section-number">3.12.5</span> EP03_05 🔲 Aplicação de Máscara AND Binária</h3>
 <p>Em sistemas de inspeção industrial por visão computacional, é necessário isolar regiões de interesse (ROI) em imagens de peças para verificar defeitos de fabricação. A operação <strong>AND bit a bit com uma máscara binária</strong> é o mecanismo fundamental para recortar exatamente a área de inspeção, zerando todos os pixels fora dela.</p>
 <p>Ver na <a href="#fig-03-mascara-and" class="quarto-xref">Figura&nbsp;<span>3.27</span></a> uma simulação deste EP.</p>
 <section id="diretrizes-de-implementação-4" class="level4" data-number="3.12.5.1">
@@ -3159,7 +3262,7 @@ g(i,j) = f(i,j) \;\text{AND}\; m(i,j)
 </ul>
 </section>
 <section id="exemplos-4" class="level4" data-number="3.12.5.5">
-<h4 data-number="3.12.5.5" class="anchored" data-anchor-id="exemplos-4"><span class="header-section-number">3.12.5.5</span> 📌 Exemplos</h4>
+<h4 data-number="3.12.5.5" class="anchored"><span class="header-section-number">3.12.5.5</span> 📌 Exemplos</h4>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 32%">
@@ -3196,69 +3299,184 @@ g(i,j) = f(i,j) \;\text{AND}\; m(i,j)
 </tbody>
 </table>
 <div id="cell-fig-03-mascara-and" class="cell">
-<div id="fig-03-mascara-and" class="cell-output cell-output-display quarto-figure quarto-figure-center quarto-float anchored" data-execution_count="228">
+<div id="fig-03-mascara-and" class="cell-output cell-output-display quarto-figure quarto-figure-center quarto-float anchored" data-execution_count="1">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-03-mascara-and-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 
-<div id="sim-ep0305" style="background-color:#fef9ef;border-radius:18px;border:1px solid #ede6d8;overflow:hidden;margin-top:20px;font-family:sans-serif;">
-  <div style="background:#f3efe6;padding:8px 16px;font-size:12px;color:#5e5a4a;border-bottom:1px solid #e9dfcf;display:flex;justify-content:space-between;align-items:center;">
-    <span>🎮 Simulador: Máscara AND Binária</span>
-    <span style="background:#e8e0cf;border-radius:40px;padding:2px 10px;font-weight:600;font-size:10px;">🔲 g = f AND m</span>
-  </div>
-  <div style="padding:20px;background:white;">
-    <p style="font-size:11px;color:#666;margin-bottom:12px;">Clique nas células da máscara para alternar entre 0 (preto) e 255 (branco):</p>
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
-      <div style="text-align:center;background:white;border:1px solid #eee;padding:12px;border-radius:12px;">
-        <p style="font-size:10px;font-weight:600;color:#888;text-transform:uppercase;margin-bottom:8px;">Imagem f</p>
-        <div id="ep0305_grid_f" style="display:grid;grid-template-columns:repeat(4,38px);gap:3px;justify-content:center;"></div>
-        <button id="ep0305_btn_new" style="margin-top:10px;font-size:11px;padding:4px 8px;border-radius:4px;border:1px solid #ccc;background:white;cursor:pointer;">🎲 Nova</button>
-      </div>
-      <div style="text-align:center;background:white;border:1px solid #eee;padding:12px;border-radius:12px;">
-        <p style="font-size:10px;font-weight:600;color:#888;text-transform:uppercase;margin-bottom:8px;">Máscara m (clique!)</p>
-        <div id="ep0305_grid_m" style="display:grid;grid-template-columns:repeat(4,38px);gap:3px;justify-content:center;"></div>
-      </div>
-      <div style="text-align:center;background:white;border:1px solid #eee;padding:12px;border-radius:12px;">
-        <p style="font-size:10px;font-weight:600;color:#888;text-transform:uppercase;margin-bottom:8px;">Resultado g</p>
-        <div id="ep0305_grid_g" style="display:grid;grid-template-columns:repeat(4,38px);gap:3px;justify-content:center;"></div>
+<style>
+.ep0305-cell{width:42px;height:42px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;border-radius:6px;transition:transform 0.1s;}
+.ep0305-mask-cell{cursor:pointer;border:2px solid;}
+.ep0305-mask-cell:hover{transform:scale(1.08);}
+.ep0305-mask-cell:active{transform:scale(0.95);}
+.ep0305-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:16px;text-align:center;}
+.ep0305-label{font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.05em;margin:0 0 4px;}
+.ep0305-formula{font-family:var(--font-mono);font-size:13px;color:var(--color-text-primary);margin:0;}
+.ep0305-grid{display:grid;grid-template-columns:repeat(4,42px);gap:4px;justify-content:center;margin-top:12px;}
+.ep0305-stat{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 14px;font-size:12px;color:var(--color-text-secondary);}
+.ep0305-stat b{font-weight:500;font-size:15px;display:block;color:var(--color-text-primary);}
+</style>
+
+<h2 class="sr-only anchored" data-anchor-id="exemplos-4">Simulador de máscara AND binária: aplica operação AND pixel a pixel entre imagem e máscara interativa.</h2>
+
+<div id="ep0305-sim-and-03" style="max-width:900px;margin:0 auto;padding:4px 0 16px;">
+
+  <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:16px;">
+
+    <div class="ep0305-card">
+      <p class="ep0305-label">Imagem f</p>
+      <p class="ep0305-formula">valores 0–255</p>
+      <div id="ep0305-grid-f" class="ep0305-grid"></div>
+      <button id="ep0305-btn-new" style="margin-top:14px;font-size:11px;padding:5px 12px;">
+        <i class="ti ti-dice" aria-hidden="true"></i> Nova imagem
+      </button>
+    </div>
+
+    <div class="ep0305-card" style="border:2px solid #185FA5;">
+      <p class="ep0305-label" style="color:#185FA5;">Máscara m</p>
+      <p class="ep0305-formula" style="color:#185FA5;">clique para alternar</p>
+      <div id="ep0305-grid-mask" class="ep0305-grid"></div>
+      <button id="ep0305-btn-reset" style="margin-top:14px;font-size:11px;padding:5px 12px;">
+        <i class="ti ti-refresh" aria-hidden="true"></i> Resetar máscara
+      </button>
+    </div>
+
+    <div class="ep0305-card" style="border:2px solid #0F6E56;">
+      <p class="ep0305-label" style="color:#0F6E56;">Resultado g</p>
+      <p class="ep0305-formula" style="color:#0F6E56;">g = f AND m</p>
+      <div id="ep0305-grid-result" class="ep0305-grid"></div>
+      <div style="margin-top:14px;height:26px;display:flex;align-items:center;justify-content:center;">
+        <span id="ep0305-pct" style="font-size:12px;color:var(--color-text-secondary);font-family:var(--font-mono);"></span>
       </div>
     </div>
-    <div id="ep0305_debug" style="margin-top:16px;background:#fff3e0;border-radius:8px;padding:10px;border:1px solid #ffcc80;font-family:monospace;font-size:11px;color:#e65100;text-align:center;">g(i,j) = f(i,j) AND m(i,j) — Clique na máscara para alterar</div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:16px;">
+    <div class="ep0305-stat"><b id="ep0305-stat-preserved">—</b>preservados</div>
+    <div class="ep0305-stat"><b id="ep0305-stat-zeroed">—</b>zerados</div>
+    <div class="ep0305-stat"><b id="ep0305-stat-ratio">—</b>% da imagem visível</div>
+  </div>
+
+  <div style="background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:14px;display:flex;gap:20px;align-items:center;flex-wrap:wrap;justify-content:center;margin-bottom:14px;">
+    <span style="font-size:12px;font-weight:500;color:var(--color-text-secondary);">Legenda da máscara</span>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div style="width:32px;height:32px;background:#E6F1FB;border:2px solid #185FA5;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;color:#0C447C;">255</div>
+      <span style="font-size:12px;color:var(--color-text-secondary);">Passante — pixel preservado</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div style="width:32px;height:32px;background:#2C2C2A;border:2px solid #444441;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;color:#B4B2A9;">0</div>
+      <span style="font-size:12px;color:var(--color-text-secondary);">Bloqueante — pixel zerado</span>
+    </div>
+  </div>
+
+  <div style="background:#E6F1FB;border:0.5px solid #B5D4F4;border-radius:var(--border-radius-md);padding:10px 14px;font-family:var(--font-mono);font-size:12px;color:#0C447C;text-align:center;">
+    <span id="ep0305-debug">g(i,j) = f(i,j) &amp; m(i,j)</span>
   </div>
 </div>
+
 <script>
-setTimeout(function(){
-  var gF=document.getElementById('ep0305_grid_f');
-  var gM=document.getElementById('ep0305_grid_m');
-  var gG=document.getElementById('ep0305_grid_g');
-  if(!gF)return;
-  var pixels=[]; var mask=new Array(16).fill(255);
-  function gen_0305(){pixels=Array.from({length:16},function(){return Math.floor(Math.random()*256);});}
-  function render_0305(){
-    gF.innerHTML=''; gM.innerHTML=''; gG.innerHTML='';
-    for(var i=0;i<16;i++){
-      (function(idx){
-        var p=pixels[idx]; var m=mask[idx];
-        var cF=document.createElement('div');
-        cF.style.cssText='width:38px;height:38px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:bold;border-radius:4px;border:1px solid #eee;';
-        cF.style.background='rgb('+p+','+p+','+p+')'; cF.style.color=p>128?'black':'white'; cF.innerText=p;
-        gF.appendChild(cF);
-        var cM=document.createElement('div');
-        cM.style.cssText='width:38px;height:38px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:bold;border-radius:4px;border:2px solid #ff9800;cursor:pointer;';
-        cM.style.background=m===255?'white':'black'; cM.style.color=m===255?'black':'white'; cM.innerText=m;
-        cM.onclick=function(){mask[idx]=mask[idx]===255?0:255;render_0305();};
-        gM.appendChild(cM);
-        var r=p&m;
-        var cG=document.createElement('div');
-        cG.style.cssText='width:38px;height:38px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:bold;border-radius:4px;border:1px solid #ddd;';
-        cG.style.background='rgb('+r+','+r+','+r+')'; cG.style.color=r>128?'black':'white'; cG.innerText=r;
-        gG.appendChild(cG);
-      })(i);
-    }
+(function ep0305Init() {
+  const ep0305Container = document.getElementById('ep0305-sim-and-03');
+  if (!ep0305Container) { setTimeout(ep0305Init, 100); return; }
+
+  const ep0305GridF      = document.getElementById('ep0305-grid-f');
+  const ep0305GridMask   = document.getElementById('ep0305-grid-mask');
+  const ep0305GridResult = document.getElementById('ep0305-grid-result');
+  const ep0305Debug      = document.getElementById('ep0305-debug');
+  const ep0305Pct        = document.getElementById('ep0305-pct');
+  const ep0305StatPres   = document.getElementById('ep0305-stat-preserved');
+  const ep0305StatZero   = document.getElementById('ep0305-stat-zeroed');
+  const ep0305StatRatio  = document.getElementById('ep0305-stat-ratio');
+
+  const EP0305_N = 16;
+  let ep0305Pixels = [];
+  let ep0305Mask   = [];
+
+  function ep0305GeneratePixels() {
+    ep0305Pixels = Array.from({ length: EP0305_N }, () => Math.floor(Math.random() * 256));
   }
-  document.getElementById('ep0305_btn_new').onclick=function(){gen_0305();render_0305();};
-  gen_0305(); render_0305();
-},100);
+
+  function ep0305ResetMask() {
+    ep0305Mask = Array.from({ length: EP0305_N }, (_, i) => {
+      const r = Math.floor(i / 4), c = i % 4;
+      return (r + c) % 2 === 0 ? 255 : 0;
+    });
+  }
+
+  function ep0305TextColor(gray) {
+    return gray > 140 ? '#111' : '#eee';
+  }
+
+  function ep0305Render() {
+    ep0305GridF.innerHTML = '';
+    ep0305GridMask.innerHTML = '';
+    ep0305GridResult.innerHTML = '';
+
+    let ep0305Preserved = 0, ep0305Zeroed = 0;
+
+    for (let i = 0; i < EP0305_N; i++) {
+      const p = ep0305Pixels[i];
+      const m = ep0305Mask[i];
+      const res = p & m;
+
+      const ep0305CellF = document.createElement('div');
+      ep0305CellF.className = 'ep0305-cell';
+      ep0305CellF.style.background = `rgb(${p},${p},${p})`;
+      ep0305CellF.style.color = ep0305TextColor(p);
+      ep0305CellF.style.border = '0.5px solid rgba(128,128,128,0.2)';
+      ep0305CellF.innerText = p;
+      ep0305GridF.appendChild(ep0305CellF);
+
+      const ep0305CellM = document.createElement('div');
+      ep0305CellM.className = 'ep0305-cell ep0305-mask-cell';
+      if (m === 255) {
+        ep0305CellM.style.background = '#E6F1FB';
+        ep0305CellM.style.borderColor = '#185FA5';
+        ep0305CellM.style.color = '#0C447C';
+      } else {
+        ep0305CellM.style.background = '#2C2C2A';
+        ep0305CellM.style.borderColor = '#5F5E5A';
+        ep0305CellM.style.color = '#B4B2A9';
+      }
+      ep0305CellM.innerText = m;
+      ep0305CellM.setAttribute('title', m === 255 ? 'Clique para bloquear' : 'Clique para passar');
+      const ep0305Idx = i;
+      ep0305CellM.onclick = () => {
+        ep0305Mask[ep0305Idx] = ep0305Mask[ep0305Idx] === 255 ? 0 : 255;
+        ep0305Render();
+      };
+      ep0305GridMask.appendChild(ep0305CellM);
+
+      const ep0305CellR = document.createElement('div');
+      ep0305CellR.className = 'ep0305-cell';
+      ep0305CellR.style.background = `rgb(${res},${res},${res})`;
+      ep0305CellR.style.color = ep0305TextColor(res);
+      ep0305CellR.style.border = m === 255
+        ? '1.5px solid #1D9E75'
+        : '0.5px solid rgba(128,128,128,0.15)';
+      ep0305CellR.innerText = res;
+      ep0305GridResult.appendChild(ep0305CellR);
+
+      if (m === 255) ep0305Preserved++; else ep0305Zeroed++;
+    }
+
+    const ep0305RatioPct = Math.round((ep0305Preserved / EP0305_N) * 100);
+    ep0305StatPres.innerText = ep0305Preserved;
+    ep0305StatZero.innerText = ep0305Zeroed;
+    ep0305StatRatio.innerText = ep0305RatioPct + '%';
+    ep0305Pct.innerText = ep0305RatioPct + '% visível';
+    ep0305Debug.innerHTML =
+      `g(i,j) = f(i,j) &amp; m(i,j) &nbsp;|&nbsp; ${ep0305Preserved} preservados · ${ep0305Zeroed} zerados`;
+  }
+
+  document.getElementById('ep0305-btn-new').onclick = () => { ep0305GeneratePixels(); ep0305Render(); };
+  document.getElementById('ep0305-btn-reset').onclick = () => { ep0305ResetMask(); ep0305Render(); };
+
+  ep0305GeneratePixels();
+  ep0305ResetMask();
+  ep0305Render();
+})();
 </script>
+
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-03-mascara-and-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figura&nbsp;3.27: Simulador: Aplicação de Máscara AND Binária
@@ -3270,7 +3488,7 @@ Figura&nbsp;3.27: Simulador: Aplicação de Máscara AND Binária
 <div class="sourceCode cell-code" id="cb62"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile EP03_05.py</span>
 <span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Código Python</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Overwriting EP03_05.py</code></pre>
+<pre><code>Writing EP03_05.py</code></pre>
 </div>
 </div>
 <div id="ep0305_test" class="cell">
@@ -3287,8 +3505,9 @@ Figura&nbsp;3.27: Simulador: Aplicação de Máscara AND Binária
 </section>
 </section>
 <section id="ep03_06-filtro-de-média-com-kernel-nn" class="level3" data-number="3.12.6">
-<h3 data-number="3.12.6" class="anchored" data-anchor-id="ep03_06-filtro-de-média-com-kernel-nn"><span class="header-section-number">3.12.6</span> EP03_06 🌫️ Filtro de Média com <em>Kernel</em> N×N</h3>
-<p>Em câmeras de veículos autônomos, imagens capturadas em ambientes com chuva ou névoa possuem ruído gaussiano. O <strong>filtro de média</strong> é a primeira linha de defesa para redução de ruído em tempo real, implementado diretamente em hardware nos processadores de sinal de imagem (ISP) dos sensores CMOS.</p>
+<h3 data-number="3.12.6" class="anchored"><span class="header-section-number">3.12.6</span> EP03_06 🌫️ Filtro de Média com <em>Kernel</em> N×N</h3>
+<p>Em câmeras de veículos autônomos, imagens capturadas sob chuva ou névoa apresentam ruído gaussiano. O <strong>filtro de média</strong> é amplamente utilizado para sua redução em tempo real, sendo implementado diretamente no <strong>ISP</strong> (<em>Image Signal Processor</em>) de sensores <strong>CMOS</strong> (<em>Complementary Metal-Oxide-Semiconductor</em>).</p>
+<p>Os sensores CMOS são os sensores de imagem usados na maioria das câmeras modernas (<em>smartphones</em>, <em>webcams</em>, câmeras automotivas etc.). Eles convertem a luz em sinais elétricos, e o ISP processa esses sinais em tempo real — aplicando operações como redução de ruído, balanço de branco e outros ajustes de imagem.</p>
 <p>Ver na <a href="#fig-03-filtro-media-simulador" class="quarto-xref">Figura&nbsp;<span>3.28</span></a> uma simulação deste EP.</p>
 <section id="diretrizes-de-implementação-5" class="level4" data-number="3.12.6.1">
 <h4 data-number="3.12.6.1" class="anchored" data-anchor-id="diretrizes-de-implementação-5"><span class="header-section-number">3.12.6.1</span> 📋 Diretrizes de Implementação</h4>
@@ -3363,7 +3582,7 @@ Figura&nbsp;3.27: Simulador: Aplicação de Máscara AND Binária
 </ul>
 </section>
 <section id="exemplos-5" class="level4" data-number="3.12.6.5">
-<h4 data-number="3.12.6.5" class="anchored" data-anchor-id="exemplos-5"><span class="header-section-number">3.12.6.5</span> 📌 Exemplos</h4>
+<h4 data-number="3.12.6.5" class="anchored"><span class="header-section-number">3.12.6.5</span> 📌 Exemplos</h4>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 32%">
@@ -3409,80 +3628,205 @@ Figura&nbsp;3.27: Simulador: Aplicação de Máscara AND Binária
 </tbody>
 </table>
 <div id="cell-fig-03-filtro-media-simulador" class="cell">
-<div id="fig-03-filtro-media-simulador" class="cell-output cell-output-display quarto-figure quarto-figure-center quarto-float anchored" data-execution_count="231">
+<div id="fig-03-filtro-media-simulador" class="cell-output cell-output-display quarto-figure quarto-figure-center quarto-float anchored" data-execution_count="3">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-03-filtro-media-simulador-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 
-<div id="sim-ep0306" style="background-color:#fef9ef;border-radius:18px;border:1px solid #ede6d8;overflow:hidden;margin-top:20px;font-family:sans-serif;">
-  <div style="background:#f3efe6;padding:8px 16px;font-size:12px;color:#5e5a4a;border-bottom:1px solid #e9dfcf;display:flex;justify-content:space-between;align-items:center;">
-    <span>🎮 Simulador: Filtro de Média N×N</span>
-    <span style="background:#e8e0cf;border-radius:40px;padding:2px 10px;font-weight:600;font-size:10px;">🌫️ g = round(Σ f / N²)</span>
+<style>
+.ep0306-cell{width:42px;height:42px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;border-radius:6px;transition:background 0.1s,transform 0.1s,box-shadow 0.1s;}
+.ep0306-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:16px;text-align:center;}
+.ep0306-label{font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.05em;margin:0 0 4px;}
+.ep0306-grid{display:grid;gap:4px;justify-content:center;margin-top:12px;}
+.ep0306-stat{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 14px;font-size:12px;color:var(--color-text-secondary);text-align:center;}
+.ep0306-stat b{font-weight:500;font-size:15px;display:block;color:var(--color-text-primary);}
+.ep0306-kbtn{padding:6px 16px;font-size:12px;border-radius:var(--border-radius-md);cursor:pointer;border:2px solid var(--color-border-secondary);background:var(--color-background-primary);color:var(--color-text-secondary);transition:all 0.15s;}
+.ep0306-kbtn.active{background:#E6F1FB;border-color:#185FA5;color:#0C447C;font-weight:500;}
+</style>
+
+<h2 class="sr-only anchored" data-anchor-id="exemplos-5">Simulador de filtro de média com kernel 3×3 ou 5×5: passe o mouse nas células do resultado para visualizar a janela de vizinhança.</h2>
+
+<div id="ep0306-sim-media-03" style="max-width:900px;margin:0 auto;padding:4px 0 16px;">
+
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap;">
+    <span style="font-size:13px;font-weight:500;color:var(--color-text-secondary);">Tamanho do kernel:</span>
+    <button class="ep0306-kbtn active" id="ep0306-btn-k3" onclick="ep0306SetKernel(3)">3 × 3 &nbsp;<span style="font-weight:400;font-size:11px;">(9 vizinhos)</span></button>
+    <button class="ep0306-kbtn" id="ep0306-btn-k5" onclick="ep0306SetKernel(5)">5 × 5 &nbsp;<span style="font-weight:400;font-size:11px;">(25 vizinhos)</span></button>
+    <button id="ep0306-btn-new" style="margin-left:auto;font-size:12px;padding:6px 14px;">
+      <i class="ti ti-dice" aria-hidden="true"></i> Nova imagem
+    </button>
   </div>
-  <div style="padding:20px;background:white;">
-    <div style="background:#fafafa;border:1px solid #ddd;border-radius:12px;padding:16px;margin-bottom:16px;">
-      <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
-        <label style="font-size:12px;font-weight:bold;color:#1565c0;">N (tamanho do kernel)</label>
-        <span id="ep0306_vl_n" style="font-family:monospace;font-weight:bold;color:#1565c0;">3</span>
-      </div>
-      <input id="ep0306_sl_n" style="width:100%;accent-color:#1565c0;" max="7" min="3" step="2" type="range" value="3">
+
+  <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-bottom:14px;">
+    <div class="ep0306-card">
+      <p class="ep0306-label">Imagem original f (7×7)</p>
+      <p style="font-size:11px;color:var(--color-text-secondary);margin:0;">com ruído sal e pimenta</p>
+      <div id="ep0306-grid-f" class="ep0306-grid"></div>
     </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
-      <div style="text-align:center;background:white;border:1px solid #eee;padding:15px;border-radius:12px;">
-        <p style="font-size:10px;font-weight:600;color:#888;text-transform:uppercase;margin-bottom:12px;">Original</p>
-        <div id="ep0306_grid_orig" style="display:grid;grid-template-columns:repeat(5,36px);gap:3px;justify-content:center;"></div>
-        <button id="ep0306_btn_new" style="margin-top:12px;font-size:11px;padding:5px 10px;border-radius:4px;border:1px solid #ccc;background:white;cursor:pointer;">🎲 Nova Imagem</button>
-      </div>
-      <div style="text-align:center;background:white;border:1px solid #eee;padding:15px;border-radius:12px;">
-        <p style="font-size:10px;font-weight:600;color:#888;text-transform:uppercase;margin-bottom:12px;">Filtrada</p>
-        <div id="ep0306_grid_filt" style="display:grid;grid-template-columns:repeat(5,36px);gap:3px;justify-content:center;"></div>
-      </div>
+    <div class="ep0306-card" style="border:2px solid #185FA5;">
+      <p class="ep0306-label" style="color:#185FA5;">Resultado g (filtro suavizado)</p>
+      <p style="font-size:11px;color:#185FA5;margin:0;">passe o mouse para inspecionar</p>
+      <div id="ep0306-grid-result" class="ep0306-grid"></div>
     </div>
-    <div id="ep0306_debug" style="margin-top:16px;background:#e3f2fd;border-radius:8px;padding:10px;border:1px solid #90caf9;font-family:monospace;font-size:11px;color:#0d47a1;text-align:center;">Kernel 3x3: coeficiente = 1/9 ≈ 0.111</div>
+  </div>
+
+  <div style="background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:12px;display:flex;gap:20px;align-items:center;flex-wrap:wrap;justify-content:center;margin-bottom:12px;">
+    <span style="font-size:12px;font-weight:500;color:var(--color-text-secondary);">Legenda</span>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div style="width:20px;height:20px;background:#FAEEDA;border:2px dashed #BA7517;border-radius:4px;"></div>
+      <span style="font-size:12px;color:var(--color-text-secondary);">Janela do kernel (vizinhos)</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div style="width:20px;height:20px;background:#E1F5EE;border:1.5px solid #1D9E75;border-radius:4px;"></div>
+      <span style="font-size:12px;color:var(--color-text-secondary);">Borda — copiada sem filtro</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div style="width:20px;height:20px;background:#E6F1FB;border:1.5px solid #185FA5;border-radius:4px;"></div>
+      <span style="font-size:12px;color:var(--color-text-secondary);">Pixel inspecionado</span>
+    </div>
+  </div>
+
+  <div id="ep0306-debug" style="background:#E6F1FB;border:0.5px solid #B5D4F4;border-radius:var(--border-radius-md);padding:10px 14px;font-family:var(--font-mono);font-size:12px;color:#0C447C;text-align:center;min-height:38px;line-height:1.6;">
+    Passe o mouse sobre um pixel interno do resultado para ver o cálculo.
   </div>
 </div>
+
 <script>
-setTimeout(function(){
-  var slN=document.getElementById('ep0306_sl_n');
-  var vlN=document.getElementById('ep0306_vl_n');
-  var gO=document.getElementById('ep0306_grid_orig');
-  var gF=document.getElementById('ep0306_grid_filt');
-  var db=document.getElementById('ep0306_debug');
-  if(!slN||!gO)return;
-  var ROWS=5,COLS=5; var pixels=[];
-  function gen_0306(){pixels=Array.from({length:ROWS*COLS},function(){return Math.floor(Math.random()*256);});}
-  function render_0306(){
-    var N=parseInt(slN.value); var r=Math.floor(N/2);
-    vlN.innerText=N;
-    db.innerHTML='Kernel '+N+'x'+N+': coeficiente = 1/'+N*N+' ≈ '+(1/(N*N)).toFixed(4);
-    gO.innerHTML=''; gF.innerHTML='';
-    gO.style.gridTemplateColumns='repeat('+COLS+',36px)';
-    gF.style.gridTemplateColumns='repeat('+COLS+',36px)';
-    var result=pixels.slice();
-    for(var i=r;i<ROWS-r;i++){
-      for(var j=r;j<COLS-r;j++){
-        var sum=0;
-        for(var s=-r;s<=r;s++){for(var t=-r;t<=r;t++){sum+=pixels[(i+s)*COLS+(j+t)];}}
-        result[i*COLS+j]=Math.round(sum/(N*N));
+(function(){
+  const EP0306_ROWS = 7, EP0306_COLS = 7, EP0306_N = 49;
+  let ep0306Pixels = [], ep0306Result = [], ep0306KSize = 3, ep0306Radius = 1;
+
+  function ep0306GenPixels() {
+    ep0306Pixels = Array.from({ length: EP0306_N }, () => {
+      let v = 60 + Math.floor(Math.random() * 60);
+      if (Math.random() > 0.82) v = Math.random() > 0.5 ? 255 : 0;
+      return v;
+    });
+  }
+
+  function ep0306CalcFilter() {
+    ep0306Result = [...ep0306Pixels];
+    ep0306Radius = Math.floor(ep0306KSize / 2);
+    for (let r = 0; r < EP0306_ROWS; r++) {
+      for (let c = 0; c < EP0306_COLS; c++) {
+        if (r >= ep0306Radius && r < EP0306_ROWS - ep0306Radius && c >= ep0306Radius && c < EP0306_COLS - ep0306Radius) {
+          let sum = 0, cnt = 0;
+          for (let s = -ep0306Radius; s <= ep0306Radius; s++)
+            for (let t = -ep0306Radius; t <= ep0306Radius; t++) { sum += ep0306Pixels[(r+s)*EP0306_COLS+(c+t)]; cnt++; }
+          ep0306Result[r*EP0306_COLS+c] = Math.round(sum/cnt);
+        }
       }
     }
-    for(var i=0;i<ROWS*COLS;i++){
-      var p=pixels[i];
-      var cO=document.createElement('div');
-      cO.style.cssText='width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:bold;border-radius:3px;border:1px solid #eee;';
-      cO.style.background='rgb('+p+','+p+','+p+')'; cO.style.color=p>128?'black':'white'; cO.innerText=p;
-      gO.appendChild(cO);
-      var q=result[i];
-      var cF=document.createElement('div');
-      cF.style.cssText='width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:bold;border-radius:3px;border:1px solid #ddd;';
-      cF.style.background='rgb('+q+','+q+','+q+')'; cF.style.color=q>128?'black':'white'; cF.innerText=q;
-      gF.appendChild(cF);
+  }
+
+  function ep0306TC(g){ return g > 140 ? '#111' : '#eee'; }
+
+  function ep0306HighlightKernel(tr, tc, on) {
+    const cells = document.getElementById('ep0306-grid-f').children;
+    for (let r = 0; r < EP0306_ROWS; r++) {
+      for (let c = 0; c < EP0306_COLS; c++) {
+        const idx = r*EP0306_COLS+c;
+        if (!cells[idx]) continue;
+        const p = ep0306Pixels[idx];
+        if (on && Math.abs(r-tr) <= ep0306Radius && Math.abs(c-tc) <= ep0306Radius) {
+          cells[idx].style.background = '#FAEEDA';
+          cells[idx].style.color = '#633806';
+          cells[idx].style.boxShadow = '0 0 0 2px #BA7517 inset';
+        } else {
+          cells[idx].style.background = `rgb(${p},${p},${p})`;
+          cells[idx].style.color = ep0306TC(p);
+          cells[idx].style.boxShadow = 'none';
+        }
+      }
     }
   }
-  slN.oninput=render_0306;
-  document.getElementById('ep0306_btn_new').onclick=function(){gen_0306();render_0306();};
-  gen_0306(); render_0306();
-},100);
+
+  function ep0306Render() {
+    const gf = document.getElementById('ep0306-grid-f');
+    const gr = document.getElementById('ep0306-grid-result');
+    const cols = `repeat(${EP0306_COLS}, 42px)`;
+    gf.style.gridTemplateColumns = cols;
+    gr.style.gridTemplateColumns = cols;
+    gf.innerHTML = ''; gr.innerHTML = '';
+
+    for (let i = 0; i < EP0306_N; i++) {
+      const r = Math.floor(i/EP0306_COLS), c = i%EP0306_COLS;
+      const p = ep0306Pixels[i], res = ep0306Result[i];
+      const isBorder = r < ep0306Radius || r >= EP0306_ROWS-ep0306Radius || c < ep0306Radius || c >= EP0306_COLS-ep0306Radius;
+
+      const cf = document.createElement('div');
+      cf.className = 'ep0306-cell';
+      cf.style.background = `rgb(${p},${p},${p})`;
+      cf.style.color = ep0306TC(p);
+      cf.style.border = '0.5px solid rgba(128,128,128,0.15)';
+      cf.innerText = p;
+      gf.appendChild(cf);
+
+      const cr = document.createElement('div');
+      cr.className = 'ep0306-cell';
+      cr.style.background = `rgb(${res},${res},${res})`;
+      cr.style.color = ep0306TC(res);
+      cr.innerText = res;
+
+      if (isBorder) {
+        cr.style.border = '1.5px solid #1D9E75';
+        cr.style.background = '#E1F5EE';
+        cr.style.color = '#085041';
+        cr.onmouseenter = () => {
+          document.getElementById('ep0306-debug').innerHTML =
+            `Pixel (${r},${c}) é <b>borda</b>: valor herdado do original sem cálculo &nbsp;→&nbsp; <b>${res}</b>`;
+        };
+        cr.onmouseleave = () => ep0306ResetDebug();
+      } else {
+        cr.style.border = '0.5px solid var(--color-border-tertiary)';
+        cr.style.cursor = 'pointer';
+        cr.onmouseenter = () => {
+          ep0306HighlightKernel(r, c, true);
+          cr.style.transform = 'scale(1.12)';
+          cr.style.boxShadow = '0 0 0 2px #185FA5 inset';
+          cr.style.background = '#E6F1FB';
+          cr.style.color = '#0C447C';
+          const neighbors = [];
+          for (let s = -ep0306Radius; s <= ep0306Radius; s++)
+            for (let t = -ep0306Radius; t <= ep0306Radius; t++)
+              neighbors.push(ep0306Pixels[(r+s)*EP0306_COLS+(c+t)]);
+          const k = ep0306KSize * ep0306KSize;
+          document.getElementById('ep0306-debug').innerHTML =
+            `Pixel (${r},${c}): round( (${neighbors.join(' + ')}) / ${k} ) &nbsp;=&nbsp; <b>${res}</b>`;
+        };
+        cr.onmouseleave = () => {
+          ep0306HighlightKernel(r, c, false);
+          cr.style.transform = 'scale(1)';
+          cr.style.boxShadow = 'none';
+          cr.style.background = `rgb(${res},${res},${res})`;
+          cr.style.color = ep0306TC(res);
+          ep0306ResetDebug();
+        };
+      }
+      gr.appendChild(cr);
+    }
+  }
+
+  function ep0306ResetDebug() {
+    document.getElementById('ep0306-debug').innerText =
+      'Passe o mouse sobre um pixel interno do resultado para ver o cálculo.';
+  }
+
+  window.ep0306SetKernel = function(k) {
+    ep0306KSize = k;
+    document.getElementById('ep0306-btn-k3').classList.toggle('active', k===3);
+    document.getElementById('ep0306-btn-k5').classList.toggle('active', k===5);
+    ep0306CalcFilter();
+    ep0306Render();
+  };
+
+  document.getElementById('ep0306-btn-new').onclick = () => {
+    ep0306GenPixels(); ep0306CalcFilter(); ep0306Render();
+  };
+
+  ep0306GenPixels(); ep0306CalcFilter(); ep0306Render();
+})();
 </script>
+
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-03-filtro-media-simulador-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figura&nbsp;3.28: Simulador: Filtro de Média com <em>Kernel</em> N×N
@@ -3494,7 +3838,7 @@ Figura&nbsp;3.28: Simulador: Filtro de Média com <em>Kernel</em> N×N
 <div class="sourceCode cell-code" id="cb65"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile EP03_06.py</span>
 <span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Código Python</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Overwriting EP03_06.py</code></pre>
+<pre><code>Writing EP03_06.py</code></pre>
 </div>
 </div>
 <div id="ep0306_test" class="cell">
@@ -3625,7 +3969,7 @@ Figura&nbsp;3.28: Simulador: Filtro de Média com <em>Kernel</em> N×N
 </tbody>
 </table>
 <div id="cell-fig-03-laplaciano-simulador" class="cell">
-<div id="fig-03-laplaciano-simulador" class="cell-output cell-output-display quarto-figure quarto-figure-center quarto-float anchored" data-execution_count="234">
+<div id="fig-03-laplaciano-simulador" class="cell-output cell-output-display quarto-figure quarto-figure-center quarto-float anchored" data-execution_count="20">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-03-laplaciano-simulador-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 
@@ -3693,7 +4037,7 @@ Figura&nbsp;3.29: Simulador: Operador Laplaciano (w4) para Realce de Bordas
 <div class="sourceCode cell-code" id="cb68"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile EP03_07.py</span>
 <span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Código Python</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Overwriting EP03_07.py</code></pre>
+<pre><code>Writing EP03_07.py</code></pre>
 </div>
 </div>
 <div id="ep0307_test" class="cell">
@@ -3822,7 +4166,7 @@ Figura&nbsp;3.29: Simulador: Operador Laplaciano (w4) para Realce de Bordas
 </tbody>
 </table>
 <div id="cell-fig-03-sobel-simulador" class="cell">
-<div id="fig-03-sobel-simulador" class="cell-output cell-output-display quarto-figure quarto-figure-center quarto-float anchored" data-execution_count="237">
+<div id="fig-03-sobel-simulador" class="cell-output cell-output-display quarto-figure quarto-figure-center quarto-float anchored" data-execution_count="23">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-03-sobel-simulador-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 
@@ -3900,7 +4244,7 @@ Figura&nbsp;3.30: Simulador: Gradiente de Sobel: Gx e Gy
 <div class="sourceCode cell-code" id="cb71"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile EP03_08.py</span>
 <span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Código Python</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Overwriting EP03_08.py</code></pre>
+<pre><code>Writing EP03_08.py</code></pre>
 </div>
 </div>
 <div id="ep0308_test" class="cell">
@@ -4033,7 +4377,7 @@ Figura&nbsp;3.30: Simulador: Gradiente de Sobel: Gx e Gy
 </tbody>
 </table>
 <div id="cell-fig-03-median-simulador" class="cell">
-<div id="fig-03-median-simulador" class="cell-output cell-output-display quarto-figure quarto-figure-center quarto-float anchored" data-execution_count="240">
+<div id="fig-03-median-simulador" class="cell-output cell-output-display quarto-figure quarto-figure-center quarto-float anchored" data-execution_count="26">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-03-median-simulador-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 
@@ -4118,7 +4462,7 @@ Figura&nbsp;3.31: Simulador: Filtro da Mediana 3×3
 <div class="sourceCode cell-code" id="cb74"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile EP03_09.py</span>
 <span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Código Python</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Overwriting EP03_09.py</code></pre>
+<pre><code>Writing EP03_09.py</code></pre>
 </div>
 </div>
 <div id="ep0309_test" class="cell">
@@ -4260,7 +4604,7 @@ Figura&nbsp;3.31: Simulador: Filtro da Mediana 3×3
 </tbody>
 </table>
 <div id="cell-fig-03-unsharp-simulador" class="cell">
-<div id="fig-03-unsharp-simulador" class="cell-output cell-output-display quarto-figure quarto-figure-center quarto-float anchored" data-execution_count="243">
+<div id="fig-03-unsharp-simulador" class="cell-output cell-output-display quarto-figure quarto-figure-center quarto-float anchored" data-execution_count="29">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-03-unsharp-simulador-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 
@@ -4352,7 +4696,7 @@ Figura&nbsp;3.32: Simulador: <em>Unsharp Masking</em> (USM)
 <div class="sourceCode cell-code" id="cb77"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile EP03_10.py</span>
 <span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Código Python</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Overwriting EP03_10.py</code></pre>
+<pre><code>Writing EP03_10.py</code></pre>
 </div>
 </div>
 <div id="ep0310_test" class="cell">

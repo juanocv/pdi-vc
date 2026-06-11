@@ -1,0 +1,194 @@
+<style>
+.ep0306-cell{width:42px;height:42px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;border-radius:6px;transition:background 0.1s,transform 0.1s,box-shadow 0.1s;}
+.ep0306-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:16px;text-align:center;}
+.ep0306-label{font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.05em;margin:0 0 4px;}
+.ep0306-grid{display:grid;gap:4px;justify-content:center;margin-top:12px;}
+.ep0306-stat{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 14px;font-size:12px;color:var(--color-text-secondary);text-align:center;}
+.ep0306-stat b{font-weight:500;font-size:15px;display:block;color:var(--color-text-primary);}
+.ep0306-kbtn{padding:6px 16px;font-size:12px;border-radius:var(--border-radius-md);cursor:pointer;border:2px solid var(--color-border-secondary);background:var(--color-background-primary);color:var(--color-text-secondary);transition:all 0.15s;}
+.ep0306-kbtn.active{background:#E6F1FB;border-color:#185FA5;color:#0C447C;font-weight:500;}
+</style>
+
+<h2 class="sr-only">Simulador de filtro de média com kernel 3×3 ou 5×5: passe o mouse nas células do resultado para visualizar a janela de vizinhança.</h2>
+
+<div id="ep0306-sim-media-03" style="max-width:900px;margin:0 auto;padding:4px 0 16px;">
+
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap;">
+    <span style="font-size:13px;font-weight:500;color:var(--color-text-secondary);">Tamanho do kernel:</span>
+    <button class="ep0306-kbtn active" id="ep0306-btn-k3" onclick="ep0306SetKernel(3)">3 × 3 &nbsp;<span style="font-weight:400;font-size:11px;">(9 vizinhos)</span></button>
+    <button class="ep0306-kbtn" id="ep0306-btn-k5" onclick="ep0306SetKernel(5)">5 × 5 &nbsp;<span style="font-weight:400;font-size:11px;">(25 vizinhos)</span></button>
+    <button id="ep0306-btn-new" style="margin-left:auto;font-size:12px;padding:6px 14px;">
+      <i class="ti ti-dice" aria-hidden="true"></i> Nova imagem
+    </button>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-bottom:14px;">
+    <div class="ep0306-card">
+      <p class="ep0306-label">Imagem original f (7×7)</p>
+      <p style="font-size:11px;color:var(--color-text-secondary);margin:0;">com ruído sal e pimenta</p>
+      <div id="ep0306-grid-f" class="ep0306-grid"></div>
+    </div>
+    <div class="ep0306-card" style="border:2px solid #185FA5;">
+      <p class="ep0306-label" style="color:#185FA5;">Resultado g (filtro suavizado)</p>
+      <p style="font-size:11px;color:#185FA5;margin:0;">passe o mouse para inspecionar</p>
+      <div id="ep0306-grid-result" class="ep0306-grid"></div>
+    </div>
+  </div>
+
+  <div style="background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:12px;display:flex;gap:20px;align-items:center;flex-wrap:wrap;justify-content:center;margin-bottom:12px;">
+    <span style="font-size:12px;font-weight:500;color:var(--color-text-secondary);">Legenda</span>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div style="width:20px;height:20px;background:#FAEEDA;border:2px dashed #BA7517;border-radius:4px;"></div>
+      <span style="font-size:12px;color:var(--color-text-secondary);">Janela do kernel (vizinhos)</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div style="width:20px;height:20px;background:#E1F5EE;border:1.5px solid #1D9E75;border-radius:4px;"></div>
+      <span style="font-size:12px;color:var(--color-text-secondary);">Borda — copiada sem filtro</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div style="width:20px;height:20px;background:#E6F1FB;border:1.5px solid #185FA5;border-radius:4px;"></div>
+      <span style="font-size:12px;color:var(--color-text-secondary);">Pixel inspecionado</span>
+    </div>
+  </div>
+
+  <div id="ep0306-debug" style="background:#E6F1FB;border:0.5px solid #B5D4F4;border-radius:var(--border-radius-md);padding:10px 14px;font-family:var(--font-mono);font-size:12px;color:#0C447C;text-align:center;min-height:38px;line-height:1.6;">
+    Passe o mouse sobre um pixel interno do resultado para ver o cálculo.
+  </div>
+</div>
+
+<script>
+(function(){
+  const EP0306_ROWS = 7, EP0306_COLS = 7, EP0306_N = 49;
+  let ep0306Pixels = [], ep0306Result = [], ep0306KSize = 3, ep0306Radius = 1;
+
+  function ep0306GenPixels() {
+    ep0306Pixels = Array.from({ length: EP0306_N }, () => {
+      let v = 60 + Math.floor(Math.random() * 60);
+      if (Math.random() > 0.82) v = Math.random() > 0.5 ? 255 : 0;
+      return v;
+    });
+  }
+
+  function ep0306CalcFilter() {
+    ep0306Result = [...ep0306Pixels];
+    ep0306Radius = Math.floor(ep0306KSize / 2);
+    for (let r = 0; r < EP0306_ROWS; r++) {
+      for (let c = 0; c < EP0306_COLS; c++) {
+        if (r >= ep0306Radius && r < EP0306_ROWS - ep0306Radius && c >= ep0306Radius && c < EP0306_COLS - ep0306Radius) {
+          let sum = 0, cnt = 0;
+          for (let s = -ep0306Radius; s <= ep0306Radius; s++)
+            for (let t = -ep0306Radius; t <= ep0306Radius; t++) { sum += ep0306Pixels[(r+s)*EP0306_COLS+(c+t)]; cnt++; }
+          ep0306Result[r*EP0306_COLS+c] = Math.round(sum/cnt);
+        }
+      }
+    }
+  }
+
+  function ep0306TC(g){ return g > 140 ? '#111' : '#eee'; }
+
+  function ep0306HighlightKernel(tr, tc, on) {
+    const cells = document.getElementById('ep0306-grid-f').children;
+    for (let r = 0; r < EP0306_ROWS; r++) {
+      for (let c = 0; c < EP0306_COLS; c++) {
+        const idx = r*EP0306_COLS+c;
+        if (!cells[idx]) continue;
+        const p = ep0306Pixels[idx];
+        if (on && Math.abs(r-tr) <= ep0306Radius && Math.abs(c-tc) <= ep0306Radius) {
+          cells[idx].style.background = '#FAEEDA';
+          cells[idx].style.color = '#633806';
+          cells[idx].style.boxShadow = '0 0 0 2px #BA7517 inset';
+        } else {
+          cells[idx].style.background = `rgb(${p},${p},${p})`;
+          cells[idx].style.color = ep0306TC(p);
+          cells[idx].style.boxShadow = 'none';
+        }
+      }
+    }
+  }
+
+  function ep0306Render() {
+    const gf = document.getElementById('ep0306-grid-f');
+    const gr = document.getElementById('ep0306-grid-result');
+    const cols = `repeat(${EP0306_COLS}, 42px)`;
+    gf.style.gridTemplateColumns = cols;
+    gr.style.gridTemplateColumns = cols;
+    gf.innerHTML = ''; gr.innerHTML = '';
+
+    for (let i = 0; i < EP0306_N; i++) {
+      const r = Math.floor(i/EP0306_COLS), c = i%EP0306_COLS;
+      const p = ep0306Pixels[i], res = ep0306Result[i];
+      const isBorder = r < ep0306Radius || r >= EP0306_ROWS-ep0306Radius || c < ep0306Radius || c >= EP0306_COLS-ep0306Radius;
+
+      const cf = document.createElement('div');
+      cf.className = 'ep0306-cell';
+      cf.style.background = `rgb(${p},${p},${p})`;
+      cf.style.color = ep0306TC(p);
+      cf.style.border = '0.5px solid rgba(128,128,128,0.15)';
+      cf.innerText = p;
+      gf.appendChild(cf);
+
+      const cr = document.createElement('div');
+      cr.className = 'ep0306-cell';
+      cr.style.background = `rgb(${res},${res},${res})`;
+      cr.style.color = ep0306TC(res);
+      cr.innerText = res;
+
+      if (isBorder) {
+        cr.style.border = '1.5px solid #1D9E75';
+        cr.style.background = '#E1F5EE';
+        cr.style.color = '#085041';
+        cr.onmouseenter = () => {
+          document.getElementById('ep0306-debug').innerHTML =
+            `Pixel (${r},${c}) é <b>borda</b>: valor herdado do original sem cálculo &nbsp;→&nbsp; <b>${res}</b>`;
+        };
+        cr.onmouseleave = () => ep0306ResetDebug();
+      } else {
+        cr.style.border = '0.5px solid var(--color-border-tertiary)';
+        cr.style.cursor = 'pointer';
+        cr.onmouseenter = () => {
+          ep0306HighlightKernel(r, c, true);
+          cr.style.transform = 'scale(1.12)';
+          cr.style.boxShadow = '0 0 0 2px #185FA5 inset';
+          cr.style.background = '#E6F1FB';
+          cr.style.color = '#0C447C';
+          const neighbors = [];
+          for (let s = -ep0306Radius; s <= ep0306Radius; s++)
+            for (let t = -ep0306Radius; t <= ep0306Radius; t++)
+              neighbors.push(ep0306Pixels[(r+s)*EP0306_COLS+(c+t)]);
+          const k = ep0306KSize * ep0306KSize;
+          document.getElementById('ep0306-debug').innerHTML =
+            `Pixel (${r},${c}): round( (${neighbors.join(' + ')}) / ${k} ) &nbsp;=&nbsp; <b>${res}</b>`;
+        };
+        cr.onmouseleave = () => {
+          ep0306HighlightKernel(r, c, false);
+          cr.style.transform = 'scale(1)';
+          cr.style.boxShadow = 'none';
+          cr.style.background = `rgb(${res},${res},${res})`;
+          cr.style.color = ep0306TC(res);
+          ep0306ResetDebug();
+        };
+      }
+      gr.appendChild(cr);
+    }
+  }
+
+  function ep0306ResetDebug() {
+    document.getElementById('ep0306-debug').innerText =
+      'Passe o mouse sobre um pixel interno do resultado para ver o cálculo.';
+  }
+
+  window.ep0306SetKernel = function(k) {
+    ep0306KSize = k;
+    document.getElementById('ep0306-btn-k3').classList.toggle('active', k===3);
+    document.getElementById('ep0306-btn-k5').classList.toggle('active', k===5);
+    ep0306CalcFilter();
+    ep0306Render();
+  };
+
+  document.getElementById('ep0306-btn-new').onclick = () => {
+    ep0306GenPixels(); ep0306CalcFilter(); ep0306Render();
+  };
+
+  ep0306GenPixels(); ep0306CalcFilter(); ep0306Render();
+})();
+</script>

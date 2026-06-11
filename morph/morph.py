@@ -599,6 +599,29 @@ class mm:
         return cv2.blur(f, (N, N))
 
     @staticmethod
+    def gaussian0(f, N=3, sigma=0):
+        """Filtro Gaussiano N×N (Python pura): borda copiada."""
+        r = N // 2
+        L, C = f.shape
+
+        k = cv2.getGaussianKernel(N, sigma)
+        h = k @ k.T
+        h /= h.sum()
+
+        g = f.copy().astype(float)
+
+        for i in range(r, L-r):
+            for j in range(r, C-r):
+                g[i,j] = round(np.sum(f[i-r:i+r+1, j-r:j+r+1] * h))
+
+        return g.astype('uint8')
+
+    @staticmethod
+    def gaussian(f, N=3, sigma=0):
+        """Filtro Gaussiano N×N via cv2: borda copiada."""
+        return cv2.GaussianBlur(f, (N, N), sigma)   
+
+    @staticmethod
     def laplacian0(f, B=np.array([[0,1,0],[1,-4,1],[0,1,0]], dtype=np.float32)):
         """Realce por Laplaciano (Python pura): g = clip(f - conv(f,B)), borda copiada."""
         g = f.copy().astype(int)
