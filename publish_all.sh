@@ -115,10 +115,6 @@ fi
 # ===================================================================
 # Passo 4: Preparar docs/ para GitHub Pages
 # ===================================================================
-# rode a primeira vez sem Git LFS para criar .gitattributes, depois configure LFS e rode novamente para trackear PDFs grandes
-# sudo apt install git-lfs
-# git lfs install
-
 echo ""
 echo "[4/5] Preparando docs/..."
 rm -rf docs
@@ -126,17 +122,25 @@ mkdir -p docs
 cp -rL gen/book/. docs/
 touch docs/.nojekyll
 
-# Configura Git LFS para PDFs grandes
-if ! git lfs version &>/dev/null; then
-  echo "      ⚠ Git LFS não instalado: sudo apt install git-lfs"
-else
-  git lfs install --local 2>/dev/null || true
-  if ! grep -q '*.pdf' .gitattributes 2>/dev/null; then
-    git lfs track "*.pdf"
-    git add .gitattributes
-    echo "      ✓ Git LFS configurado para *.pdf"
+# Comprime PDFs grandes (>50MB) com Ghostscript
+find docs -name "*.pdf" | while read pdf; do
+  size=$(du -m "$pdf" | cut -f1)
+  if [ "$size" -gt 50 ]; then
+    echo "      ⚙ Comprimindo $pdf (${size}MB)..."
+    tmp="${pdf%.pdf}_tmp.pdf"
+    if gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite \
+          -dPDFSETTINGS=/ebook \
+          -dCompatibilityLevel=1.5 \
+          -sOutputFile="$tmp" "$pdf" 2>/dev/null; then
+      mv "$tmp" "$pdf"
+      new_size=$(du -m "$pdf" | cut -f1)
+      echo "      ✓ Comprimido: ${size}MB → ${new_size}MB"
+    else
+      rm -f "$tmp"
+      echo "      ⚠ Falha ao comprimir, mantendo original"
+    fi
   fi
-fi
+done
 echo "      ✓ docs/ pronta"
 
 
