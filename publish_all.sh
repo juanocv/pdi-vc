@@ -104,13 +104,41 @@ fi
 # ===================================================================
 # Passo 4: Preparar docs/ para GitHub Pages
 # ===================================================================
+# echo ""
+# echo "[4/5] Preparando docs/..."
+# rm -rf docs
+# mkdir -p docs
+# cp -rL gen/book/. docs/
+# touch docs/.nojekyll
+# echo "      ✓ docs/ pronta"
+
+# ===================================================================
+# Passo 4: Preparar docs/ para GitHub Pages
+# ===================================================================
+# rode a primeira vez sem Git LFS para criar .gitattributes, depois configure LFS e rode novamente para trackear PDFs grandes
+# sudo apt install git-lfs
+# git lfs install
+
 echo ""
 echo "[4/5] Preparando docs/..."
 rm -rf docs
 mkdir -p docs
 cp -rL gen/book/. docs/
 touch docs/.nojekyll
+
+# Configura Git LFS para PDFs grandes
+if ! git lfs version &>/dev/null; then
+  echo "      ⚠ Git LFS não instalado: sudo apt install git-lfs"
+else
+  git lfs install --local 2>/dev/null || true
+  if ! grep -q '*.pdf' .gitattributes 2>/dev/null; then
+    git lfs track "*.pdf"
+    git add .gitattributes
+    echo "      ✓ Git LFS configurado para *.pdf"
+  fi
+fi
 echo "      ✓ docs/ pronta"
+
 
 # ===================================================================
 # Passo 5: Git commit e push
