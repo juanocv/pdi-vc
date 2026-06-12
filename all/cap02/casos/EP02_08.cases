@@ -6,9 +6,9 @@ nearest
 10 20 30
 40 50 60
 70 80 90
-output=10 20 30
-20 45 55
-0 70 80
+output=10 20 30 
+40 50 60 
+ 0 70 80 
 
 #### case=Caso2_Exemplo2_Vertical
 input=2
@@ -38,9 +38,9 @@ nearest
 10 20 30
 40 50 60
 70 80 90
-output=10 20 30
-45 55 30
-80 90 0
+output=10 20 30 
+50 60  0 
+80 90  0 
 
 #### case=Caso5_Cisalhamento_Diagonal
 input=3
@@ -50,6 +50,6 @@ nearest
 10 20 30
 40 50 60
 70 80 90
-output=10 8 0
-17 36 30
-0 70 64
+output=10  0  0 
+ 0 50 30 
+ 0 70 50 

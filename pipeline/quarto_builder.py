@@ -958,13 +958,21 @@ def _render_pdf_with_patched_tex(qdir: Path, env: dict):
         pdf_path = max(pdf_files, key=lambda p: p.stat().st_mtime)
         try:
             from pypdf import PdfReader, PdfWriter
+            import platform
+            os_release = Path('/etc/os-release').read_text() if Path('/etc/os-release').exists() else ''
+
             reader = PdfReader(str(pdf_path))
             writer = PdfWriter()
-            for page in reader.pages[1:]:  # pula 1 página (em branco)
+            start_page = 1
+            if 'ubuntu' in os_release.lower():
+                # No Debian, o lualatex gera 1 página em branco no início
+                 start_page = 2
+            for page in reader.pages[start_page:]:  # pula páginas (em branco)
                 writer.add_page(page)
             with open(str(pdf_path), 'wb') as f:
                 writer.write(f)
             print(f'  ✓ Página em branco removida: {pdf_path.name}')
+                
         except Exception as e:
             print(f'  ⚠ Falha ao remover página em branco: {e}')
 

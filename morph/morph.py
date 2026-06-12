@@ -224,14 +224,14 @@ class mm:
     
 
     @staticmethod
-    def shear(img, shx=0.0, shy=0.0):
-        """Aplica cisalhamento afim: shx desloca horizontalmente, shy verticalmente."""
-        import cv2
-        import numpy as np
+    def shear(img, shx=0.0, shy=0.0, method='bilinear'):
+        """Aplica cisalhamento afim. method: 'nearest', 'bilinear', 'bicubic', 'lanczos'."""
+        import cv2, numpy as np
+        _m = {'nearest': cv2.INTER_NEAREST, 'bilinear': cv2.INTER_LINEAR,
+            'bicubic': cv2.INTER_CUBIC,   'lanczos':  cv2.INTER_LANCZOS4}
         h, w = img.shape[:2]
-        M = np.float32([[1, shx, 0],
-                        [shy, 1, 0]])
-        return cv2.warpAffine(img, M, (w, h))
+        M = np.float32([[1, shx, 0], [shy, 1, 0]])
+        return cv2.warpAffine(img, M, (w, h), flags=_m.get(method, cv2.INTER_LINEAR))
 
     @staticmethod
     def perspective_transform(img, pts1, pts2, size=None):
