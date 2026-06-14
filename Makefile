@@ -35,7 +35,9 @@ all-formats:
 build:
 	$(PY) --once --langs $(LANGS) --locales $(LOCALES) --render html
 	$(MAKE) index
-
+	python extrair_eps.py --input gen/book/$(LOCALES:%=py.%) 2>/dev/null || \
+		python extrair_eps.py --input gen/book
+		
 .PHONY: build-pdf
 build-pdf:
 	$(PY) --once --langs $(LANGS) --locales $(LOCALES) --render pdf
@@ -108,6 +110,22 @@ alunos-no-numbering:
 epub:
 	python gerar_notebooks_alunos.py --epub references.bib --out-dir notebooks_epub
 
+
+# ── Extração de EPs ───────────────────────────────────────────────────────────
+.PHONY: eps
+eps:
+	python extrair_eps.py --input gen/book/$(LOCALES:%=py.%) 2>/dev/null || \
+	python extrair_eps.py --input gen/book
+
+.PHONY: eps-all
+eps-all:
+	python extrair_eps.py --input gen/book
+
+.PHONY: eps-dry
+eps-dry:
+	python extrair_eps.py --input gen/book --dry-run
+
+	
 # ── Ajuda ─────────────────────────────────────────────────────────────────────
 .PHONY: help
 help:

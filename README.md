@@ -71,9 +71,14 @@ pdi-vc/
 │   │       ├── capXX -> gen/py.pt/capXX  (symlink)
 │   │       └── includes -> includes/     (symlink)
 │   └── book/                     ← saída final
-│       └── py.pt/
-│           ├── livro.pt.py.pdf
-│           └── *.html
+│       ├── py.pt/
+│       │   ├── livro.pt.py.pdf
+│       │   └── *.html
+│       └── eps/                  ← EPs extraídos individualmente
+│           └── py.pt/
+│               ├── EP01_01.html
+│               ├── EP01_02.html
+│               └── ...
 │
 ├── notebooks_alunos/             ← 📦  distribuição para alunos
 │   └── capXX/
@@ -102,6 +107,7 @@ pdi-vc/
 │   └── testsuite.py              ← validador automático de EPs
 │
 ├── dev.py                        ← 🔑  CLI principal (watch + build)
+├── extrair_eps.py                ← extrai cada EP em HTML individual
 ├── gerar_livro.py                ← CLI alternativo (batch)
 ├── gerar_notebooks_alunos.py     ← gera notebooks_alunos/
 ├── run.sh                        ← build rápido de PDF (limpa cache + make pdf)
@@ -204,6 +210,47 @@ python dev.py --once --langs py,cpp --locales pt,en --render html
 # Sem chamar API (modo seco para revisar estrutura)
 python dev.py --once --dry-run
 ```
+
+### Extração de EPs em HTML individual
+
+O script `extrair_eps.py` percorre todos os `gen/book/*/cap*/*.html` gerados pelo Quarto e salva cada EP em um arquivo HTML autônomo, com o mesmo visual do livro (CSS/JS herdados do original).
+
+```bash
+# Extrai todos os EPs de todas as versões disponíveis
+python extrair_eps.py
+
+# Versão específica (ex: py.pt)
+python extrair_eps.py --input gen/book/py.pt
+
+# Arquivo único
+python extrair_eps.py --input gen/book/py.pt/cap01/cap01.py.pt.html
+
+# Pasta de saída customizada
+python extrair_eps.py --out-dir output/eps
+
+# Lista EPs encontrados sem gravar arquivos
+python extrair_eps.py --dry-run
+```
+
+Saída padrão: `gen/book/eps/<versao>/EPXX_YY.html`
+
+Cada arquivo contém o bloco completo do EP: do heading `EPXX_YY` até a célula `%%writefile EPXX_YY.py` (inclusive). Via Makefile:
+
+```bash
+make eps        # extrai EPs da versão padrão (LOCALES=pt)
+make eps-all    # extrai EPs de todas as versões em gen/book/
+make eps-dry    # dry-run — só lista, não grava
+```
+
+#### Uso como atividades VPL no Moodle
+
+Os HTMLs gerados podem ser usados diretamente para criar atividades **VPL (*Virtual Programming Lab*)** no Moodle, com correção automática das submissões dos alunos:
+
+1. Criar uma atividade VPL no Moodle e colar o conteúdo do `EPXX_YY.html` como enunciado;
+2. Importar os arquivos `.cases` correspondentes (em `all/capXX/casos/`) como casos de teste do VPL;
+3. Configurar as linguagens suportadas — os mesmos casos de teste funcionam para Python, Java, C++, C, JavaScript e R.
+
+Os arquivos `.cases` utilizados pelo `TestSuite` nos *notebooks* são **diretamente compatíveis** com o VPL do Moodle: o mesmo conjunto que valida a solução no Colab corrige automaticamente as submissões na plataforma, sem necessidade de reescrever os testes.
 
 ### Notebooks para alunos
 
