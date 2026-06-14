@@ -4,22 +4,22 @@
 \contentsline {table}{\numberline {1.2}{\ignorespaces Principais tipos de imagem digital e seus respectivos conjuntos de valores possíveis para cada pixel.}}{23}{table.1.2}%
 \contentsline {table}{\numberline {1.3}{\ignorespaces Principais bibliotecas utilizadas ao longo deste livro para manipulação matricial, PDI e visualização de resultados.}}{24}{table.1.3}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {2.1}{\ignorespaces Convenções de escala e ordem de canais nas principais bibliotecas de PDI.}}{67}{table.2.1}%
-\contentsline {table}{\numberline {2.2}{\ignorespaces Comparativo entre estratégias de compactação e eficiência de processamento.}}{74}{table.2.2}%
-\contentsline {table}{\numberline {2.3}{\ignorespaces Comparativo de métricas de distância aplicadas à malha de pixels.}}{75}{table.2.3}%
-\contentsline {table}{\numberline {2.4}{\ignorespaces Principais formatos de armazenamento de imagens digitais e suas aplicações em PDI.}}{75}{table.2.4}%
-\contentsline {table}{\numberline {2.5}{\ignorespaces Métodos de interpolação disponíveis em \texttt {mm.resize} e seus respectivos números de vizinhos utilizados no cálculo.}}{81}{table.2.5}%
+\contentsline {table}{\numberline {2.1}{\ignorespaces Convenções de escala e ordem de canais nas principais bibliotecas de PDI.}}{68}{table.2.1}%
+\contentsline {table}{\numberline {2.2}{\ignorespaces Comparativo entre estratégias de compactação e eficiência de processamento.}}{75}{table.2.2}%
+\contentsline {table}{\numberline {2.3}{\ignorespaces Comparativo de métricas de distância aplicadas à malha de pixels.}}{76}{table.2.3}%
+\contentsline {table}{\numberline {2.4}{\ignorespaces Principais formatos de armazenamento de imagens digitais e suas aplicações em PDI.}}{76}{table.2.4}%
+\contentsline {table}{\numberline {2.5}{\ignorespaces Métodos de interpolação disponíveis em \texttt {mm.resize} e seus respectivos números de vizinhos utilizados no cálculo.}}{82}{table.2.5}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {3.1}{\ignorespaces Algoritmo de equalização de histograma.}}{117}{table.3.1}%
-\contentsline {table}{\numberline {3.2}{\ignorespaces Interpretação típica dos coeficientes do \emph {kernel}.}}{127}{table.3.2}%
-\contentsline {table}{\numberline {3.3}{\ignorespaces Etapas do \emph {Unsharp Masking}.}}{140}{table.3.3}%
-\contentsline {table}{\numberline {3.4}{\ignorespaces Média vs.~mediana com um pixel corrompido. A mediana ignora o outlier; a média é deslocada \textasciitilde 40 níveis.}}{143}{table.3.4}%
+\contentsline {table}{\numberline {3.1}{\ignorespaces Algoritmo de equalização de histograma.}}{120}{table.3.1}%
+\contentsline {table}{\numberline {3.2}{\ignorespaces Interpretação típica dos coeficientes do \emph {kernel}.}}{130}{table.3.2}%
+\contentsline {table}{\numberline {3.3}{\ignorespaces Etapas do \emph {Unsharp Masking}.}}{143}{table.3.3}%
+\contentsline {table}{\numberline {3.4}{\ignorespaces Média vs.~mediana com um pixel corrompido. A mediana ignora o outlier; a média é deslocada \textasciitilde 40 níveis.}}{146}{table.3.4}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {4.1}{\ignorespaces Propriedades de abertura e fechamento.}}{181}{table.4.1}%
-\contentsline {table}{\numberline {4.2}{\ignorespaces Sequências do filtro sequencial alternado \texttt {mm.asf}.}}{181}{table.4.2}%
-\contentsline {table}{\numberline {4.3}{\ignorespaces Taxonomia dos métodos de segmentação baseados em propriedades de homogeneidade e conectividade espacial.}}{190}{table.4.3}%
-\contentsline {table}{\numberline {4.4}{\ignorespaces Pipeline morfológico típico do \emph {watershed} baseado em marcadores.}}{196}{table.4.4}%
+\contentsline {table}{\numberline {4.1}{\ignorespaces Propriedades de abertura e fechamento.}}{186}{table.4.1}%
+\contentsline {table}{\numberline {4.2}{\ignorespaces Sequências do filtro sequencial alternado \texttt {mm.asf}.}}{186}{table.4.2}%
+\contentsline {table}{\numberline {4.3}{\ignorespaces Taxonomia dos métodos de segmentação baseados em propriedades de homogeneidade e conectividade espacial.}}{195}{table.4.3}%
+\contentsline {table}{\numberline {4.4}{\ignorespaces Pipeline morfológico típico do \emph {watershed} baseado em marcadores.}}{201}{table.4.4}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {5.1}{\ignorespaces Comparação de complexidade entre convolução direta, separável e via FFT.}}{219}{table.5.1}%
-\contentsline {table}{\numberline {5.2}{\ignorespaces Tipos de redundância em imagens e como são exploradas.}}{235}{table.5.2}%
-\contentsline {table}{\numberline {5.3}{\ignorespaces Comparação entre os principais formatos de imagem rasterizados.}}{243}{table.5.3}%
+\contentsline {table}{\numberline {5.1}{\ignorespaces Comparação de complexidade entre convolução direta, separável e via FFT.}}{223}{table.5.1}%
+\contentsline {table}{\numberline {5.2}{\ignorespaces Tipos de redundância em imagens e como são exploradas.}}{239}{table.5.2}%
+\contentsline {table}{\numberline {5.3}{\ignorespaces Comparação entre os principais formatos de imagem rasterizados.}}{246}{table.5.3}%
