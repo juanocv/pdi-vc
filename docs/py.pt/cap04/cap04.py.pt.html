@@ -2,13 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.557">
+<meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Processamento Digital de Imagens e Visão Computacional - 4&nbsp; Morfologia Matemática e Segmentação de Imagens</title>
+<title>4&nbsp; Morfologia Matemática e Segmentação de Imagens – Processamento Digital de Imagens e Visão Computacional</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -21,8 +24,9 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 /* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -33,7 +37,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -77,7 +81,7 @@ div.csl-indent {
 }</style>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -86,15 +90,16 @@ div.csl-indent {
 <meta name="quarto:offset" content="../">
 <link href="../cap05/cap05.py.pt.html" rel="next">
 <link href="../cap03/cap03.py.pt.html" rel="prev">
-<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-de63f62b328812d8e578a4d74e282472.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-d024cad0e32bf2110a1b02cbacc0c8bd.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -122,7 +127,7 @@ div.csl-indent {
     "search-label": "Procurar"
   }
 }</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
 
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -136,7 +141,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -149,7 +154,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -168,19 +173,19 @@ window.Quarto = {
 <link rel="stylesheet" href="../custom.css">
 </head>
 
-<body class="nav-sidebar floating">
+<body class="nav-sidebar floating quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../cap01/cap01.py.pt.html">Parte I — Fundamentos de PDI</a></li><li class="breadcrumb-item"><a href="../cap04/cap04.py.pt.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Morfologia Matemática e Segmentação de Imagens</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -219,9 +224,9 @@ window.Quarto = {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
  <span class="menu-text">Parte I — Fundamentos de PDI</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Alternar seção">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar seção">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -352,7 +357,7 @@ window.Quarto = {
 <li><strong>Extrair descritores de forma:</strong> Rotular componentes conexas e quantificar propriedades geométricas (área, perímetro, circularidade, excentricidade e momentos de Hu) via <code>cv2.findContours</code>.</li>
 </ul>
 <div id="bf34c8f7" class="cell" data-quarto-raw="true">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os, importlib, urllib.request</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os, importlib, urllib.request</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cv2</span>
@@ -367,7 +372,7 @@ window.Quarto = {
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>importlib.<span class="bu">reload</span>(morph)</span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> morph <span class="im">import</span> mm</span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"✅ Ambiente pronto"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"✅ Ambiente pronto"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>✅ Ambiente pronto</code></pre>
 </div>
@@ -408,7 +413,7 @@ T^* =
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Otsu assume histogramas bimodais
+<span class="screen-reader-only">Nota</span>Otsu assume histogramas bimodais
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -421,7 +426,7 @@ Otsu assume histogramas bimodais
 <h3 data-number="4.2.1" class="anchored" data-anchor-id="imagem-de-moedas"><span class="header-section-number">4.2.1</span> Imagem de Moedas</h3>
 <p>A imagem utilizada para praticar a segmentação é uma fotografia de coleção de moedas de diferentes países e épocas (<a href="#fig-04-coins" class="quarto-xref">Figura&nbsp;<span>4.1</span></a>). Crédito: GAZI.MD.AHAD (CC BY-SA 4.0). Ela apresenta objetos circulares com bordas bem definidas, sendo ideal para demonstrar limiarização, operadores morfológicos, transformada de distância, <em>watershed</em> e descritores de forma.</p>
 <div id="cell-fig-04-coins" class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>url     <span class="op">=</span> <span class="st">"https://upload.wikimedia.org/wikipedia/commons/2/25/GAZI.MD.AHAD_11.jpg"</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>caminho <span class="op">=</span> <span class="st">"imagens/coins.jpg"</span></span>
@@ -437,12 +442,12 @@ Otsu assume histogramas bimodais
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>img_coins_gray  <span class="op">=</span> mm.gray(img_coins_color)</span>
 <span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Dimensões [y,x,c]: </span><span class="sc">{</span>img_coins_color<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>mm.show(img_coins_color, scale<span class="op">=</span><span class="dv">30</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>mm.show(img_coins_color, scale<span class="op">=</span><span class="dv">30</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Dimensões [y,x,c]: (2560, 1920, 3)</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<div id="fig-04-coins" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-04-coins" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-04-coins-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="cap04.py.pt_files/figure-html/fig-04-coins-output-2.png" class="img-fluid figure-img">
@@ -493,7 +498,7 @@ Figura&nbsp;4.1: Imagem com moedas de vários tipos. Crédito: GAZI.MD.AHAD (CC 
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Critério de comparação
+<span class="screen-reader-only">Nota</span>Critério de comparação
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -501,7 +506,7 @@ Critério de comparação
 </div>
 </div>
 <div id="cell-fig-04-otsu-comparacao-histogramas" class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cv2, io</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cv2, io</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> otsu_criterio(img):</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    h<span class="op">=</span>mm.hist(img)<span class="op">;</span> p<span class="op">=</span>h<span class="op">/</span>h.<span class="bu">sum</span>()<span class="op">;</span>                  <span class="co"># histograma e probabilidades</span></span>
@@ -552,7 +557,7 @@ Critério de comparação
 <span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>    titles <span class="op">+=</span> [nome,<span class="ss">f"Hist T*=</span><span class="sc">{</span>T<span class="sc">}</span><span class="ss">"</span>,<span class="st">"σ²B(T)"</span>,<span class="ss">f"Otsu T*=</span><span class="sc">{</span>T<span class="sc">}</span><span class="ss">"</span>]</span>
 <span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a><span class="co"># ── Exibição final ───────────────────────────────────────────────────────────</span></span>
-<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>mm.show(imgs,titles<span class="op">=</span>titles,cols<span class="op">=</span><span class="dv">4</span>,figsize<span class="op">=</span>(<span class="dv">12</span>,<span class="dv">12</span>),dpi<span class="op">=</span><span class="dv">200</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>mm.show(imgs,titles<span class="op">=</span>titles,cols<span class="op">=</span><span class="dv">4</span>,figsize<span class="op">=</span>(<span class="dv">12</span>,<span class="dv">12</span>),dpi<span class="op">=</span><span class="dv">200</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Versão                T*      σ²B pico
 ----------------------------------------
@@ -561,7 +566,7 @@ CLAHE                122    2.4695e+03
 CLAHE+Gauss          123    2.4283e+03</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<div id="fig-04-otsu-comparacao-histogramas" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-04-otsu-comparacao-histogramas" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-04-otsu-comparacao-histogramas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="cap04.py.pt_files/figure-html/fig-04-otsu-comparacao-histogramas-output-2.png" class="img-fluid figure-img">
@@ -583,7 +588,7 @@ Figura&nbsp;4.2: Comparação dos pré-processamentos: imagem | histograma+T* | 
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Interpretação visual
+<span class="screen-reader-only">Dica</span>Interpretação visual
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -644,7 +649,7 @@ A \oplus B = \{\, z \in \mathbb{E} \mid \hat{\mathbb{B}}_z \cap A \neq \varnothi
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Dualidade erosão–dilatação
+<span class="screen-reader-only">Nota</span>Dualidade erosão–dilatação
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -669,7 +674,7 @@ Dualidade erosão–dilatação
 </div>
 <p>Para ilustrar numericamente os operadores morfológicos e a dualidade erosão–dilatação, a <a href="#fig-04-ero-dil-didatico" class="quarto-xref">Figura&nbsp;<span>4.3</span></a> apresenta uma imagem binária 10×10 processada com um elemento estruturante em formato de “L”. Na implementação de <code>morph.py</code>, a origem de <span class="math inline">\(B\)</span> é fixada no centro geométrico da máscara — posição <span class="math inline">\((1,1)\)</span> para um <em>kernel</em> 3×3 — e deve ser um elemento ativo para que a erosão se comporte corretamente (conforme discutido anteriormente). O <span class="math inline">\(B_L\)</span> definido a seguir satisfaz essa condição. A <a href="#fig-04-erosao" class="quarto-xref">Figura&nbsp;<span>4.4</span></a> complementa a análise com um simulador interativo da erosão, permitindo visualizar o deslocamento do elemento estruturante sobre a imagem e identificar as posições em que ele permanece completamente contido no objeto.</p>
 <div id="cell-fig-04-ero-dil-didatico" class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> np.array([</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> np.array([</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>],</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>],</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>],</span>
@@ -704,12 +709,12 @@ Dualidade erosão–dilatação
 <span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>    titles<span class="op">=</span>[<span class="st">"A"</span>, <span class="st">"Aᶜ"</span>, <span class="st">"A ⊖ B"</span>, <span class="st">"(A ⊖ B)ᶜ"</span>, <span class="st">"Aᶜ ⊕ B̂"</span>],</span>
 <span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>    cols<span class="op">=</span><span class="dv">5</span>,</span>
 <span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>    figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">3</span>)</span>
-<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Dualidade (A ⊖ B)^c == A^c ⊕ B̂ : True</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<div id="fig-04-ero-dil-didatico" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-04-ero-dil-didatico" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-04-ero-dil-didatico-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="cap04.py.pt_files/figure-html/fig-04-ero-dil-didatico-output-2.png" class="img-fluid figure-img">
@@ -722,7 +727,7 @@ Figura&nbsp;4.3: Erosão e dilatação em imagem binária 10×10 com elemento es
 </div>
 </div>
 <div id="cell-fig-04-erosao" class="cell">
-<div id="fig-04-erosao" class="cell-output cell-output-display quarto-figure quarto-figure-center quarto-float anchored" data-execution_count="5">
+<div id="fig-04-erosao" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="5">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-04-erosao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 
@@ -1100,7 +1105,7 @@ A \circ B = (A \ominus B) \oplus B
 A \bullet B = (A \oplus B) \ominus B
 \tag{4.6}\]</span></span></p>
 <p>O OpenCV aplica o mesmo <code>B</code> nas duas etapas (assume simetria), o que equivale a <span class="math inline">\((A \ominus B) \oplus B\)</span> para abertura e <span class="math inline">\((A \oplus B) \ominus B\)</span> para fechamento.</p>
-<div id="tbl-04-open-close" class="quarto-float anchored">
+<div id="tbl-04-open-close" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-04-open-close-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Tabela&nbsp;4.1: Propriedades de abertura e fechamento.
@@ -1137,7 +1142,7 @@ Tabela&nbsp;4.1: Propriedades de abertura e fechamento.
 </div>
 <p><strong>Propriedade importante:</strong> ambos são <strong>idempotentes</strong> — <span class="math inline">\((A \circ B) \circ B = A \circ B\)</span> — aplicar o operador duas vezes produz o mesmo resultado que uma vez.</p>
 <p>Na prática, abertura e fechamento são frequentemente aplicados em sequência para remover simultaneamente ruído externo e preencher buracos internos. A função <code>mm.asf</code> (<em>Alternating Sequential Filter</em>) generaliza essa ideia: aplica abertura e fechamento alternadamente, com elemento estruturante crescente a cada iteração <span class="math inline">\(i\)</span> via <code>mm.sesum(b, i)</code>. As sequências disponíveis são:</p>
-<div id="tbl-04-asf" class="quarto-float anchored">
+<div id="tbl-04-asf" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-04-asf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Tabela&nbsp;4.2: Sequências do filtro sequencial alternado <code>mm.asf</code>.
@@ -1184,7 +1189,7 @@ Tabela&nbsp;4.2: Sequências do filtro sequencial alternado <code>mm.asf</code>.
 </div>
 <p>O parâmetro <code>n</code> controla o número de iterações — a cada iteração <span class="math inline">\(i\)</span>, o elemento estruturante cresce por soma de Minkowski (<code>mm.sesum</code>), o que equivale a aplicar filtros progressivamente maiores. O resultado é uma suavização morfológica multiescala que preserva melhor as estruturas relevantes do que uma única abertura ou fechamento com kernel grande. Ver na <a href="#fig-04-open-close" class="quarto-xref">Figura&nbsp;<span>4.5</span></a> um exemplo de uso da abertura e fechamento na imagem das moedas.</p>
 <div id="cell-fig-04-open-close" class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>img_bin    <span class="op">=</span> mm.threshold(img_clahe)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>img_bin    <span class="op">=</span> mm.threshold(img_clahe)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>B_disk     <span class="op">=</span> mm.sedisk(<span class="dv">19</span>)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>img_open  <span class="op">=</span> mm.<span class="bu">open</span>(img_bin, B_disk)             <span class="co"># erosão → dilatação</span></span>
@@ -1198,9 +1203,9 @@ Tabela&nbsp;4.2: Sequências do filtro sequencial alternado <code>mm.asf</code>.
 <span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    titles<span class="op">=</span>[<span class="st">"Binarização Otsu (CLAHE)"</span>, <span class="st">"Abertura (A∘B)"</span>, <span class="st">"Fechamento (A∙B)"</span>,</span>
 <span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Abertura→Fechamento"</span>, <span class="st">"ASF-OC (n=7)"</span>],</span>
 <span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    cols<span class="op">=</span><span class="dv">5</span>, figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">12</span>)</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
-<div id="fig-04-open-close" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-04-open-close" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-04-open-close-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="cap04.py.pt_files/figure-html/fig-04-open-close-output-1.png" class="img-fluid figure-img">
@@ -1231,10 +1236,10 @@ R_g^\delta(f) = (f \oplus_g b)^\infty, \quad \text{onde } (f \oplus_g b)^{(k)} =
 <p>Em <code>morph.py</code>: <code>mm.infrec(f, g, b)</code> dilata <span class="math inline">\(f\)</span> dentro de <span class="math inline">\(g\)</span> até convergir.</p>
 <p>A reconstrução morfológica é significativamente mais robusta que a abertura convencional porque filtra estruturas indesejadas <strong>sem alterar a morfologia</strong> dos objetos preservados. Enquanto a abertura suaviza cantos e deforma contornos devido à aplicação irrestrita do elemento estruturante, a reconstrução geodésica resgata os limites exatos dos objetos que interceptam o marcador, conforme ilustrado na <a href="#fig-04-reconstrucao-didatica" class="quarto-xref">Figura&nbsp;<span>4.7</span></a> com o elemento estruturante em cruz da <a href="#fig-04-elemento-cruz" class="quarto-xref">Figura&nbsp;<span>4.6</span></a>.</p>
 <div id="cell-fig-04-elemento-cruz" class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>B_cruz <span class="op">=</span> mm.secross()</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>mm.drawImgPlt(B_cruz, scale<span class="op">=</span><span class="dv">20</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>B_cruz <span class="op">=</span> mm.secross()</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>mm.drawImgPlt(B_cruz, scale<span class="op">=</span><span class="dv">20</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
-<div id="fig-04-elemento-cruz" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-04-elemento-cruz" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-04-elemento-cruz-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="cap04.py.pt_files/figure-html/fig-04-elemento-cruz-output-1.png" class="img-fluid figure-img">
@@ -1247,7 +1252,7 @@ Figura&nbsp;4.6: Elemento estruturante em formato de cruz (<span class="math inl
 </div>
 </div>
 <div id="cell-fig-04-reconstrucao-didatica" class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Definição da Máscara (g): Imagem 10x10 com dois objetos isolados</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Definição da Máscara (g): Imagem 10x10 com dois objetos isolados</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>g <span class="op">=</span> np.array([</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>],</span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>],</span>
@@ -1289,12 +1294,12 @@ Figura&nbsp;4.6: Elemento estruturante em formato de cruz (<span class="math inl
 <span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a>    titles<span class="op">=</span>[<span class="st">"Máscara (g)"</span>, <span class="st">"Marcador (f)"</span>] <span class="op">+</span> titulos_iteracoes <span class="op">+</span> [<span class="st">"Reconstrução Final R_g(f)"</span>],</span>
 <span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a>    cols<span class="op">=</span><span class="dv">8</span>,</span>
 <span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a>    figsize<span class="op">=</span>(<span class="dv">18</span>, <span class="dv">3</span>)</span>
-<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>✅ Reconstrução alcançou estabilidade na iteração 5: False</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<div id="fig-04-reconstrucao-didatica" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-04-reconstrucao-didatica" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-04-reconstrucao-didatica-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="cap04.py.pt_files/figure-html/fig-04-reconstrucao-didatica-output-2.png" class="img-fluid figure-img">
@@ -1324,7 +1329,7 @@ Figura&nbsp;4.7: Pipeline de Reconstrução Morfológica por Dilatação Condici
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Comparação dos dois operadores
+<span class="screen-reader-only">Nota</span>Comparação dos dois operadores
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1356,7 +1361,7 @@ Comparação dos dois operadores
 </div>
 <p>A evolução passo a passo dessas transformações geodésicas pode ser acompanhada nas figuras a seguir. A <a href="#fig-04-clohole-didatico" class="quarto-xref">Figura&nbsp;<span>4.8</span></a> ilustra o mecanismo de inundação controlada do operador <code>mm.clohole</code>, evidenciando como a frente de onda preenche o plano de fundo externo e deixa isoladas apenas as cavidades internas. Em contrapartida, a <a href="#fig-04-edgeoff-didatico" class="quarto-xref">Figura&nbsp;<span>4.9</span></a> detalha a dinâmica do operador <code>mm.edgeoff</code>, onde os objetos ancorados nas extremidades da matriz são integralmente mapeados a partir do <em>frame</em> limítrofe e, em seguida, eliminados por meio da subtração morfológica, restando exclusivamente os elementos totalmente contidos no domínio interno da imagem. A conectividade da propagação geodésica é controlada pelo elemento estruturante: <code>mm.sebox()</code> (vizinhança de 8) inclui componentes diagonais, enquanto <code>mm.secross()</code> (vizinhança de 4) os exclui — o que afeta quais objetos são atingidos pelo <em>frame</em> e, portanto, quais são preservados ou removidos.</p>
 <div id="cell-fig-04-clohole-didatico" class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Função auxiliar unificada para gerar o pipeline iterativo com realce visual</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Função auxiliar unificada para gerar o pipeline iterativo com realce visual</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> gerar_pipeline_reconstrucao(marcador, mascara, kernel, passos<span class="op">=</span><span class="dv">4</span>, fator<span class="op">=</span><span class="dv">80</span>):</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    iteracoes, titulos <span class="op">=</span> [], []</span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    img_atual <span class="op">=</span> marcador.copy()</span>
@@ -1396,12 +1401,12 @@ Comparação dos dois operadores
 <span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a>    [f, marcador_ch] <span class="op">+</span> iters_ch <span class="op">+</span> [img_clohole],</span>
 <span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a>    titles<span class="op">=</span>[<span class="st">"f original"</span>, <span class="st">"Marcador (Borda)"</span>] <span class="op">+</span> tits_ch <span class="op">+</span> [<span class="st">"clohole(f)"</span>],</span>
 <span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a>    cols<span class="op">=</span><span class="dv">8</span>, figsize<span class="op">=</span>(<span class="dv">18</span>, <span class="dv">3</span>), axis<span class="op">=</span><span class="va">True</span></span>
-<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>✅ Validação clohole: True</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<div id="fig-04-clohole-didatico" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-04-clohole-didatico" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-04-clohole-didatico-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="cap04.py.pt_files/figure-html/fig-04-clohole-didatico-output-2.png" class="img-fluid figure-img">
@@ -1414,7 +1419,7 @@ Figura&nbsp;4.8: Pipeline de preenchimento de buracos (<em>clohole</em>): o marc
 </div>
 </div>
 <div id="cell-fig-04-edgeoff-didatico" class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ── PIPELINE EDGEOFF ──────────────────────────────────────────────────────────</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ── PIPELINE EDGEOFF ──────────────────────────────────────────────────────────</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>B_box <span class="op">=</span> mm.sebox()</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>marcador_eo <span class="op">=</span> marcador_ch <span class="op">&amp;</span> f</span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>iters_eo, tits_eo <span class="op">=</span> gerar_pipeline_reconstrucao(marcador_eo, f, B_box, passos<span class="op">=</span><span class="dv">5</span>)</span>
@@ -1427,12 +1432,12 @@ Figura&nbsp;4.8: Pipeline de preenchimento de buracos (<em>clohole</em>): o marc
 <span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    [f, marcador_eo] <span class="op">+</span> iters_eo <span class="op">+</span> [img_edgeoff],</span>
 <span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>    titles<span class="op">=</span>[<span class="st">"f original"</span>, <span class="st">"Marcador (Borda)"</span>] <span class="op">+</span> tits_eo <span class="op">+</span> [<span class="st">"edgeoff(f)"</span>],</span>
 <span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>    cols<span class="op">=</span><span class="dv">8</span>, figsize<span class="op">=</span>(<span class="dv">18</span>, <span class="dv">3</span>)</span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>✅ Validação edgeoff: True</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<div id="fig-04-edgeoff-didatico" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-04-edgeoff-didatico" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-04-edgeoff-didatico-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="cap04.py.pt_files/figure-html/fig-04-edgeoff-didatico-output-2.png" class="img-fluid figure-img">
@@ -1458,7 +1463,7 @@ Figura&nbsp;4.9: Pipeline de eliminação de estruturas de borda (<em>edgeoff</e
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Por que a abertura após o clohole?
+<span class="screen-reader-only">Dica</span>Por que a abertura após o clohole?
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1466,7 +1471,7 @@ Por que a abertura após o clohole?
 </div>
 </div>
 <div id="cell-fig-04-pipeline-clahe" class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ── Pré-processamento: apenas CLAHE </span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ── Pré-processamento: apenas CLAHE </span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>img_clahe0 <span class="op">=</span> cv2.createCLAHE(clipLimit<span class="op">=</span><span class="fl">2.0</span>, tileGridSize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">8</span>)).<span class="bu">apply</span>(img_coins_gray)</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># ── Etapa 1: Binarização Otsu</span></span>
@@ -1490,9 +1495,9 @@ Por que a abertura após o clohole?
 <span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>    titles<span class="op">=</span>[<span class="st">"CLAHE"</span>,            <span class="st">"Otsu"</span>,                <span class="st">"Abertura (r=9)"</span>,</span>
 <span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>            <span class="st">"clohole"</span>,          <span class="st">"Abertura (r=33)"</span>,     <span class="st">"Final (edgeoff)"</span>],</span>
 <span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>    cols<span class="op">=</span><span class="dv">6</span>, figsize<span class="op">=</span>(<span class="dv">18</span>, <span class="dv">6</span>)</span>
-<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
-<div id="fig-04-pipeline-clahe" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-04-pipeline-clahe" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-04-pipeline-clahe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="cap04.py.pt_files/figure-html/fig-04-pipeline-clahe-output-1.png" class="img-fluid figure-img">
@@ -1521,7 +1526,7 @@ Figura&nbsp;4.10: Pipeline completo de segmentação com CLAHE: Otsu → fechame
 <p><em>Top-hat</em> extrai elementos brilhantes que são menores que o elemento estruturante <span class="math inline">\(B\)</span>, enquanto o <em>Black-hat</em> extrai elementos escuros menores que <span class="math inline">\(B\)</span>.</p>
 <p>Os três operadores, ilustrados na <a href="#fig-04-morf-gc-histogramas" class="quarto-xref">Figura&nbsp;<span>4.11</span></a>, estão disponíveis em <code>mm.gradm</code>, <code>mm.tophat</code> e <code>mm.blackhat</code>.</p>
 <div id="cell-fig-04-morf-gc-histogramas" class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> io</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> io</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -1555,9 +1560,9 @@ Figura&nbsp;4.10: Pipeline completo de segmentação com CLAHE: Otsu → fechame
 <span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a>    titles <span class="op">+=</span> [nome, <span class="ss">f"Hist. </span><span class="sc">{</span>nome<span class="sc">}</span><span class="ss">"</span>]</span>
 <span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-34"><a href="#cb18-34" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Exibição final em grade de duas colunas (Imagem | Histograma)</span></span>
-<span id="cb18-35"><a href="#cb18-35" aria-hidden="true" tabindex="-1"></a>mm.show(imgs, titles<span class="op">=</span>titles, cols<span class="op">=</span><span class="dv">4</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>))</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-35"><a href="#cb18-35" aria-hidden="true" tabindex="-1"></a>mm.show(imgs, titles<span class="op">=</span>titles, cols<span class="op">=</span><span class="dv">4</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
-<div id="fig-04-morf-gc-histogramas" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-04-morf-gc-histogramas" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-04-morf-gc-histogramas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="cap04.py.pt_files/figure-html/fig-04-morf-gc-histogramas-output-1.png" class="img-fluid figure-img">
@@ -1580,7 +1585,7 @@ Figura&nbsp;4.11: Morfologia em tons de cinza emparelhada com seus respectivos h
 \bigcup_{i=1}^{n} R_i = \Omega, \quad \text{onde} \quad R_i \cap R_j = \emptyset \quad \forall \quad i \neq j
 \tag{4.13}\]</span></span></p>
 <p>Cada sub-região <span class="math inline">\(R_i\)</span> deve constituir um domínio <strong>homogêneo</strong> segundo um predicado de similaridade definido sobre propriedades locais — intensidade, cor ou textura — e, concomitantemente, ser <strong>distinta</strong> em relação às regiões adjacentes. As abordagens para a obtenção dessa partição organizam-se em três famílias, fundamentadas em critérios de continuidade, conectividade e similaridade estatística, conforme sintetizado na <a href="#tbl-04-segmentacao" class="quarto-xref">Tabela&nbsp;<span>4.3</span></a>.</p>
-<div id="tbl-04-segmentacao" class="quarto-float anchored">
+<div id="tbl-04-segmentacao" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-04-segmentacao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Tabela&nbsp;4.3: Taxonomia dos métodos de segmentação baseados em propriedades de homogeneidade e conectividade espacial.
@@ -1649,7 +1654,7 @@ Tabela&nbsp;4.3: Taxonomia dos métodos de segmentação baseados em propriedade
 </ol>
 <p>A implementação em <code>morph.py</code> expõe duas versões: <code>label0</code>, que reproduz o algoritmo acima explicitamente para fins didáticos, e <code>label</code>, que delega ao <code>cv2.connectedComponents</code> otimizado:</p>
 <div id="e24f5f09" class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="at">@staticmethod</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="at">@staticmethod</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> label(f):</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    _, lbl <span class="op">=</span> cv2.connectedComponents(f)<span class="op">;</span> <span class="cf">return</span> lbl</span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -1669,12 +1674,12 @@ Tabela&nbsp;4.3: Taxonomia dos métodos de segmentação baseados em propriedade
 <span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>                        <span class="cf">if</span> bv <span class="kw">and</span> f[vy,vx] <span class="kw">and</span> <span class="kw">not</span> g[vy,vx]:</span>
 <span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>                            pilha.append([vy,vx])</span>
 <span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>                cor <span class="op">+=</span> <span class="dv">1</span></span>
-<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> g</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> g</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>O auxiliar <code>_viz</code> itera sobre a janela estruturante <code>b</code> centrada em <span class="math inline">\((i,j)\)</span>, gerando somente os vizinhos válidos dentro dos limites da imagem — a conectividade desejada é inteiramente determinada pela forma de <code>b</code> passada ao algoritmo.</p>
 <p><strong>Exemplo didático — efeito da conectividade:</strong></p>
 <div id="cell-fig-04-rotulacao" class="cell">
-<div id="fig-04-rotulacao" class="cell-output cell-output-display quarto-figure quarto-figure-center quarto-float anchored" data-execution_count="14">
+<div id="fig-04-rotulacao" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="14">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-04-rotulacao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 
@@ -2145,7 +2150,7 @@ Figura&nbsp;4.12: Simulador interativo de rotulação de componentes conexas (<e
 </div>
 </div>
 <div id="cell-fig-04-rotulacao-didatico" class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Imagem binária 10×10 com componentes diagonalmente adjacentes</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Imagem binária 10×10 com componentes diagonalmente adjacentes</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> np.array([</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>],</span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>],</span>
@@ -2189,14 +2194,14 @@ Figura&nbsp;4.12: Simulador interativo de rotulação de componentes conexas (<e
 <span id="cb20-42"><a href="#cb20-42" aria-hidden="true" tabindex="-1"></a>        <span class="ss">f"Rotulação C8</span><span class="ch">\n</span><span class="ss">(</span><span class="sc">{</span>lbl8_cv2<span class="sc">.</span><span class="bu">max</span>()<span class="sc">}</span><span class="ss"> componentes)"</span></span>
 <span id="cb20-43"><a href="#cb20-43" aria-hidden="true" tabindex="-1"></a>    ],</span>
 <span id="cb20-44"><a href="#cb20-44" aria-hidden="true" tabindex="-1"></a>    cols<span class="op">=</span><span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">4</span>), axis<span class="op">=</span><span class="va">True</span></span>
-<span id="cb20-45"><a href="#cb20-45" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-45"><a href="#cb20-45" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>✅ label0 (C4) == cv2 (C4): True
 ✅ label0 (C8) == cv2 (C8): True
    Componentes C4: 7  |  Componentes C8: 4</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<div id="fig-04-rotulacao-didatico" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-04-rotulacao-didatico" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-04-rotulacao-didatico-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="cap04.py.pt_files/figure-html/fig-04-rotulacao-didatico-output-2.png" class="img-fluid figure-img">
@@ -2217,7 +2222,7 @@ D(x,y) = \min_{(x',y') \,:\, f(x',y')=0} \; d\bigl((x,y),\,(x',y')\bigr)
 \]</span></p>
 <p>onde <span class="math inline">\(d(\cdot,\cdot)\)</span> é uma métrica de distância — tipicamente Euclidiana (<span class="math inline">\(L_2\)</span>). O resultado é uma representação topográfica dos objetos: pixels no interior profundo assumem valores elevados, enquanto pixels próximos à borda dos objetos apresentam baixos valores de distância. Os <strong>máximos locais</strong> de <span class="math inline">\(D\)</span> correspondem aos centros geométricos aproximados de cada objeto — propriedade relevante para a geração de marcadores no <em>watershed</em>.</p>
 <p>A TD admite ainda uma interpretação morfológica iterativa: aplicar erosões sucessivas com uma função estruturante <span class="math inline">\(b\)</span> especial até que o objeto se extinga equivale a atribuir a cada pixel o resultado de erosões sucessivas, segundo o elemento estruturante adotado. Essa visão é materializada em <code>mm.dist1()</code>, enquanto <code>mm.dist()</code> delega ao operador <span class="math inline">\(L_2\)</span> otimizado do OpenCV:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="at">@staticmethod</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="at">@staticmethod</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> dist(f):</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> cv2.distanceTransform(f, cv2.DIST_L2, <span class="dv">5</span>)</span>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> y.astype(<span class="st">'uint8'</span>) <span class="cf">if</span> y.<span class="bu">max</span>() <span class="op">&lt;=</span> <span class="dv">255</span> <span class="cf">else</span> y.astype(<span class="st">'uint16'</span>)</span>
@@ -2229,12 +2234,12 @@ D(x,y) = \min_{(x',y') \,:\, f(x',y')=0} \; d\bigl((x,y),\,(x',y')\bigr)
 <span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="va">True</span>:</span>
 <span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>        f <span class="op">=</span> g.copy()<span class="op">;</span> g <span class="op">=</span> mm.ero1(g, b)</span>
 <span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> np.array_equal(f, g): <span class="cf">break</span></span>
-<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> g</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> g</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <p><code>dist1</code> é funcionalmente equivalente à TD na métrica induzida por <code>b</code>: com o elemento cruz (<code>secross</code>), a métrica resultante é a <strong><em>Manhattan</em></strong> (<span class="math inline">\(L_1\)</span>); com o quadrado (<code>sebox</code>), aproxima-se da distância de <strong><em>Chebyshev</em></strong> (<span class="math inline">\(L_\infty\)</span>). Por ser iterativa com varredura completa a cada passo, <code>dist1</code> é impraticável em imagens grandes — seu uso é restrito a fins didáticos e verificação em imagens pequenas.</p>
 <p>A <a href="#fig-04-distancia" class="quarto-xref">Figura&nbsp;<span>4.14</span></a> apresenta um simulador interativo da TD: dado um pixel do objeto, é possível mover o cursor sobre a imagem binária e observar, em tempo real, o valor da TD naquela posição — isto é, a TD ao pixel de fundo mais próximo. A <a href="#fig-04-distancia-didatico" class="quarto-xref">Figura&nbsp;<span>4.15</span></a> apresenta um exemplo prático em Python da TD.</p>
 <p><strong>Exemplo didático — TD iterativa vs.&nbsp;direta em imagem 10×10:</strong></p>
 <div id="cell-fig-04-distancia" class="cell">
-<div id="fig-04-distancia" class="cell-output cell-output-display quarto-figure quarto-figure-center quarto-float anchored" data-execution_count="16">
+<div id="fig-04-distancia" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="16">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-04-distancia-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 
@@ -2808,7 +2813,7 @@ Figura&nbsp;4.14: Simulador interativo da Transformada de Distância (TD) iterat
 </div>
 </div>
 <div id="cell-fig-04-distancia-didatico" class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Imagem binária 10×10 com um único pixel de fundo (0,0) e o resto como objeto (255)</span></span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> np.ones((<span class="dv">10</span>,<span class="dv">10</span>), dtype<span class="op">=</span>np.uint8) <span class="op">*</span> <span class="dv">255</span></span>
@@ -2832,7 +2837,7 @@ Figura&nbsp;4.14: Simulador interativo da Transformada de Distância (TD) iterat
 <span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>    [f,        d_iter,                    d_l2],</span>
 <span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>    titles<span class="op">=</span>[<span class="st">"f original"</span>, <span class="st">"mm.dist1</span><span class="ch">\n</span><span class="st">(erosões com cruz)"</span>, <span class="st">"mm.dist</span><span class="ch">\n</span><span class="st">(L2 Euclidiana)"</span>],</span>
 <span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>    cols<span class="op">=</span><span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">4</span>), axis<span class="op">=</span><span class="va">True</span></span>
-<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Máx. dist1 (erosões) : 18 iterações
 Máx. dist  (L2)      : 12.00 px
@@ -2840,7 +2845,7 @@ Posição do máximo dist1 : (np.int64(9), np.int64(9))
 Posição do máximo dist  : (np.int64(9), np.int64(9))</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<div id="fig-04-distancia-didatico" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-04-distancia-didatico" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-04-distancia-didatico-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="cap04.py.pt_files/figure-html/fig-04-distancia-didatico-output-2.png" class="img-fluid figure-img">
@@ -2858,7 +2863,7 @@ Figura&nbsp;4.15: Transformada de Distância em imagem binária 10×10. Esquerda
 <h3 data-number="4.4.3" class="anchored" data-anchor-id="segmentação-por-watershed"><span class="header-section-number">4.4.3</span> Segmentação por <em>Watershed</em></h3>
 <p>O algoritmo <strong><em>Watershed</em></strong> baseado em TD, regiões centrais dos objetos correspondem aos máximos topográficos, enquanto regiões de separação atuam como divisores entre bacias. O processo simula uma inundação progressiva a partir de <strong>marcadores</strong> (sementes pré-definidas que identificam com certeza o interior de cada objeto). Quando a “água” de duas bacias distintas se encontra, ergue-se uma represa: a <em>watershed line</em>. Essa linha delimita objetos sobrepostos ou em contato, solucionando cenários em que a limiarização global falha em separá-los.</p>
 <p>A implementação didática explora o conceito de crescimento de regiões (<em>region growing</em>):</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> watershed0(f, b<span class="op">=</span>np.zeros((<span class="dv">3</span>,<span class="dv">3</span>), dtype<span class="op">=</span><span class="st">'uint8'</span>), op<span class="op">=</span><span class="st">'region'</span>):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> watershed0(f, b<span class="op">=</span>np.zeros((<span class="dv">3</span>,<span class="dv">3</span>), dtype<span class="op">=</span><span class="st">'uint8'</span>), op<span class="op">=</span><span class="st">'region'</span>):</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Watershed didático por propagação de rótulos."""</span></span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    f <span class="op">=</span> mm.label0(f, b)<span class="op">;</span> g <span class="op">=</span> f.copy()</span>
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> g.<span class="bu">min</span>() <span class="op">==</span> <span class="dv">0</span>:</span>
@@ -2883,10 +2888,10 @@ Figura&nbsp;4.15: Transformada de Distância em imagem binária 10×10. Esquerda
 <span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a>    w <span class="op">=</span> watershed(fones, ndi.label(mark)[<span class="dv">0</span>], mask<span class="op">=</span>fones)</span>
 <span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> op<span class="op">==</span><span class="st">'line'</span>:</span>
 <span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> np.array((w<span class="op">-</span>cv2.erode(w.astype(<span class="st">'uint16'</span>),mm.sebox()))<span class="op">&gt;</span><span class="dv">0</span>,dtype<span class="op">=</span><span class="st">'uint16'</span>)</span>
-<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> w</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> w</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <p>A função <code>watershed0</code> ilustra o princípio da colisão de bacias propagando rótulos puramente por proximidade espacial (uma aproximação plana semelhante a um Diagrama de Voronoi). Já o <code>cv2.watershed</code> implementa o verdadeiro modelo topográfico: ele inunda a imagem respeitando os valores de intensidade/gradiente dos pixels, garantindo que as linhas de fronteira se formem exatamente sobre as cristas do relevo.</p>
 <p>O <em>pipeline</em> morfológico típico do <em>watershed</em> baseado em marcadores segue as etapas resumidas na <a href="#tbl-04-watershed-pipeline" class="quarto-xref">Tabela&nbsp;<span>4.4</span></a>.</p>
-<div id="tbl-04-watershed-pipeline" class="quarto-float anchored">
+<div id="tbl-04-watershed-pipeline" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-04-watershed-pipeline-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Tabela&nbsp;4.4: Pipeline morfológico típico do <em>watershed</em> baseado em marcadores.
@@ -2943,7 +2948,7 @@ Tabela&nbsp;4.4: Pipeline morfológico típico do <em>watershed</em> baseado em 
 </div>
 <p>A <a href="#fig-04-watershed" class="quarto-xref">Figura&nbsp;<span>4.16</span></a> apresenta um simulador iterativo que ilustra essa dinâmica: os marcadores comportam-se como fontes de inundação que se expandem progressivamente pela máscara correspondente à região incerta. Quando duas bacias tentam ocupar simultaneamente o mesmo pixel, esse ponto passa a ser classificado como fronteira (<code>-1</code>). A <a href="#fig-04-watershed-didatico" class="quarto-xref">Figura&nbsp;<span>4.17</span></a> apresenta um exemplo completo do algoritmo <em>watershed</em> em Python utilizando <code>morph.py</code>, enquanto a <a href="#fig-04-watershed-moedas" class="quarto-xref">Figura&nbsp;<span>4.18</span></a> ilustra sua aplicação na separação de moedas adjacentes em uma imagem binária.</p>
 <div id="cell-fig-04-watershed" class="cell">
-<div id="fig-04-watershed" class="cell-output cell-output-display quarto-figure quarto-figure-center quarto-float anchored" data-execution_count="18">
+<div id="fig-04-watershed" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="18">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-04-watershed-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 
@@ -3435,7 +3440,7 @@ Figura&nbsp;4.16: Simulador interativo do Algoritmo Watershed por propagação m
 </div>
 </div>
 <div id="cell-fig-04-watershed-didatico" class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Imagem sintética: dois discos sobrepostos</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Imagem sintética: dois discos sobrepostos</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>f_sint <span class="op">=</span> np.zeros((<span class="dv">20</span>, <span class="dv">20</span>), dtype<span class="op">=</span>np.uint8)</span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>cv2.circle(f_sint, (<span class="dv">6</span>,  <span class="dv">10</span>), <span class="dv">5</span>, <span class="dv">255</span>, <span class="op">-</span><span class="dv">1</span>)</span>
 <span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>cv2.circle(f_sint, (<span class="dv">14</span>, <span class="dv">10</span>), <span class="dv">5</span>, <span class="dv">255</span>, <span class="op">-</span><span class="dv">1</span>)</span>
@@ -3476,9 +3481,9 @@ Figura&nbsp;4.16: Simulador interativo do Algoritmo Watershed por propagação m
 <span id="cb26-39"><a href="#cb26-39" aria-hidden="true" tabindex="-1"></a>        <span class="st">"watershed (cv2)</span><span class="ch">\n</span><span class="st">op='region'"</span>,   <span class="st">"watershed (cv2)</span><span class="ch">\n</span><span class="st">op='line'"</span></span>
 <span id="cb26-40"><a href="#cb26-40" aria-hidden="true" tabindex="-1"></a>    ],</span>
 <span id="cb26-41"><a href="#cb26-41" aria-hidden="true" tabindex="-1"></a>    cols<span class="op">=</span><span class="dv">5</span>, figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">4</span>)</span>
-<span id="cb26-42"><a href="#cb26-42" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb26-42"><a href="#cb26-42" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
-<div id="fig-04-watershed-didatico" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-04-watershed-didatico" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-04-watershed-didatico-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="cap04.py.pt_files/figure-html/fig-04-watershed-didatico-output-1.png" class="img-fluid figure-img">
@@ -3492,7 +3497,7 @@ Figura&nbsp;4.17: Pipeline watershed (cv2) em imagem binária 20×20 com dois di
 </div>
 <p><strong>Aplicação em moedas sobrepostas:</strong></p>
 <div id="cell-fig-04-watershed-moedas" class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>img_base <span class="op">=</span> img_coins_gray</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>img_base <span class="op">=</span> img_coins_gray</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Dilatar img_final para conectar moedas (simula sobreposição real)</span></span>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>img_sobrepostas <span class="op">=</span> mm.dil(img_final, mm.sebox(<span class="dv">40</span>))</span>
@@ -3548,12 +3553,12 @@ Figura&nbsp;4.17: Pipeline watershed (cv2) em imagem binária 20×20 com dois di
 <span id="cb27-54"><a href="#cb27-54" aria-hidden="true" tabindex="-1"></a>        <span class="st">"mm.watershed</span><span class="ch">\n</span><span class="st">op='line'"</span>, <span class="st">"Anotado"</span></span>
 <span id="cb27-55"><a href="#cb27-55" aria-hidden="true" tabindex="-1"></a>    ],</span>
 <span id="cb27-56"><a href="#cb27-56" aria-hidden="true" tabindex="-1"></a>    cols<span class="op">=</span><span class="dv">3</span>, rows<span class="op">=</span><span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">8</span>)</span>
-<span id="cb27-57"><a href="#cb27-57" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb27-57"><a href="#cb27-57" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Objetos detectados: 12</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<div id="fig-04-watershed-moedas" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-04-watershed-moedas" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-04-watershed-moedas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="cap04.py.pt_files/figure-html/fig-04-watershed-moedas-output-2.png" class="img-fluid figure-img">
@@ -3611,7 +3616,7 @@ Figura&nbsp;4.18: Pipeline Watershed para separação de moedas sobrepostas: da 
 <h3 data-number="4.5.1" class="anchored" data-anchor-id="connectedcomponentswithstats"><span class="header-section-number">4.5.1</span> connectedComponentsWithStats</h3>
 <p>A <a href="#fig-04-componentes" class="quarto-xref">Figura&nbsp;<span>4.19</span></a> demonstra a extração na imagem de moedas.</p>
 <div id="cell-fig-04-componentes" class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Rotulagem e estatísticas</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Rotulagem e estatísticas</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>n, labels, stats, centroids <span class="op">=</span> cv2.connectedComponentsWithStats(</span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>    img_final, connectivity<span class="op">=</span><span class="dv">8</span></span>
 <span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>)</span>
@@ -3641,7 +3646,7 @@ Figura&nbsp;4.18: Pipeline Watershed para separação de moedas sobrepostas: da 
 <span id="cb29-28"><a href="#cb29-28" aria-hidden="true" tabindex="-1"></a>    [img_coins_gray, img_final, img_colored, img_annotated],</span>
 <span id="cb29-29"><a href="#cb29-29" aria-hidden="true" tabindex="-1"></a>    titles<span class="op">=</span>[<span class="st">"Original"</span>, <span class="st">"Segmentação Final"</span>, <span class="st">"Componentes Conexos"</span>, <span class="st">"Áreas Anotadas"</span>],</span>
 <span id="cb29-30"><a href="#cb29-30" aria-hidden="true" tabindex="-1"></a>    cols<span class="op">=</span><span class="dv">4</span>, figsize<span class="op">=</span>(<span class="dv">18</span>, <span class="dv">6</span>)</span>
-<span id="cb29-31"><a href="#cb29-31" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb29-31"><a href="#cb29-31" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Componentes detectados (excluindo fundo): 12
 
@@ -3661,7 +3666,7 @@ Figura&nbsp;4.18: Pipeline Watershed para separação de moedas sobrepostas: da 
   12   215387    932   2292    528    522</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<div id="fig-04-componentes" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-04-componentes" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-04-componentes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="cap04.py.pt_files/figure-html/fig-04-componentes-output-2.png" class="img-fluid figure-img">
@@ -3689,7 +3694,7 @@ Figura&nbsp;4.19: Componentes conexos extraídos após o pipeline CLAHE → Otsu
 </ul>
 <p>A <a href="#fig-04-contornos" class="quarto-xref">Figura&nbsp;<span>4.20</span></a> exibe os mesmos objetos com circularidade anotada.</p>
 <div id="cell-fig-04-contornos" class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>contornos, hierarquia <span class="op">=</span> cv2.findContours(</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>contornos, hierarquia <span class="op">=</span> cv2.findContours(</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    img_final, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE</span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -3721,7 +3726,7 @@ Figura&nbsp;4.19: Componentes conexos extraídos após o pipeline CLAHE → Otsu
 <span id="cb31-30"><a href="#cb31-30" aria-hidden="true" tabindex="-1"></a>    [img_final, img_contornos, img_circulares],</span>
 <span id="cb31-31"><a href="#cb31-31" aria-hidden="true" tabindex="-1"></a>    titles<span class="op">=</span>[<span class="st">"Segmentação Final"</span>, <span class="st">"Contornos"</span>, <span class="st">"Circularidade"</span>],</span>
 <span id="cb31-32"><a href="#cb31-32" aria-hidden="true" tabindex="-1"></a>    cols<span class="op">=</span><span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">18</span>, <span class="dv">6</span>)</span>
-<span id="cb31-33"><a href="#cb31-33" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb31-33"><a href="#cb31-33" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Contornos detectados: 12
 
@@ -3741,7 +3746,7 @@ Figura&nbsp;4.19: Componentes conexos extraídos após o pipeline CLAHE → Otsu
   12   231181     1847.4          0.851</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<div id="fig-04-contornos" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-04-contornos" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-04-contornos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="cap04.py.pt_files/figure-html/fig-04-contornos-output-2.png" class="img-fluid figure-img">
@@ -3760,7 +3765,7 @@ Figura&nbsp;4.20: Contornos extraídos com findContours. Cada moeda é anotada c
 <p>Detectores baseados em aprendizado profundo, como a família <strong>YOLO</strong> (<em>You Only Look Once</em>) <span class="citation" data-cites="redmon2016you">(<a href="../referencias.html#ref-redmon2016you" role="doc-biblioref">Redmon et al., 2016</a>)</span>, operam diretamente sobre imagens coloridas e produzem, para cada objeto detectado, uma <strong>caixa delimitadora</strong> (<em>bounding box</em>) com coordenadas <span class="math inline">\((x, y, w, h)\)</span> e uma <strong>pontuação de confiança</strong> — a mesma representação gerada por <code>connectedComponentsWithStats</code>. A diferença fundamental é que o YOLO aprende a detectar e classificar objetos simultaneamente, sem etapa de segmentação prévia, generalizando para categorias arbitrárias a partir de dados anotados.</p>
 <p>A <a href="#fig-04-bbox" class="quarto-xref">Figura&nbsp;<span>4.21</span></a> ilustra como as <em>bounding boxes</em> obtidas por morfologia podem ser exportadas no formato YOLO para treinar ou avaliar um detector:</p>
 <div id="cell-fig-04-bbox" class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>H_img, W_img <span class="op">=</span> img_coins_gray.shape</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>H_img, W_img <span class="op">=</span> img_coins_gray.shape</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>img_bbox <span class="op">=</span> cv2.cvtColor(img_coins_gray, cv2.COLOR_GRAY2BGR)</span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>CLASSE <span class="op">=</span> <span class="dv">0</span>   <span class="co"># 0 = moeda (única categoria neste exemplo)</span></span>
@@ -3796,7 +3801,7 @@ Figura&nbsp;4.20: Contornos extraídos com findContours. Cada moeda é anotada c
 <span id="cb33-34"><a href="#cb33-34" aria-hidden="true" tabindex="-1"></a>    [img_coins_gray, img_final, img_bbox],</span>
 <span id="cb33-35"><a href="#cb33-35" aria-hidden="true" tabindex="-1"></a>    titles<span class="op">=</span>[<span class="st">"Original"</span>, <span class="st">"Segmentação Final"</span>, <span class="st">"Bounding Boxes (formato YOLO)"</span>],</span>
 <span id="cb33-36"><a href="#cb33-36" aria-hidden="true" tabindex="-1"></a>    cols<span class="op">=</span><span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">18</span>, <span class="dv">6</span>)</span>
-<span id="cb33-37"><a href="#cb33-37" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb33-37"><a href="#cb33-37" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> cls     cx_n     cy_n      w_n      h_n  ← formato YOLO
 ------------------------------------------------------
@@ -3816,7 +3821,7 @@ Figura&nbsp;4.20: Contornos extraídos com findContours. Cada moeda é anotada c
 Anotação salva em moedas.txt</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<div id="fig-04-bbox" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-04-bbox" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-04-bbox-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="cap04.py.pt_files/figure-html/fig-04-bbox-output-2.png" class="img-fluid figure-img">
@@ -3840,7 +3845,7 @@ J = \sum_{i=1}^{k}\sum_{x \in C_i} \|x - \mu_i\|^2
 <p>O algoritmo itera entre dois passos até que os centróides variem muito pouco ou seja atingido o número máximo de iterações: <strong>(1) atribuição</strong> — cada pixel ao centróide mais próximo; <strong>(2) atualização</strong> — cada centróide recalculado como média dos pixels atribuídos. A escolha de <span class="math inline">\(k\)</span> é auxiliada pelo <strong>método do cotovelo</strong>: plota-se <span class="math inline">\(J\)</span> em função de <span class="math inline">\(k\)</span> e identifica-se o ponto de inflexão (cotovelo), a partir do qual o aumento de <span class="math inline">\(k\)</span> traz reduções apenas marginais na inércia, evitando o sobreajuste (<em>overfitting</em>).</p>
 <p>A <a href="#fig-04-kmeans-cotovelo" class="quarto-xref">Figura&nbsp;<span>4.22</span></a> mostra o método do cotovelo e a <a href="#fig-04-kmeans" class="quarto-xref">Figura&nbsp;<span>4.23</span></a> a segmentação resultante:</p>
 <div id="cell-fig-04-kmeans-cotovelo" class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>pixels   <span class="op">=</span> img_coins_gray.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>).astype(np.float32)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>pixels   <span class="op">=</span> img_coins_gray.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>).astype(np.float32)</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>inercias <span class="op">=</span> []</span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>ks       <span class="op">=</span> <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">2</span>, <span class="dv">9</span>))</span>
 <span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>resultados <span class="op">=</span> []  <span class="co"># guarda (labels, centers) para reusar no mm.show</span></span>
@@ -3859,9 +3864,9 @@ J = \sum_{i=1}^{k}\sum_{x \in C_i} \|x - \mu_i\|^2
 <span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a>    imgs   <span class="op">+=</span> [seg]</span>
 <span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a>    titles <span class="op">+=</span> [<span class="ss">f"k=</span><span class="sc">{</span>k<span class="sc">}</span><span class="ss">  J=</span><span class="sc">{</span>inercia<span class="sc">:.2e}</span><span class="ss">"</span>]</span>
 <span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-20"><a href="#cb35-20" aria-hidden="true" tabindex="-1"></a>mm.show(imgs, titles<span class="op">=</span>titles, cols<span class="op">=</span><span class="dv">4</span>, rows<span class="op">=</span><span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">12</span>))</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb35-20"><a href="#cb35-20" aria-hidden="true" tabindex="-1"></a>mm.show(imgs, titles<span class="op">=</span>titles, cols<span class="op">=</span><span class="dv">4</span>, rows<span class="op">=</span><span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">12</span>))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
-<div id="fig-04-kmeans-cotovelo" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-04-kmeans-cotovelo" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-04-kmeans-cotovelo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="cap04.py.pt_files/figure-html/fig-04-kmeans-cotovelo-output-1.png" class="img-fluid figure-img">
@@ -3874,7 +3879,7 @@ Figura&nbsp;4.22: Método do cotovelo: inércia J em função de k para a imagem
 </div>
 </div>
 <div id="cell-fig-04-kmeans" class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> kmeans_seg(img, k):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> kmeans_seg(img, k):</span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>    pixels   <span class="op">=</span> img.reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>).astype(np.float32)</span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>    criteria <span class="op">=</span> (cv2.TERM_CRITERIA_EPS <span class="op">+</span> cv2.TERM_CRITERIA_MAX_ITER, <span class="dv">100</span>, <span class="fl">0.2</span>)</span>
 <span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    _, labels, centers <span class="op">=</span> cv2.kmeans(pixels, k, <span class="va">None</span>, criteria, <span class="dv">5</span>, cv2.KMEANS_RANDOM_CENTERS)</span>
@@ -3882,9 +3887,9 @@ Figura&nbsp;4.22: Método do cotovelo: inércia J em função de k para a imagem
 <span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>imgs_km   <span class="op">=</span> [img_coins_gray] <span class="op">+</span> [kmeans_seg(img_coins_gray, k) <span class="cf">for</span> k <span class="kw">in</span> [<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>]]</span>
 <span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>titles_km <span class="op">=</span> [<span class="st">"Original"</span>] <span class="op">+</span> [<span class="ss">f"k-means k=</span><span class="sc">{</span>k<span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> k <span class="kw">in</span> [<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>]]</span>
-<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>mm.show(imgs_km, titles<span class="op">=</span>titles_km, cols<span class="op">=</span><span class="dv">4</span>, figsize<span class="op">=</span>(<span class="dv">18</span>, <span class="dv">6</span>))</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>mm.show(imgs_km, titles<span class="op">=</span>titles_km, cols<span class="op">=</span><span class="dv">4</span>, figsize<span class="op">=</span>(<span class="dv">18</span>, <span class="dv">6</span>))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
-<div id="fig-04-kmeans" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-04-kmeans" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-04-kmeans-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="cap04.py.pt_files/figure-html/fig-04-kmeans-output-1.png" class="img-fluid figure-img">
@@ -3907,7 +3912,7 @@ Figura&nbsp;4.23: Segmentação * da imagem das moedas com k=2, 4 e 6 clusters. 
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Avaliação: IoU (<em>Intersection over Union</em>)
+<span class="screen-reader-only">Nota</span>Avaliação: IoU (<em>Intersection over Union</em>)
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -3941,7 +3946,7 @@ Avaliação: IoU (<em>Intersection over Union</em>)
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-🎓 Estude com o Tutor Inteligente
+<span class="screen-reader-only">Importante</span>🎓 Estude com o Tutor Inteligente
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -3983,8 +3988,8 @@ Avaliação: IoU (<em>Intersection over Union</em>)
 <section id="download" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="download">Download</h4>
 <p>Baixe <code>morph.py</code> e <code>testsuite.py</code> executando a célula abaixo:</p>
-<div id="c05c69bd" class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os, sys, importlib, inspect, urllib.request</span>
+<div id="0f7e534d" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os, sys, importlib, inspect, urllib.request</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="co"># URLs do repositório</span></span>
 <span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>BASE_URL <span class="op">=</span> <span class="st">"https://raw.githubusercontent.com/fzampirolli/pdi-vc/master/morph"</span></span>
@@ -3997,7 +4002,7 @@ Avaliação: IoU (<em>Intersection over Union</em>)
 <span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> morph <span class="im">import</span> mm</span>
 <span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> testsuite <span class="im">import</span> TestSuite</span>
 <span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"✅ Ambiente pronto. Morph: </span><span class="sc">{</span>morph<span class="sc">.</span>__version__<span class="sc">}</span><span class="ss"> | TestSuite: </span><span class="sc">{</span>testsuite<span class="sc">.</span>__version__<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"✅ Ambiente pronto. Morph: </span><span class="sc">{</span>morph<span class="sc">.</span>__version__<span class="sc">}</span><span class="ss"> | TestSuite: </span><span class="sc">{</span>testsuite<span class="sc">.</span>__version__<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>✅ Ambiente pronto. Morph: 1.1.0 | TestSuite: 1.1.0</code></pre>
 </div>
@@ -4009,7 +4014,7 @@ Avaliação: IoU (<em>Intersection over Union</em>)
 <p>Para rodar os testes, execute <code>TestSuite("EP01_01.extensão").run()</code> numa nova célula, trocando a extensão pela da linguagem usada (<code>.py</code>, <code>.java</code>, <code>.c</code>, <code>.cpp</code>, <code>.js</code> ou <code>.r</code>). O sistema baixa os casos de teste do GitHub, executa o programa e calcula a nota automaticamente.</p>
 <p><strong>Exemplo de teste de <code>sqrt</code> em Python, com <code>timeit</code> isolando cada operação:</strong></p>
 <div id="cell-fig-01-metricas-distancia" class="cell">
-<div id="fig-01-metricas-distancia" class="cell-output cell-output-display quarto-figure quarto-figure-center quarto-float anchored" data-execution_count="56">
+<div id="fig-01-metricas-distancia" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="56">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-01-metricas-distancia-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 
@@ -4260,8 +4265,8 @@ Figura&nbsp;4.24: Simulador: Distâncias Euclidiana, <em>City-block</em> e <em>C
 </figure>
 </div>
 </div>
-<div id="f631d2b5" class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile EP02_01.py</span>
+<div id="1fe686a3" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile EP02_01.py</span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Código Python</span></span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>x1,y1,x2,y2 <span class="op">=</span> <span class="bu">int</span>(<span class="bu">input</span>()), <span class="bu">int</span>(<span class="bu">input</span>()), <span class="bu">int</span>(<span class="bu">input</span>()), <span class="bu">int</span>(<span class="bu">input</span>())</span>
 <span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Cálculo das diferenças</span></span>
@@ -4280,24 +4285,24 @@ Figura&nbsp;4.24: Simulador: Distâncias Euclidiana, <em>City-block</em> e <em>C
 <span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Saída formatada conforme os casos de teste</span></span>
 <span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>dist_euclidiana<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
 <span id="cb39-19"><a href="#cb39-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>dist_city_block<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
-<span id="cb39-20"><a href="#cb39-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>dist_chessboard<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb39-20"><a href="#cb39-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>dist_chessboard<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Writing EP02_01.py</code></pre>
 </div>
 </div>
-<div id="dfeff339" class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>np.set_printoptions(linewidth<span class="op">=</span><span class="dv">100</span>, edgeitems<span class="op">=</span><span class="dv">3</span>, threshold<span class="op">=</span><span class="dv">1000</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="2d0aee93" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>np.set_printoptions(linewidth<span class="op">=</span><span class="dv">100</span>, edgeitems<span class="op">=</span><span class="dv">3</span>, threshold<span class="op">=</span><span class="dv">1000</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="6dc37e66" class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Substitui emoji Unicode literal ✅ por comando"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="66dee604" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Substitui emoji Unicode literal ✅ por comando"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Substitui emoji Unicode literal ✅ por comando</code></pre>
 </div>
 </div>
-<div id="6c710766" class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mm.drawImg(np.zeros((<span class="dv">5</span>, <span class="dv">5</span>))))</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="69683311" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mm.drawImg(np.zeros((<span class="dv">5</span>, <span class="dv">5</span>))))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  0   0   0   0   0 
   0   0   0   0   0 
@@ -4307,8 +4312,8 @@ Figura&nbsp;4.24: Simulador: Distâncias Euclidiana, <em>City-block</em> e <em>C
 </code></pre>
 </div>
 </div>
-<div id="a95dc0ce" class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>TestSuite(<span class="st">"EP02_01.py"</span>).run()</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="66912f90" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>TestSuite(<span class="st">"EP02_01.py"</span>).run()</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">✔️ EP02_01.cases já existe em casos/
 📋 8 caso(s) carregado(s) de casos/EP02_01.cases
@@ -4444,43 +4449,58 @@ SZELISKI, Richard. <strong><a href="https://szeliski.org/Book/">Computer Vision:
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
-window.document.addEventListener("DOMContentLoaded", function (event) {
-  const toggleBodyColorMode = (bsSheetEl) => {
-    const mode = bsSheetEl.getAttribute("data-mode");
-    const bodyEl = window.document.querySelector("body");
-    if (mode === "dark") {
-      bodyEl.classList.add("quarto-dark");
-      bodyEl.classList.remove("quarto-light");
-    } else {
-      bodyEl.classList.add("quarto-light");
-      bodyEl.classList.remove("quarto-dark");
-    }
-  }
-  const toggleBodyColorPrimary = () => {
-    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-    if (bsSheetEl) {
-      toggleBodyColorMode(bsSheetEl);
-    }
-  }
-  toggleBodyColorPrimary();  
-  const icon = "";
-  const anchorJS = new window.AnchorJS();
-  anchorJS.options = {
-    placement: 'right',
-    icon: icon
-  };
-  anchorJS.add('.anchored');
-  const isCodeAnnotation = (el) => {
-    for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {                     
-        return true;
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
       }
+      return false;
     }
-    return false;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiada");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiada");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
       for (const childEl of codeEl.children) {
         if (isCodeAnnotation(childEl)) {
           childEl.remove();
@@ -4488,235 +4508,235 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       }
       return codeEl.innerText;
     }
-  });
-  clipboard.on('success', function(e) {
-    // button target
-    const button = e.trigger;
-    // don't keep focus
-    button.blur();
-    // flash "checked"
-    button.classList.add('code-copy-button-checked');
-    var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copiada");
-    let tooltip;
-    if (window.bootstrap) {
-      button.setAttribute("data-bs-toggle", "tooltip");
-      button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copiada");
-      tooltip = new bootstrap.Tooltip(button, 
-        { trigger: "manual", 
-          customClass: "code-copy-button-tooltip",
-          offset: [0, -8]});
-      tooltip.show();    
-    }
-    setTimeout(function() {
-      if (tooltip) {
-        tooltip.hide();
-        button.removeAttribute("data-bs-title");
-        button.removeAttribute("data-bs-toggle");
-        button.removeAttribute("data-bs-placement");
-      }
-      button.setAttribute("title", currentTitle);
-      button.classList.remove('code-copy-button-checked');
-    }, 1000);
-    // clear code selection
-    e.clearSelection();
-  });
-  const viewSource = window.document.getElementById('quarto-view-source') ||
-                     window.document.getElementById('quarto-code-tools-source');
-  if (viewSource) {
-    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
-    viewSource.addEventListener("click", function(e) {
-      if (sourceUrl) {
-        // rstudio viewer pane
-        if (/\bcapabilities=\b/.test(window.location)) {
-          window.open(sourceUrl);
-        } else {
-          window.location.href = sourceUrl;
-        }
-      } else {
-        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
-        modal.show();
-      }
-      return false;
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
     });
-  }
-  function toggleCodeHandler(show) {
-    return function(e) {
-      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
-      for (let i=0; i<detailsSrc.length; i++) {
-        const details = detailsSrc[i].parentElement;
-        if (show) {
-          details.open = true;
-        } else {
-          details.removeAttribute("open");
-        }
-      }
-      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
-      const fromCls = show ? "hidden" : "unhidden";
-      const toCls = show ? "unhidden" : "hidden";
-      for (let i=0; i<cellCodeDivs.length; i++) {
-        const codeDiv = cellCodeDivs[i];
-        if (codeDiv.classList.contains(fromCls)) {
-          codeDiv.classList.remove(fromCls);
-          codeDiv.classList.add(toCls);
-        } 
-      }
-      return false;
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
     }
-  }
-  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
-  if (hideAllCode) {
-    hideAllCode.addEventListener("click", toggleCodeHandler(false));
-  }
-  const showAllCode = window.document.getElementById("quarto-show-all-code");
-  if (showAllCode) {
-    showAllCode.addEventListener("click", toggleCodeHandler(true));
-  }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-    const config = {
-      allowHTML: true,
-      maxWidth: 500,
-      delay: 100,
-      arrow: false,
-      appendTo: function(el) {
-          return el.parentElement;
-      },
-      interactive: true,
-      interactiveBorder: 10,
-      theme: 'quarto',
-      placement: 'bottom-start',
-    };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
-    window.tippy(el, config); 
-  }
-  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-  for (var i=0; i<noterefs.length; i++) {
-    const ref = noterefs[i];
-    tippyHover(ref, function() {
-      // use id or data attribute instead here
-      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-      try { href = new URL(href).hash; } catch {}
-      const id = href.replace(/^#\/?/, "");
-      const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
           } else {
-            container.appendChild(child.cloneNode(true));
-            break;
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
           }
         }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
         }
-        return container.innerHTML
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
       } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
         if (window.Quarto?.typesetMath) {
           window.Quarto.typesetMath(note);
         }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
       }
     }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
           }
         } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
           .then(res => res.text())
           .then(html => {
             const parser = new DOMParser();
             const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
+            const note = htmlDoc.querySelector('main.content');
             if (note !== null) {
-              const html = processXRef(id, note);
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
               instance.setContent(html);
             } 
           }).finally(() => {
@@ -4724,185 +4744,161 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             instance.show();
           });
         }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
-    });
-  }
-      let selectedAnnoteEl;
-      const selectorForAnnotation = ( cell, annotation) => {
-        let cellAttr = 'data-code-cell="' + cell + '"';
-        let lineAttr = 'data-code-annotation="' +  annotation + '"';
-        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-        return selector;
-      }
-      const selectCodeLines = (annoteEl) => {
-        const doc = window.document;
-        const targetCell = annoteEl.getAttribute("data-target-cell");
-        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-        const lineIds = lines.map((line) => {
-          return targetCell + "-" + line;
-        })
-        let top = null;
-        let height = null;
-        let parent = null;
-        if (lineIds.length > 0) {
-            //compute the position of the single el (top and bottom and make a div)
-            const el = window.document.getElementById(lineIds[0]);
-            top = el.offsetTop;
-            height = el.offsetHeight;
-            parent = el.parentElement.parentElement;
-          if (lineIds.length > 1) {
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-            height = bottom - top;
-          }
-          if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it 
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            div.style.top = top - 2 + "px";
-            div.style.height = height + 4 + "px";
-            div.style.left = 0;
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            gutterDiv.style.top = top - 2 + "px";
-            gutterDiv.style.height = height + 4 + "px";
-          }
-          selectedAnnoteEl = annoteEl;
-        }
-      };
-      const unselectCodeLines = () => {
-        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-        elementsIds.forEach((elId) => {
-          const div = window.document.getElementById(elId);
-          if (div) {
-            div.remove();
-          }
-        });
-        selectedAnnoteEl = undefined;
-      };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
-          }
-        });
-      }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
-      }
-    } else {
-      return undefined;
-    }
-  };
-  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-  for (var i=0; i<bibliorefs.length; i++) {
-    const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
-          }
-          popup.appendChild(citeDiv);
-        });
-        return popup.innerHTML;
+      }, function(instance) {
       });
     }
-  }
-});
-</script>
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../cap03/cap03.py.pt.html" class="pagination-link" aria-label="Operações Espaciais: Intensidade, Histograma e Filtragem">
