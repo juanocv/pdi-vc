@@ -735,7 +735,7 @@ def _get_quarto_latex_path() -> str | None:
             return str(p)
     return None
 
-def _screenshot_html_cells(qdir: Path, all_root: Path):
+def _screenshot_html_cells_old(qdir: Path, all_root: Path):
     """Lê notebooks ORIGINAIS de all/ para gerar screenshots."""
     from playwright.sync_api import sync_playwright
 
@@ -796,6 +796,82 @@ def _screenshot_html_cells(qdir: Path, all_root: Path):
                 finally:
                     tmp_html.unlink(missing_ok=True)
 
+
+def _screenshot_html_cells(qdir: Path, all_root: Path, scale: float = 1.0): 
+    """Lê notebooks ORIGINAIS de all/ para gerar screenshots."""
+    from playwright.sync_api import sync_playwright
+
+    for cap_link in qdir.iterdir():
+        if not re.match(r'cap\d+', cap_link.name):
+            continue
+        cap = cap_link.name
+        img_dir = all_root / cap / 'imagens'
+        img_dir.mkdir(parents=True, exist_ok=True)
+
+        for nb_path in (all_root / cap).glob('*.ipynb'):
+            nb = nbformat.read(nb_path, as_version=4)
+            for cell in nb.cells:
+                if cell.cell_type != 'code':
+                    continue
+                if 'HTML("""' not in cell.source and "HTML('''" not in cell.source:
+                    continue
+
+                label = None
+                for line in cell.source.splitlines():
+                    m = re.match(r'#\|\s*label:\s*(\S+)', line)
+                    if m:
+                        label = m.group(1)
+                        break
+                if not label:
+                    continue
+
+                png_path = img_dir / f'{label}.png'
+                if png_path.exists():
+                    print(f'  ✓ Screenshot já existe: {png_path.name}')
+                    continue
+
+                m = re.search(r'HTML\("""(.*?)"""\)', cell.source, re.DOTALL)
+                if not m:
+                    m = re.search(r"HTML\('''(.*?)'''\)", cell.source, re.DOTALL)
+                if not m:
+                    continue
+
+                html_content = m.group(1)
+                tmp_html = qdir / f'_tmp_{label}.html'
+                tmp_html.write_text(f'''<!DOCTYPE html>
+<html><head><meta charset="utf-8">
+<style>body {{ margin: 0; background: white; }}</style>
+</head><body>{html_content}</body></html>''', encoding='utf-8')
+
+                try:
+                    with sync_playwright() as p:
+                        browser = p.chromium.launch()
+
+                        # 1ª passagem: mede as dimensões reais do conteúdo
+                        page = browser.new_page(viewport={'width': 900, 'height': 600},
+                                                device_scale_factor=scale) # = 2.0 é melhor
+                        page.goto(f'file://{tmp_html.resolve()}')
+                        page.wait_for_timeout(1500)
+
+                        dims = page.evaluate('''() => ({
+                            width:  document.body.scrollWidth,
+                            height: document.body.scrollHeight
+                        })''')
+
+                        real_w = max(dims['width'],  1)
+                        real_h = max(dims['height'], 1)
+
+                        # 2ª passagem: viewport exato → screenshot sem corte
+                        page.set_viewport_size({'width': real_w, 'height': real_h})
+                        page.wait_for_timeout(300)   # re-render após resize
+                        page.screenshot(path=str(png_path), full_page=False)
+
+                        browser.close()
+                    print(f'  📸 Screenshot: {png_path.name}')
+                except Exception as e:
+                    print(f'  ⚠ Falha screenshot {label}: {e}')
+                finally:
+                    tmp_html.unlink(missing_ok=True)
 
 def _fix_html_outputs_for_pdf(nb_root: Path):
     """Remove 'text/plain: <IPython.core.display.HTML object>' de todos os outputs."""
@@ -963,7 +1039,7 @@ def _render_pdf_with_patched_tex(qdir: Path, env: dict):
 
             reader = PdfReader(str(pdf_path))
             writer = PdfWriter()
-            start_page = 1
+            start_page = 2
             if 'ubuntu' in os_release.lower():
                 # No Debian, o lualatex gera 1 página em branco no início
                  start_page = 2
