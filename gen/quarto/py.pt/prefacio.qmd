@@ -68,45 +68,46 @@ O código-fonte está disponível em:
 **[github.com/fzampirolli/pdi-vc/tree/master/morph](https://github.com/fzampirolli/pdi-vc/tree/master/morph)**.
 
 
-## Exercícios de Programação (EPs) e validação automática {.unnumbered}
+## Exercícios de Programação (EPs) e Validação Automática {.unnumbered}
 
-Cada unidade inclui **Exercícios de Programação (EPs)**. Trata-se de problemas que demandam a implementação de programas, que podem utilizar a `morph.py` ou outras bibliotecas padrão. Os EPs visam consolidar a teoria por meio de uma progressão de complexidade técnica.
+Cada unidade inclui **Exercícios de Programação (EPs)**, compostos por problemas que exigem a implementação de programas utilizando a biblioteca `morph.py` e/ou bibliotecas padrão da linguagem adotada. Os EPs têm como objetivo consolidar os conceitos teóricos por meio de atividades práticas com complexidade crescente.
 
 ### Estrutura e Validação {.unnumbered}
 
-A execução da validação ocorre por meio da classe `TestSuite`:
+A validação automática das soluções é realizada pela classe `TestSuite`, definida no arquivo `testsuite.py`, que deve estar localizado na mesma pasta que `morph.py`:
 
 ```python
 TestSuite("EP01_01.py").run()
-
 ```
 
-O sistema compara a saída da implementação com casos de teste definidos (arquivos `.cases`) e gera um relatório de conformidade. O suporte abrange múltiplas linguagens (atualmente Python, Java, C++, C, JavaScript e R), o que possibilita a aplicação do material em diferentes contextos acadêmicos. Os mesmos EPs, com os respectivos casos de teste, estão disponíveis para a plataforma Moodle para fins de avaliação.
+A saída produzida pela implementação é comparada com os resultados esperados, definidos em arquivos de casos de teste (`.cases`), gerando ao final um relatório de conformidade.
 
-### EPs como atividades VPL no Moodle {.unnumbered}
+O sistema oferece suporte a múltiplas linguagens de programação, incluindo Python, Java, C++, C, JavaScript e R. Os mesmos EPs e casos de teste também podem ser utilizados na plataforma Moodle para fins de avaliação.
 
-Cada EP disponível nos *notebooks* pode ser convertido em uma **atividade VPL (*Virtual Programming Lab*)** no Moodle, permitindo a correção automática das submissões dos alunos diretamente na plataforma.
+### EPs como Atividades VPL no Moodle {.unnumbered}
 
-O *script* `extrair_eps.py` percorre os arquivos HTML gerados pelo Quarto (`gen/book/*/cap*/*.html`) e salva cada EP em um arquivo HTML autônomo — com enunciado, exemplos e casos de teste — preservando o mesmo visual do livro:
+Os EPs presentes nos *notebooks* podem ser convertidos em atividades **VPL (*Virtual Programming Lab*)**, permitindo a correção automática das submissões diretamente no Moodle.
 
-```bash
-python extrair_eps.py                          # todos os EPs de todas as versões
-python extrair_eps.py --input gen/book/py.pt   # versão específica
-python extrair_eps.py --dry-run                # lista EPs sem gravar arquivos
+O script `extrair_eps.py` percorre os arquivos HTML gerados pelo Quarto (`gen/book/*/cap*/*.html`) e produz versões independentes dos EPs, contendo enunciado, exemplos e casos de teste, preservando a formatação do livro. Os arquivos são gerados em:
+
+```text
+gen/book/eps/<versao>/EPXX_YY.html
 ```
 
-Os arquivos são gerados em `gen/book/eps/<versao>/EPXX_YY.html`. O professor pode então:
+O professor pode então:
 
-1. Criar uma atividade VPL no Moodle e colar o conteúdo do HTML como enunciado;
-2. Importar os arquivos `.cases` correspondentes (em `all/capXX/casos/`) como casos de teste do VPL;
-3. Configurar as linguagens suportadas — os mesmos casos de teste funcionam para Python, Java, C++, C, JavaScript e R, graças à arquitetura multilíngue do `TestSuite`.
+1. Criar uma atividade VPL e utilizar o HTML gerado como enunciado;
+2. Importar os arquivos `.cases` correspondentes (`all/capXX/casos/`) como casos de teste;
+3. Configurar a linguagem de programação desejada.
 
 ::: {.callout-tip}
 
-### Reaproveitamento dos casos de teste {.unnumbered}
+### Reaproveitamento dos Casos de Teste {.unnumbered}
 
-Os arquivos `.cases` utilizados no `TestSuite` dos *notebooks* são **diretamente compatíveis** com o VPL do Moodle. Não é necessário reescrever os testes: o mesmo conjunto que valida a solução do aluno no Colab é o que corrige automaticamente as submissões na plataforma.
+Os arquivos `.cases` utilizados pelo `TestSuite` são diretamente compatíveis com o VPL. Dessa forma, o mesmo conjunto de testes pode ser empregado tanto durante o desenvolvimento nos *notebooks* quanto na correção automática das submissões no Moodle.
+
 :::
+
 
 ## Idiomas e Conversão de Código {.unnumbered}
 
@@ -141,4 +142,11 @@ O conteúdo é estruturado em *Notebooks*, documentos que intercalam **células 
 ### Nota sobre o formato {.unnumbered}
 
 Em ambientes interativos, o código pode ser modificado e executado. Nas versões estáticas (HTML ou PDF), os blocos de código servem para fins de leitura e referência, mantendo-se a integridade das explicações.
+:::
+
+
+::: {.content-visible when-format="html"}
+
+## Referências do Prefácio {.unnumbered}
+
 :::
