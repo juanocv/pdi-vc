@@ -965,20 +965,28 @@ class mm:
         return y
 
     @staticmethod
-    def infrec(f, g, b=np.zeros((3,3),dtype='uint8')):
-        """Inf-reconstrução: dilata g ∧ f até convergir."""
-        y, y1 = np.minimum(f,g), np.zeros_like(f)
+    def infrec(f, g, b=np.zeros((3,3), dtype='uint8')):
+        """Inf-reconstrução: dilata o marcador (f ∧ g) até convergir sob a máscara g."""
+        y = np.minimum(f, g)
+        # Inicializa y1 com valores impossíveis para forçar a entrada no laço
+        y1 = np.full_like(f, 256, dtype=np.int16) 
         while not np.array_equal(y, y1):
-            y1 = y; y = np.minimum(cv2.dilate(y,b), g)
-        return y
+            y1 = y.copy()
+            # Aplica a dilatação geodésica: (y ⊕ b) ∧ g
+            y = np.minimum(cv2.dilate(y, b), g)
+        return y.astype('uint8')
 
     @staticmethod
-    def suprec(f, g, b=np.zeros((3,3),dtype='uint8')):
-        """Sup-reconstrução: erode g ∨ f até convergir."""
-        y, y1 = np.maximum(f,g), np.ones_like(f)*255
+    def suprec(f, g, b=np.zeros((3,3), dtype='uint8')):
+        """Sup-reconstrução: erode o marcador (f ∨ g) até convergir sobre a máscara g."""
+        y = np.maximum(f, g)
+        # Inicializa y1 com valores impossíveis para forçar a entrada no laço
+        y1 = np.full_like(f, -1, dtype=np.int16)
         while not np.array_equal(y, y1):
-            y1 = y; y = np.maximum(cv2.erode(y,b), g)
-        return y
+            y1 = y.copy()
+            # Aplica a erosão geodésica: (y ⊖ b) ∨ g
+            y = np.maximum(cv2.erode(y, b), g)
+        return y.astype('uint8')
 
     @staticmethod
     def closerec(f, b=np.zeros((3,3),dtype='uint8'), bc=np.zeros((3,3),dtype='uint8')):
