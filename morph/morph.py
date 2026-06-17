@@ -952,14 +952,14 @@ class mm:
 
     @staticmethod
     def cero(f, g, b=np.zeros((3,3),dtype='uint8'), n=1):
-        """Erosão condicional de g com máximo f, n vezes."""
+        """Erosão geodésica de f sob a máscara g."""
         y = np.maximum(f, g)
         for _ in range(n): y = np.maximum(cv2.erode(y,b), g)
         return y
 
     @staticmethod
     def cdil(f, g, b=np.zeros((3,3),dtype='uint8'), n=1):
-        """Dilatação condicional de g com mínimo f, n vezes."""
+        """Dilatação geodésica de g sob a máscara f."""
         y = np.minimum(f, g)
         for _ in range(n): y = np.minimum(cv2.dilate(y,b), g)
         return y

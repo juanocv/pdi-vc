@@ -210,7 +210,10 @@ class QuartoBuilder:
         for cap in self.CAPS_PART1 + self.CAPS_PART2:
             cap_dir = nb_root / cap
             if cap_dir.exists():
-                self._symlink(qdir / cap, cap_dir)
+                dest = qdir / cap
+                dest.mkdir(parents=True, exist_ok=True)  # diretório real, não symlink
+                for f in cap_dir.iterdir():
+                    self._symlink(dest / f.name, f)      # symlinks apenas dos arquivos
                 all_imagens = self.root / 'all' / cap / 'imagens'
                 gen_imagens = nb_root / cap / 'imagens'
                 if all_imagens.exists() and not gen_imagens.exists():

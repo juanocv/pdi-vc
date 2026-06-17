@@ -1,0 +1,208 @@
+
+<style>
+  #laby { display: flex; flex-direction: column; gap: 1rem; padding: 1rem 0; }
+  #controls { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  #step-info { font-size: 13px; color: var(--color-text-secondary); flex: 1; min-width: 160px; }
+  .btn-row { display: flex; gap: 8px; }
+  button { font-size: 13px; }
+  #legend { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 12px; color: var(--color-text-secondary); }
+  .leg { display: flex; align-items: center; gap: 5px; }
+  .leg-swatch { width: 16px; height: 16px; border-radius: 3px; flex-shrink: 0; }
+  canvas { width: 100%; max-width: 580px; display: block; border-radius: 8px; }
+</style>
+<div id="laby">
+  <div id="legend">
+    <div class="leg"><div class="leg-swatch" style="background:#2c2c2a"></div>Parede</div>
+    <div class="leg"><div class="leg-swatch" style="background:#e8f5f0; border: 1px solid #c0ddd0"></div>Caminho livre (máscara g)</div>
+    <div class="leg"><div class="leg-swatch" style="background:#1d9e75"></div>Marcador f (passo atual)</div>
+    <div class="leg"><div class="leg-swatch" style="background:#9fe1cb"></div>Propagação anterior</div>
+    <div class="leg"><div class="leg-swatch" style="background:#faecca; border:1px solid #f4c875"></div>Saída</div>
+  </div>
+  <canvas id="cv" width="580" height="580"></canvas>
+  <div id="controls">
+    <div class="btn-row">
+      <button id="btn-reset" onclick="reset()">↺ Reiniciar</button>
+      <button id="btn-prev" onclick="step(-1)" disabled>‹ Anterior</button>
+      <button id="btn-next" onclick="step(1)">Avançar ›</button>
+      <button id="btn-play" onclick="togglePlay()">▶ Animar</button>
+    </div>
+    <div id="step-info">Passo 0 — marcador inicial f (entrada)</div>
+  </div>
+</div>
+<script>
+const G = [
+  [0,0,0,0,0,0,0,0,0,0,0,0],
+  [0,1,1,1,0,1,1,1,1,1,1,0],
+  [0,0,0,1,0,1,0,0,0,0,1,0],
+  [0,1,0,1,0,1,0,1,1,0,1,0],
+  [0,1,0,1,1,1,0,1,0,0,1,0],
+  [0,1,0,0,0,0,0,1,0,1,1,0],
+  [0,1,1,1,1,1,1,1,0,1,0,0],
+  [0,0,0,0,0,0,1,0,0,1,0,0],
+  [0,1,1,1,1,0,1,1,1,1,0,0],
+  [0,1,0,0,1,0,0,0,0,1,0,0],
+  [0,1,1,1,1,1,1,1,1,1,0,0],
+  [0,0,0,0,0,0,0,0,0,0,0,0]
+];
+const ROWS = G.length, COLS = G[0].length;
+const START = [1,1];
+const EXIT  = [10,9];
+
+function dilate(prev, mask) {
+  const next = prev.map(r => [...r]);
+  const dirs = [[-1,0],[1,0],[0,-1],[0,1]];
+  for (let r=0; r<ROWS; r++)
+    for (let c=0; c<COLS; c++)
+      if (prev[r][c]) {
+        for (const [dr,dc] of dirs) {
+          const nr=r+dr, nc=c+dc;
+          if (nr>=0&&nr<ROWS&&nc>=0&&nc<COLS&&mask[nr][nc])
+            next[nr][nc]=1;
+        }
+      }
+  return next;
+}
+
+function emptyGrid() { return Array.from({length:ROWS},()=>new Array(COLS).fill(0)); }
+
+let steps = [];
+function buildSteps() {
+  steps = [];
+  let cur = emptyGrid();
+  cur[START[0]][START[1]] = 1;
+  steps.push(cur.map(r=>[...r]));
+  let prev = null;
+  while (JSON.stringify(cur) !== JSON.stringify(prev)) {
+    prev = cur.map(r=>[...r]);
+    cur = dilate(cur, G);
+    steps.push(cur.map(r=>[...r]));
+    if (steps.length > 80) break;
+  }
+}
+
+buildSteps();
+let idx = 0, playing = false, timer = null;
+
+const cv = document.getElementById('cv');
+const ctx = cv.getContext('2d');
+const dark = matchMedia('(prefers-color-scheme: dark)').matches;
+
+const C = {
+  wall:    dark ? '#1a1a18' : '#2c2c2a',
+  free:    dark ? '#1a2e26' : '#e8f5f0',
+  freeBd:  dark ? '#254035' : '#c0ddd0',
+  marker:  '#1d9e75',
+  trail:   dark ? '#0f6e56' : '#9fe1cb',
+  exit:    dark ? '#3a2e0a' : '#faecca',
+  exitBd:  dark ? '#85600a' : '#f4c875',
+  bg:      dark ? '#141412' : '#f8f8f6',
+  text:    dark ? '#c2c0b6' : '#3d3d3a',
+  grid:    dark ? '#2c2c2a' : '#d3d1c7',
+};
+
+function draw() {
+  const W = cv.width, H = cv.height;
+  const cw = W / COLS, ch = H / ROWS;
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle = C.bg;
+  ctx.fillRect(0,0,W,H);
+
+  const cur = steps[idx];
+  const prev = idx > 0 ? steps[idx-1] : null;
+
+  for (let r=0; r<ROWS; r++) {
+    for (let c=0; c<COLS; c++) {
+      const x = c*cw, y = r*ch;
+      const isExit = r===EXIT[0]&&c===EXIT[1];
+
+      if (!G[r][c]) {
+        ctx.fillStyle = C.wall;
+        ctx.fillRect(x+0.5,y+0.5,cw-1,ch-1);
+      } else {
+        if (isExit) {
+          ctx.fillStyle = C.exit;
+          ctx.fillRect(x+0.5,y+0.5,cw-1,ch-1);
+          ctx.strokeStyle = C.exitBd;
+          ctx.lineWidth = 1.5;
+          ctx.strokeRect(x+1.5,y+1.5,cw-3,ch-3);
+        } else {
+          ctx.fillStyle = C.free;
+          ctx.fillRect(x+0.5,y+0.5,cw-1,ch-1);
+          ctx.strokeStyle = C.freeBd;
+          ctx.lineWidth = 0.5;
+          ctx.strokeRect(x+0.5,y+0.5,cw-1,ch-1);
+        }
+        if (prev && prev[r][c] && !cur[r][c]) {
+          ctx.fillStyle = C.trail;
+          ctx.fillRect(x+0.5,y+0.5,cw-1,ch-1);
+        } else if (prev && prev[r][c]) {
+          ctx.fillStyle = C.trail;
+          ctx.fillRect(x+0.5,y+0.5,cw-1,ch-1);
+        }
+        if (cur[r][c]) {
+          ctx.fillStyle = C.marker;
+          ctx.fillRect(x+2,y+2,cw-4,ch-4);
+        }
+      }
+    }
+  }
+
+  ctx.strokeStyle = C.grid;
+  ctx.lineWidth = 0.5;
+  for (let r=0;r<=ROWS;r++) { ctx.beginPath(); ctx.moveTo(0,r*ch); ctx.lineTo(W,r*ch); ctx.stroke(); }
+  for (let c=0;c<=COLS;c++) { ctx.beginPath(); ctx.moveTo(c*cw,0); ctx.lineTo(c*cw,H); ctx.stroke(); }
+
+  ctx.fillStyle = '#FFFFFF';
+  ctx.font = 'bold 11px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  const [sr,sc] = START;
+  ctx.fillText('E', (sc+0.5)*cw, (sr+0.5)*ch);
+  const [er,ec] = EXIT;
+  ctx.fillStyle = dark ? '#FAC775' : '#854F0B';
+  ctx.fillText('S', (ec+0.5)*cw, (er+0.5)*ch);
+
+  const reached = steps[idx][EXIT[0]][EXIT[1]];
+  let msg = '';
+  if (idx === 0) msg = 'Passo 0 — marcador inicial f (entrada)';
+  else if (reached) msg = `Passo ${idx} — saída alcançada! 🎉`;
+  else msg = `Passo ${idx} — propagação geodésica (máscara g bloqueia paredes)`;
+
+  document.getElementById('step-info').textContent = msg;
+  document.getElementById('btn-prev').disabled = idx === 0;
+  document.getElementById('btn-next').disabled = idx === steps.length-1;
+}
+
+function step(d) {
+  idx = Math.max(0, Math.min(steps.length-1, idx+d));
+  draw();
+}
+
+function reset() {
+  stopPlay();
+  idx = 0;
+  draw();
+}
+
+function togglePlay() {
+  playing ? stopPlay() : startPlay();
+}
+
+function startPlay() {
+  playing = true;
+  document.getElementById('btn-play').textContent = '⏸ Pausar';
+  timer = setInterval(() => {
+    if (idx >= steps.length-1) { stopPlay(); return; }
+    idx++;
+    draw();
+  }, 350);
+}
+
+function stopPlay() {
+  playing = false;
+  clearInterval(timer);
+  document.getElementById('btn-play').textContent = '▶ Animar';
+}
+
+draw();
+</script>

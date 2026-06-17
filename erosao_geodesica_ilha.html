@@ -1,0 +1,180 @@
+
+<style>
+#ero { display:flex; flex-direction:column; gap:1rem; padding:1rem 0; }
+#legend { display:flex; gap:16px; flex-wrap:wrap; align-items:center; font-size:12px; color:var(--color-text-secondary); }
+.leg { display:flex; align-items:center; gap:5px; }
+.leg-sw { width:16px; height:16px; border-radius:3px; flex-shrink:0; }
+#canvases { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.cv-wrap { display:flex; flex-direction:column; gap:4px; }
+.cv-label { font-size:12px; color:var(--color-text-secondary); text-align:center; }
+canvas { width:100%; border-radius:8px; display:block; }
+#controls { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+#step-info { font-size:13px; color:var(--color-text-secondary); flex:1; min-width:180px; }
+.btn-row { display:flex; gap:8px; }
+</style>
+<div id="ero">
+  <div id="legend">
+    <div class="leg"><div class="leg-sw" style="background:#185FA5"></div>Mar (g = 0, barreira)</div>
+    <div class="leg"><div class="leg-sw" style="background:#9FE1CB; border:1px solid #1D9E75"></div>Ilha protegida (g = 1)</div>
+    <div class="leg"><div class="leg-sw" style="background:#D85A30"></div>Mancha f atual</div>
+    <div class="leg"><div class="leg-sw" style="background:#F5C4B3"></div>Já erodido</div>
+  </div>
+  <div id="canvases">
+    <div class="cv-wrap">
+      <div class="cv-label">Máscara g (arquipélago)</div>
+      <canvas id="cv-mask" width="280" height="280"></canvas>
+    </div>
+    <div class="cv-wrap">
+      <div class="cv-label" id="cv-f-label">Marcador f — passo 0</div>
+      <canvas id="cv-f" width="280" height="280"></canvas>
+    </div>
+  </div>
+  <div id="controls">
+    <div class="btn-row">
+      <button onclick="reset()">↺ Reiniciar</button>
+      <button id="btn-prev" onclick="step(-1)" disabled>‹ Anterior</button>
+      <button id="btn-next" onclick="step(1)">Avançar ›</button>
+      <button id="btn-play" onclick="togglePlay()">▶ Animar</button>
+    </div>
+    <div id="step-info">Passo 0 — marcador f cobre tudo exceto o mar</div>
+  </div>
+</div>
+<script>
+const R=14, C=14;
+
+const G = [
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  [0,0,1,1,1,0,0,0,1,1,0,0,0,0],
+  [0,0,1,1,1,1,0,0,1,1,1,0,0,0],
+  [0,0,1,1,1,1,0,0,0,1,0,0,0,0],
+  [0,0,0,1,1,0,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,1,1,1,1,0,0,0],
+  [0,0,0,1,0,0,0,1,1,1,1,1,0,0],
+  [0,0,1,1,1,0,0,1,1,1,1,0,0,0],
+  [0,0,1,1,1,1,0,0,1,1,0,0,0,0],
+  [0,0,0,1,1,0,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+];
+
+function emptyGrid(){ return Array.from({length:R},()=>new Array(C).fill(0)); }
+
+function erode(prev, mask){
+  const next = prev.map(r=>[...r]);
+  const dirs=[[-1,0],[1,0],[0,-1],[0,1]];
+  for(let r=0;r<R;r++)
+    for(let c=0;c<C;c++){
+      if(!prev[r][c]) continue;
+      let isEdge=false;
+      for(const [dr,dc] of dirs){
+        const nr=r+dr,nc=c+dc;
+        if(nr<0||nr>=R||nc<0||nc>=C||!prev[nr][nc]){ isEdge=true; break; }
+      }
+      if(isEdge) next[r][c] = mask[r][c];
+    }
+  return next;
+}
+
+let steps=[];
+function buildSteps(){
+  steps=[];
+  let cur = emptyGrid();
+  for(let r=0;r<R;r++) for(let c=0;c<C;c++) cur[r][c]=1;
+  for(let r=0;r<R;r++) for(let c=0;c<C;c++) if(!G[r][c]) cur[r][c]=0;
+  steps.push(cur.map(r=>[...r]));
+  let prev=null;
+  while(JSON.stringify(cur)!==JSON.stringify(prev)){
+    prev=cur.map(r=>[...r]);
+    cur=erode(cur,G);
+    steps.push(cur.map(r=>[...r]));
+    if(steps.length>60) break;
+  }
+}
+buildSteps();
+
+const dark = matchMedia('(prefers-color-scheme: dark)').matches;
+const SEA   = dark ? '#042C53' : '#185FA5';
+const ISLE  = dark ? '#085041' : '#9FE1CB';
+const ISLEB = dark ? '#1D9E75' : '#1D9E75';
+const MARK  = dark ? '#993C1D' : '#D85A30';
+const ERODED= dark ? '#4A1B0C' : '#F5C4B3';
+const BG    = dark ? '#141412' : '#f8f8f6';
+const GRID  = dark ? '#2c2c2a' : '#d3d1c7';
+
+function drawGrid(cv, grid, showEroded){
+  const ctx=cv.getContext('2d');
+  const W=cv.width, H=cv.height;
+  const cw=W/C, ch=H/R;
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle=BG; ctx.fillRect(0,0,W,H);
+
+  const s0=steps[0];
+
+  for(let r=0;r<R;r++) for(let c=0;c<C;c++){
+    const x=c*cw,y=r*ch;
+    if(!G[r][c]){
+      ctx.fillStyle=SEA;
+    } else if(grid[r][c]===1){
+      ctx.fillStyle=MARK;
+    } else {
+      ctx.fillStyle= (showEroded && s0[r][c]===1) ? ERODED : ISLE;
+    }
+    ctx.fillRect(x+0.5,y+0.5,cw-1,ch-1);
+    if(G[r][c]===1 && grid[r][c]===0){
+      ctx.strokeStyle=ISLEB; ctx.lineWidth=1.5;
+      ctx.strokeRect(x+1,y+1,cw-2,ch-2);
+    }
+  }
+  ctx.strokeStyle=GRID; ctx.lineWidth=0.5;
+  for(let rr=0;rr<=R;rr++){ ctx.beginPath();ctx.moveTo(0,rr*ch);ctx.lineTo(W,rr*ch);ctx.stroke(); }
+  for(let cc=0;cc<=C;cc++){ ctx.beginPath();ctx.moveTo(cc*cw,0);ctx.lineTo(cc*cw,H);ctx.stroke(); }
+}
+
+function drawMask(){
+  const cv=document.getElementById('cv-mask');
+  drawGrid(cv, G, false);
+}
+
+let idx=0, playing=false, timer=null;
+
+function draw(){
+  const cv=document.getElementById('cv-f');
+  drawGrid(cv, steps[idx], true);
+
+  const done = JSON.stringify(steps[idx])===JSON.stringify(steps[steps.length-1]);
+  let msg='';
+  if(idx===0) msg='Passo 0 — f cobre todos os caminhos livres (f = g inicial)';
+  else if(done) msg=`Passo ${idx} — ponto fixo: resta apenas o arquipélago g`;
+  else msg=`Passo ${idx} — erosão geodésica retrai f, ilhas protegidas por g`;
+
+  document.getElementById('step-info').textContent=msg;
+  document.getElementById('cv-f-label').textContent=`Marcador f — passo ${idx}`;
+  document.getElementById('btn-prev').disabled=idx===0;
+  document.getElementById('btn-next').disabled=idx===steps.length-1;
+
+  const remaining=steps[idx];
+  let cnt=0; for(let r=0;r<R;r++) for(let c=0;c<C;c++) if(remaining[r][c]) cnt++;
+  let tot=0; for(let r=0;r<R;r++) for(let c=0;c<C;c++) if(G[r][c]) tot++;
+}
+
+function step(d){
+  idx=Math.max(0,Math.min(steps.length-1,idx+d));
+  draw();
+}
+function reset(){ stopPlay(); idx=0; draw(); }
+function togglePlay(){ playing?stopPlay():startPlay(); }
+function startPlay(){
+  playing=true;
+  document.getElementById('btn-play').textContent='⏸ Pausar';
+  timer=setInterval(()=>{ if(idx>=steps.length-1){stopPlay();return;} idx++; draw(); },420);
+}
+function stopPlay(){
+  playing=false; clearInterval(timer);
+  document.getElementById('btn-play').textContent='▶ Animar';
+}
+
+drawMask();
+draw();
+</script>
