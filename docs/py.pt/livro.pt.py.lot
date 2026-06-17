@@ -1,0 +1,23 @@
+\babel@toc {portuguese}{}\relax 
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {1.1}{\ignorespaces Conexão entre PDI, VC e outras áreas da ciência.}}{18}{table.1.1}%
+\contentsline {table}{\numberline {1.2}{\ignorespaces Principais tipos de imagem digital e seus respectivos conjuntos de valores possíveis para cada pixel.}}{21}{table.1.2}%
+\contentsline {table}{\numberline {1.3}{\ignorespaces Principais bibliotecas utilizadas ao longo deste livro para manipulação matricial, PDI e visualização de resultados.}}{22}{table.1.3}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {2.1}{\ignorespaces Convenções de escala e ordem de canais nas principais bibliotecas de PDI.}}{66}{table.2.1}%
+\contentsline {table}{\numberline {2.2}{\ignorespaces Comparativo entre estratégias de compactação e eficiência de processamento.}}{73}{table.2.2}%
+\contentsline {table}{\numberline {2.3}{\ignorespaces Comparativo de métricas de distância aplicadas à malha de pixels.}}{74}{table.2.3}%
+\contentsline {table}{\numberline {2.4}{\ignorespaces Principais formatos de armazenamento de imagens digitais e suas aplicações em PDI.}}{74}{table.2.4}%
+\contentsline {table}{\numberline {2.5}{\ignorespaces Métodos de interpolação disponíveis em \texttt {mm.resize} e seus respectivos números de vizinhos utilizados no cálculo.}}{80}{table.2.5}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {3.1}{\ignorespaces Algoritmo de equalização de histograma.}}{118}{table.3.1}%
+\contentsline {table}{\numberline {3.2}{\ignorespaces Interpretação típica dos coeficientes do \emph {kernel}.}}{128}{table.3.2}%
+\contentsline {table}{\numberline {3.3}{\ignorespaces Etapas do \emph {Unsharp Masking}.}}{141}{table.3.3}%
+\contentsline {table}{\numberline {3.4}{\ignorespaces Média vs.~mediana com um pixel corrompido. A mediana ignora o outlier; a média é deslocada \textasciitilde 40 níveis.}}{144}{table.3.4}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {4.1}{\ignorespaces Técnicas de pré-processamento avaliadas para melhorar a separação entre moedas e fundo antes da aplicação do método de Otsu.}}{177}{table.4.1}%
+\contentsline {table}{\numberline {4.2}{\ignorespaces Propriedades de abertura e fechamento.}}{188}{table.4.2}%
+\contentsline {table}{\numberline {4.3}{\ignorespaces Sequências do filtro sequencial alternado \texttt {mm.asf}.}}{188}{table.4.3}%
+\contentsline {table}{\numberline {4.4}{\ignorespaces Comparação entre os operadores \emph {clohole} e \emph {edgeoff}.}}{196}{table.4.4}%
+\contentsline {table}{\numberline {4.5}{\ignorespaces Taxonomia simplificada dos principais métodos de segmentação abordados neste capítulo.}}{203}{table.4.5}%
+\contentsline {table}{\numberline {4.6}{\ignorespaces Pipeline morfológico típico do \emph {watershed} baseado em marcadores.}}{209}{table.4.6}%
