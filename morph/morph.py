@@ -6,7 +6,7 @@ https://github.com/fzampirolli/pdi-vc/blob/master/morph/morph.py - version 1.1 -
 Last update: Jun 2026
 """
 
-__version__ = "1.1.1"
+__version__ = "1.1.2"
 
 import sys, subprocess
 import numpy as np
@@ -820,12 +820,14 @@ class mm:
         try:    return cv2.erode(f, Bc)
         except: return mm.ero1(f, Bc)
 
+
     @staticmethod
     def ero0(f, Bc=np.zeros((3,3),dtype='uint8')):
-        """Erosão sem pesos."""
-        g = f.copy()
+        """Erosão clássica sem pesos."""
+        g = np.empty_like(f)
         for y in range(f.shape[0]):
             for x in range(f.shape[1]):
+                g[y,x] = 255
                 for vy,vx,bv in mm._viz(f,Bc,y,x):
                     if bv and g[y,x] > f[vy,vx]: g[y,x] = f[vy,vx]
         return g
@@ -841,64 +843,85 @@ class mm:
         return g
 
     @staticmethod
+    def ero1(f, b=np.zeros((3,3),dtype='uint8')):
+        """Erosão com pesos: mínimo de f[viz]-b."""
+        g = np.empty_like(f)
+        for y in range(f.shape[0]):
+            for x in range(f.shape[1]):
+                g[y,x] = 255 
+                for vy,vx,bv in mm._viz(f,b,y,x):
+                    # Usamos np.clip ou max para garantir que a subtração de uint8 não estoure abaixo de 0
+                    val_sub = max(0, int(f[vy,vx]) - int(bv))
+                    if g[y,x] > val_sub: g[y,x] = val_sub
+        return g
+
+    @staticmethod
     def dil(f, Bc=np.zeros((3,3),dtype='uint8')):
         """Dilatação (OpenCV ou com pesos)."""
         try:    return cv2.dilate(f, Bc)
         except: return mm.dil1(f, Bc)
 
     @staticmethod
-    def dil0_old(f, Bc=np.zeros((3,3),dtype='uint8')):
-        """Dilatação sem pesos."""
-        g = f.copy()
-        for y in range(f.shape[0]):
-            for x in range(f.shape[1]):
-                for vy,vx,bv in mm._viz(f,Bc,y,x):
-                    if bv and g[y,x] < f[vy,vx]: g[y,x] = f[vy,vx]
-        return g
-    
-    @staticmethod
     def dil0(f, Bc=np.zeros((3,3),dtype='uint8')):
-        """Dilatação binária seguindo rigorosamente a teoria."""
-        g = f.copy()
-        Bc = np.flip(Bc)                    # reflexão explícita: B̂
-
+        """Dilatação plana seguindo rigorosamente a teoria."""
+        g = np.empty_like(f) 
+        Bc = np.flip(Bc)     # reflexão explícita: B̂
         for y in range(f.shape[0]):
             for x in range(f.shape[1]):
+                g[y,x] = 0 # Inicializa com o valor mínimo para buscar o máximo
                 for vy,vx,bv in mm._viz(f,Bc,y,x):
                     if bv and g[y,x] < f[vy,vx]:
                         g[y,x] = f[vy,vx]
-
         return g
     
     @staticmethod
     def dil1(f, b=np.zeros((3,3),dtype='uint8')):
         """Dilatação com pesos: máximo de f[viz]+b."""
-        g = f.copy()
+        g = np.empty_like(f) 
+        b = np.flip(b)
         for y in range(f.shape[0]):
             for x in range(f.shape[1]):
+                g[y,x] = 0 
                 for vy,vx,bv in mm._viz(f,b,y,x):
-                    if g[y,x] < f[vy,vx]+bv: g[y,x] = f[vy,vx]+bv
+                    # Usamos min para garantir que a adição de uint8 não estoure acima de 255
+                    val_soma = min(255, int(f[vy,vx]) + int(bv))
+                    if g[y,x] < val_soma: g[y,x] = val_soma
         return g
 
     # ── OPERADORES MORFOLÓGICOS ──────────────────────────────────────────────
 
     @staticmethod
-    def gradm(f, b=np.zeros((3,3),dtype='uint8')):
-        """Gradiente morfológico: dil(f,b) - ero(f,b)."""
-        return mm.subm(mm.dil(f,b), mm.ero(f,b))
-
-    @staticmethod
     def open(f, b=np.zeros((3,3),dtype='uint8')):
         return cv2.morphologyEx(f, cv2.MORPH_OPEN, b)
-
+    @staticmethod
+    def open0(f, B=np.ones((3,3),dtype='uint8')):
+        return mm.dil0(mm.ero0(f, B), B)
+    @staticmethod
+    def open1(f, b=np.zeros((3,3),dtype='uint8')):
+        return mm.dil1(mm.ero1(f, b), b)
+        
     @staticmethod
     def close(f, b=np.zeros((3,3),dtype='uint8')):
         return cv2.morphologyEx(f, cv2.MORPH_CLOSE, b)
+    @staticmethod
+    def close0(f, B=np.ones((3,3),dtype='uint8')):
+        return mm.ero0(mm.dil0(f, B), B)
+    @staticmethod
+    def close1(f, b):
+        return mm.ero1(mm.dil1(f, b), b)
 
+    @staticmethod
+    def gradm(f, b=np.zeros((3,3),dtype='uint8')):
+        """Gradiente morfológico: dil(f,b) - ero(f,b)."""
+        return mm.subm(mm.dil(f,b), mm.ero(f,b))
+    @staticmethod
+    def gradm1(f, b=np.zeros((3,3),dtype='uint8')):
+        """Gradiente morfológico: dil(f,b) - ero(f,b)."""
+        return mm.subm(mm.dil1(f,b), mm.ero1(f,b))
+    
     @staticmethod
     def openth(f, b=np.zeros((3,3),dtype='uint8')):
         return mm.subm(f, cv2.morphologyEx(f, cv2.MORPH_OPEN, b))
-
     @staticmethod
     def openth1(f, b=np.zeros((3,3),dtype='uint8')):
         return mm.subm(f, mm.dil1(mm.ero1(f,b), b))
@@ -906,7 +929,7 @@ class mm:
     @staticmethod
     def closeth(f, b=np.zeros((3,3),dtype='uint8')):
         return mm.subm(cv2.morphologyEx(f, cv2.MORPH_CLOSE, b), f)
-
+    
     @staticmethod
     def closerecth(f, b=np.zeros((3,3),dtype='uint8')):  # alias
         return mm.closeth(f, b)
