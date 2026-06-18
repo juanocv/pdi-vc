@@ -35,8 +35,8 @@ all-formats:
 build:
 	$(PY) --once --langs $(LANGS) --locales $(LOCALES) --render html
 	$(MAKE) index
-	python extrair_eps.py --input gen/book/$(LOCALES:%=py.%) 2>/dev/null || \
-		python extrair_eps.py --input gen/book
+#python extrair_eps.py --input gen/book/$(LOCALES:%=py.%) 2>/dev/null || \
+#	python extrair_eps.py --input gen/book
 		
 .PHONY: build-pdf
 build-pdf:

@@ -1,0 +1,389 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans)}
+.tabs{display:flex;gap:6px;margin-bottom:20px;flex-wrap:wrap}
+.tab{padding:6px 14px;border-radius:20px;font-size:13px;cursor:pointer;border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);color:var(--color-text-secondary);transition:all .15s;white-space:nowrap}
+.tab.active{background:var(--color-text-primary);color:var(--color-background-primary);border-color:transparent}
+.panel{display:none}.panel.active{display:block}
+
+.algo-wrap{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden}
+.algo-header{padding:14px 20px;border-bottom:0.5px solid var(--color-border-tertiary);display:flex;align-items:center;gap:10px}
+.algo-icon{width:32px;height:32px;border-radius:var(--border-radius-md);display:flex;align-items:center;justify-content:center;font-size:16px;background:#E6F1FB;color:#185FA5}
+.algo-title{font-size:14px;font-weight:500;color:var(--color-text-primary);text-align:left}
+.algo-sub{font-size:12px;color:var(--color-text-secondary);margin-top:1px;text-align:left}
+.algo-body{padding:20px;text-align:left}
+
+.step{display:flex;gap:12px;margin-bottom:14px;align-items:flex-start}
+.step:last-child{margin-bottom:0}
+.step-num{min-width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;flex-shrink:0;margin-top:1px}
+.step-text{font-size:13.5px;line-height:1.65;color:var(--color-text-primary);text-align:left}
+.step-text code{font-family:var(--font-mono);font-size:12px;background:var(--color-background-secondary);padding:1px 6px;border-radius:4px;color:var(--color-text-primary)}
+.step-sub{margin-top:8px;border-left:2px solid var(--color-border-secondary);padding-left:12px;display:flex;flex-direction:column;gap:5px}
+.step-sub-item{font-size:13px;color:var(--color-text-secondary);line-height:1.55;text-align:left}
+.step-sub-item code{font-family:var(--font-mono);font-size:11.5px;background:var(--color-background-secondary);padding:1px 5px;border-radius:3px;color:var(--color-text-primary)}
+.while-box{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:11px 13px;margin-top:8px;text-align:left}
+.while-head{font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.06em;margin-bottom:7px}
+.note{margin-top:16px;padding-top:12px;border-top:0.5px solid var(--color-border-tertiary);font-size:12px;color:var(--color-text-secondary);font-style:italic;line-height:1.5;text-align:left}
+
+.num-teal{background:#E1F5EE;color:#0F6E56}
+.num-purple{background:#EEEDFE;color:#534AB7}
+.num-amber{background:#FAEEDA;color:#854F0B}
+.num-coral{background:#FAECE7;color:#993C1D}
+.num-blue{background:#E6F1FB;color:#185FA5}
+.num-gray{background:var(--color-background-secondary);color:var(--color-text-secondary)}
+
+.card-step{display:flex;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);overflow:hidden;margin-bottom:8px}
+.card-step:last-child{margin-bottom:0}
+.card-badge{min-width:48px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;flex-shrink:0}
+.card-content{padding:10px 14px;flex:1;text-align:left}
+.card-label{font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px}
+.card-text{font-size:13.5px;line-height:1.6;color:var(--color-text-primary);text-align:left}
+.card-text code{font-family:var(--font-mono);font-size:12px;background:var(--color-background-secondary);padding:1px 5px;border-radius:3px;color:var(--color-text-primary)}
+.card-sub{margin-top:6px;display:flex;flex-direction:column;gap:3px}
+.card-sub-item{font-size:12.5px;color:var(--color-text-secondary);padding-left:10px;border-left:2px solid var(--color-border-secondary);line-height:1.5;text-align:left}
+.card-sub-item code{font-family:var(--font-mono);font-size:11.5px;background:var(--color-background-secondary);padding:1px 4px;border-radius:3px;color:var(--color-text-primary)}
+
+.tl{position:relative;padding:4px 0 4px 36px;text-align:left}
+.tl-line{position:absolute;left:11px;top:20px;bottom:20px;width:1.5px;background:var(--color-border-secondary);border-radius:2px}
+.tl-step{display:flex;gap:0;margin-bottom:18px;position:relative}
+.tl-step:last-child{margin-bottom:0}
+.tl-dot-wrap{position:absolute;left:-36px;top:2px;display:flex;flex-direction:column;align-items:center;gap:3px}
+.tl-dot{width:14px;height:14px;border-radius:50%;border:2px solid var(--color-border-secondary);background:var(--color-background-primary);transition:all .2s;z-index:1}
+.tl-step:hover .tl-dot{background:var(--color-text-primary);border-color:var(--color-text-primary)}
+.tl-num{font-size:9px;color:var(--color-text-secondary);font-weight:500;letter-spacing:.04em}
+.tl-title{font-size:13.5px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px;text-align:left}
+.tl-desc{font-size:13px;color:var(--color-text-secondary);line-height:1.6;text-align:left}
+.tl-desc code{font-family:var(--font-mono);font-size:12px;background:var(--color-background-secondary);padding:1px 5px;border-radius:3px;color:var(--color-text-primary)}
+
+.code-wrap{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden}
+.code-bar{background:var(--color-background-secondary);padding:10px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:0.5px solid var(--color-border-tertiary)}
+.code-lang{font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.08em}
+.code-body{padding:18px 20px;overflow-x:auto;text-align:left}
+.code-body pre{font-family:var(--font-mono);font-size:13px;line-height:1.75;color:var(--color-text-primary);margin:0;white-space:pre;text-align:left}
+.kw{color:#7C3AED}.fn{color:#0369A1}.cm{color:#6B7280;font-style:italic}.st{color:#059669}.num-lit{color:#DC2626}
+
+.ann-line{display:flex;align-items:flex-start;gap:10px;margin-bottom:8px;padding:10px 12px;background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);text-align:left}
+.ann-badge{min-width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;flex-shrink:0;margin-top:1px}
+.ann-text{font-size:13px;line-height:1.6;color:var(--color-text-primary);text-align:left}
+.ann-text code{font-family:var(--font-mono);font-size:11.5px;background:var(--color-background-secondary);padding:1px 5px;border-radius:3px;color:var(--color-text-primary)}
+
+.metric-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:16px}
+.metric-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:12px 14px;text-align:left}
+.metric-title{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px}
+.metric-formula{font-family:var(--font-mono);font-size:12px;color:var(--color-text-primary);margin-bottom:4px}
+.metric-desc{font-size:12px;color:var(--color-text-secondary);line-height:1.5}
+.metric-elem{display:inline-grid;grid-template-columns:repeat(3,16px);grid-template-rows:repeat(3,16px);gap:2px;margin-top:6px}
+.mc{width:16px;height:16px;border-radius:2px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:500}
+.mc-on{background:#E6F1FB;color:#185FA5}
+.mc-off{background:var(--color-background-secondary);color:var(--color-text-secondary)}
+.mc-ctr{background:#185FA5;color:#fff}
+</style>
+
+<h2 class="sr-only" style="position:absolute;left:-9999px">Transformada de distância iterativa por erosões sucessivas — painel interativo com cinco visualizações</h2>
+
+<div class="tabs">
+  <div class="tab active" onclick="show(0)"><i class="ti ti-list-numbers" aria-hidden="true"></i> Passo a passo</div>
+  <div class="tab" onclick="show(1)"><i class="ti ti-cards" aria-hidden="true"></i> Cards</div>
+  <div class="tab" onclick="show(2)"><i class="ti ti-timeline" aria-hidden="true"></i> Linha do tempo</div>
+  <div class="tab" onclick="show(3)"><i class="ti ti-code" aria-hidden="true"></i> Código Python</div>
+  <div class="tab" onclick="show(4)"><i class="ti ti-git-branch" aria-hidden="true"></i> Fluxograma</div>
+</div>
+
+<!-- PAINEL 1: Passo a passo -->
+<div class="panel active" id="p0">
+<div class="algo-wrap">
+  <div class="algo-header">
+    <div class="algo-icon"><i class="ti ti-ripple" aria-hidden="true"></i></div>
+    <div><div class="algo-title">Transformada de distância iterativa</div><div class="algo-sub">Acúmulo de erosões sucessivas — métrica induzida por <em>b</em></div></div>
+  </div>
+  <div class="algo-body">
+    <div class="step"><div class="step-num num-teal">1</div><div class="step-text">Binarizar a entrada: <code>img ← (f &gt; 0)</code>, garantindo valores em {0, 1}.</div></div>
+    <div class="step"><div class="step-num num-teal">2</div><div class="step-text">Criar acumulador <code>D ← zeros</code> (mesmo shape de <em>f</em>, tipo <code>uint16</code>).</div></div>
+    <div class="step">
+      <div class="step-num num-coral">3</div>
+      <div class="step-text">
+        Enquanto <code>img</code> contiver pixels ativos (<code>any(img) = verdadeiro</code>):
+        <div class="step-sub">
+          <div class="step-sub-item">Acumular: <code>D ← D + img</code> — cada pixel ativo soma 1 à sua conta de erosões suportadas.</div>
+          <div class="step-sub-item">Erodir: <code>img ← erode(img, b)</code> — remove a camada mais externa dos objetos segundo a vizinhança de <em>b</em>.</div>
+        </div>
+      </div>
+    </div>
+    <div class="step"><div class="step-num num-blue">4</div><div class="step-text">Acumulador vazio ⟹ cada pixel ativo de <em>f</em> contém o número de erosões que suportou, equivalente à sua distância ao fundo na métrica de <em>b</em>.</div></div>
+    <div class="step"><div class="step-num num-blue">5</div><div class="step-text">Retornar <code>D</code> como <code>uint8</code> se <code>max(D) ≤ 255</code>, ou <code>uint16</code> para imagens maiores.</div></div>
+    <div class="note">A métrica resultante depende do elemento estruturante <em>b</em>: cruz (<code>secross</code>) → Manhattan (L₁); quadrado (<code>sebox</code>) → Chebyshev (L∞); disco → aproxima Euclidiana (L₂). Uso didático — para imagens grandes, prefira <code>cv2.distanceTransform</code>.</div>
+  </div>
+</div>
+
+<div class="metric-grid">
+  <div class="metric-card">
+    <div class="metric-title" style="color:#185FA5">Cruz — L₁ (Manhattan)</div>
+    <div class="metric-formula">d = |Δx| + |Δy|</div>
+    <div class="metric-desc"><code>secross()</code> — 4 vizinhos</div>
+    <div class="metric-elem">
+      <div class="mc mc-off"></div><div class="mc mc-on">1</div><div class="mc mc-off"></div>
+      <div class="mc mc-on">1</div><div class="mc mc-ctr">0</div><div class="mc mc-on">1</div>
+      <div class="mc mc-off"></div><div class="mc mc-on">1</div><div class="mc mc-off"></div>
+    </div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-title" style="color:#854F0B">Quadrado — L∞ (Chebyshev)</div>
+    <div class="metric-formula">d = max(|Δx|, |Δy|)</div>
+    <div class="metric-desc"><code>sebox()</code> — 8 vizinhos</div>
+    <div class="metric-elem">
+      <div class="mc mc-on">1</div><div class="mc mc-on">1</div><div class="mc mc-on">1</div>
+      <div class="mc mc-on">1</div><div class="mc mc-ctr">0</div><div class="mc mc-on">1</div>
+      <div class="mc mc-on">1</div><div class="mc mc-on">1</div><div class="mc mc-on">1</div>
+    </div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-title" style="color:#0F6E56">Disco — L₂ (Euclidiana)</div>
+    <div class="metric-formula">d = √(Δx² + Δy²)</div>
+    <div class="metric-desc"><code>cv2.distanceTransform</code></div>
+    <div class="metric-elem">
+      <div class="mc mc-off"></div><div class="mc mc-on">1</div><div class="mc mc-off"></div>
+      <div class="mc mc-on">1</div><div class="mc mc-ctr">0</div><div class="mc mc-on">1</div>
+      <div class="mc mc-off"></div><div class="mc mc-on">1</div><div class="mc mc-off"></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- PAINEL 2: Cards -->
+<div class="panel" id="p1">
+  <div class="card-step">
+    <div class="card-badge num-teal">01</div>
+    <div class="card-content">
+      <div class="card-label" style="color:#0F6E56">Binarização</div>
+      <div class="card-text">Converter entrada: <code>img ← (f &gt; 0).astype('uint8')</code>, garantindo {0, 1}.</div>
+    </div>
+  </div>
+  <div class="card-step">
+    <div class="card-badge num-teal">02</div>
+    <div class="card-content">
+      <div class="card-label" style="color:#0F6E56">Inicialização</div>
+      <div class="card-text">Criar acumulador <code>D ← zeros_like(f, dtype='uint16')</code>.</div>
+    </div>
+  </div>
+  <div class="card-step">
+    <div class="card-badge num-coral">03</div>
+    <div class="card-content">
+      <div class="card-label" style="color:#993C1D">Acumulação (loop)</div>
+      <div class="card-text">Enquanto <code>any(img)</code>:</div>
+      <div class="card-sub">
+        <div class="card-sub-item"><code>D ← D + img</code> — conta erosões suportadas por cada pixel</div>
+        <div class="card-sub-item"><code>img ← erode(img, b)</code> — remove camada externa pelo elemento <em>b</em></div>
+      </div>
+    </div>
+  </div>
+  <div class="card-step">
+    <div class="card-badge num-blue">04</div>
+    <div class="card-content">
+      <div class="card-label" style="color:#185FA5">Interpretação</div>
+      <div class="card-text">Valor em <code>D[x,y]</code> = número de erosões que o pixel suportou = distância ao fundo na métrica de <em>b</em>. Máximos locais de <em>D</em> são os centros geométricos dos objetos.</div>
+    </div>
+  </div>
+  <div class="card-step">
+    <div class="card-badge num-purple">05</div>
+    <div class="card-content">
+      <div class="card-label" style="color:#534AB7">Retorno</div>
+      <div class="card-text">Retornar <code>D.astype('uint8')</code> se <code>max(D) ≤ 255</code>, caso contrário manter <code>uint16</code>.</div>
+    </div>
+  </div>
+</div>
+
+<!-- PAINEL 3: Linha do tempo -->
+<div class="panel" id="p2">
+<div class="tl">
+  <div class="tl-line"></div>
+  <div class="tl-step">
+    <div class="tl-dot-wrap"><div class="tl-dot"></div><span class="tl-num">01</span></div>
+    <div><div class="tl-title">Binarizar entrada</div><div class="tl-desc">Garantir <code>img ∈ {0,1}</code> via <code>(f &gt; 0).astype('uint8')</code>.</div></div>
+  </div>
+  <div class="tl-step">
+    <div class="tl-dot-wrap"><div class="tl-dot"></div><span class="tl-num">02</span></div>
+    <div><div class="tl-title">Criar acumulador</div><div class="tl-desc">Alocar <code>D ← zeros</code> com mesmo shape de <em>f</em>, tipo <code>uint16</code>.</div></div>
+  </div>
+  <div class="tl-step">
+    <div class="tl-dot-wrap"><div class="tl-dot"></div><span class="tl-num">03</span></div>
+    <div>
+      <div class="tl-title">Erosões sucessivas</div>
+      <div class="while-box">
+        <div class="while-head">Enquanto any(img)</div>
+        <div class="step-sub" style="border-color:var(--color-border-tertiary)">
+          <div class="step-sub-item"><code>D ← D + img</code> &nbsp;— acumula presença de cada pixel</div>
+          <div class="step-sub-item"><code>img ← erode(img, b)</code> &nbsp;— descasca a camada externa</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tl-step">
+    <div class="tl-dot-wrap"><div class="tl-dot"></div><span class="tl-num">04</span></div>
+    <div><div class="tl-title">Objeto extinto</div><div class="tl-desc">Nenhum pixel sobreviveu às erosões — <code>D</code> está completo. Máximos locais = centros dos objetos.</div></div>
+  </div>
+  <div class="tl-step">
+    <div class="tl-dot-wrap"><div class="tl-dot"></div><span class="tl-num">05</span></div>
+    <div><div class="tl-title">Retornar resultado</div><div class="tl-desc"><code>uint8</code> se <code>max(D) ≤ 255</code>, senão <code>uint16</code>. A métrica depende de <em>b</em>: cruz → L₁, quadrado → L∞.</div></div>
+  </div>
+</div>
+</div>
+
+<!-- PAINEL 4: Código Python -->
+<div class="panel" id="p3">
+<div class="code-wrap">
+  <div class="code-bar">
+    <span class="code-lang"><i class="ti ti-brand-python" aria-hidden="true" style="font-size:14px;vertical-align:-2px;margin-right:5px"></i>dist1.py</span>
+    <span style="font-size:11px;color:var(--color-text-secondary)">TD iterativa por erosões sucessivas</span>
+  </div>
+  <div class="code-body">
+<pre><span class="kw">def</span> <span class="fn">dist1</span>(f, b=np.ones((3,3), dtype=<span class="st">'uint8'</span>)):
+    <span class="cm">"""TD iterativa por acúmulo de erosões sucessivas.
+    Métrica induzida pelo elemento estruturante b."""</span>
+
+    <span class="cm"># 1. Garantir entrada binária {0, 1}</span>
+    img_corrente = (f > <span class="num-lit">0</span>).astype(<span class="st">'uint8'</span>)
+
+    <span class="cm"># 2. Acumulador de erosões suportadas</span>
+    acumulador = np.zeros_like(f, dtype=<span class="st">'uint16'</span>)
+
+    <span class="cm"># 3. Erosões sucessivas até extinção do objeto</span>
+    <span class="kw">while</span> np.any(img_corrente):
+        acumulador += img_corrente        <span class="cm"># conta presença</span>
+        img_corrente = cv2.erode(         <span class="cm"># descasca camada</span>
+            img_corrente, b
+        )
+
+    <span class="cm"># 4. Retornar no menor tipo possível</span>
+    <span class="kw">if</span> acumulador.max() <= <span class="num-lit">255</span>:
+        <span class="kw">return</span> acumulador.astype(<span class="st">'uint8'</span>)
+    <span class="kw">return</span> acumulador</pre>
+  </div>
+</div>
+
+<div style="margin-top:16px;display:flex;flex-direction:column;gap:8px;text-align:left">
+  <div class="ann-line"><div class="ann-badge num-teal">1</div><div class="ann-text"><code>(f &gt; 0).astype('uint8')</code> — normaliza qualquer imagem binária para {0,1}; necessário pois <code>cv2.erode</code> opera sobre esses valores.</div></div>
+  <div class="ann-line"><div class="ann-badge num-coral">2</div><div class="ann-text"><code>acumulador += img_corrente</code> — em cada iteração, pixels ainda vivos somam 1. Ao fim do loop, <code>acumulador[x,y]</code> = quantas erosões o pixel <em>(x,y)</em> sobreviveu = distância ao fundo.</div></div>
+  <div class="ann-line"><div class="ann-badge num-blue">3</div><div class="ann-text"><code>cv2.erode(img, b)</code> — aplica erosão morfológica com elemento estruturante <em>b</em>. A geometria de <em>b</em> define a métrica: cruz → L₁ (Manhattan), quadrado → L∞ (Chebyshev).</div></div>
+  <div class="ann-line"><div class="ann-badge num-purple">4</div><div class="ann-text">O número de iterações é igual ao valor máximo da TD — proporcional ao raio do maior objeto. Para imagens grandes, use <code>cv2.distanceTransform(f, cv2.DIST_L2, 5)</code>.</div></div>
+</div>
+
+<div style="margin-top:16px;background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:12px 14px;text-align:left">
+  <div style="font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.07em;color:var(--color-text-secondary);margin-bottom:10px">Comparação: dist1 vs. dist (OpenCV)</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+    <div>
+      <div style="font-size:12px;font-weight:500;color:#185FA5;margin-bottom:4px">dist1 — iterativa</div>
+      <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.6">Métrica configurável via <em>b</em>. O(r·N) onde r = raio máximo. Didática e exata na métrica de <em>b</em>.</div>
+    </div>
+    <div>
+      <div style="font-size:12px;font-weight:500;color:#0F6E56;margin-bottom:4px">dist — OpenCV L₂</div>
+      <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.6">Euclidiana exata, O(N) com dois passes. Recomendada para imagens de alta resolução.</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- PAINEL 5: Fluxograma -->
+<div class="panel" id="p4">
+<svg viewBox="0 0 560 720" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:560px;display:block">
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M1,1 L1,5 L7,3 Z" fill="#888780"/></marker>
+    <marker id="arr-b" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M1,1 L1,5 L7,3 Z" fill="#185FA5"/></marker>
+    <marker id="arr-r" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M1,1 L1,5 L7,3 Z" fill="#993C1D"/></marker>
+    <marker id="arr-g" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M1,1 L1,5 L7,3 Z" fill="#0F6E56"/></marker>
+  </defs>
+
+  <!-- START -->
+  <ellipse cx="280" cy="36" rx="60" ry="22" fill="#E1F5EE" stroke="#0F6E56" stroke-width="1"/>
+  <text x="280" y="41" text-anchor="middle" font-size="13" font-weight="500" fill="#085041">início</text>
+
+  <!-- Box 1: binarizar -->
+  <rect x="150" y="74" width="260" height="46" rx="6" fill="#E1F5EE" stroke="#9FE1CB" stroke-width="1"/>
+  <text x="280" y="92" text-anchor="middle" font-size="12" font-weight="500" fill="#0F6E56">binarizar entrada</text>
+  <text x="280" y="109" text-anchor="middle" font-size="12" fill="#085041">img ← (f &gt; 0).astype('uint8')</text>
+
+  <!-- Box 2: acumulador -->
+  <rect x="150" y="138" width="260" height="46" rx="6" fill="#E1F5EE" stroke="#9FE1CB" stroke-width="1"/>
+  <text x="280" y="156" text-anchor="middle" font-size="12" font-weight="500" fill="#0F6E56">criar acumulador</text>
+  <text x="280" y="173" text-anchor="middle" font-size="12" fill="#085041">D ← zeros_like(f, 'uint16')</text>
+
+  <!-- Diamond: any(img)? -->
+  <polygon points="280,208 390,238 280,268 170,238" fill="#FAECE7" stroke="#F0997B" stroke-width="1"/>
+  <text x="280" y="234" text-anchor="middle" font-size="12" fill="#712B13">any(img)</text>
+  <text x="280" y="250" text-anchor="middle" font-size="12" fill="#712B13">verdadeiro?</text>
+
+  <!-- não → retorno -->
+  <line x1="390" y1="238" x2="448" y2="238" stroke="#0F6E56" stroke-width="1.2" marker-end="url(#arr-g)"/>
+  <text x="416" y="231" text-anchor="middle" font-size="11" fill="#0F6E56">não</text>
+
+  <rect x="448" y="218" width="92" height="40" rx="6" fill="#EAF3DE" stroke="#97C459" stroke-width="1"/>
+  <text x="494" y="234" text-anchor="middle" font-size="11.5" font-weight="500" fill="#27500A">retornar D</text>
+  <text x="494" y="249" text-anchor="middle" font-size="10.5" fill="#3B6D11">uint8 / uint16</text>
+
+  <!-- END -->
+  <ellipse cx="494" cy="298" rx="46" ry="20" fill="#EAF3DE" stroke="#97C459" stroke-width="1"/>
+  <text x="494" y="303" text-anchor="middle" font-size="13" font-weight="500" fill="#27500A">fim</text>
+  <line x1="494" y1="258" x2="494" y2="278" stroke="#888780" stroke-width="1.2" marker-end="url(#arr)"/>
+
+  <!-- sim ↓ -->
+  <line x1="280" y1="268" x2="280" y2="288" stroke="#993C1D" stroke-width="1.2" marker-end="url(#arr-r)"/>
+  <text x="292" y="283" font-size="11" fill="#993C1D">sim</text>
+
+  <!-- Box: acumular -->
+  <rect x="150" y="288" width="260" height="46" rx="6" fill="#FAECE7" stroke="#F0997B" stroke-width="1"/>
+  <text x="280" y="306" text-anchor="middle" font-size="12" font-weight="500" fill="#993C1D">acumular presença</text>
+  <text x="280" y="323" text-anchor="middle" font-size="12" fill="#712B13">D ← D + img</text>
+
+  <!-- Arrow -->
+  <line x1="280" y1="334" x2="280" y2="352" stroke="#888780" stroke-width="1.2" marker-end="url(#arr)"/>
+
+  <!-- Box: erodir -->
+  <rect x="150" y="352" width="260" height="46" rx="6" fill="#FAEEDA" stroke="#FAC775" stroke-width="1"/>
+  <text x="280" y="370" text-anchor="middle" font-size="12" font-weight="500" fill="#854F0B">erodir com elemento b</text>
+  <text x="280" y="387" text-anchor="middle" font-size="12" fill="#633806">img ← erode(img, b)</text>
+
+  <!-- volta para diamond -->
+  <line x1="280" y1="398" x2="280" y2="420" stroke="#888780" stroke-width="1.2"/>
+  <line x1="280" y1="420" x2="100" y2="420" stroke="#888780" stroke-width="1.2"/>
+  <line x1="100" y1="420" x2="100" y2="238" stroke="#888780" stroke-width="1.2"/>
+  <line x1="100" y1="238" x2="170" y2="238" stroke="#888780" stroke-width="1.2" marker-end="url(#arr)"/>
+
+  <!-- Arrows top -->
+  <line x1="280" y1="58" x2="280" y2="74" stroke="#888780" stroke-width="1.2" marker-end="url(#arr)"/>
+  <line x1="280" y1="120" x2="280" y2="138" stroke="#888780" stroke-width="1.2" marker-end="url(#arr)"/>
+  <line x1="280" y1="184" x2="280" y2="208" stroke="#888780" stroke-width="1.2" marker-end="url(#arr)"/>
+
+  <!-- Legenda métricas -->
+  <rect x="60" y="450" width="440" height="110" rx="6" fill="none" stroke="var(--color-border-secondary,#ccc)" stroke-width="0.5" stroke-dasharray="4,3"/>
+  <text x="80" y="468" font-size="10" font-weight="500" fill="#888780" letter-spacing="0.06em">MÉTRICA INDUZIDA POR b</text>
+
+  <rect x="76" y="478" width="114" height="68" rx="4" fill="#E6F1FB" stroke="#85B7EB" stroke-width="0.5"/>
+  <text x="133" y="494" text-anchor="middle" font-size="11" font-weight="500" fill="#0C447C">Cruz — L₁</text>
+  <text x="133" y="508" text-anchor="middle" font-size="10" fill="#185FA5">secross()</text>
+  <text x="133" y="522" text-anchor="middle" font-size="10" fill="#185FA5">d = |Δx| + |Δy|</text>
+  <text x="133" y="536" text-anchor="middle" font-size="10" fill="#185FA5">4 vizinhos</text>
+
+  <rect x="203" y="478" width="154" height="68" rx="4" fill="#FAEEDA" stroke="#FAC775" stroke-width="0.5"/>
+  <text x="280" y="494" text-anchor="middle" font-size="11" font-weight="500" fill="#633806">Quadrado — L∞</text>
+  <text x="280" y="508" text-anchor="middle" font-size="10" fill="#854F0B">sebox()</text>
+  <text x="280" y="522" text-anchor="middle" font-size="10" fill="#854F0B">d = max(|Δx|, |Δy|)</text>
+  <text x="280" y="536" text-anchor="middle" font-size="10" fill="#854F0B">8 vizinhos</text>
+
+  <rect x="370" y="478" width="114" height="68" rx="4" fill="#E1F5EE" stroke="#9FE1CB" stroke-width="0.5"/>
+  <text x="427" y="494" text-anchor="middle" font-size="11" font-weight="500" fill="#085041">Disco — L₂</text>
+  <text x="427" y="508" text-anchor="middle" font-size="10" fill="#0F6E56">cv2.distanceTransform</text>
+  <text x="427" y="522" text-anchor="middle" font-size="10" fill="#0F6E56">d = √(Δx²+Δy²)</text>
+  <text x="427" y="536" text-anchor="middle" font-size="10" fill="#0F6E56">exata / otimizada</text>
+
+  <!-- nota iterações -->
+  <text x="280" y="582" text-anchor="middle" font-size="11" fill="#888780">Nº de iterações = max(D) = raio do maior objeto na métrica de b</text>
+  <text x="280" y="598" text-anchor="middle" font-size="11" fill="#888780">Máximos locais de D → centros geométricos (marcadores watershed)</text>
+</svg>
+</div>
+
+<script>
+function show(i){
+  document.querySelectorAll('.panel').forEach((p,j)=>p.classList.toggle('active',i===j));
+  document.querySelectorAll('.tab').forEach((t,j)=>t.classList.toggle('active',i===j));
+}
+</script>
