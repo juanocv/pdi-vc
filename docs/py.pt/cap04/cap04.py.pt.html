@@ -716,25 +716,25 @@ Figura&nbsp;4.3: Elemento estruturante em formato de cruz (<span class="math inl
 0 1 0 
 
 Imagem original f:
-1 8 1 4 0 
-8 5 3 2 2 
-5 7 1 8 3 
-1 9 7 5 5 
-2 0 4 0 1 
+2 4 4 8 9 
+9 4 3 2 2 
+0 5 2 1 7 
+7 6 8 2 0 
+9 7 6 7 7 
 
 Erosão Plana Didática (ero0):
-1 1 1 0 0 
-1 3 1 2 0 
-1 1 1 1 2 
-1 0 1 0 1 
-0 0 0 0 0 
+2 2 3 2 2 
+0 3 2 1 2 
+0 0 1 1 0 
+0 5 2 0 0 
+7 6 6 2 0 
 
 Erosão Otimizada OpenCV (ero):
-1 1 1 0 0 
-1 3 1 2 0 
-1 1 1 1 2 
-1 0 1 0 1 
-0 0 0 0 0 
+2 2 3 2 2 
+0 3 2 1 2 
+0 0 1 1 0 
+0 5 2 0 0 
+7 6 6 2 0 
 </code></pre>
 </div>
 </div>
@@ -801,25 +801,25 @@ A \oplus \mathbb{B} = \{\, z \in \mathbb{E} \mid \hat{\mathbb{B}}_z \cap A \neq 
 0 1 0 
 
 Imagem original f:
-8 7 4 9 1 
-4 6 3 4 8 
-7 2 5 5 6 
-4 8 8 5 0 
-8 5 1 5 7 
+1 7 1 2 0 
+6 0 8 8 1 
+0 0 4 8 7 
+8 3 1 2 1 
+1 6 3 4 3 
 
 Dilatação Plana Didática (dil0):
-8 8 9 9 9 
-8 7 6 9 8 
-7 8 8 6 8 
-8 8 8 8 7 
-8 8 8 7 7 
+7 7 8 8 2 
+6 8 8 8 8 
+8 4 8 8 8 
+8 8 4 8 7 
+8 6 6 4 4 
 
 Dilatação Otimizada OpenCV (dil):
-8 8 9 9 9 
-8 7 6 9 8 
-7 8 8 6 8 
-8 8 8 8 7 
-8 8 8 7 7 
+7 7 8 8 2 
+6 8 8 8 8 
+8 4 8 8 8 
+8 8 4 8 7 
+8 6 6 4 4 
 </code></pre>
 </div>
 </div>
@@ -968,7 +968,7 @@ Figura&nbsp;4.4: Erosão e dilatação em imagem binária 10×10 com elemento es
 </div>
 </div>
 <div id="cell-fig-04-erosao" class="cell">
-<div id="fig-04-erosao" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="155">
+<div id="fig-04-erosao" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="8">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-04-erosao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 
@@ -1481,100 +1481,40 @@ Figura&nbsp;4.6: Abertura, fechamento, composição e filtro sequencial alternad
 </section>
 <section id="operadores-geodésicos" class="level3" data-number="4.3.3">
 <h3 data-number="4.3.3" class="anchored" data-anchor-id="operadores-geodésicos"><span class="header-section-number">4.3.3</span> Operadores Geodésicos</h3>
-<p>Os operadores geodésicos introduzem uma restrição adicional aos operadores morfológicos clássicos por meio de uma imagem de controle denominada <strong>máscara</strong> <span class="math inline">\(g\)</span>. Em vez de permitir que a erosão ou a dilatação se propaguem livremente pela imagem, cada iteração é limitada ponto a ponto pelos valores da máscara, restringindo a evolução da operação às regiões permitidas.</p>
+<p>Os operadores geodésicos introduzem uma restrição adicional aos operadores morfológicos clássicos por meio de uma imagem de controle denominada <strong>máscara</strong> (g). Em vez de permitir que a erosão ou a dilatação se propaguem livremente pela imagem, o resultado de cada iteração é limitado ponto a ponto pelos valores da máscara, restringindo a evolução da operação às regiões permitidas.</p>
 <section id="dilatação-geodésica" class="level4" data-number="4.3.3.1">
 <h4 data-number="4.3.3.1" class="anchored" data-anchor-id="dilatação-geodésica"><span class="header-section-number">4.3.3.1</span> Dilatação Geodésica</h4>
-<p>A <strong>dilatação geodésica</strong> de uma imagem marcador <span class="math inline">\(f\)</span> sob uma imagem máscara <span class="math inline">\(g\)</span>, utilizando um elemento estruturante plano <span class="math inline">\(b\)</span>, é definida por:</p>
+<p>A <strong>dilatação geodésica</strong> de uma imagem marcador (f) sob uma imagem máscara (g), utilizando um elemento estruturante plano (b), é definida por:</p>
 <p><span class="math display">\[
 f \oplus_g b = (f \oplus b) \wedge g,
 \]</span></p>
-<p>onde <span class="math inline">\(\wedge\)</span> representa o mínimo ponto a ponto.</p>
-<p>Em outras palavras, realiza-se inicialmente uma dilatação convencional sobre o marcador e, em seguida, o resultado é restringido pela máscara <span class="math inline">\(g\)</span>. Dessa forma, a propagação nunca pode ultrapassar as regiões permitidas pela máscara.</p>
+<p>onde () representa o mínimo ponto a ponto.</p>
+<p>Em outras palavras, realiza-se inicialmente uma dilatação convencional sobre o marcador e, em seguida, o resultado é restringido pela máscara (g). Dessa forma, a propagação nunca pode ultrapassar as regiões permitidas pela máscara.</p>
+<p>A formulação clássica da dilatação geodésica pressupõe que o marcador esteja contido na máscara, isto é,</p>
+<p><span class="math display">\[
+f \le g,
+\]</span></p>
+<p>garantindo que a evolução da operação permaneça sempre limitada pela máscara.</p>
 </section>
 <section id="implementação-da-dilatação-geodésica" class="level4" data-number="4.3.3.2">
 <h4 data-number="4.3.3.2" class="anchored" data-anchor-id="implementação-da-dilatação-geodésica"><span class="header-section-number">4.3.3.2</span> Implementação da dilatação geodésica</h4>
 <p>A função <code>mm.cdil</code> implementa diretamente esse operador e permite executar múltiplas iterações consecutivas:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="at">@staticmethod</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cdil(f, g, b<span class="op">=</span>np.zeros((<span class="dv">3</span>,<span class="dv">3</span>),dtype<span class="op">=</span><span class="st">'uint8'</span>), n<span class="op">=</span><span class="dv">1</span>):</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Dilatação condicional de g com mínimo f, n vezes."""</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> np.minimum(f, g)</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(n):</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>        y <span class="op">=</span> np.minimum(cv2.dilate(y, b), g)</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> y</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cdil(f, g, b<span class="op">=</span>np.zeros((<span class="dv">3</span>,<span class="dv">3</span>),dtype<span class="op">=</span><span class="st">'uint8'</span>), n<span class="op">=</span><span class="dv">1</span>):</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Dilatação geodésica do marcador f sob a máscara g."""</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> f.copy()</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(n):</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>        y <span class="op">=</span> np.minimum(cv2.dilate(y, b), g)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> y</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <p>A instrução</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>np.minimum(cv2.dilate(y, b), g)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <p>implementa exatamente a definição matemática da dilatação geodésica, isto é,</p>
 <p><span class="math display">\[
 (y \oplus b)\wedge g.
 \]</span></p>
-<p>A inicialização</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> np.minimum(f, g)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<p>garante que o marcador inicial esteja contido na máscara, condição necessária para a reconstrução geodésica.</p>
-<p>Quando <span class="math inline">\(n=1\)</span>, a função executa uma única dilatação geodésica. Para <span class="math inline">\(n&gt;1\)</span>, o resultado de cada etapa torna-se o marcador da etapa seguinte, produzindo uma propagação progressiva controlada pela máscara.</p>
-</section>
-<section id="exemplo-propagação-em-um-labirinto" class="level4" data-number="4.3.3.3">
-<h4 data-number="4.3.3.3" class="anchored" data-anchor-id="exemplo-propagação-em-um-labirinto"><span class="header-section-number">4.3.3.3</span> Exemplo: propagação em um labirinto</h4>
-<p>A <a href="#fig-04-cdil-labirinto" class="quarto-xref">Figura&nbsp;<span>4.7</span></a> ilustra a aplicação de <code>mm.cdil</code> em um labirinto binário. A máscara <span class="math inline">\(g\)</span> representa os corredores permitidos (valor 1) e as paredes (valor 0), enquanto o marcador <span class="math inline">\(f\)</span> consiste em uma única semente posicionada na entrada do labirinto.</p>
-<p>Utilizando o elemento estruturante em cruz (<code>mm.secross()</code>), a propagação ocorre apenas pelos quatro vizinhos ortogonais (conectividade-4). A cada iteração, a frente de dilatação avança uma célula ao longo dos corredores acessíveis, permanecendo bloqueada pelas paredes impostas pela máscara.</p>
-<p>As imagens intermediárias mostram o estado da propagação após diferentes números de iterações (<code>n=5</code>, <code>n=12</code> e <code>n=22</code>). Já a imagem final é obtida por <code>mm.infrec</code>, que continua aplicando dilatações geodésicas até atingir um ponto fixo. Nesse instante, todos os pixels da máscara conectados à semente inicial foram reconstruídos.</p>
-<p>Esse exemplo evidencia a principal característica dos operadores geodésicos: a propagação depende simultaneamente da conectividade definida pelo elemento estruturante e das restrições espaciais impostas pela máscara.</p>
-<div id="cell-fig-04-cdil-labirinto" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Máscara g: Labirinto 10x10 com caminho único. </span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Entrada aberta em (0,1) e Saída aberta em (9,8). 0 = Parede, 1 = Corredor.</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>g <span class="op">=</span> np.array([</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>],</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>],</span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>],</span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>],</span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>],</span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>]], dtype<span class="op">=</span>np.uint8)</span>
-<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Marcador f: Semente injetada exatamente na abertura da entrada (linha 0, coluna 1)</span></span>
-<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> np.zeros((<span class="dv">10</span>, <span class="dv">10</span>), dtype<span class="op">=</span>np.uint8)</span>
-<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>f[<span class="dv">0</span>, <span class="dv">1</span>] <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Usamos o elemento em cruz para garantir movimentos estritamente ortogonais (Manhattan)</span></span>
-<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>B_cruz <span class="op">=</span> mm.secross()</span>
-<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Captura de estágios estratégicos do avanço geodésico pelos corredores</span></span>
-<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>passo_5  <span class="op">=</span> mm.cdil(f, g, B_cruz, n<span class="op">=</span><span class="dv">5</span>)   <span class="co"># Primeiras curvas no topo</span></span>
-<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>passo_12 <span class="op">=</span> mm.cdil(f, g, B_cruz, n<span class="op">=</span><span class="dv">12</span>)  <span class="co"># Navegando pelo miolo central</span></span>
-<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a>passo_22 <span class="op">=</span> mm.cdil(f, g, B_cruz, n<span class="op">=</span><span class="dv">22</span>)  <span class="co"># Aproximando-se da reta final</span></span>
-<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a>ponto_fixo <span class="op">=</span> mm.infrec(f, g, B_cruz)    <span class="co"># Inundação completa (estabilidade)</span></span>
-<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Exibição unificada e elegante do pipeline de busca de caminho</span></span>
-<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a>mm.show(</span>
-<span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a>    [g, f, passo_5, passo_12, passo_22, ponto_fixo],</span>
-<span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a>    titles<span class="op">=</span>[</span>
-<span id="cb19-34"><a href="#cb19-34" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Máscara (g)"</span>, <span class="st">"Marcador (f)"</span>, </span>
-<span id="cb19-35"><a href="#cb19-35" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Avanço (n=5)"</span>, <span class="st">"Avanço (n=12)"</span>, </span>
-<span id="cb19-36"><a href="#cb19-36" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Avanço (n=22)"</span>, <span class="st">"Saída Alcançada"</span></span>
-<span id="cb19-37"><a href="#cb19-37" aria-hidden="true" tabindex="-1"></a>    ],</span>
-<span id="cb19-38"><a href="#cb19-38" aria-hidden="true" tabindex="-1"></a>    cols<span class="op">=</span><span class="dv">6</span>,</span>
-<span id="cb19-39"><a href="#cb19-39" aria-hidden="true" tabindex="-1"></a>    figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="fl">3.5</span>)</span>
-<span id="cb19-40"><a href="#cb19-40" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display">
-<div id="fig-04-cdil-labirinto" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-04-cdil-labirinto-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="cap04.py.pt_files/figure-html/fig-04-cdil-labirinto-output-1.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-04-cdil-labirinto-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;4.7: Resolução de labirinto via Dilatação Geodésica: O marcador (f) é injetado na entrada superior esquerda e a frente de onda propaga-se estritamente pelos caminhos permitidos pela máscara (g) até encontrar a saída na base direita.
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<p>O simulador interativo <a href="#fig-04-cdil-simulador" class="quarto-xref">Figura&nbsp;<span>4.8</span></a> permite acompanhar, passo a passo, a propagação do marcador <span class="math inline">\(f\)</span> ao longo dos corredores do labirinto. A cada iteração de <code>mm.cdil</code>, a frente de dilatação avança para as células vizinhas livres — aquelas em que <span class="math inline">\(g = 1\)</span> —, enquanto as paredes (<span class="math inline">\(g = 0\)</span>) permanecem intransponíveis. O número de passos necessários para que o marcador alcance a saída corresponde exatamente ao comprimento geodésico do caminho mais curto dentro da máscara, evidenciando a conexão direta entre a dilatação geodésica iterada e a noção de distância em grafos.</p>
+<p>Quando (n=1), a função executa uma única dilatação geodésica. Para (n&gt;1), o resultado de cada etapa torna-se o marcador da etapa seguinte, produzindo uma propagação progressiva controlada pela máscara.</p>
+<p>O simulador interativo <a href="#fig-04-cdil-simulador" class="quarto-xref">Figura&nbsp;<span>4.7</span></a> permite acompanhar, passo a passo, a propagação do marcador <span class="math inline">\(f\)</span> ao longo dos corredores do labirinto. A cada iteração de <code>mm.cdil</code>, a frente de dilatação avança para as células vizinhas livres — aquelas em que <span class="math inline">\(g = 1\)</span> —, enquanto as paredes (<span class="math inline">\(g = 0\)</span>) permanecem intransponíveis. O número de passos necessários para que o marcador alcance a saída corresponde exatamente ao comprimento geodésico do caminho mais curto dentro da máscara, evidenciando a conexão direta entre a dilatação geodésica iterada e a noção de distância em grafos.</p>
 <div id="cell-fig-04-cdil-simulador" class="cell">
-<div id="fig-04-cdil-simulador" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="158">
+<div id="fig-04-cdil-simulador" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="10">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-04-cdil-simulador-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 
@@ -1788,30 +1728,43 @@ draw();
 
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-04-cdil-simulador-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;4.8: Simulador interativo de dilatação geodésica: o marcador <span class="math inline">\(f\)</span> (verde) propaga-se passo a passo pelos caminhos livres da máscara <span class="math inline">\(g\)</span>, sem atravessar paredes — ilustrando como <span class="math inline">\(\delta_g^{(n)}(f)\)</span> encontra a saída do labirinto.
+Figura&nbsp;4.7: Simulador interativo de dilatação geodésica: o marcador <span class="math inline">\(f\)</span> (verde) propaga-se passo a passo pelos caminhos livres da máscara <span class="math inline">\(g\)</span>, sem atravessar paredes — ilustrando como <span class="math inline">\(\delta_g^{(n)}(f)\)</span> encontra a saída do labirinto.
 </figcaption>
 </figure>
 </div>
 </div>
 </section>
-<section id="erosão-geodésica" class="level4" data-number="4.3.3.4">
-<h4 data-number="4.3.3.4" class="anchored" data-anchor-id="erosão-geodésica"><span class="header-section-number">4.3.3.4</span> Erosão Geodésica</h4>
-<p>De forma dual, a <strong>erosão geodésica</strong> de uma imagem marcador <span class="math inline">\(f\)</span> sob uma imagem máscara <span class="math inline">\(g\)</span> é definida por:</p>
-<p><span class="math display">\[f \ominus_g b = (f \ominus b) \vee g,\]</span></p>
-<p>onde <span class="math inline">\(\vee\)</span> representa o operador de máximo ponto a ponto.</p>
-<p>Nesse caso, a erosão convencional do marcador é seguida por uma restrição inferior imposta pela máscara: o resultado nunca pode recuar abaixo do piso estabelecido por <span class="math inline">\(g\)</span>.</p>
+<section id="erosão-geodésica" class="level4" data-number="4.3.3.3">
+<h4 data-number="4.3.3.3" class="anchored" data-anchor-id="erosão-geodésica"><span class="header-section-number">4.3.3.3</span> Erosão Geodésica</h4>
+<p>De forma dual, a <strong>erosão geodésica</strong> de uma imagem marcador (f) sob uma imagem máscara (g) é definida por:</p>
+<p><span class="math display">\[
+f \ominus_g b = (f \ominus b) \vee g,
+\]</span></p>
+<p>onde () representa o operador de máximo ponto a ponto.</p>
+<p>Nesse caso, a erosão convencional do marcador é seguida por uma restrição inferior imposta pela máscara. Assim, nenhum pixel do resultado pode assumir valor inferior ao correspondente pixel da máscara.</p>
+<p>A formulação clássica da erosão geodésica pressupõe a condição dual</p>
+<p><span class="math display">\[
+f \ge g,
+\]</span></p>
+<p>de modo que a máscara atue como limite inferior durante todo o processo.</p>
 </section>
-<section id="implementação-da-erosão-geodésica" class="level4" data-number="4.3.3.5">
-<h4 data-number="4.3.3.5" class="anchored" data-anchor-id="implementação-da-erosão-geodésica"><span class="header-section-number">4.3.3.5</span> Implementação da erosão geodésica</h4>
+<section id="implementação-da-erosão-geodésica" class="level4" data-number="4.3.3.4">
+<h4 data-number="4.3.3.4" class="anchored" data-anchor-id="implementação-da-erosão-geodésica"><span class="header-section-number">4.3.3.4</span> Implementação da erosão geodésica</h4>
 <p>A função estática <code>mm.cero</code> materializa esse operador:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="at">@staticmethod</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cero(f, g, b<span class="op">=</span>np.zeros((<span class="dv">3</span>,<span class="dv">3</span>),dtype<span class="op">=</span><span class="st">'uint8'</span>), n<span class="op">=</span><span class="dv">1</span>):</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Erosão condicional (geodésica) de f sob a máscara g."""</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> np.maximum(f, g)</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(n):</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>        y <span class="op">=</span> np.maximum(cv2.erode(y, b), g)</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> y</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Assim como na dilatação condicional, o parâmetro <span class="math inline">\(n\)</span> define quantas erosões geodésicas em cascata serão computadas antes de retornar a matriz final.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="at">@staticmethod</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cero(f, g, b<span class="op">=</span>np.zeros((<span class="dv">3</span>,<span class="dv">3</span>),dtype<span class="op">=</span><span class="st">'uint8'</span>), n<span class="op">=</span><span class="dv">1</span>):</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Erosão geodésica do marcador f sob a máscara g."""</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> f.copy()</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(n):</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>        y <span class="op">=</span> np.maximum(cv2.erode(y, b), g)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> y</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p>A instrução</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>np.maximum(cv2.erode(y, b), g)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p>implementa diretamente a expressão</p>
+<p><span class="math display">\[
+(y \ominus b)\vee g.
+\]</span></p>
+<p>Assim como na dilatação geodésica, o parâmetro (n) define quantas erosões geodésicas sucessivas serão computadas antes de retornar a imagem final.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1822,8 +1775,107 @@ Figura&nbsp;4.8: Simulador interativo de dilatação geodésica: o marcador <spa
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>A reconstrução morfológica apresentada na próxima seção é obtida pela aplicação iterativa da dilatação geodésica (<code>mm.cdil</code>) até que um ponto fixo seja alcançado — isto é, até que nenhuma célula mude de valor entre dois passos consecutivos. Em outras palavras, a reconstrução nada mais é do que uma sequência de dilatações geodésicas sucessivas que se propagam dentro da máscara até não haver mais alterações.</p>
-<p>De forma dual, também é possível definir reconstruções baseadas em erosão geodésica a partir de aplicações sucessivas de <code>mm.cero</code>.</p>
+<p>A reconstrução morfológica apresentada na próxima seção é obtida pela aplicação iterativa da dilatação geodésica (<code>mm.cdil</code>) até que um ponto fixo seja alcançado, isto é, até que nenhuma célula mude de valor entre duas iterações consecutivas. Em outras palavras, a reconstrução consiste em uma sequência de dilatações geodésicas sucessivas que se propagam dentro da máscara até não haver mais alterações.</p>
+<p>De forma dual, também é possível definir reconstruções baseadas em erosão geodésica por meio de aplicações sucessivas de <code>mm.cero</code>.</p>
+</div>
+</div>
+</section>
+<section id="exemplo-propagação-em-um-labirinto-via-dualidade" class="level4" data-number="4.3.3.5">
+<h4 data-number="4.3.3.5" class="anchored" data-anchor-id="exemplo-propagação-em-um-labirinto-via-dualidade"><span class="header-section-number">4.3.3.5</span> Exemplo: propagação em um labirinto via dualidade</h4>
+<p>A <a href="#fig-04-cero-labirinto" class="quarto-xref">Figura&nbsp;<span>4.8</span></a> ilustra a resolução do problema de conectividade de um labirinto utilizando a dualidade morfológica por meio das funções <code>mm.cero</code> e <code>mm.suprec</code>.</p>
+<p>Em vez de propagar um marcador pelos corredores livres através de dilatações geodésicas, o problema é formulado no domínio complementar. Inicialmente, a máscara original é invertida,</p>
+<p><span class="math display">\[
+g = 1 - g_{orig},
+\]</span></p>
+<p>fazendo com que as paredes passem a assumir valor 1 e os corredores valor 0. De forma análoga, o marcador é construído nesse mesmo domínio complementar, contendo um único valor 0 na posição de entrada do labirinto e valor 1 nos demais pixels.</p>
+<p>Utilizando o elemento estruturante em cruz (<code>mm.secross()</code>), a erosão geodésica atua sobre o marcador complementado. A cada iteração de <code>mm.cero</code>, a região conectada ao marcador inicial sofre erosões sucessivas, enquanto a máscara impõe um limite inferior que impede a propagação através das paredes do labirinto.</p>
+<p>As imagens intermediárias mostram estados da evolução após diferentes números de iterações (<code>n=5</code>, <code>n=12</code> e <code>n=22</code>). O resultado final é obtido pela reconstrução geodésica por erosão (<code>mm.suprec</code>), que aplica erosões geodésicas sucessivas até atingir um ponto fixo, isto é, uma situação em que nenhuma alteração adicional ocorre entre duas iterações consecutivas.</p>
+<p>No domínio complementar, a região reconstruída corresponde exatamente ao conjunto de corredores conectados à entrada do labirinto. Assim, a conectividade entre entrada e saída pode ser determinada diretamente a partir da imagem reconstruída.</p>
+<div id="cell-fig-04-cero-labirinto" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.colors <span class="im">as</span> mcolors</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Máscara original g (0 = Parede, 1 = Corredor)</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>g_orig <span class="op">=</span> np.array([</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>],</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>],</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>],</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>],</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>],</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>],</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>],</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>],</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>]], dtype<span class="op">=</span>np.uint8)</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Inversão global no início (Dualidade Morfológica)</span></span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>g <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> g_orig  <span class="co"># Agora: 1 = Parede, 0 = Corredor</span></span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> np.ones((<span class="dv">10</span>, <span class="dv">10</span>), dtype<span class="op">=</span>np.uint8)</span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>f[<span class="dv">0</span>, <span class="dv">1</span>] <span class="op">=</span> <span class="dv">0</span>     <span class="co"># Semente injetada como 0 no corredor</span></span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Elemento estruturante em cruz</span></span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>B_cruz <span class="op">=</span> mm.secross()</span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Processamento direto usando mm.cero e mm.suprec no domínio invertido</span></span>
+<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a>passo_5    <span class="op">=</span> mm.cero(f, g, B_cruz, n<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a>passo_12   <span class="op">=</span> mm.cero(f, g, B_cruz, n<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a>passo_22   <span class="op">=</span> mm.cero(f, g, B_cruz, n<span class="op">=</span><span class="dv">22</span>)</span>
+<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a>ponto_fixo <span class="op">=</span> mm.suprec(f, g, B_cruz)</span>
+<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a><span class="co"># --- CONFIGURAÇÃO DA EXIBIÇÃO GRÁFICA ---</span></span>
+<span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a>titles <span class="op">=</span> [</span>
+<span id="cb20-35"><a href="#cb20-35" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Máscara (~g)"</span>, <span class="st">"Marcador (~f)"</span>, </span>
+<span id="cb20-36"><a href="#cb20-36" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Avanço (n=5)"</span>, <span class="st">"Avanço (n=12)"</span>, </span>
+<span id="cb20-37"><a href="#cb20-37" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Avanço (n=22)"</span>, <span class="st">"~mm.suprec"</span></span>
+<span id="cb20-38"><a href="#cb20-38" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb20-39"><a href="#cb20-39" aria-hidden="true" tabindex="-1"></a>images <span class="op">=</span> [g, f, passo_5, passo_12, passo_22, ponto_fixo]</span>
+<span id="cb20-40"><a href="#cb20-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-41"><a href="#cb20-41" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">6</span>, figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">4</span>), facecolor<span class="op">=</span><span class="st">'#fcfcfc'</span>)</span>
+<span id="cb20-42"><a href="#cb20-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-43"><a href="#cb20-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Mapa de cores adaptado para o domínio complementar:</span></span>
+<span id="cb20-44"><a href="#cb20-44" aria-hidden="true" tabindex="-1"></a><span class="co"># No domínio invertido: 1 = Parede (Azul Escuro)</span></span>
+<span id="cb20-45"><a href="#cb20-45" aria-hidden="true" tabindex="-1"></a><span class="co"># Onde g == 0 e imagem == 1 = Corredor Livre (Cinza Claro)</span></span>
+<span id="cb20-46"><a href="#cb20-46" aria-hidden="true" tabindex="-1"></a><span class="co"># Onde g == 0 e imagem == 0 = Onda Geodésica Ativa (Ouro)</span></span>
+<span id="cb20-47"><a href="#cb20-47" aria-hidden="true" tabindex="-1"></a>cmap_pipeline <span class="op">=</span> mcolors.ListedColormap([<span class="st">'#ffc13b'</span>, <span class="st">'#e0e0e0'</span>, <span class="st">'#1e3d59'</span>])</span>
+<span id="cb20-48"><a href="#cb20-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-49"><a href="#cb20-49" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, ax <span class="kw">in</span> <span class="bu">enumerate</span>(axes):</span>
+<span id="cb20-50"><a href="#cb20-50" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> i <span class="op">==</span> <span class="dv">0</span> <span class="kw">or</span> i <span class="op">==</span> <span class="dv">1</span>:</span>
+<span id="cb20-51"><a href="#cb20-51" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Para as condições iniciais (~g e ~f)</span></span>
+<span id="cb20-52"><a href="#cb20-52" aria-hidden="true" tabindex="-1"></a>        cmap_init <span class="op">=</span> mcolors.ListedColormap([<span class="st">'#e0e0e0'</span>, <span class="st">'#1e3d59'</span>])</span>
+<span id="cb20-53"><a href="#cb20-53" aria-hidden="true" tabindex="-1"></a>        ax.imshow(images[i], cmap<span class="op">=</span>cmap_init, vmin<span class="op">=</span><span class="dv">0</span>, vmax<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb20-54"><a href="#cb20-54" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb20-55"><a href="#cb20-55" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Renderização baseada nos estados complementares</span></span>
+<span id="cb20-56"><a href="#cb20-56" aria-hidden="true" tabindex="-1"></a>        render_step <span class="op">=</span> np.zeros_like(g, dtype<span class="op">=</span>np.uint8)</span>
+<span id="cb20-57"><a href="#cb20-57" aria-hidden="true" tabindex="-1"></a>        render_step[g <span class="op">==</span> <span class="dv">1</span>] <span class="op">=</span> <span class="dv">2</span>           <span class="co"># Parede (1 original do mapa de cores)</span></span>
+<span id="cb20-58"><a href="#cb20-58" aria-hidden="true" tabindex="-1"></a>        render_step[g <span class="op">==</span> <span class="dv">0</span>] <span class="op">=</span> <span class="dv">1</span>           <span class="co"># Corredor padrão</span></span>
+<span id="cb20-59"><a href="#cb20-59" aria-hidden="true" tabindex="-1"></a>        render_step[images[i] <span class="op">==</span> <span class="dv">0</span>] <span class="op">=</span> <span class="dv">0</span>   <span class="co"># Onda ativa (0 original do mapa de cores)</span></span>
+<span id="cb20-60"><a href="#cb20-60" aria-hidden="true" tabindex="-1"></a>        ax.imshow(render_step, cmap<span class="op">=</span>cmap_pipeline, vmin<span class="op">=</span><span class="dv">0</span>, vmax<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb20-61"><a href="#cb20-61" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb20-62"><a href="#cb20-62" aria-hidden="true" tabindex="-1"></a>    ax.set_title(titles[i], fontsize<span class="op">=</span><span class="dv">10</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'#1e3d59'</span>, pad<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb20-63"><a href="#cb20-63" aria-hidden="true" tabindex="-1"></a>    ax.set_xticks(np.arange(<span class="op">-</span><span class="fl">0.5</span>, <span class="dv">10</span>, <span class="dv">1</span>), minor<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb20-64"><a href="#cb20-64" aria-hidden="true" tabindex="-1"></a>    ax.set_yticks(np.arange(<span class="op">-</span><span class="fl">0.5</span>, <span class="dv">10</span>, <span class="dv">1</span>), minor<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb20-65"><a href="#cb20-65" aria-hidden="true" tabindex="-1"></a>    ax.grid(which<span class="op">=</span><span class="st">'minor'</span>, color<span class="op">=</span><span class="st">'#ffffff'</span>, linestyle<span class="op">=</span><span class="st">'-'</span>, linewidth<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb20-66"><a href="#cb20-66" aria-hidden="true" tabindex="-1"></a>    ax.tick_params(which<span class="op">=</span><span class="st">'both'</span>, bottom<span class="op">=</span><span class="va">False</span>, left<span class="op">=</span><span class="va">False</span>, labelbottom<span class="op">=</span><span class="va">False</span>, labelleft<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb20-67"><a href="#cb20-67" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb20-68"><a href="#cb20-68" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Indicadores gráficos de Entrada e Saída</span></span>
+<span id="cb20-69"><a href="#cb20-69" aria-hidden="true" tabindex="-1"></a>    ax.plot(<span class="dv">1</span>, <span class="dv">0</span>, marker<span class="op">=</span><span class="st">'v'</span>, color<span class="op">=</span><span class="st">'#2ecc71'</span>, markersize<span class="op">=</span><span class="dv">7</span>, markeredgewidth<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb20-70"><a href="#cb20-70" aria-hidden="true" tabindex="-1"></a>    ax.plot(<span class="dv">8</span>, <span class="dv">9</span>, marker<span class="op">=</span><span class="st">'o'</span>, color<span class="op">=</span><span class="st">'#e74c3c'</span>, markersize<span class="op">=</span><span class="dv">6</span>, fillstyle<span class="op">=</span><span class="st">'none'</span>, markeredgewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb20-71"><a href="#cb20-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-72"><a href="#cb20-72" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb20-73"><a href="#cb20-73" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="fig-04-cero-labirinto" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-04-cero-labirinto-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="cap04.py.pt_files/figure-html/fig-04-cero-labirinto-output-1.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-04-cero-labirinto-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4.8: Resolução de labirinto via Operações Complementares: Invertendo a máscara e o marcador no início do pipeline, o fluxo é resolvido diretamente no domínio complementar através de mm.cero e mm.suprec, eliminando re-inversões redundantes.
+</figcaption>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -2180,7 +2232,7 @@ Figura&nbsp;4.12: <em>Pipeline</em> completo de segmentação com CLAHE: Otsu �
 <p>O botão localizado no canto superior direito permite alternar entre a visualização original em tons de cinza e uma representação pseudocolorida (<em>colormap</em>). A versão colorida facilita a percepção visual das variações de intensidade, tornando mais evidente a ação dos operadores morfológicos sobre máximos, mínimos e transições locais da imagem.</p>
 <p>Os operadores apresentados estão disponíveis em <code>morph.py</code> por meio das funções <code>mm.gradm</code>, <code>mm.tophat</code> e <code>mm.blackhat</code>.</p>
 <div id="cell-fig-04-gradientes-avancado" class="cell">
-<div id="fig-04-gradientes-avancado" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="163">
+<div id="fig-04-gradientes-avancado" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="16">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-04-gradientes-avancado-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 
@@ -2730,7 +2782,7 @@ Tabela&nbsp;4.5: Taxonomia simplificada dos principais métodos de segmentação
 <p>O auxiliar <code>_viz</code> itera sobre a janela estruturante <code>b</code> centrada em <span class="math inline">\((i,j)\)</span>, gerando somente os vizinhos válidos dentro dos limites da imagem — a conectividade desejada é inteiramente determinada pela forma de <code>b</code> passada ao algoritmo.</p>
 <p><strong>Exemplo didático — efeito da conectividade:</strong></p>
 <div id="cell-fig-04-rotulacao" class="cell">
-<div id="fig-04-rotulacao" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="166">
+<div id="fig-04-rotulacao" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="19">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-04-rotulacao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 
@@ -3299,7 +3351,7 @@ D(x,y) = \min_{(x',y') \,:\, f(x',y')=0} \; d\bigl((x,y),\,(x',y')\bigr)
 <p>A <a href="#fig-04-distancia" class="quarto-xref">Figura&nbsp;<span>4.17</span></a> apresenta um simulador interativo da TD: dado um pixel do objeto, é possível mover o cursor sobre a imagem binária e observar, em tempo real, o valor da TD naquela posição — isto é, a distância ao pixel de fundo mais próximo. A <a href="#fig-04-distancia-didatico" class="quarto-xref">Figura&nbsp;<span>4.18</span></a> apresenta o exemplo prático dessa execução em ambiente Python.</p>
 <p><strong>Exemplo didático — TD iterativa vs.&nbsp;direta em imagem 10×10:</strong></p>
 <div id="cell-fig-04-distancia" class="cell">
-<div id="fig-04-distancia" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="168">
+<div id="fig-04-distancia" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="21">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-04-distancia-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 
@@ -4008,7 +4060,7 @@ Tabela&nbsp;4.6: Pipeline morfológico típico do <em>watershed</em> baseado em 
 </div>
 <p>A <a href="#fig-04-watershed" class="quarto-xref">Figura&nbsp;<span>4.19</span></a> apresenta um simulador iterativo que ilustra essa dinâmica: os marcadores comportam-se como fontes de inundação que se expandem progressivamente pela máscara correspondente à região incerta. Quando duas bacias tentam ocupar simultaneamente o mesmo pixel, esse ponto passa a ser classificado como fronteira (<code>-1</code>). A <a href="#fig-04-watershed-didatico" class="quarto-xref">Figura&nbsp;<span>4.20</span></a> apresenta um exemplo completo do algoritmo <em>watershed</em> em Python utilizando <code>morph.py</code>, enquanto a <a href="#fig-04-watershed-moedas" class="quarto-xref">Figura&nbsp;<span>4.21</span></a> ilustra sua aplicação na separação de moedas adjacentes em uma imagem binária.</p>
 <div id="cell-fig-04-watershed" class="cell">
-<div id="fig-04-watershed" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="18">
+<div id="fig-04-watershed" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="23">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-04-watershed-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 
@@ -5067,7 +5119,7 @@ Figura&nbsp;4.26: Segmentação * da imagem das moedas com k=2, 4 e 6 clusters. 
 <section id="download" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="download">Download</h4>
 <p>Baixe <code>morph.py</code> e <code>testsuite.py</code> executando a célula abaixo:</p>
-<div id="53407c3b" class="cell">
+<div id="e7cc5d6c" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os, sys, importlib, inspect, urllib.request</span>
 <span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="co"># URLs do repositório</span></span>
