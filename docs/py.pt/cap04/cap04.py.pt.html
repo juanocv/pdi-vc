@@ -889,15 +889,11 @@ Dilatação Otimizada OpenCV (dil):
 <div class="callout-body-container callout-body">
 <p>Erosão e dilatação são <strong>duais pelo complemento</strong>. Isso significa que um operador pode ser completamente obtido a partir do outro, desde que se atue sobre o complemento da imagem utilizando o elemento estruturante refletido <span class="math inline">\(\hat{B}\)</span>:</p>
 <p><span class="math display">\[
-(A \ominus B)^c = A^c \oplus \hat{B}
-\quad \Longleftrightarrow \quad
-A \ominus B = (A^c \oplus \hat{B})^c
+(A \ominus B)^c = A^c \oplus \hat{B} \quad \Longleftrightarrow \quad A \ominus B = (A^c \oplus \hat{B})^c
 \]</span></p>
 <p>De forma análoga, a <strong>dilatação também pode ser obtida a partir da erosão</strong>:</p>
 <p><span class="math display">\[
-(A \oplus B)^c = A^c \ominus \hat{B}
-\quad \Longleftrightarrow \quad
-A \oplus B = (A^c \ominus \hat{B})^c
+(A \oplus B)^c = A^c \ominus \hat{B} \quad \Longleftrightarrow \quad A \oplus B = (A^c \ominus \hat{B})^c
 \]</span></p>
 <p>Em termos práticos, a erosão de um objeto pode ser obtida pela dilatação de seu complemento, seguida da complementação do resultado (e vice-versa). Na implementação do pacote <code>morph.py</code>, as versões didáticas <code>mm.ero0</code> e <code>mm.dil0</code> tornam explícita essa estrutura por meio de laços (<em>loops</em>), enquanto <code>mm.ero</code> e <code>mm.dil</code> delegam as operações ao OpenCV visando maior eficiência computacional.</p>
 </div>
@@ -5765,7 +5761,7 @@ Figura&nbsp;4.26: <em>Bounding boxes</em> derivadas dos componentes conexos sobr
 <section id="download" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="download">Download</h4>
 <p>Baixe <code>morph.py</code> e <code>testsuite.py</code> executando a célula abaixo:</p>
-<div id="5244f4af" class="cell">
+<div id="e043f53d" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os, sys, importlib, inspect, urllib.request</span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="co"># URLs do repositório</span></span>
