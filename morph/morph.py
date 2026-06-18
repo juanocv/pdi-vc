@@ -835,23 +835,26 @@ class mm:
     @staticmethod
     def ero1(f, b=np.zeros((3,3),dtype='uint8')):
         """Erosão com pesos: mínimo de f[viz]-b."""
-        g = f.copy()
+        g = np.empty_like(f)
         for y in range(f.shape[0]):
             for x in range(f.shape[1]):
+                g[y,x] = 255
                 for vy,vx,bv in mm._viz(f,b,y,x):
-                    if g[y,x] > f[vy,vx]-bv: g[y,x] = f[vy,vx]-bv
+                    if g[y,x] > f[vy,vx]-bv: 
+                        g[y,x] = f[vy,vx]-bv
         return g
 
     @staticmethod
-    def ero1(f, b=np.zeros((3,3),dtype='uint8')):
+    def ero1_new(f, b=np.zeros((3,3),dtype='uint8')):
         """Erosão com pesos: mínimo de f[viz]-b."""
         g = np.empty_like(f)
         for y in range(f.shape[0]):
             for x in range(f.shape[1]):
-                g[y,x] = 255 
+                g[y,x] = 255
                 for vy,vx,bv in mm._viz(f,b,y,x):
-                    # Usamos np.clip ou max para garantir que a subtração de uint8 não estoure abaixo de 0
-                    val_sub = max(0, int(f[vy,vx]) - int(bv))
+                    if np.isneginf(bv): continue
+                    val_sub = int(f[vy,vx]) - int(bv)
+                    if val_sub < 0: val_sub = 0
                     if g[y,x] > val_sub: g[y,x] = val_sub
         return g
 
@@ -876,6 +879,20 @@ class mm:
     
     @staticmethod
     def dil1(f, b=np.zeros((3,3),dtype='uint8')):
+        """Dilatação com pesos: máximo de f[viz]+b."""
+        g = np.empty_like(f)
+        b = np.flip(b)
+        for y in range(f.shape[0]):
+            for x in range(f.shape[1]):
+                g[y,x] = 0
+                for vy,vx,bv in mm._viz(f,b,y,x):
+                    val_soma = int(f[vy,vx]) + int(bv)
+                    if g[y,x] < val_soma: 
+                        g[y,x] = val_soma
+        return g
+
+    @staticmethod
+    def dil1_new(f, b=np.zeros((3,3),dtype='uint8')):
         """Dilatação com pesos: máximo de f[viz]+b."""
         g = np.empty_like(f) 
         b = np.flip(b)
