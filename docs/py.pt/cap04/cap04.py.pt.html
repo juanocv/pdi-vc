@@ -716,25 +716,25 @@ Figura&nbsp;4.3: Elemento estruturante em formato de cruz (<span class="math inl
 0 1 0 
 
 Imagem original f:
-4 5 3 4 9 
-0 9 1 3 3 
-5 0 5 9 5 
-9 0 5 0 2 
-0 2 5 7 0 
+4 7 7 7 9 
+3 1 3 1 1 
+3 6 1 8 5 
+4 8 6 5 3 
+8 9 5 1 8 
 
 Erosão Plana Didática (ero0):
-0 3 1 3 3 
-0 0 1 1 3 
-0 0 0 0 2 
-0 0 0 0 0 
-0 0 2 0 0 
+3 1 3 1 1 
+1 1 1 1 1 
+3 1 1 1 1 
+3 4 1 1 3 
+4 5 1 1 1 
 
 Erosão Otimizada OpenCV (ero):
-0 3 1 3 3 
-0 0 1 1 3 
-0 0 0 0 2 
-0 0 0 0 0 
-0 0 2 0 0 
+3 1 3 1 1 
+1 1 1 1 1 
+3 1 1 1 1 
+3 4 1 1 3 
+4 5 1 1 1 
 </code></pre>
 </div>
 </div>
@@ -820,25 +820,25 @@ A \oplus \mathbb{B} = \{\, z \in \mathbb{E} \mid \hat{\mathbb{B}}_z \cap A \neq 
 0 1 0 
 
 Imagem original f:
-6 2 7 0 6 
-3 8 8 0 1 
-2 7 6 0 6 
-1 8 7 0 9 
-1 5 0 5 0 
+7 1 6 3 7 
+6 0 7 1 6 
+7 0 9 3 8 
+8 3 8 8 2 
+5 5 2 0 8 
 
 Dilatação Plana Didática (dil0):
-6 8 8 7 6 
-8 8 8 8 6 
-7 8 8 6 9 
-8 8 8 9 9 
-5 8 7 5 9 
+7 7 7 7 7 
+7 7 9 7 8 
+8 9 9 9 8 
+8 8 9 8 8 
+8 5 8 8 8 
 
 Dilatação Otimizada OpenCV (dil):
-6 8 8 7 6 
-8 8 8 8 6 
-7 8 8 6 9 
-8 8 8 9 9 
-5 8 7 5 9 
+7 7 7 7 7 
+7 7 9 7 8 
+8 9 9 9 8 
+8 8 9 8 8 
+8 5 8 8 8 
 </code></pre>
 </div>
 </div>
@@ -983,7 +983,7 @@ Figura&nbsp;4.4: Erosão e dilatação em imagem binária 10×10 com elemento es
 </div>
 </div>
 <div id="cell-fig-04-erosao" class="cell">
-<div id="fig-04-erosao" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="34">
+<div id="fig-04-erosao" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="15">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-04-erosao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 
@@ -1520,7 +1520,7 @@ f \oplus_g b = (f \oplus b) \wedge g,
 <p>Quando <span class="math inline">\(n=1\)</span>, a função executa uma única dilatação geodésica. Para <span class="math inline">\(n&gt;1\)</span>, o resultado de cada etapa torna-se o marcador da etapa seguinte, produzindo uma propagação progressiva controlada pela máscara.</p>
 <p>O simulador interativo <a href="#fig-04-cdil-simulador" class="quarto-xref">Figura&nbsp;<span>4.7</span></a> permite acompanhar, passo a passo, a propagação do marcador <span class="math inline">\(f\)</span> ao longo dos corredores do labirinto. A cada iteração de <code>mm.cdil</code>, a frente de dilatação avança para as células vizinhas livres — aquelas em que <span class="math inline">\(g = 1\)</span> —, enquanto as paredes (<span class="math inline">\(g = 0\)</span>) permanecem intransponíveis. O número de passos necessários para que o marcador alcance a saída corresponde exatamente ao comprimento geodésico do caminho mais curto dentro da máscara, evidenciando a conexão direta entre a dilatação geodésica iterada e a noção de distância em grafos.</p>
 <div id="cell-fig-04-cdil-simulador" class="cell">
-<div id="fig-04-cdil-simulador" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="36">
+<div id="fig-04-cdil-simulador" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="17">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-04-cdil-simulador-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 
@@ -2184,7 +2184,7 @@ Figura&nbsp;4.11: <em>Pipeline</em> de eliminação de estruturas de borda (<em>
 <span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>img_limpo <span class="op">=</span> mm.<span class="bu">open</span>(img_hole, mm.sedisk(<span class="dv">33</span>))</span>
 <span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a><span class="co"># ── Etapa 5: edgeoff — remove objetos que tocam a borda </span></span>
-<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>img_final <span class="op">=</span> mm.edgeoff(img_limpo)</span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>img_final <span class="op">=</span> mm.edgeoff(img_limpo, border<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>mm.show(</span>
 <span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>    [img_clahe0,  img_bin,               img_open,</span>
@@ -5838,7 +5838,7 @@ Figura&nbsp;4.27: <em>Bounding boxes</em> derivadas dos componentes conexos sobr
 <section id="download" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="download">Download</h4>
 <p>Baixe <code>morph.py</code> e <code>testsuite.py</code> executando a célula abaixo:</p>
-<div id="84b63e28" class="cell">
+<div id="186b16c6" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os, sys, importlib, inspect, urllib.request</span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="co"># URLs do repositório</span></span>
@@ -5971,7 +5971,7 @@ p' = \begin{cases} 255, &amp; \text{se } p \geq T \\ 0, &amp; \text{se } p &lt; 
 </tbody>
 </table>
 <div id="cell-fig-04-sim-limiar" class="cell">
-<div id="fig-04-sim-limiar" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="88">
+<div id="fig-04-sim-limiar" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="119">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-04-sim-limiar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 
@@ -6095,9 +6095,11 @@ Figura&nbsp;4.28: Simulador: Limiarização Global por Limiar Fixo
 <div id="ed1f62da" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>TestSuite(<span class="st">"EP04_01.py"</span>).run()</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
-<pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">📥 Tentando: https://raw.githubusercontent.com/fzampirolli/pdi-vc/master/all/cap04/casos/EP04_01.cases
-📥 Tentando: https://raw.githubusercontent.com/fzampirolli/pdi-vc/master/all/cap04/cap4/EP4_1.cases
-❌ Não foi possível baixar EP04_01.cases</pre>
+<pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">✔️ EP04_01.cases já existe em casos/
+📋 7 caso(s) carregado(s) de casos/EP04_01.cases
+
+🔍 Testando Python: EP04_01.py
+<span style="color:#f39c12;font-weight:500">⚠️ EP04_01.py: Arquivo sem conteúdo (menos de 3 linhas). Testes ignorados.</span></pre>
 </div>
 </div>
 </section>
@@ -6215,7 +6217,7 @@ Figura&nbsp;4.28: Simulador: Limiarização Global por Limiar Fixo
 </tbody>
 </table>
 <div id="cell-fig-04-sim-otsu" class="cell">
-<div id="fig-04-sim-otsu" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="91">
+<div id="fig-04-sim-otsu" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="122">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-04-sim-otsu-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 
@@ -6367,9 +6369,11 @@ Figura&nbsp;4.29: Simulador: Limiarização Automática de Otsu
 <div id="8c53704f" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>TestSuite(<span class="st">"EP04_02.py"</span>).run()</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
-<pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">📥 Tentando: https://raw.githubusercontent.com/fzampirolli/pdi-vc/master/all/cap04/casos/EP04_02.cases
-📥 Tentando: https://raw.githubusercontent.com/fzampirolli/pdi-vc/master/all/cap04/cap4/EP4_2.cases
-❌ Não foi possível baixar EP04_02.cases</pre>
+<pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">✔️ EP04_02.cases já existe em casos/
+📋 5 caso(s) carregado(s) de casos/EP04_02.cases
+
+🔍 Testando Python: EP04_02.py
+<span style="color:#f39c12;font-weight:500">⚠️ EP04_02.py: Arquivo sem conteúdo (menos de 3 linhas). Testes ignorados.</span></pre>
 </div>
 </div>
 </section>
@@ -6497,7 +6501,7 @@ g(y,x) = \max\Big(f(y,x),\ \max_{\substack{(v_y,v_x)\ \text{válido}\\ B_{ref}(b
 </tbody>
 </table>
 <div id="cell-fig-04-sim-dil0" class="cell">
-<div id="fig-04-sim-dil0" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="94">
+<div id="fig-04-sim-dil0" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="125">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-04-sim-dil0-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 
@@ -6644,9 +6648,11 @@ Figura&nbsp;4.30: Simulador: Dilatação Binária Plana (mm.dil0)
 <div id="8bcaa2de" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>TestSuite(<span class="st">"EP04_03.py"</span>).run()</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
-<pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">📥 Tentando: https://raw.githubusercontent.com/fzampirolli/pdi-vc/master/all/cap04/casos/EP04_03.cases
-📥 Tentando: https://raw.githubusercontent.com/fzampirolli/pdi-vc/master/all/cap04/cap4/EP4_3.cases
-❌ Não foi possível baixar EP04_03.cases</pre>
+<pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">✔️ EP04_03.cases já existe em casos/
+📋 5 caso(s) carregado(s) de casos/EP04_03.cases
+
+🔍 Testando Python: EP04_03.py
+<span style="color:#f39c12;font-weight:500">⚠️ EP04_03.py: Arquivo sem conteúdo (menos de 3 linhas). Testes ignorados.</span></pre>
 </div>
 </div>
 </section>
@@ -6772,7 +6778,7 @@ g(y,x) = \min\Big(f(y,x),\ \min_{\substack{(v_y,v_x)\ \text{válido}\\ B(by,bx)=
 </tbody>
 </table>
 <div id="cell-fig-04-sim-ero0" class="cell">
-<div id="fig-04-sim-ero0" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="97">
+<div id="fig-04-sim-ero0" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="128">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-04-sim-ero0-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 
@@ -6916,9 +6922,11 @@ Figura&nbsp;4.31: Simulador: Erosão Binária Plana (mm.ero0)
 <div id="5483f624" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>TestSuite(<span class="st">"EP04_04.py"</span>).run()</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
-<pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">📥 Tentando: https://raw.githubusercontent.com/fzampirolli/pdi-vc/master/all/cap04/casos/EP04_04.cases
-📥 Tentando: https://raw.githubusercontent.com/fzampirolli/pdi-vc/master/all/cap04/cap4/EP4_4.cases
-❌ Não foi possível baixar EP04_04.cases</pre>
+<pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">✔️ EP04_04.cases já existe em casos/
+📋 5 caso(s) carregado(s) de casos/EP04_04.cases
+
+🔍 Testando Python: EP04_04.py
+<span style="color:#f39c12;font-weight:500">⚠️ EP04_04.py: Arquivo sem conteúdo (menos de 3 linhas). Testes ignorados.</span></pre>
 </div>
 </div>
 </section>
@@ -7044,7 +7052,7 @@ Figura&nbsp;4.31: Simulador: Erosão Binária Plana (mm.ero0)
 </tbody>
 </table>
 <div id="cell-fig-04-sim-abertura" class="cell">
-<div id="fig-04-sim-abertura" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="100">
+<div id="fig-04-sim-abertura" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="131">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-04-sim-abertura-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 
@@ -7199,9 +7207,11 @@ Figura&nbsp;4.32: Simulador: Abertura Morfológica (erosão + dilatação)
 <div id="d86c2a05" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>TestSuite(<span class="st">"EP04_05.py"</span>).run()</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
-<pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">📥 Tentando: https://raw.githubusercontent.com/fzampirolli/pdi-vc/master/all/cap04/casos/EP04_05.cases
-📥 Tentando: https://raw.githubusercontent.com/fzampirolli/pdi-vc/master/all/cap04/cap4/EP4_5.cases
-❌ Não foi possível baixar EP04_05.cases</pre>
+<pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">✔️ EP04_05.cases já existe em casos/
+📋 5 caso(s) carregado(s) de casos/EP04_05.cases
+
+🔍 Testando Python: EP04_05.py
+<span style="color:#f39c12;font-weight:500">⚠️ EP04_05.py: Arquivo sem conteúdo (menos de 3 linhas). Testes ignorados.</span></pre>
 </div>
 </div>
 </section>
@@ -7329,7 +7339,7 @@ Figura&nbsp;4.32: Simulador: Abertura Morfológica (erosão + dilatação)
 </tbody>
 </table>
 <div id="cell-fig-04-sim-fechamento" class="cell">
-<div id="fig-04-sim-fechamento" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="103">
+<div id="fig-04-sim-fechamento" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="134">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-04-sim-fechamento-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 
@@ -7495,9 +7505,11 @@ Figura&nbsp;4.33: Simulador: Fechamento Morfológico (dilatação + erosão)
 <div id="35039888" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>TestSuite(<span class="st">"EP04_06.py"</span>).run()</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
-<pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">📥 Tentando: https://raw.githubusercontent.com/fzampirolli/pdi-vc/master/all/cap04/casos/EP04_06.cases
-📥 Tentando: https://raw.githubusercontent.com/fzampirolli/pdi-vc/master/all/cap04/cap4/EP4_6.cases
-❌ Não foi possível baixar EP04_06.cases</pre>
+<pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">✔️ EP04_06.cases já existe em casos/
+📋 5 caso(s) carregado(s) de casos/EP04_06.cases
+
+🔍 Testando Python: EP04_06.py
+<span style="color:#f39c12;font-weight:500">⚠️ EP04_06.py: Arquivo sem conteúdo (menos de 3 linhas). Testes ignorados.</span></pre>
 </div>
 </div>
 </section>
@@ -7622,7 +7634,7 @@ g_{ero}(y,x) = \min\Big(f(y,x),\ \min_{(v_y,v_x)\ \text{válido}} \big(f(v_y,v_x
 </tbody>
 </table>
 <div id="cell-fig-04-sim-pesos" class="cell">
-<div id="fig-04-sim-pesos" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="106">
+<div id="fig-04-sim-pesos" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="137">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-04-sim-pesos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 
@@ -7754,9 +7766,11 @@ Figura&nbsp;4.34: Simulador: Dilatação e Erosão com Pesos (mm.dil1 / mm.ero1)
 <div id="053e66ef" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>TestSuite(<span class="st">"EP04_07.py"</span>).run()</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
-<pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">📥 Tentando: https://raw.githubusercontent.com/fzampirolli/pdi-vc/master/all/cap04/casos/EP04_07.cases
-📥 Tentando: https://raw.githubusercontent.com/fzampirolli/pdi-vc/master/all/cap04/cap4/EP4_7.cases
-❌ Não foi possível baixar EP04_07.cases</pre>
+<pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">✔️ EP04_07.cases já existe em casos/
+📋 3 caso(s) carregado(s) de casos/EP04_07.cases
+
+🔍 Testando Python: EP04_07.py
+<span style="color:#f39c12;font-weight:500">⚠️ EP04_07.py: Arquivo sem conteúdo (menos de 3 linhas). Testes ignorados.</span></pre>
 </div>
 </div>
 </section>
@@ -7885,7 +7899,7 @@ Figura&nbsp;4.34: Simulador: Dilatação e Erosão com Pesos (mm.dil1 / mm.ero1)
 </tbody>
 </table>
 <div id="cell-fig-04-sim-gradiente" class="cell">
-<div id="fig-04-sim-gradiente" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="109">
+<div id="fig-04-sim-gradiente" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="140">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-04-sim-gradiente-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 
@@ -8022,51 +8036,48 @@ Figura&nbsp;4.35: Simulador: Gradiente Morfológico, Top-hat e Black-hat
 <div id="1ce87fee" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb71"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>TestSuite(<span class="st">"EP04_08.py"</span>).run()</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
-<pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">📥 Tentando: https://raw.githubusercontent.com/fzampirolli/pdi-vc/master/all/cap04/casos/EP04_08.cases
-📥 Tentando: https://raw.githubusercontent.com/fzampirolli/pdi-vc/master/all/cap04/cap4/EP4_8.cases
-❌ Não foi possível baixar EP04_08.cases</pre>
+<pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">✔️ EP04_08.cases já existe em casos/
+📋 4 caso(s) carregado(s) de casos/EP04_08.cases
+
+🔍 Testando Python: EP04_08.py
+<span style="color:#f39c12;font-weight:500">⚠️ EP04_08.py: Arquivo sem conteúdo (menos de 3 linhas). Testes ignorados.</span></pre>
 </div>
 </div>
 </section>
 </section>
 <section id="ep04_09-transformada-de-distância-e-o-miolo-do-objeto" class="level3" data-number="4.9.9">
 <h3 data-number="4.9.9" class="anchored" data-anchor-id="ep04_09-transformada-de-distância-e-o-miolo-do-objeto"><span class="header-section-number">4.9.9</span> EP04_09 🗺️ Transformada de Distância e o “Miolo” do Objeto</h3>
-<p>Em <strong>robótica móvel</strong>, ao planejar uma rota dentro de um corredor, o robô quer saber não só <em>onde</em> há espaço livre, mas <strong>quão longe</strong> cada ponto livre está da parede mais próxima — o caminho mais seguro passa pelo “miolo” do corredor, e não pela beirada. A <strong>transformada de distância</strong> responde exatamente isso: cada pixel do objeto recebe o número de <strong>camadas de erosão</strong> que ele resiste antes de desaparecer, e o pixel de valor máximo é o ponto mais protegido — o coração geométrico do objeto. Ver na <a href="#fig-04-sim-distancia" class="quarto-xref">Figura&nbsp;<span>4.36</span></a> uma simulação deste EP.</p>
+<p>Em <strong>robótica móvel</strong>, ao planejar uma rota dentro de um corredor, o robô quer saber não apenas <em>onde</em> existe espaço livre, mas também <strong>quão longe</strong> cada ponto livre está da parede mais próxima. Os caminhos mais seguros tendem a passar pelo “miolo” do corredor, longe dos obstáculos.</p>
+<p>A <strong>transformada de distância morfológica</strong> atribui a cada pixel um valor que representa sua distância até a borda mais próxima, segundo a métrica definida pelo elemento estruturante. Pixels próximos à borda recebem valores baixos, enquanto pixels mais internos recebem valores maiores. O pixel de valor máximo corresponde à região mais protegida do objeto, frequentemente associada ao seu centro morfológico.</p>
+<p>Ver na <a href="#fig-04-sim-distancia" class="quarto-xref">Figura&nbsp;<span>4.36</span></a> uma simulação deste EP.</p>
 <section id="diretrizes-de-implementação-8" class="level4" data-number="4.9.9.1">
 <h4 data-number="4.9.9.1" class="anchored" data-anchor-id="diretrizes-de-implementação-8"><span class="header-section-number">4.9.9.1</span> 📋 Diretrizes de Implementação</h4>
 <ol type="1">
-<li><strong>Dimensões da imagem:</strong> Ler os inteiros <span class="math inline">\(L\)</span> (linhas) e <span class="math inline">\(C\)</span> (colunas) de <span class="math inline">\(f\)</span>.</li>
-<li><strong>Dimensões de <span class="math inline">\(B\)</span>:</strong> Ler os inteiros <span class="math inline">\(H_B\)</span> (linhas) e <span class="math inline">\(W_B\)</span> (colunas) do elemento estruturante.</li>
-<li><strong>Elemento estruturante:</strong> Ler a matriz <span class="math inline">\(B\)</span> com valores <span class="math inline">\(0\)</span> ou <span class="math inline">\(1\)</span>, linha a linha.</li>
-<li><strong>Dados:</strong> Ler a matriz binária <span class="math inline">\(f\)</span> (valores <span class="math inline">\(0\)</span> ou <span class="math inline">\(1\)</span>), linha a linha.</li>
-<li><strong>Inicialização:</strong> Criar a matriz de distâncias <span class="math inline">\(\text{dist}\)</span>, toda em <span class="math inline">\(0\)</span>, e copiar <span class="math inline">\(f\)</span> para uma matriz auxiliar <span class="math inline">\(\text{atual}\)</span>.</li>
-<li><strong>Decascamento iterativo:</strong> Repetir, enquanto <span class="math inline">\(\text{atual}\)</span> tiver algum pixel <span class="math inline">\(1\)</span>:
-<ol type="1">
-<li>Incrementar o nível: <span class="math inline">\(\text{nivel} \mathrel{+}= 1\)</span>.</li>
-<li>Para cada pixel onde <span class="math inline">\(\text{atual}(y,x)=1\)</span>, atualizar <span class="math inline">\(\text{dist}(y,x) = \text{nivel}\)</span>.</li>
-<li>Calcular <span class="math inline">\(\text{prox} = \text{atual} \ominus B\)</span> (erosão binária plana, exatamente como no EP04_04).</li>
-<li>Se <span class="math inline">\(\text{prox}\)</span> for <strong>idêntico</strong> a <span class="math inline">\(\text{atual}\)</span> (nenhum pixel mudou — situação de elemento estruturante incapaz de continuar encolhendo), <strong>parar o laço</strong>.</li>
-<li>Caso contrário, <span class="math inline">\(\text{atual} \leftarrow \text{prox}\)</span> e continuar.</li>
-</ol></li>
-<li><strong>Localização do miolo:</strong> Encontrar o valor máximo de <span class="math inline">\(\text{dist}\)</span> e a posição <span class="math inline">\((y^*,x^*)\)</span> da <strong>primeira</strong> ocorrência desse máximo, percorrendo a matriz em ordem <strong>raster</strong> (linha a linha, da esquerda para a direita).</li>
-<li><strong>Saída:</strong> Exibir a matriz <span class="math inline">\(\text{dist}\)</span> completa e, na última linha, os dois inteiros <span class="math inline">\(y^*\)</span> e <span class="math inline">\(x^*\)</span> separados por espaço.</li>
+<li><strong>Dimensões da imagem:</strong> ler os inteiros <span class="math inline">\(L\)</span> (linhas) e <span class="math inline">\(C\)</span> (colunas) da imagem <span class="math inline">\(f\)</span>.</li>
+<li><strong>Dimensões de <span class="math inline">\(B\)</span>:</strong> ler os inteiros <span class="math inline">\(H_b\)</span> (linhas) e <span class="math inline">\(W_b\)</span> (colunas) do elemento estruturante.</li>
+<li><strong>Elemento estruturante:</strong> ler a matriz <span class="math inline">\(b\)</span>, contendo valor <span class="math inline">\(0\)</span> no centro e valores negativos nas demais posições.</li>
+<li><strong>Imagem:</strong> ler a matriz binária <span class="math inline">\(f\)</span> (valores <span class="math inline">\(0\)</span> ou <span class="math inline">\(1\)</span>), linha a linha.</li>
+<li><strong>Preparação:</strong> multiplicar a imagem por <span class="math inline">\(L\times C\)</span>, garantindo que os pixels internos tenham valor inicial suficientemente alto para a propagação das distâncias.</li>
+<li><strong>Transformada de distância:</strong> calcular a matriz de distâncias utilizando o método <code>mm.dist1(f,b)</code>.</li>
+<li><strong>Saída:</strong> exibir a matriz resultante da transformada de distância.</li>
 </ol>
 </section>
 <section id="restrições-computacionais-8" class="level4" data-number="4.9.9.2">
 <h4 data-number="4.9.9.2" class="anchored" data-anchor-id="restrições-computacionais-8"><span class="header-section-number">4.9.9.2</span> 📌 Restrições Computacionais</h4>
 <ul>
-<li><strong>Erosão sem reflexão e sem padding</strong>, idêntica à do EP04_04, em cada iteração.</li>
-<li><strong>Critério de parada duplo:</strong> parar tanto quando não houver mais <span class="math inline">\(1\)</span>s quanto quando a erosão deixar de mudar a matriz (evita laço infinito em casos degenerados).</li>
-<li><strong>Desempate determinístico:</strong> entre múltiplos pixels com o valor máximo, escolher sempre o <strong>primeiro em ordem raster</strong>.</li>
+<li>Utilizar a implementação de erosão ponderada fornecida pela biblioteca.</li>
+<li>O elemento estruturante pode conter valores negativos arbitrários.</li>
+<li>A transformada deve ser obtida pela aplicação iterativa de erosões ponderadas até atingir um ponto fixo.</li>
 </ul>
+<p><strong>⚠️ Nota Crucial sobre Leitura de Matrizes:</strong> Como o elemento estruturante pode conter valores inteiros negativos (por exemplo, <code>-1</code> e <code>-99</code>), <strong>não utilize a função <code>mm.readImg</code> para ler a matriz <span class="math inline">\(b\)</span></strong>. Essa função converte os dados para o tipo <code>uint8</code>, provocando <em>underflow</em> e corrompendo os valores negativos. Leia as <span class="math inline">\(H_b\)</span> linhas de <span class="math inline">\(b\)</span> manualmente utilizando o tipo padrão <code>int</code>. A imagem <span class="math inline">\(f\)</span> pode continuar sendo lida normalmente por <code>mm.readImg</code>.</p>
 </section>
 <section id="fundamentação-teórica-8" class="level4" data-number="4.9.9.3">
 <h4 data-number="4.9.9.3" class="anchored" data-anchor-id="fundamentação-teórica-8"><span class="header-section-number">4.9.9.3</span> 🧠 Fundamentação Teórica</h4>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 25%">
-<col style="width: 32%">
-<col style="width: 42%">
+<col style="width: 21%">
+<col style="width: 50%">
+<col style="width: 27%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -8078,18 +8089,23 @@ Figura&nbsp;4.35: Simulador: Gradiente Morfológico, Top-hat e Black-hat
 <tbody>
 <tr class="odd">
 <td><strong><span class="math inline">\(\text{dist}(y,x)\)</span></strong></td>
-<td>Número de erosões que o pixel sobrevive</td>
-<td>Equivale à distância (em “passos” de <span class="math inline">\(B\)</span>) até a borda mais próxima</td>
+<td>Distância morfológica até a borda mais próxima segundo a métrica definida por <span class="math inline">\(b\)</span></td>
+<td>Pixels mais internos recebem valores maiores</td>
 </tr>
 <tr class="even">
 <td><strong>Valor máximo</strong></td>
-<td>Pixel mais “protegido” do objeto</td>
-<td>Aproxima o centro do <strong>esqueleto morfológico</strong></td>
+<td>Pixel mais distante da borda</td>
+<td>Aproxima o centro morfológico do objeto</td>
 </tr>
 <tr class="odd">
+<td><strong>Elemento estruturante ponderado</strong></td>
+<td>Define os custos de deslocamento entre pixels vizinhos</td>
+<td>Determina a métrica de distância utilizada</td>
+</tr>
+<tr class="even">
 <td><strong>Objetos finos</strong></td>
-<td>Largura comparável a <span class="math inline">\(B\)</span></td>
-<td>Toda a região tem o mesmo valor baixo de distância</td>
+<td>Regiões estreitas do objeto</td>
+<td>Produzem valores baixos de distância</td>
 </tr>
 </tbody>
 </table>
@@ -8098,26 +8114,25 @@ Figura&nbsp;4.35: Simulador: Gradiente Morfológico, Top-hat e Black-hat
 <h4 data-number="4.9.9.4" class="anchored" data-anchor-id="especificação-de-entrada-e-saída-vpl-8"><span class="header-section-number">4.9.9.4</span> 📦 Especificação de Entrada e Saída (VPL)</h4>
 <p><strong>Entrada:</strong></p>
 <ul>
-<li>Linha 1: Inteiro <span class="math inline">\(L\)</span>.</li>
-<li>Linha 2: Inteiro <span class="math inline">\(C\)</span>.</li>
-<li>Linha 3: Inteiro <span class="math inline">\(H_B\)</span>.</li>
-<li>Linha 4: Inteiro <span class="math inline">\(W_B\)</span>.</li>
-<li>Próximas <span class="math inline">\(H_B\)</span> linhas: elementos inteiros (<span class="math inline">\(0\)</span> ou <span class="math inline">\(1\)</span>) da matriz <span class="math inline">\(B\)</span>.</li>
-<li>Próximas <span class="math inline">\(L\)</span> linhas: elementos inteiros (<span class="math inline">\(0\)</span> ou <span class="math inline">\(1\)</span>) da matriz <span class="math inline">\(f\)</span>.</li>
+<li>Linha 1: inteiro <span class="math inline">\(L\)</span>.</li>
+<li>Linha 2: inteiro <span class="math inline">\(C\)</span>.</li>
+<li>Linha 3: inteiro <span class="math inline">\(H_b\)</span>.</li>
+<li>Linha 4: inteiro <span class="math inline">\(W_b\)</span>.</li>
+<li>Próximas <span class="math inline">\(H_b\)</span> linhas: elementos inteiros da matriz <span class="math inline">\(b\)</span>.</li>
+<li>Próximas <span class="math inline">\(L\)</span> linhas: elementos binários (<span class="math inline">\(0\)</span> ou <span class="math inline">\(1\)</span>) da matriz <span class="math inline">\(f\)</span>.</li>
 </ul>
 <p><strong>Saída:</strong></p>
 <ul>
-<li>Matriz <span class="math inline">\(\text{dist}\)</span> em <span class="math inline">\(L\)</span> linhas e <span class="math inline">\(C\)</span> colunas.</li>
-<li>Última linha: dois inteiros <span class="math inline">\(y^*\)</span> e <span class="math inline">\(x^*\)</span> (posição do miolo), separados por espaço.</li>
+<li>Matriz da transformada de distância em <span class="math inline">\(L\)</span> linhas e <span class="math inline">\(C\)</span> colunas.</li>
 </ul>
 </section>
-<section id="exemplos-8" class="level4" data-number="4.9.9.5">
-<h4 data-number="4.9.9.5" class="anchored" data-anchor-id="exemplos-8"><span class="header-section-number">4.9.9.5</span> 📌 Exemplos</h4>
+<section id="exemplo" class="level4" data-number="4.9.9.5">
+<h4 data-number="4.9.9.5" class="anchored" data-anchor-id="exemplo"><span class="header-section-number">4.9.9.5</span> 📌 Exemplo</h4>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 32%">
-<col style="width: 25%">
-<col style="width: 42%">
+<col style="width: 53%">
+<col style="width: 33%">
+<col style="width: 13%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -8132,9 +8147,9 @@ Figura&nbsp;4.35: Simulador: Gradiente Morfológico, Top-hat e Black-hat
 9<br>
 3<br>
 3<br>
-0 1 0<br>
-1 1 1<br>
-0 1 0<br>
+-99 -1 -99<br>
+-1 0 -1<br>
+-99 -1 -99<br>
 0 0 0 0 0 0 0 0 0<br>
 0 1 1 1 1 1 1 1 0<br>
 0 1 1 1 1 1 1 1 0<br>
@@ -8144,139 +8159,169 @@ Figura&nbsp;4.35: Simulador: Gradiente Morfológico, Top-hat e Black-hat
 0 1 1 1 1 1 1 1 0<br>
 0 1 2 2 2 2 2 1 0<br>
 0 1 1 1 1 1 1 1 0<br>
-0 0 0 0 0 0 0 0 0<br>
-2 2</td>
-<td>O “corredor” 3×7 tem miolo em toda a linha central; o primeiro em ordem raster é <span class="math inline">\((2,2)\)</span></td>
+0 0 0 0 0 0 0 0 0</td>
+<td>Resultado da transformada de distância.</td>
 </tr>
 </tbody>
 </table>
+<p><strong>Nota:</strong> o valor <code>-99</code> atua como uma aproximação prática de <span class="math inline">\(-\infty\)</span>, impedindo a propagação pelas diagonais. Dessa forma, apenas os vizinhos horizontal e vertical contribuem para a distância, produzindo a distância de Manhattan.</p>
 <div id="cell-fig-04-sim-distancia" class="cell">
-<div id="fig-04-sim-distancia" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="112">
+<div id="fig-04-sim-distancia" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="143">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-04-sim-distancia-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 
 <div id="sim-ep0409" style="background-color:#fef9ef;border-radius:18px;border:1px solid #ede6d8;overflow:hidden;margin-top:20px;font-family:sans-serif;">
   <div style="background:#f3efe6;padding:8px 16px;font-size:12px;color:#5e5a4a;border-bottom:1px solid #e9dfcf;display:flex;justify-content:space-between;align-items:center;">
-    <span>🎮 Simulador: Distância por Decascamento</span>
+    <span>🎮 Simulador: Transformada de Distância</span>
     <span style="background:#e8e0cf;border-radius:40px;padding:2px 10px;font-weight:600;font-size:10px;">🗺️ camadas de erosão</span>
   </div>
+
   <div style="padding:20px;background:white;">
-    <p style="font-size:11px;color:#555;margin-bottom:10px;text-align:center;">Clique nas células para desenhar seu próprio objeto (mínimo 3 pixels)</p>
+    <p style="font-size:11px;color:#555;margin-bottom:10px;text-align:center;">
+      Clique nas células para desenhar seu próprio objeto (mínimo 3 pixels)
+    </p>
+
     <div style="display:flex;justify-content:center;margin-bottom:18px;">
       <div id="ep0409_grid_f" style="display:grid;grid-template-columns:repeat(9,32px);gap:2px;"></div>
     </div>
+
     <div style="text-align:center;margin-bottom:14px;">
       <button id="ep0409_btn_corredor" style="font-size:11px;padding:5px 10px;border-radius:4px;border:1px solid #ccc;background:white;cursor:pointer;margin-right:6px;">📐 Corredor</button>
       <button id="ep0409_btn_disco" style="font-size:11px;padding:5px 10px;border-radius:4px;border:1px solid #ccc;background:white;cursor:pointer;margin-right:6px;">⬤ Disco</button>
       <button id="ep0409_btn_l" style="font-size:11px;padding:5px 10px;border-radius:4px;border:1px solid #ccc;background:white;cursor:pointer;">📏 Forma em L</button>
     </div>
-    <p style="font-size:10px;font-weight:600;color:#888;text-transform:uppercase;margin-bottom:10px;text-align:center;">Mapa de distâncias (★ = miolo)</p>
+
+    <p style="font-size:10px;font-weight:600;color:#888;text-transform:uppercase;margin-bottom:10px;text-align:center;">
+      Mapa de distâncias
+    </p>
+
     <div style="display:flex;justify-content:center;">
       <div id="ep0409_grid_dist" style="display:grid;grid-template-columns:repeat(9,32px);gap:2px;"></div>
     </div>
   </div>
 </div>
+
 <script>
 (function(){
   function init(root){
-    if(!root) return;
-    if(root.dataset.ep0409Ready === '1') return;
+    if(!root || root.dataset.ep0409Ready === '1') return;
     root.dataset.ep0409Ready = '1';
 
-  var gF=root.querySelector('#ep0409_grid_f');
-  var gD=root.querySelector('#ep0409_grid_dist');
-  if(!gF)return;
-  var L=5,C=9,f=[];
-  var B=[[0,1,0],[1,1,1],[0,1,0]];
-  function setCorredor(){
-    f=Array.from({length:L},function(){return new Array(C).fill(0);});
-    for(var y=1;y<4;y++)for(var x=1;x<8;x++) f[y][x]=1;
-  }
-  function setDisco(){
-    f=Array.from({length:L},function(){return new Array(C).fill(0);});
-    var cy=2,cx=4;
-    for(var y=0;y<L;y++)for(var x=0;x<C;x++) if(Math.pow(y-cy,2)+Math.pow((x-cx)*0.6,2)<=4) f[y][x]=1;
-  }
-  function setL(){
-    f=Array.from({length:L},function(){return new Array(C).fill(0);});
-    for(var y=1;y<4;y++)for(var x=1;x<3;x++) f[y][x]=1;
-    for(var y=2;y<4;y++)for(var x=1;x<8;x++) f[y][x]=1;
-  }
-  function erode(img,Bm){
-    var HB=Bm.length, WB=Bm[0].length, oy=-HB/2+0.5, ox=-WB/2+0.5;
-    var g=img.map(function(r){return r.slice();});
-    for(var y=0;y<L;y++)for(var x=0;x<C;x++)for(var by=0;by<HB;by++)for(var bx=0;bx<WB;bx++){
-      if(Bm[by][bx]!==1) continue;
-      var vy=Math.trunc(y+by+oy), vx=Math.trunc(x+bx+ox);
-      if(vy>=0&&vy<L&&vx>=0&&vx<C && img[vy][vx]<g[y][x]) g[y][x]=img[vy][vx];
+    var gF=root.querySelector('#ep0409_grid_f');
+    var gD=root.querySelector('#ep0409_grid_dist');
+
+    var L=5,C=9,f=[];
+    var B=[[0,1,0],[1,1,1],[0,1,0]];
+
+    function setCorredor(){
+      f=Array.from({length:L},()=>new Array(C).fill(0));
+      for(var y=1;y<4;y++)for(var x=1;x<8;x++) f[y][x]=1;
     }
-    return g;
-  }
-  function sameMatrix(a,b){
-    for(var y=0;y<L;y++)for(var x=0;x<C;x++) if(a[y][x]!==b[y][x]) return false;
-    return true;
-  }
-  function render_0409(){
-    gF.innerHTML='';
-    for(var y=0;y<L;y++)for(var x=0;x<C;x++){
-      (function(y,x){
+
+    function setDisco(){
+      f=Array.from({length:L},()=>new Array(C).fill(0));
+      var cy=2,cx=4;
+      for(var y=0;y<L;y++)
+        for(var x=0;x<C;x++)
+          if(Math.pow(y-cy,2)+Math.pow((x-cx)*0.6,2)<=4) f[y][x]=1;
+    }
+
+    function setL(){
+      f=Array.from({length:L},()=>new Array(C).fill(0));
+      for(var y=1;y<4;y++)for(var x=1;x<3;x++) f[y][x]=1;
+      for(var y=2;y<4;y++)for(var x=1;x<8;x++) f[y][x]=1;
+    }
+
+    function erode(img,Bm){
+      var HB=Bm.length, WB=Bm[0].length, oy=-HB/2+0.5, ox=-WB/2+0.5;
+      var g=img.map(r=>r.slice());
+
+      for(var y=0;y<L;y++)
+        for(var x=0;x<C;x++)
+          for(var by=0;by<HB;by++)
+            for(var bx=0;bx<WB;bx++){
+              if(Bm[by][bx]!==1) continue;
+              var vy=Math.trunc(y+by+oy), vx=Math.trunc(x+bx+ox);
+              if(vy>=0&&vy<L&&vx>=0&&vx<C && img[vy][vx]<g[y][x])
+                g[y][x]=img[vy][vx];
+            }
+      return g;
+    }
+
+    function sameMatrix(a,b){
+      for(var y=0;y<L;y++)
+        for(var x=0;x<C;x++)
+          if(a[y][x]!==b[y][x]) return false;
+      return true;
+    }
+
+    function render(){
+      gF.innerHTML='';
+      for(var y=0;y<L;y++)for(var x=0;x<C;x++){
+        (function(y,x){
+          var c=document.createElement('div');
+          c.style.cssText='width:32px;height:32px;border-radius:4px;border:1px solid #ddd;cursor:pointer;';
+          c.style.background=f[y][x]?'#16a085':'#f7f7f7';
+          c.onclick=function(){f[y][x]=1-f[y][x]; render();};
+          gF.appendChild(c);
+        })(y,x);
+      }
+
+      var dist=Array.from({length:L},()=>new Array(C).fill(0));
+      var atual=f.map(r=>r.slice());
+      var nivel=0;
+
+      while(atual.some(r=>r.some(v=>v===1))){
+        nivel++;
+        for(var y=0;y<L;y++)
+          for(var x=0;x<C;x++)
+            if(atual[y][x]===1) dist[y][x]=nivel;
+
+        var prox=erode(atual,B);
+        if(sameMatrix(prox,atual)) break;
+        atual=prox;
+      }
+
+      gD.innerHTML='';
+      for(var y=0;y<L;y++)for(var x=0;x<C;x++){
         var c=document.createElement('div');
-        c.style.cssText='width:32px;height:32px;border-radius:4px;border:1px solid #ddd;cursor:pointer;';
-        c.style.background=f[y][x]?'#16a085':'#f7f7f7';
-        c.onclick=function(){f[y][x]=1-f[y][x]; render_0409();};
-        gF.appendChild(c);
-      })(y,x);
+        var v=dist[y][x];
+        var t=v/(nivel||1);
+        var inten=Math.round(220-t*170);
+
+        c.style.cssText='width:32px;height:32px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold;border:1px solid #ddd;';
+        c.style.background= v===0 ? '#f7f7f7' : 'rgb('+(inten-60)+','+inten+','+(inten-30)+')';
+        c.style.color = v>0 ? 'white':'#bbb';
+        c.innerText = v||'';
+        gD.appendChild(c);
+      }
     }
-    var dist=Array.from({length:L},function(){return new Array(C).fill(0);});
-    var atual=f.map(function(r){return r.slice();});
-    var nivel=0;
-    while(atual.some(function(r){return r.some(function(v){return v===1;});})){
-      nivel++;
-      for(var y=0;y<L;y++)for(var x=0;x<C;x++) if(atual[y][x]===1) dist[y][x]=nivel;
-      var prox=erode(atual,B);
-      if(sameMatrix(prox,atual)) break;
-      atual=prox;
-    }
-    var maxV=0;
-    for(var y=0;y<L;y++)for(var x=0;x<C;x++) if(dist[y][x]>maxV) maxV=dist[y][x];
-    var found=false, my=-1, mx=-1;
-    for(var y=0;y<L && !found;y++)for(var x=0;x<C;x++) if(dist[y][x]===maxV && maxV>0){my=y;mx=x;found=true;break;}
-    gD.innerHTML='';
-    for(var y=0;y<L;y++)for(var x=0;x<C;x++){
-      var c=document.createElement('div');
-      var v=dist[y][x];
-      var t=maxV>0?v/maxV:0;
-      var inten=Math.round(220-t*170);
-      c.style.cssText='width:32px;height:32px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold;border:1px solid #ddd;';
-      c.style.background= v===0 ? '#f7f7f7' : 'rgb('+(inten-60)+','+inten+','+(inten-30)+')';
-      c.style.color = v>0 ? 'white':'#bbb';
-      c.innerText = (y===my && x===mx) ? '★' : (v||'');
-      gD.appendChild(c);
-    }
-  }
-  root.querySelector('#ep0409_btn_corredor').onclick=function(){setCorredor();render_0409();};
-  root.querySelector('#ep0409_btn_disco').onclick=function(){setDisco();render_0409();};
-  root.querySelector('#ep0409_btn_l').onclick=function(){setL();render_0409();};
-  setCorredor(); render_0409();
+
+    root.querySelector('#ep0409_btn_corredor').onclick=()=>{setCorredor();render();};
+    root.querySelector('#ep0409_btn_disco').onclick=()=>{setDisco();render();};
+    root.querySelector('#ep0409_btn_l').onclick=()=>{setL();render();};
+
+    setCorredor();
+    render();
   }
 
   function tryInit(){
-    var all = document.querySelectorAll('[id="sim-ep0409"]');
-    if(all.length === 0) return false;
+    var all=document.querySelectorAll('[id="sim-ep0409"]');
+    if(!all.length) return false;
     init(all[all.length-1]);
     return true;
   }
 
-  var tentativas = 0;
-  var intervalo = setInterval(function(){
-    tentativas++;
-    if(tryInit() || tentativas > 20) clearInterval(intervalo);
-  }, 50);
+  var t=0;
+  var interval=setInterval(()=>{
+    t++;
+    if(tryInit() || t>20) clearInterval(interval);
+  },50);
 })();
 </script>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-04-sim-distancia-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;4.36: Simulador: Transformada de Distância e o Miolo do Objeto
+Figura&nbsp;4.36: Simulador: Transformada de Distância
 </figcaption>
 </figure>
 </div>
@@ -8291,49 +8336,60 @@ Figura&nbsp;4.36: Simulador: Transformada de Distância e o Miolo do Objeto
 <div id="3512aa10" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb74"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>TestSuite(<span class="st">"EP04_09.py"</span>).run()</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
-<pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">📥 Tentando: https://raw.githubusercontent.com/fzampirolli/pdi-vc/master/all/cap04/casos/EP04_09.cases
-📥 Tentando: https://raw.githubusercontent.com/fzampirolli/pdi-vc/master/all/cap04/cap4/EP4_9.cases
-❌ Não foi possível baixar EP04_09.cases</pre>
+<pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">✔️ EP04_09.cases já existe em casos/
+📋 4 caso(s) carregado(s) de casos/EP04_09.cases
+
+🔍 Testando Python: EP04_09.py
+<span style="color:#f39c12;font-weight:500">⚠️ EP04_09.py: Arquivo sem conteúdo (menos de 3 linhas). Testes ignorados.</span></pre>
 </div>
 </div>
 </section>
 </section>
 <section id="ep04_10-separação-de-blobs-rotulação-e-descritores" class="level3" data-number="4.9.10">
 <h3 data-number="4.9.10" class="anchored" data-anchor-id="ep04_10-separação-de-blobs-rotulação-e-descritores"><span class="header-section-number">4.9.10</span> EP04_10 🪙 Separação de Blobs, Rotulação e Descritores</h3>
-<p>Em uma <strong>linha de produção de moedas</strong>, é comum que peças encostem umas nas outras na esteira, formando uma única mancha conectada na imagem — uma contagem ingênua erraria o total. A solução clássica combina tudo o que foi construído neste capítulo: primeiro uma <strong>erosão</strong> rompe as “pontes” finas que ligam objetos vizinhos, depois a <strong>rotulação por conectividade</strong> (como em <code>mm.label0</code>) separa cada peça em um rótulo próprio, e por fim <strong>descritores geométricos</strong> (área e caixa delimitadora) resumem cada peça encontrada. Ver na <a href="#fig-04-sim-rotulacao" class="quarto-xref">Figura&nbsp;<span>4.37</span></a> uma simulação deste EP.</p>
+<p>Em uma <strong>linha de produção de moedas</strong>, é comum que peças encostem umas nas outras na esteira, formando uma única mancha conectada na imagem — uma contagem ingênua erraria o total. A solução clássica combina operações morfológicas e análise de conectividade: primeiro uma <strong>erosão</strong> reduz ou rompe conexões frágeis entre objetos, e depois a <strong>rotulação de componentes conectados</strong> separa cada objeto em uma região distinta. Por fim, <strong>descritores geométricos</strong> (área e caixa delimitadora) resumem cada componente encontrado.</p>
+<p>Ver na <a href="#fig-04-sim-rotulacao" class="quarto-xref">Figura&nbsp;<span>4.37</span></a> uma simulação deste EP.</p>
+<hr>
 <section id="diretrizes-de-implementação-9" class="level4" data-number="4.9.10.1">
 <h4 data-number="4.9.10.1" class="anchored" data-anchor-id="diretrizes-de-implementação-9"><span class="header-section-number">4.9.10.1</span> 📋 Diretrizes de Implementação</h4>
 <ol type="1">
-<li><strong>Dimensões da imagem:</strong> Ler os inteiros <span class="math inline">\(L\)</span> (linhas) e <span class="math inline">\(C\)</span> (colunas) de <span class="math inline">\(f\)</span>.</li>
-<li><strong>Dimensões de <span class="math inline">\(B\)</span>:</strong> Ler os inteiros <span class="math inline">\(H_B\)</span> (linhas) e <span class="math inline">\(W_B\)</span> (colunas) do elemento estruturante.</li>
-<li><strong>Elemento estruturante:</strong> Ler a matriz <span class="math inline">\(B\)</span> com valores <span class="math inline">\(0\)</span> ou <span class="math inline">\(1\)</span>, linha a linha.</li>
-<li><strong>Dados:</strong> Ler a matriz binária <span class="math inline">\(f\)</span> (valores <span class="math inline">\(0\)</span> ou <span class="math inline">\(1\)</span>), linha a linha.</li>
-<li><strong>Separação:</strong> Calcular <span class="math inline">\(f_{ero} = f \ominus B\)</span> (erosão binária plana, igual ao EP04_04), eliminando pontes finas entre objetos.</li>
-<li><strong>Rotulação (<span class="math inline">\(K{=}8\)</span>):</strong> Sobre <span class="math inline">\(f_{ero}\)</span>, identificar componentes conectados usando <strong>8-vizinhança</strong> (as <span class="math inline">\(8\)</span> posições adjacentes, incluindo diagonais). Percorrer a imagem em ordem raster; ao encontrar um pixel <span class="math inline">\(1\)</span> ainda sem rótulo, atribuir um novo rótulo inteiro crescente a partir de <span class="math inline">\(1\)</span> e propagá-lo a toda a região conectada (busca em largura ou profundidade).</li>
-<li><strong>Descritores:</strong> Para cada rótulo <span class="math inline">\(k\)</span>, calcular:
+<li><p><strong>Dimensões da imagem:</strong> ler os inteiros <span class="math inline">\(L\)</span> (linhas) e <span class="math inline">\(C\)</span> (colunas) de <span class="math inline">\(f\)</span>.</p></li>
+<li><p><strong>Dimensões de <span class="math inline">\(B\)</span>:</strong> ler os inteiros <span class="math inline">\(H_B\)</span> (linhas) e <span class="math inline">\(W_B\)</span> (colunas) do elemento estruturante.</p></li>
+<li><p><strong>Elemento estruturante:</strong> ler a matriz <span class="math inline">\(B\)</span>, contendo valores <span class="math inline">\(0\)</span> ou <span class="math inline">\(1\)</span>, linha a linha.</p></li>
+<li><p><strong>Dados:</strong> ler a matriz binária <span class="math inline">\(f\)</span> (valores <span class="math inline">\(0\)</span> ou <span class="math inline">\(1\)</span>), linha a linha.</p></li>
+<li><p><strong>Separação:</strong> calcular <span class="math display">\[
+f_{ero} = f \ominus B
+\]</span> usando erosão binária plana (como no EP04_04), eliminando conexões frágeis entre objetos.</p></li>
+<li><p><strong>Rotulação:</strong> sobre <span class="math inline">\(f_{ero}\)</span>, identificar componentes conectados usando conectividade definida pela vizinhança <span class="math inline">\(B\)</span>. A rotulação deve seguir varredura raster: ao encontrar um pixel <span class="math inline">\(1\)</span> ainda não rotulado, atribuir um novo rótulo inteiro crescente a partir de 1 e propagar esse rótulo a toda a região conectada (via BFS ou DFS usando essa vizinhança).</p></li>
+<li><p><strong>Descritores:</strong> para cada rótulo <span class="math inline">\(k\)</span>, calcular:</p>
 <ul>
-<li><strong>Área:</strong> número de pixels com aquele rótulo.</li>
-<li><strong>Caixa delimitadora:</strong> <span class="math inline">\((y_{min}, x_{min}, y_{max}, x_{max})\)</span>, as menores e maiores coordenadas de linha e coluna entre os pixels do rótulo.</li>
+<li><strong>Área:</strong> número de pixels pertencentes ao rótulo;</li>
+<li><strong>Caixa delimitadora:</strong> <span class="math display">\[(y_{min}, x_{min}, y_{max}, x_{max})\]</span></li>
 </ul></li>
-<li><strong>Saída:</strong> Exibir o número total de rótulos encontrados e, em seguida, uma linha por rótulo (em ordem crescente) com: rótulo, área, <span class="math inline">\(y_{min}\)</span>, <span class="math inline">\(x_{min}\)</span>, <span class="math inline">\(y_{max}\)</span>, <span class="math inline">\(x_{max}\)</span>.</li>
+<li><p><strong>Saída:</strong> exibir o número total de rótulos e, em seguida, uma linha por rótulo no formato: <span class="math display">\[
+k,\ \text{área},\ y_{min},\ x_{min},\ y_{max},\ x_{max}
+\]</span></p></li>
 </ol>
+<hr>
 </section>
 <section id="restrições-computacionais-9" class="level4" data-number="4.9.10.2">
 <h4 data-number="4.9.10.2" class="anchored" data-anchor-id="restrições-computacionais-9"><span class="header-section-number">4.9.10.2</span> 📌 Restrições Computacionais</h4>
 <ul>
-<li><strong>A erosão acontece antes da rotulação</strong>, sempre — rotular <span class="math inline">\(f\)</span> diretamente (sem separar) pode fundir objetos em um só componente.</li>
-<li><strong>8-vizinhança fixa nesta etapa de rotulação</strong>, independente do <span class="math inline">\(B\)</span> usado na erosão (que pode ter outro formato).</li>
-<li><strong>Sem padding em nenhuma etapa.</strong></li>
-<li><strong>Ordem dos rótulos:</strong> seguir a ordem de <strong>primeira descoberta</strong> em varredura raster.</li>
+<li>A erosão deve ser aplicada antes da rotulação.</li>
+<li>A conectividade é fixa e definida pela vizinhança acima.</li>
+<li>O elemento estruturante <span class="math inline">\(B\)</span> não interfere na conectividade da rotulação.</li>
+<li>Sem padding em qualquer etapa.</li>
+<li>A ordem dos rótulos segue a primeira descoberta em varredura raster.</li>
 </ul>
+<hr>
 </section>
 <section id="fundamentação-teórica-9" class="level4" data-number="4.9.10.3">
 <h4 data-number="4.9.10.3" class="anchored" data-anchor-id="fundamentação-teórica-9"><span class="header-section-number">4.9.10.3</span> 🧠 Fundamentação Teórica</h4>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 31%">
-<col style="width: 40%">
-<col style="width: 28%">
+<col style="width: 15%">
+<col style="width: 38%">
+<col style="width: 46%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -8344,80 +8400,49 @@ Figura&nbsp;4.36: Simulador: Transformada de Distância e o Miolo do Objeto
 </thead>
 <tbody>
 <tr class="odd">
-<td><strong>Ponte fina</strong></td>
-<td>Conexão de espessura <span class="math inline">\(1\)</span> entre dois objetos</td>
-<td>Some após uma erosão com <span class="math inline">\(B\)</span> maior que a espessura da ponte</td>
+<td>Ponte fina</td>
+<td>Conexão estreita entre objetos</td>
+<td>Pode ser removida pela erosão morfológica</td>
 </tr>
 <tr class="even">
-<td><strong>8-vizinhança</strong></td>
-<td>Inclui diagonais</td>
-<td>Reconecta cantos que a 4-vizinhança deixaria separados</td>
+<td>Conectividade</td>
+<td>Definida pelo conjunto <span class="math display">\[\mathcal{N}(y,x)\]</span></td>
+<td>Determina quais pixels pertencem ao mesmo componente</td>
 </tr>
 <tr class="odd">
-<td><strong>Área pequena</strong></td>
-<td>Poucos pixels no rótulo</td>
-<td>Pode indicar ruído residual, não um objeto real</td>
+<td>Área</td>
+<td>Número de pixels por componente</td>
+<td>Estimativa direta do tamanho do objeto</td>
+</tr>
+<tr class="even">
+<td>Caixa delimitadora</td>
+<td>Extensão espacial do rótulo</td>
+<td>Resumo geométrico do componente</td>
 </tr>
 </tbody>
 </table>
+<hr>
 </section>
 <section id="especificação-de-entrada-e-saída-vpl-9" class="level4" data-number="4.9.10.4">
 <h4 data-number="4.9.10.4" class="anchored" data-anchor-id="especificação-de-entrada-e-saída-vpl-9"><span class="header-section-number">4.9.10.4</span> 📦 Especificação de Entrada e Saída (VPL)</h4>
 <p><strong>Entrada:</strong></p>
 <ul>
-<li>Linha 1: Inteiro <span class="math inline">\(L\)</span>.</li>
-<li>Linha 2: Inteiro <span class="math inline">\(C\)</span>.</li>
-<li>Linha 3: Inteiro <span class="math inline">\(H_B\)</span>.</li>
-<li>Linha 4: Inteiro <span class="math inline">\(W_B\)</span>.</li>
-<li>Próximas <span class="math inline">\(H_B\)</span> linhas: elementos inteiros (<span class="math inline">\(0\)</span> ou <span class="math inline">\(1\)</span>) da matriz <span class="math inline">\(B\)</span>.</li>
-<li>Próximas <span class="math inline">\(L\)</span> linhas: elementos inteiros (<span class="math inline">\(0\)</span> ou <span class="math inline">\(1\)</span>) da matriz <span class="math inline">\(f\)</span>.</li>
+<li>Linha 1: inteiro <span class="math inline">\(L\)</span></li>
+<li>Linha 2: inteiro <span class="math inline">\(C\)</span></li>
+<li>Linha 3: inteiro <span class="math inline">\(H_B\)</span></li>
+<li>Linha 4: inteiro <span class="math inline">\(W_B\)</span></li>
+<li>Próximas <span class="math inline">\(H_B\)</span> linhas: matriz <span class="math inline">\(B\)</span></li>
+<li>Próximas <span class="math inline">\(L\)</span> linhas: matriz <span class="math inline">\(f\)</span></li>
 </ul>
 <p><strong>Saída:</strong></p>
 <ul>
-<li>Linha 1: número total de rótulos encontrados.</li>
-<li>Uma linha por rótulo, na ordem <span class="math inline">\(k, \text{área}, y_{min}, x_{min}, y_{max}, x_{max}\)</span>.</li>
+<li>Linha 1: número total de rótulos encontrados</li>
+<li>Linhas seguintes: <span class="math display">\[
+k,\ \text{área},\ y_{min},\ x_{min},\ y_{max},\ x_{max}
+\]</span></li>
 </ul>
-</section>
-<section id="exemplos-9" class="level4" data-number="4.9.10.5">
-<h4 data-number="4.9.10.5" class="anchored" data-anchor-id="exemplos-9"><span class="header-section-number">4.9.10.5</span> 📌 Exemplos</h4>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 32%">
-<col style="width: 25%">
-<col style="width: 42%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Entrada</th>
-<th>Saída</th>
-<th>Observação</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>7<br>
-10<br>
-3<br>
-3<br>
-1 1 1<br>
-1 1 1<br>
-1 1 1<br>
-0 0 0 0 0 0 0 0 0 0<br>
-0 1 1 1 0 0 1 1 1 0<br>
-0 1 1 1 0 0 1 1 1 0<br>
-0 1 1 1 1 1 1 1 1 0<br>
-0 1 1 1 0 0 1 1 1 0<br>
-0 1 1 1 0 0 1 1 1 0<br>
-0 0 0 0 0 0 0 0 0 0</td>
-<td>2<br>
-1 3 2 2 4 2<br>
-2 3 2 7 4 7</td>
-<td>A ponte central de <span class="math inline">\(1\)</span> pixel de espessura é removida pela erosão <span class="math inline">\(3\times3\)</span>; os dois blocos <span class="math inline">\(3\times3\)</span> encolhem para colunas únicas e são contados separadamente</td>
-</tr>
-</tbody>
-</table>
 <div id="cell-fig-04-sim-rotulacao" class="cell">
-<div id="fig-04-sim-rotulacao" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="115">
+<div id="fig-04-sim-rotulacao" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="146">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-04-sim-rotulacao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 
@@ -8581,9 +8606,11 @@ Figura&nbsp;4.37: Simulador: Separação de Blobs, Rotulação e Descritores
 <div id="9f47897e" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb77"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>TestSuite(<span class="st">"EP04_10.py"</span>).run()</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
-<pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">📥 Tentando: https://raw.githubusercontent.com/fzampirolli/pdi-vc/master/all/cap04/casos/EP04_10.cases
-📥 Tentando: https://raw.githubusercontent.com/fzampirolli/pdi-vc/master/all/cap04/cap4/EP4_10.cases
-❌ Não foi possível baixar EP04_10.cases</pre>
+<pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">✔️ EP04_10.cases já existe em casos/
+📋 4 caso(s) carregado(s) de casos/EP04_10.cases
+
+🔍 Testando Python: EP04_10.py
+<span style="color:#f39c12;font-weight:500">⚠️ EP04_10.py: Arquivo sem conteúdo (menos de 3 linhas). Testes ignorados.</span></pre>
 </div>
 </div>
 

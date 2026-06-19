@@ -119,7 +119,7 @@
 \contentsline {figure}{\numberline {4.33}{\ignorespaces Simulador: Fechamento Morfológico (dilatação + erosão)}}{241}{figure.caption.169}%
 \contentsline {figure}{\numberline {4.34}{\ignorespaces Simulador: Dilatação e Erosão com Pesos (mm.dil1 / mm.ero1)}}{243}{figure.caption.170}%
 \contentsline {figure}{\numberline {4.35}{\ignorespaces Simulador: Gradiente Morfológico, Top-hat e Black-hat}}{245}{figure.caption.171}%
-\contentsline {figure}{\numberline {4.36}{\ignorespaces Simulador: Transformada de Distância e o Miolo do Objeto}}{247}{figure.caption.172}%
+\contentsline {figure}{\numberline {4.36}{\ignorespaces Simulador: Transformada de Distância}}{247}{figure.caption.172}%
 \contentsline {figure}{\numberline {4.37}{\ignorespaces Simulador: Separação de Blobs, Rotulação e Descritores}}{249}{figure.caption.173}%
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {5.1}{\ignorespaces Decomposição de Fourier 1D: uma onda quadrada (linha tracejada) é aproximada pela soma das primeiras senoides (linhas coloridas). Quanto mais termos, melhor a aproximação.}}{252}{figure.caption.174}%
