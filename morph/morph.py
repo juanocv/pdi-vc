@@ -1185,9 +1185,9 @@ class mm:
     #     return mm.subm(f, mm.infrec(mm.frame(f),f,b))
 
     @staticmethod
-    def edgeoff(f, b=np.ones((3,3),dtype='uint8')):
+    def edgeoff(f, b=np.ones((3,3),dtype='uint8'), border=1):
         # CORREÇÃO 1: Garante borda de 1 pixel e restringe o marcador apenas aos objetos (f)
-        marcador = mm.frame(f, border=1) & f
+        marcador = mm.frame(f, border=border) & f
         
         # CORREÇÃO 2: Reconstrói os objetos de borda e os subtrai da imagem original
         return mm.subm(f, mm.infrec(marcador, f, b))
