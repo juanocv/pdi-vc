@@ -1,0 +1,45 @@
+#### case=Caso1_Exemplo_Enunciado
+input=4
+4
+12 12 12 200
+12 12 200 200
+12 200 200 200
+200 200 200 200
+output=0 0 0 255
+0 0 255 255
+0 255 255 255
+255 255 255 255
+
+#### case=Caso2_Dois_Valores_Simples
+input=1
+2
+10 250
+output=0 255
+
+#### case=Caso3_Histograma_Bimodal_Separado
+input=3
+3
+20 25 20
+22 180 185
+190 182 188
+output=0 0 0
+0 255 255
+255 255 255
+
+#### case=Caso4_Degrade_Linear
+input=2
+4
+10 20 30 40
+110 120 130 140
+output=0 0 0 0
+255 255 255 255
+
+#### case=Caso5_Valores_Proximos
+input=3
+3
+100 101 102
+105 106 107
+110 111 112
+output=0 0 0
+0 0 255
+255 255 255

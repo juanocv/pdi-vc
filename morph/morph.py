@@ -926,15 +926,6 @@ class mm:
     @staticmethod
     def close1(f, b):
         return mm.ero1(mm.dil1(f, b), b)
-
-    @staticmethod
-    def gradm(f, b=np.zeros((3,3),dtype='uint8')):
-        """Gradiente morfológico: dil(f,b) - ero(f,b)."""
-        return mm.subm(mm.dil(f,b), mm.ero(f,b))
-    @staticmethod
-    def gradm1(f, b=np.zeros((3,3),dtype='uint8')):
-        """Gradiente morfológico: dil(f,b) - ero(f,b)."""
-        return mm.subm(mm.dil1(f,b), mm.ero1(f,b))
     
     @staticmethod
     def openth(f, b=np.zeros((3,3),dtype='uint8')):
@@ -1032,18 +1023,45 @@ class mm:
             return y
         return _ao(f, a)
 
+    @staticmethod
+    def gradm(f, b=np.zeros((3,3),dtype='uint8')):
+        """Gradiente morfológico: dil(f,b) - ero(f,b)."""
+        return mm.subm(mm.dil(f,b), mm.ero(f,b))
+    @staticmethod
+    def gradm1(f, b=np.zeros((3,3),dtype='uint8')):
+        """Gradiente morfológico: dil(f,b) - ero(f,b)."""
+        return mm.subm(mm.dil1(f,b), mm.ero1(f,b))
+    @staticmethod
+    def grad0(f, b=np.zeros((3,3), dtype='uint8')):
+        """Gradiente Morfológico Plano: dil0(f, b) - ero0(f, b). Evidencia contornos."""
+        return mm.subm(mm.dil0(f, b), mm.ero0(f, b))
 
     @staticmethod
     def tophat(f, b=np.zeros((3,3), dtype='uint8')):
         """Top-hat: f - open(f, b). Realça detalhes brilhantes sobre fundo escuro."""
         return mm.subm(f, mm.open(f, b))
+    @staticmethod
+    def tophat0(f, b=np.zeros((3,3), dtype='uint8')):
+        """Top-hat Plano: f - open0(f, b). Realça picos brilhantes sem padding."""
+        return mm.subm(f, mm.open0(f, b))
+    @staticmethod
+    def tophat1(f, b=np.zeros((3,3), dtype='uint8')):
+        """Top-hat Plano: f - open0(f, b). Realça picos brilhantes sem padding."""
+        return mm.subm(f, mm.open1(f, b))
 
     @staticmethod
     def blackhat(f, b=np.zeros((3,3), dtype='uint8')):
         """Black-hat: close(f, b) - f. Realça detalhes escuros sobre fundo claro."""
         return mm.subm(mm.close(f, b), f)
-
-
+    @staticmethod
+    def blackhat0(f, b=np.zeros((3,3), dtype='uint8')):
+        """Black-hat Plano: close0(f, b) - f. Realça vales escuros sem padding."""
+        return mm.subm(mm.close0(f, b), f)
+    @staticmethod
+    def blackhat1(f, b=np.zeros((3,3), dtype='uint8')):
+        """Black-hat Plano: close0(f, b) - f. Realça vales escuros sem padding."""
+        return mm.subm(mm.close1(f, b), f)
+    
     # ── REGIÕES / RÓTULOS ─────────────────────────────────────────────────────
 
     @staticmethod
