@@ -384,8 +384,8 @@ document.addEventListener('DOMContentLoaded', function() {
 <h3 class="unnumbered anchored" data-anchor-id="integração-com-o-moodle-vpl">Integração com o Moodle (VPL)</h3>
 <p>Os EPs dos <em>notebooks</em> podem ser convertidos em atividades <strong>VPL (<em>Virtual Programming Lab</em>)</strong> no Moodle. O script <code>ep_tools.py</code> (executado via <code>make build</code>) automatiza o processo em duas etapas:</p>
 <ol type="1">
-<li><strong>Extração</strong> (<code>make eps</code>): gera um HTML interativo independente por EP, com enunciado, exemplos e simulador, em <code>gen/book/eps/&lt;versao&gt;/</code>.</li>
-<li><strong>Conversão</strong> (<code>make moodle</code>): transforma o HTML em um fragmento autocontido, sem dependência de CSS externo, pronto para colar no editor do Moodle, em <code>gen/book/eps/&lt;versao&gt;_moodle/</code>.</li>
+<li><strong>Extração</strong> (<code>make eps</code>): gera um HTML interativo independente por EP, com enunciado, exemplos e simulador, em <code>gen/book/eps/&lt;versao&gt;/</code>. Ver exemplo: <a href="https://fzampirolli.github.io/pdi-vc/eps/py.pt/EP01_01.html">https://fzampirolli.github.io/pdi-vc/eps/py.pt/EP01_01.html</a></li>
+<li><strong>Conversão</strong> (<code>make moodle</code>): transforma o HTML em um fragmento autocontido, sem dependência de CSS externo, pronto para colar no editor do Moodle, em <code>gen/book/eps/&lt;versao&gt;_moodle/</code>. Ver exemplo: <a href="https://fzampirolli.github.io/pdi-vc/eps/py.pt_moodle/EP01_01.html">https://fzampirolli.github.io/pdi-vc/eps/py.pt_moodle/EP01_01.html</a></li>
 </ol>
 <p>Ao publicar com <code>make publish</code>, <strong>duas versões</strong> de cada EP ficam disponíveis publicamente:</p>
 <table class="caption-top table">
@@ -1095,10 +1095,10 @@ ZAMPIROLLI, Francisco de Assis <em>et al.</em> <a href="https://doi.org/10.5753/
 <span id="cb5-92"><a href="#cb5-92" aria-hidden="true" tabindex="-1"></a>(executado via <span class="in">`make build`</span>) automatiza o processo em duas etapas:</span>
 <span id="cb5-93"><a href="#cb5-93" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-94"><a href="#cb5-94" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Extração** (<span class="in">`make eps`</span>): gera um HTML interativo independente por EP,</span>
-<span id="cb5-95"><a href="#cb5-95" aria-hidden="true" tabindex="-1"></a>   com enunciado, exemplos e simulador, em <span class="in">`gen/book/eps/&lt;versao&gt;/`</span>.</span>
+<span id="cb5-95"><a href="#cb5-95" aria-hidden="true" tabindex="-1"></a>   com enunciado, exemplos e simulador, em <span class="in">`gen/book/eps/&lt;versao&gt;/`</span>. Ver exemplo: <span class="co">[</span><span class="ot">https://fzampirolli.github.io/pdi-vc/eps/py.pt/EP01_01.html</span><span class="co">](https://fzampirolli.github.io/pdi-vc/eps/py.pt/EP01_01.html)</span></span>
 <span id="cb5-96"><a href="#cb5-96" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Conversão** (<span class="in">`make moodle`</span>): transforma o HTML em um fragmento</span>
 <span id="cb5-97"><a href="#cb5-97" aria-hidden="true" tabindex="-1"></a>   autocontido, sem dependência de CSS externo, pronto para colar no</span>
-<span id="cb5-98"><a href="#cb5-98" aria-hidden="true" tabindex="-1"></a>   editor do Moodle, em <span class="in">`gen/book/eps/&lt;versao&gt;_moodle/`</span>.</span>
+<span id="cb5-98"><a href="#cb5-98" aria-hidden="true" tabindex="-1"></a>   editor do Moodle, em <span class="in">`gen/book/eps/&lt;versao&gt;_moodle/`</span>. Ver exemplo: <span class="co">[</span><span class="ot">https://fzampirolli.github.io/pdi-vc/eps/py.pt_moodle/EP01_01.html</span><span class="co">](https://fzampirolli.github.io/pdi-vc/eps/py.pt_moodle/EP01_01.html)</span></span>
 <span id="cb5-99"><a href="#cb5-99" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-100"><a href="#cb5-100" aria-hidden="true" tabindex="-1"></a>Ao publicar com <span class="in">`make publish`</span>, **duas versões** de cada EP ficam disponíveis</span>
 <span id="cb5-101"><a href="#cb5-101" aria-hidden="true" tabindex="-1"></a>publicamente:</span>
