@@ -3,17 +3,17 @@
 <p>Nesta atividade, você deve implementar a transformação de perspectiva, também conhecida como homografia. Diferente das transformações afins, a perspectiva não preserva o paralelismo, permitindo “retificar” objetos inclinados, como documentos ou placas capturados em ângulos oblíquos.</p>
 <div>
 <li>Leia dois inteiros <strong>L</strong> e <strong>C</strong>, representando as dimensões da matriz original.</li>
-<li>Leia <strong>quatro pares de coordenadas</strong> (<em>x</em>, <em>y</em>) representando os cantos do quadrilátero de origem (objeto distorcido).</li>
-<li>Leia <strong>quatro pares de coordenadas</strong> (<em>x</em>, <em>y</em>) representando os cantos do quadrilátero de destino (onde o objeto deve ser mapeado).</li>
+<li>Leia <strong>quatro pares de coordenadas</strong> \((x, y)\) representando os cantos do quadrilátero de origem (objeto distorcido).</li>
+<li>Leia <strong>quatro pares de coordenadas</strong> \((x, y)\) representando os cantos do quadrilátero de destino (onde o objeto deve ser mapeado).</li>
 <li>Leia os valores da matriz original.</li>
-<li>Calcule a matriz de homografia 3 × 3 e aplique a transformação.</li>
+<li>Calcule a matriz de homografia \(3 \times 3\) e aplique a transformação.</li>
 <li>Imprima a matriz resultante com as dimensões de saída especificadas.</li>
 <li>Ver na Figura 2.21 uma simulação deste EP.</li>
 </div>
 <p>📌 <strong>Importante</strong>:</p>
 <div>
-<li><strong>Graus de Liberdade:</strong> A homografia possui 8 graus de liberdade (o nono elemento da matriz 3 × 3 é uma constante de normalização, geralmente 1), exigindo no mínimo 4 pontos correspondentes para ser calculada.</li>
-<li><strong>Projeção:</strong> Após multiplicar as coordenadas pela matriz, é necessário dividir os resultados <em>x</em>' e <em>y</em>' pela componente homogênea <em>w</em> para retornar ao plano 2D.</li>
+<li><strong>Graus de Liberdade:</strong> A homografia possui 8 graus de liberdade (o nono elemento da matriz \(3 \times 3\) é uma constante de normalização, geralmente 1), exigindo no mínimo 4 pontos correspondentes para ser calculada.</li>
+<li><strong>Projeção:</strong> Após multiplicar as coordenadas pela matriz, é necessário dividir os resultados \(x'\) e \(y'\) pela componente homogênea \(w\) para retornar ao plano 2D.</li>
 <li><strong>Uso de Bibliotecas:</strong> Para esta tarefa, você pode utilizar as funções <code>cv2.getPerspectiveTransform</code> para obter a matriz e <code>cv2.warpPerspective</code> para aplicar a transformação, ou implementar o sistema linear e o mapeamento inverso manualmente para um desafio extra.</li>
 </div>
 <div><div class="sourceCode" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a aria-hidden="true" href="#cb51-1" tabindex="-1"></a><span class="co"># Dimensões de saída: bounding box dos pontos destino + 1</span></span>

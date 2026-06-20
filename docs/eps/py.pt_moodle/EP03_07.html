@@ -5,26 +5,26 @@
 <div style="background-color:#f8f9fa;padding:15px;border:1px solid #ccc;border-radius:5px;margin-bottom:20px;">
 <h4 style="margin-top:0;color:#333;">📋 Diretrizes de Implementação</h4>
 <ol type="1">
-<li><strong>Dimensões:</strong> Ler os inteiros <em>L</em> (linhas) e <em>C</em> (colunas).</li>
-<li><strong>Dados:</strong> Ler a matriz de pixels <em>f</em>.</li>
-<li><strong>Laplaciano (w4):</strong> Para cada pixel <strong>interno</strong> (<em>i</em>,<em>j</em>) com 1 \le <em>i</em> &lt; <em>L</em>-1, 1 \le <em>j</em> &lt; <em>C</em>-1, calcular:</li>
+<li><strong>Dimensões:</strong> Ler os inteiros \(L\) (linhas) e \(C\) (colunas).</li>
+<li><strong>Dados:</strong> Ler a matriz de pixels \(f\).</li>
+<li><strong>Laplaciano (w4):</strong> Para cada pixel <strong>interno</strong> \((i,j)\) com \(1 \le i < L-1\), \(1 \le j < C-1\), calcular:</li>
 </ol>
-<p><p style="text-align:center;font-family:monospace;font-size:1.1em;padding:8px;background:#f8f8f8;border-radius:4px;border:1px solid #ddd;">\nabla^2 <em>f</em>(<em>i</em>,<em>j</em>) = <em>f</em>(<em>i</em>-1,<em>j</em>) + <em>f</em>(<em>i</em>+1,<em>j</em>) + <em>f</em>(<em>i</em>,<em>j</em>-1) + <em>f</em>(<em>i</em>,<em>j</em>+1) - 4 · <em>f</em>(<em>i</em>,<em>j</em>)</p></p>
+<p><div style="text-align:center;display:block;margin:0.5em 0;">$$\nabla^2 f(i,j) = f(i-1,j) + f(i+1,j) + f(i,j-1) + f(i,j+1) - 4 \cdot f(i,j)$$</div></p>
 <ol start="4" type="1">
 <li><strong>Realce:</strong> Calcular a imagem realçada:</li>
 </ol>
-<p><p style="text-align:center;font-family:monospace;font-size:1.1em;padding:8px;background:#f8f8f8;border-radius:4px;border:1px solid #ddd;"><em>g</em>(<em>i</em>,<em>j</em>) = clip(<em>f</em>(<em>i</em>,<em>j</em>) - \nabla^2 <em>f</em>(<em>i</em>,<em>j</em>))</p></p>
+<p><div style="text-align:center;display:block;margin:0.5em 0;">$$g(i,j) = \text{clip}(f(i,j) - \nabla^2 f(i,j))$$</div></p>
 <ol start="5" type="1">
-<li><strong>Borda:</strong> Pixels na borda são copiados diretamente: <em>g</em>(<em>i</em>,<em>j</em>) = <em>f</em>(<em>i</em>,<em>j</em>).</li>
-<li><strong>Saída:</strong> Exibir a matriz realçada <em>L</em> × <em>C</em>.</li>
+<li><strong>Borda:</strong> Pixels na borda são copiados diretamente: \(g(i,j) = f(i,j)\).</li>
+<li><strong>Saída:</strong> Exibir a matriz realçada \(L \times C\).</li>
 </ol>
 <hr/>
 </div>
 <div style="background-color:#fffde7;border-left:5px solid #fbc02d;padding:15px;margin-bottom:25px;">
 <h4 style="margin-top:0;color:#856404;">📌 Restrições Computacionais</h4>
 <ul>
-<li><strong><em>Kernel</em> w4:</strong> \beginbmatrix 0 &amp; 1 &amp; 0 \\ 1 &amp; -4 &amp; 1 \\ 0 &amp; 1 &amp; 0 \endbmatrix — apenas 4-vizinhos.</li>
-<li><strong>Saturação:</strong> clip(<em>x</em>) = \max(0, \min(255, <em>x</em>)) aplicado ao resultado do realce.</li>
+<li><strong><em>Kernel</em> w4:</strong> \(\begin{bmatrix} 0 & 1 & 0 \\ 1 & -4 & 1 \\ 0 & 1 & 0 \end{bmatrix}\) — apenas 4-vizinhos.</li>
+<li><strong>Saturação:</strong> \(\text{clip}(x) = \max(0, \min(255, x))\) aplicado ao resultado do realce.</li>
 <li><strong>Sem arredondamento:</strong> O Laplaciano usa apenas somas/subtrações de inteiros.</li>
 </ul>
 <hr/>
@@ -35,24 +35,24 @@
 <thead>
 <tr style="background-color:#f1f1f1;">
 <th style="padding:10px;border:1px solid #ddd;">Região</th>
-<th style="padding:10px;border:1px solid #ddd;">\nabla^2 <em>f</em></th>
+<th style="padding:10px;border:1px solid #ddd;">\(\nabla^2 f\)</th>
 <th style="padding:10px;border:1px solid #ddd;">Efeito do Realce</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Uniforme</td>
-<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">\approx 0</td>
+<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">\(\approx 0\)</td>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Sem alteração</td>
 </tr>
 <tr>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Borda crescente</td>
-<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">&lt; 0</td>
+<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">\(< 0\)</td>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Pixel clareado</td>
 </tr>
 <tr>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Borda decrescente</td>
-<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">&gt; 0</td>
+<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">\(> 0\)</td>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Pixel escurecido</td>
 </tr>
 </tbody>
@@ -63,13 +63,13 @@
 <h4 style="margin-top:0;color:#333;">📦 Especificação de Entrada e Saída (VPL)</h4>
 <p><strong>Entrada:</strong></p>
 <ul>
-<li>Linha 1: Inteiro <em>L</em>.</li>
-<li>Linha 2: Inteiro <em>C</em>.</li>
+<li>Linha 1: Inteiro \(L\).</li>
+<li>Linha 2: Inteiro \(C\).</li>
 <li>Linhas seguintes: Elementos da matriz original.</li>
 </ul>
 <p><strong>Saída:</strong></p>
 <ul>
-<li>Matriz realçada <em>L</em> × <em>C</em>.</li>
+<li>Matriz realçada \(L \times C\).</li>
 </ul>
 </div>
 <div style="background-color:#fffde7;border-left:5px solid #fbc02d;padding:15px;margin-bottom:25px;">

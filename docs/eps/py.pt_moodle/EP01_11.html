@@ -4,12 +4,12 @@
 <div>
 <li>Leia um inteiro <strong>n</strong>, representando o tamanho do vetor.</li>
 <li>Leia os <strong>n</strong> elementos inteiros que compõem o vetor original <strong>v1</strong>.</li>
-<li>Crie um novo vetor <strong>v2</strong>, onde cada posição <em>i</em> é o resultado da comparação entre o elemento atual e seus vizinhos imediatos:</li>
+<li>Crie um novo vetor <strong>v2</strong>, onde cada posição \(i\) é o resultado da comparação entre o elemento atual e seus vizinhos imediatos:</li>
 </div>
-<p><p style="text-align:center;font-family:monospace;font-size:1.1em;padding:8px;background:#f8f8f8;border-radius:4px;border:1px solid #ddd;"><em>v</em>2[<em>i</em>] = \max(<em>v</em>1[<em>i</em>-1],\; <em>v</em>1[<em>i</em>],\; <em>v</em>1[<em>i</em>+1])</p></p>
+<p><div style="text-align:center;display:block;margin:0.5em 0;">$$v2[i] = \max(v1[i-1],\; v1[i],\; v1[i+1])$$</div></p>
 <p>📌 <strong>Importante</strong>:</p>
 <div>
-<li><strong>Bordas:</strong> Nas extremidades do vetor (índices 0 e <em>n</em>-1), a vizinhança possui apenas dois elementos (o próprio e o único vizinho disponível). No índice 0, compare apenas <em>v</em>1[0] e <em>v</em>1[1]. No último índice, compare apenas <em>v</em>1[<em>n</em>-2] e <em>v</em>1[<em>n</em>-1].</li>
+<li><strong>Bordas:</strong> Nas extremidades do vetor (índices \(0\) e \(n-1\)), a vizinhança possui apenas dois elementos (o próprio e o único vizinho disponível). No índice \(0\), compare apenas \(v1[0]\) e \(v1[1]\). No último índice, compare apenas \(v1[n-2]\) e \(v1[n-1]\).</li>
 <li><strong>Saída:</strong> Imprima o cabeçalho “v2:” seguido pelos valores do vetor resultante, um por linha.</li>
 <li>Ver um simulador interativo para esta questão na <strong>Figura 1.22</strong> (passe o mouse sobre os resultados para visualizar a janela de vizinhança utilizada no cálculo).</li>
 </div>

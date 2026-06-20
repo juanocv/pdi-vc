@@ -1,24 +1,24 @@
 <div style="font-family:sans-serif;line-height:1.6;color:#333;max-width:1200px;margin:auto;border:1px solid #ddd;padding:20px;border-radius:8px;background:white;">
 <h2 style="color:#0056b3;border-bottom:2px solid #0056b3;padding-bottom:10px;">EP04_02 📊 Limiarização Automática de Otsu</h2>
-<p>Escolher manualmente o limiar <em>T</em> funciona quando a iluminação é estável, mas em <strong>microscopia digital</strong> e em <strong>inspeção de lâminas de sangue</strong>, cada amostra tem um contraste diferente — um limiar fixo falharia de imagem para imagem. O <strong>método de Otsu</strong> resolve isso encontrando, sozinho, o limiar que <strong>maximiza a separação estatística</strong> entre as duas classes de pixels, tornando a segmentação automática e adaptativa. Ver na Figura 4.29 uma simulação deste EP.</p>
+<p>Escolher manualmente o limiar \(T\) funciona quando a iluminação é estável, mas em <strong>microscopia digital</strong> e em <strong>inspeção de lâminas de sangue</strong>, cada amostra tem um contraste diferente — um limiar fixo falharia de imagem para imagem. O <strong>método de Otsu</strong> resolve isso encontrando, sozinho, o limiar que <strong>maximiza a separação estatística</strong> entre as duas classes de pixels, tornando a segmentação automática e adaptativa. Ver na Figura 4.29 uma simulação deste EP.</p>
 <div style="background-color:#f8f9fa;padding:15px;border:1px solid #ccc;border-radius:5px;margin-bottom:20px;">
 <h4 style="margin-top:0;color:#333;">📋 Diretrizes de Implementação</h4>
 <ol type="1">
-<li><strong>Dimensões:</strong> Ler os inteiros <em>L</em> (linhas) e <em>C</em> (colunas).</li>
+<li><strong>Dimensões:</strong> Ler os inteiros \(L\) (linhas) e \(C\) (colunas).</li>
 <li><strong>Dados:</strong> Ler os valores inteiros da matriz original linha a linha.</li>
-<li><strong>Histograma:</strong> Construir o histograma <em>h</em>[<em>i</em>], i=0,\dots,255, contando quantos pixels têm valor <em>i</em>.</li>
-<li><strong>Busca do limiar:</strong> Para cada candidato <em>T</em> de 1 a 255, calcular a <strong>variância entre classes</strong>: <p style="text-align:center;font-family:monospace;font-size:1.1em;padding:8px;background:#f8f8f8;border-radius:4px;border:1px solid #ddd;">σ_<em>B</em>^2(<em>T</em>) = (<em>n</em>_0 · <em>n</em>_1)/(<em>N</em>^2)\,(<em>m</em>_0 - <em>m</em>_1)^2</p> onde <em>n</em>_0,<em>n</em>_1 são as quantidades de pixels com valor &lt;T e ≥ <em>T</em>, <em>m</em>_0,<em>m</em>_1 são suas médias, e N=<em>L</em>× <em>C</em>.</li>
-<li><strong>Escolha:</strong> O limiar ótimo <em>T</em>^* é o que maximiza σ_<em>B</em>^2(<em>T</em>) (em caso de empate, manter o <strong>primeiro</strong> encontrado).</li>
-<li><strong>Aplicação:</strong> Binarizar a imagem usando <em>T</em>^*, com o mesmo critério <em>p</em>≥ <em>T</em>^*\Rightarrow 255.</li>
-<li><strong>Saída:</strong> Exibir <em>T</em>^* e, em seguida, a matriz binarizada.</li>
+<li><strong>Histograma:</strong> Construir o histograma \(h[i]\), \(i=0,\dots,255\), contando quantos pixels têm valor \(i\).</li>
+<li><strong>Busca do limiar:</strong> Para cada candidato \(T\) de \(1\) a \(255\), calcular a <strong>variância entre classes</strong>: <div style="text-align:center;display:block;margin:0.5em 0;">$$\sigma_B^2(T) = \frac{n_0 \cdot n_1}{N^2}\,(m_0 - m_1)^2$$</div> onde \(n_0,n_1\) são as quantidades de pixels com valor \(<T\) e \(\geq T\), \(m_0,m_1\) são suas médias, e \(N=L\times C\).</li>
+<li><strong>Escolha:</strong> O limiar ótimo \(T^*\) é o que maximiza \(\sigma_B^2(T)\) (em caso de empate, manter o <strong>primeiro</strong> encontrado).</li>
+<li><strong>Aplicação:</strong> Binarizar a imagem usando \(T^*\), com o mesmo critério \(p\geq T^*\Rightarrow 255\).</li>
+<li><strong>Saída:</strong> Exibir \(T^*\) e, em seguida, a matriz binarizada.</li>
 </ol>
 </div>
 <div style="background-color:#fffde7;border-left:5px solid #fbc02d;padding:15px;margin-bottom:25px;">
 <h4 style="margin-top:0;color:#856404;">📌 Restrições Computacionais</h4>
 <ul>
-<li><strong>Candidatos válidos:</strong> Ignorar <em>T</em> que deixe <em>n</em>_0=0 ou <em>n</em>_1=0 (classe vazia).</li>
-<li><strong>Empate:</strong> Sempre manter o <strong>primeiro</strong> <em>T</em> que atingiu o valor máximo de σ_<em>B</em>^2.</li>
-<li><strong>Tipo:</strong> <em>T</em>^* e a matriz de saída devem ser inteiros.</li>
+<li><strong>Candidatos válidos:</strong> Ignorar \(T\) que deixe \(n_0=0\) ou \(n_1=0\) (classe vazia).</li>
+<li><strong>Empate:</strong> Sempre manter o <strong>primeiro</strong> \(T\) que atingiu o valor máximo de \(\sigma_B^2\).</li>
+<li><strong>Tipo:</strong> \(T^*\) e a matriz de saída devem ser inteiros.</li>
 </ul>
 </div>
 <div style="background-color:#f0fff4;border-left:5px solid #2ecc71;padding:15px;margin-bottom:20px;">
@@ -33,9 +33,9 @@
 </thead>
 <tbody>
 <tr>
-<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;"><strong>σ_<em>B</em>^2(<em>T</em>) alta</strong></td>
-<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Classes bem separadas em <em>T</em></td>
-<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;"><em>T</em> é um bom candidato a limiar</td>
+<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;"><strong>\(\sigma_B^2(T)\) alta</strong></td>
+<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Classes bem separadas em \(T\)</td>
+<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">\(T\) é um bom candidato a limiar</td>
 </tr>
 <tr>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;"><strong>Histograma bimodal</strong></td>
@@ -45,7 +45,7 @@
 <tr>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;"><strong>Histograma unimodal</strong></td>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Um único “morro”</td>
-<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Otsu ainda escolhe <em>algum</em> <em>T</em>, mas a segmentação é pouco confiável</td>
+<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Otsu ainda escolhe <em>algum</em> \(T\), mas a segmentação é pouco confiável</td>
 </tr>
 </tbody>
 </table>
@@ -54,14 +54,14 @@
 <h4 style="margin-top:0;color:#333;">📦 Especificação de Entrada e Saída (VPL)</h4>
 <p><strong>Entrada:</strong></p>
 <ul>
-<li>Linha 1: Inteiro <em>L</em>.</li>
-<li>Linha 2: Inteiro <em>C</em>.</li>
+<li>Linha 1: Inteiro \(L\).</li>
+<li>Linha 2: Inteiro \(C\).</li>
 <li>Linhas seguintes: Elementos inteiros da matriz original.</li>
 </ul>
 <p><strong>Saída:</strong></p>
 <ul>
-<li>Linha 1: Inteiro <em>T</em>^* (limiar ótimo encontrado).</li>
-<li>Linhas seguintes: Matriz binarizada em <em>L</em> linhas e <em>C</em> colunas, valores 0 ou 255.</li>
+<li>Linha 1: Inteiro \(T^*\) (limiar ótimo encontrado).</li>
+<li>Linhas seguintes: Matriz binarizada em \(L\) linhas e \(C\) colunas, valores \(0\) ou \(255\).</li>
 </ul>
 </div>
 <div style="background-color:#fffde7;border-left:5px solid #fbc02d;padding:15px;margin-bottom:25px;">
@@ -94,7 +94,7 @@
 2<br/>
 10 250</td>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">250</td>
-<td style="padding:10px;border:1px solid #ddd;vertical-align:top;">Apenas dois valores: <em>T</em>^* fica no maior</td>
+<td style="padding:10px;border:1px solid #ddd;vertical-align:top;">Apenas dois valores: \(T^*\) fica no maior</td>
 </tr>
 </tbody>
 </table>

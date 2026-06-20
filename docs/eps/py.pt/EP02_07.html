@@ -3,25 +3,25 @@
 <p>Nesta atividade, você deve implementar o redimensionamento de uma imagem utilizando fatores de escala. Diferente da subamostragem simples, aqui utilizaremos técnicas de interpolação para permitir tanto a ampliação quanto a redução da imagem.</p>
 <div>
 <li>Leia dois inteiros <strong>L</strong> e <strong>C</strong>, representando as dimensões da matriz original.</li>
-<li>Leia dois valores reais <strong><em>s</em>_<em>x</em></strong> (escala nas linhas) e <strong><em>s</em>_<em>y</em></strong> (escala nas colunas).</li>
+<li>Leia dois valores reais <strong>\(s_x\)</strong> (escala nas linhas) e <strong>\(s_y\)</strong> (escala nas colunas).</li>
 <li>Leia uma string representando o <strong>método</strong> de interpolação (<code>nearest</code> ou <code>bilinear</code>).</li>
 <li>Leia os valores inteiros da matriz original.</li>
-<li>Calcule as novas dimensões: <em>L</em>' = round(<em>L</em> × <em>s</em>_<em>x</em>) e <em>C</em>' = round(<em>C</em> × <em>s</em>_<em>y</em>).</li>
+<li>Calcule as novas dimensões: \(L' = \text{round}(L \times s_x)\) e \(C' = \text{round}(C \times s_y)\).</li>
 <li>Imprima a matriz resultante com as novas dimensões.</li>
 <li>Ver na Figura 2.18 uma simulação deste EP.</li>
 </div>
 <p>📌 <strong>Importante</strong>:</p>
 <div>
-<li><p><strong>Mapeamento Inverso:</strong> Para cada pixel (<em>x</em>', <em>y</em>') da imagem de destino, encontre a posição correspondente na origem usando (<em>x</em>, <em>y</em>) = (<em>x</em>'/<em>s</em>_<em>x</em>, <em>y</em>'/<em>s</em>_<em>y</em>).</p></li>
+<li><p><strong>Mapeamento Inverso:</strong> Para cada pixel \((x', y')\) da imagem de destino, encontre a posição correspondente na origem usando \((x, y) = (x'/s_x, y'/s_y)\).</p></li>
 <li><p><strong>Interpolação:</strong></p></li>
 <li><p><code>nearest</code>: Seleciona o valor do pixel mais próximo (arredondamento das coordenadas).</p></li>
 <li><p><code>bilinear</code>: Realiza uma interpolação linear dupla entre os quatro pixels vizinhos mais próximos na imagem original.</p></li>
-<li><p><strong>Bordas:</strong> Certifique-se de que o mapeamento não tente acessar índices fora do intervalo [0, <em>L</em>-1] e [0, <em>C</em>-1].</p></li>
+<li><p><strong>Bordas:</strong> Certifique-se de que o mapeamento não tente acessar índices fora do intervalo \([0, L-1]\) e \([0, C-1]\).</p></li>
 </div>
 <div></div>
 <div style="background-color:#f0fff4;border-left:5px solid #2ecc71;padding:15px;margin-bottom:20px;">
 <h4 style="margin-top:0;color:#1e7e34;">🧠 Interpolação para Ampliação/Redução</h4>
-<p>Redimensionar uma imagem por fatores (<em>s</em>_<em>x</em>, <em>s</em>_<em>y</em>) exige o preenchimento de vazios (na ampliação) ou a fusão de informações (na redução). O método de interpolação define a qualidade visual do resultado:</p>
+<p>Redimensionar uma imagem por fatores \((s_x, s_y)\) exige o preenchimento de vazios (na ampliação) ou a fusão de informações (na redução). O método de interpolação define a qualidade visual do resultado:</p>
 <table style="width:100%;border-collapse:collapse;background-color:#fff;text-align:left;margin-bottom:20px;">
 <thead>
 <tr style="background-color:#f1f1f1;">
@@ -38,7 +38,7 @@
 </tr>
 <tr>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;"><strong>Bilinear</strong></td>
-<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Média ponderada dos 4 vizinhos (2 × 2).</td>
+<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Média ponderada dos 4 vizinhos (\(2 \times 2\)).</td>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Suaviza a imagem, reduzindo o serrilhamento.</td>
 </tr>
 </tbody>
@@ -52,9 +52,9 @@
 <p>A segunda linha contém <code>C</code>.</p>
 <p>A terceira linha contém os fatores <code>sx</code> e <code>sy</code>.</p>
 <p>A quarta linha contém o método <code>interp</code> (<code>nearest</code> ou <code>bilinear</code>).</p>
-<p>As linhas seguintes contêm os elementos da matriz <em>L</em> × <em>C</em>.</p>
+<p>As linhas seguintes contêm os elementos da matriz \(L \times C\).</p>
 <p><strong>Saída:</strong></p>
-<p>A matriz redimensionada com dimensões <em>L</em>' × <em>C</em>'.</p>
+<p>A matriz redimensionada com dimensões \(L' \times C'\).</p>
 <hr/>
 </div>
 <div style="background-color:#fffde7;border-left:5px solid #fbc02d;padding:15px;margin-bottom:25px;">
@@ -79,7 +79,7 @@ nearest<br/>
 1 1 2 2<br/>
 3 3 4 4<br/>
 3 3 4 4</td>
-<td style="padding:10px;border:1px solid #ddd;vertical-align:top;">Ampliação 2×: cada pixel original é replicado em um bloco 2×2. A imagem 2×2 vira 4×4.</td>
+<td style="padding:10px;border:1px solid #ddd;vertical-align:top;">Ampliação 2×: cada pixel original é replicado em um bloco 2×2. A imagem \(2\times2\) vira \(4\times4\).</td>
 </tr>
 <tr>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">2<br/>
@@ -89,7 +89,7 @@ nearest<br/>
 10 20<br/>
 30 40</td>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">10</td>
-<td style="padding:10px;border:1px solid #ddd;vertical-align:top;">Redução 0.5×: a imagem 2×2 vira 1×1. Com nearest, o único pixel de saída amostra a posição (0,0)=10.</td>
+<td style="padding:10px;border:1px solid #ddd;vertical-align:top;">Redução 0.5×: a imagem \(2\times2\) vira \(1\times1\). Com nearest, o único pixel de saída amostra a posição \((0,0)=10\).</td>
 </tr>
 </tbody>
 </table>

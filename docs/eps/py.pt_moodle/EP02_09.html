@@ -3,17 +3,17 @@
 <p>Nesta atividade, você deve implementar uma transformação afim arbitrária em uma imagem. Esta operação é a generalização de todas as transformações lineares (escala, rotação, cisalhamento) combinadas com a translação, permitindo manipulações geométricas complexas através de uma única matriz.</p>
 <div>
 <li>Leia dois inteiros <strong>L</strong> e <strong>C</strong>, representando as dimensões da matriz.</li>
-<li>Leia <strong>seis valores reais</strong> (<em>a</em>, <em>b</em>, <em>t</em>_<em>x</em>, <em>c</em>, <em>d</em>, <em>t</em>_<em>y</em>) que compõem a matriz de transformação afim 2 × 3.</li>
+<li>Leia <strong>seis valores reais</strong> (\(a, b, t_x, c, d, t_y\)) que compõem a matriz de transformação afim \(2 \times 3\).</li>
 <li>Leia uma string representando o <strong>método</strong> de interpolação (<code>nearest</code> ou <code>bilinear</code>).</li>
 <li>Leia os valores inteiros da matriz original.</li>
-<li>Aplique a transformação mantendo o tamanho original <em>L</em> × <em>C</em>.</li>
+<li>Aplique a transformação mantendo o tamanho original \(L \times C\).</li>
 <li>Imprima a matriz resultante.</li>
 <li>Ver na Figura 2.20 uma simulação deste EP.</li>
 </div>
 <p>📌 <strong>Importante</strong>:</p>
 <div>
 <li><strong>Mapeamento Inverso:</strong> Para calcular o valor de cada pixel na imagem de destino, você deve utilizar a <strong>inversa</strong> da matriz de transformação afim fornecida para encontrar a coordenada correspondente na imagem original.</li>
-<li><strong>Preenchimento:</strong> Coordenadas calculadas que caiam fora dos limites [0, <em>L</em>-1] e [0, <em>C</em>-1] da imagem original devem resultar em um pixel de valor <strong>0</strong>.</li>
+<li><strong>Preenchimento:</strong> Coordenadas calculadas que caiam fora dos limites \([0, L-1]\) e \([0, C-1]\) da imagem original devem resultar em um pixel de valor <strong>0</strong>.</li>
 <li><strong>Flexibilidade:</strong> Esta implementação deve ser capaz de realizar qualquer uma das tarefas anteriores (translação, rotação, etc.) bastando alterar os parâmetros da matriz.</li>
 </div>
 <p><strong>Dica:</strong></p>
@@ -26,10 +26,10 @@
 <div></div>
 <div style="background-color:#f0fff4;border-left:5px solid #2ecc71;padding:15px;margin-bottom:20px;">
 <h4 style="margin-top:0;color:#1e7e34;">🧠 Combinação de Operações</h4>
-<p>A transformação afim preserva pontos, retas e planos. No processamento de imagens, ela mapeia a posição (<em>x</em>, <em>y</em>) para (<em>x</em>', <em>y</em>') seguindo o sistema:</p>
-<p><p style="text-align:center;font-family:monospace;font-size:1.1em;padding:8px;background:#f8f8f8;border-radius:4px;border:1px solid #ddd;">\beginbmatrix <em>x</em>' \\ <em>y</em>' \endbmatrix = \beginbmatrix <em>a</em> &amp; <em>b</em> \\ <em>c</em> &amp; <em>d</em> \endbmatrix \beginbmatrix <em>x</em> \\ <em>y</em> \endbmatrix + \beginbmatrix <em>t</em>_<em>x</em> \\ <em>t</em>_<em>y</em> \endbmatrix</p></p>
+<p>A transformação afim preserva pontos, retas e planos. No processamento de imagens, ela mapeia a posição \((x, y)\) para \((x', y')\) seguindo o sistema:</p>
+<p><div style="text-align:center;display:block;margin:0.5em 0;">$$\begin{bmatrix} x' \\ y' \end{bmatrix} = \begin{bmatrix} a & b \\ c & d \end{bmatrix} \begin{bmatrix} x \\ y \end{bmatrix} + \begin{bmatrix} t_x \\ t_y \end{bmatrix}$$</div></p>
 <p>Ou, de forma compacta em coordenadas homogêneas:</p>
-<p><p style="text-align:center;font-family:monospace;font-size:1.1em;padding:8px;background:#f8f8f8;border-radius:4px;border:1px solid #ddd;">\beginbmatrix <em>x</em>' \\ <em>y</em>' \\ 1 \endbmatrix = \beginbmatrix <em>a</em> &amp; <em>b</em> &amp; <em>t</em>_<em>x</em> \\ <em>c</em> &amp; <em>d</em> &amp; <em>t</em>_<em>y</em> \\ 0 &amp; 0 &amp; 1 \endbmatrix \beginbmatrix <em>x</em> \\ <em>y</em> \\ 1 \endbmatrix</p></p>
+<p><div style="text-align:center;display:block;margin:0.5em 0;">$$\begin{bmatrix} x' \\ y' \\ 1 \end{bmatrix} = \begin{bmatrix} a & b & t_x \\ c & d & t_y \\ 0 & 0 & 1 \end{bmatrix} \begin{bmatrix} x \\ y \\ 1 \end{bmatrix}$$</div></p>
 <hr/>
 </div>
 <div style="background-color:#f8f9fa;padding:15px;border:1px solid #ccc;border-radius:5px;margin-bottom:20px;">
@@ -39,9 +39,9 @@
 <p>A segunda linha contém <code>C</code>.</p>
 <p>A terceira linha contém seis floats: <code>a b tx c d ty</code>.</p>
 <p>A quarta linha contém o método <code>interp</code> (<code>nearest</code> ou <code>bilinear</code>).</p>
-<p>As linhas seguintes contêm os elementos da matriz <em>L</em> × <em>C</em>.</p>
+<p>As linhas seguintes contêm os elementos da matriz \(L \times C\).</p>
 <p><strong>Saída:</strong></p>
-<p>A matriz transformada com as dimensões originais <em>L</em> × <em>C</em>.</p>
+<p>A matriz transformada com as dimensões originais \(L \times C\).</p>
 <hr/>
 </div>
 <div style="background-color:#fffde7;border-left:5px solid #fbc02d;padding:15px;margin-bottom:25px;">
@@ -64,7 +64,7 @@ bilinear<br/>
 30 40</td>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">15 20<br/>
 25 30</td>
-<td style="padding:10px;border:1px solid #ddd;vertical-align:top;">Translação fracionária (<em>t</em>_x=0.5, <em>t</em>_y=0.5): cada pixel de saída (<em>i</em>,<em>j</em>) amostra a posição (<em>i</em>+0.5,\, <em>j</em>+0.5) da entrada via bilinear. Ex: (0,0) interpola os quatro vizinhos →15.</td>
+<td style="padding:10px;border:1px solid #ddd;vertical-align:top;">Translação fracionária \((t_x=0.5, t_y=0.5)\): cada pixel de saída \((i,j)\) amostra a posição \((i+0.5,\, j+0.5)\) da entrada via bilinear. Ex: \((0,0)\) interpola os quatro vizinhos \(→15\).</td>
 </tr>
 <tr>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">3<br/>
@@ -77,7 +77,7 @@ nearest<br/>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">1 1 2<br/>
 1 1 2<br/>
 4 4 5</td>
-<td style="padding:10px;border:1px solid #ddd;vertical-align:top;">Escala 2× via matriz afim (a=2, d=2): cada pixel de saída (<em>i</em>,<em>j</em>) amostra a posição (2<em>i</em>, 2<em>j</em>) da entrada com nearest. Ex: (0,2)→(0,4) fora da imagem → nearest clipa para (0,2)=3… aguarda confirmação da lógica de borda.</td>
+<td style="padding:10px;border:1px solid #ddd;vertical-align:top;">Escala \(2\times\) via matriz afim \((a=2, d=2)\): cada pixel de saída \((i,j)\) amostra a posição \((2i, 2j)\) da entrada com nearest. Ex: \((0,2)→(0,4)\) fora da imagem \(→\) nearest clipa para \((0,2)=3\)… aguarda confirmação da lógica de borda.</td>
 </tr>
 </tbody>
 </table>

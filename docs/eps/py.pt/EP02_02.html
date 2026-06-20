@@ -3,22 +3,22 @@
 <p>Nesta atividade, você deve implementar a redução da resolução espacial de uma imagem através do processo de subamostragem.</p>
 <div>
 <li>Leia dois inteiros <strong>L</strong> e <strong>C</strong>, representando as dimensões da matriz original.</li>
-<li>Leia um valor inteiro <strong><em>f</em></strong> (<em>f</em> \ge 1), que representa o fator de amostragem.</li>
+<li>Leia um valor inteiro <strong>\(f\)</strong> (\(f \ge 1\)), que representa o fator de amostragem.</li>
 <li>Leia os valores inteiros da matriz original.</li>
-<li>A nova imagem deve ser construída selecionando o pixel da posição (<em>f</em> · <em>i</em>, <em>f</em> · <em>j</em>) da imagem original.</li>
+<li>A nova imagem deve ser construída selecionando o pixel da posição \((f \cdot i, f \cdot j)\) da imagem original.</li>
 <li>Imprima a matriz resultante com as novas dimensões.</li>
 <li>Ver na Figura 2.13 uma simulação deste EP.</li>
 </div>
 <p>📌 <strong>Importante</strong>:</p>
 <div>
-<li><strong>Dimensões Finais:</strong> A imagem amostrada terá dimensões \lceil <em>L</em>/<em>f</em> \rceil × \lceil <em>C</em>/<em>f</em> \rceil. No contexto de programação, isso equivale ao tamanho resultante de um fatiamento (slicing) com passo <em>f</em>.</li>
+<li><strong>Dimensões Finais:</strong> A imagem amostrada terá dimensões \(\lceil L/f \rceil \times \lceil C/f \rceil\). No contexto de programação, isso equivale ao tamanho resultante de um fatiamento (slicing) com passo \(f\).</li>
 <li><strong>Implementação:</strong> Não utilize funções prontas de bibliotecas de processamento de imagens (como OpenCV ou PIL) para o redimensionamento. Implemente a lógica de seleção de pixels manualmente ou via fatiamento de matrizes.</li>
 <li><strong>Aliasing:</strong> Note que este processo pode causar o efeito de <em>aliasing</em> (serrilhamento), onde detalhes finos são perdidos ou padrões indesejados aparecem.</li>
 </div>
 <div></div>
 <div style="background-color:#f0fff4;border-left:5px solid #2ecc71;padding:15px;margin-bottom:20px;">
 <h4 style="margin-top:0;color:#1e7e34;">🧠 Discretização do Espaço</h4>
-<p>A subamostragem reduz a resolução espacial de uma imagem, selecionando apenas um pixel a cada <em>f</em> pixels em cada direção. É o processo inverso da interpolação:</p>
+<p>A subamostragem reduz a resolução espacial de uma imagem, selecionando apenas um pixel a cada \(f\) pixels em cada direção. É o processo inverso da interpolação:</p>
 <table style="width:100%;border-collapse:collapse;background-color:#fff;text-align:left;margin-bottom:20px;">
 <thead>
 <tr style="background-color:#f1f1f1;">
@@ -29,9 +29,9 @@
 </thead>
 <tbody>
 <tr>
-<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;"><strong>Fator <em>f</em></strong></td>
+<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;"><strong>Fator \(f\)</strong></td>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Salto de amostragem</td>
-<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Define o intervalo de seleção. Um fator 2 reduz a largura e altura pela metade.</td>
+<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Define o intervalo de seleção. Um fator \(2\) reduz a largura e altura pela metade.</td>
 </tr>
 <tr>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;"><strong>Resolução</strong></td>
@@ -53,7 +53,7 @@
 <p>A primeira linha contém <code>L</code>.</p>
 <p>A segunda linha contém <code>C</code>.</p>
 <p>A terceira linha contém o fator <code>f</code>.</p>
-<p>As linhas seguintes contêm os elementos da matriz <em>L</em> × <em>C</em>.</p>
+<p>As linhas seguintes contêm os elementos da matriz \(L \times C\).</p>
 <p><strong>Saída:</strong></p>
 <p>A matriz reduzida com as dimensões correspondentes ao fatiamento por <code>f</code>.</p>
 <hr/>

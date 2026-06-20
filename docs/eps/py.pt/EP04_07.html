@@ -4,23 +4,23 @@
 <div style="background-color:#f8f9fa;padding:15px;border:1px solid #ccc;border-radius:5px;margin-bottom:20px;">
 <h4 style="margin-top:0;color:#333;">📋 Diretrizes de Implementação</h4>
 <ol type="1">
-<li><strong>Dimensões da imagem:</strong> Ler os inteiros <em>L</em> (linhas) e <em>C</em> (colunas) de <em>f</em>.</li>
-<li><strong>Dimensões de <em>b</em>:</strong> Ler os inteiros <em>H</em>_<em>b</em> (linhas) e <em>W</em>_<em>b</em> (colunas) do elemento estruturante ponderado.</li>
-<li><strong>Pesos:</strong> Ler a matriz <em>b</em> de pesos <strong>inteiros</strong> (podem ser negativos, zero ou positivos), linha a linha.</li>
-<li><strong>Dados:</strong> Ler a matriz <em>f</em> (a imagem original), linha a linha.</li>
-<li><strong>Vizinhança sem padding:</strong> Para cada pixel (<em>y</em>,<em>x</em>), percorrer <strong>todas</strong> as posições (by,bx) de <em>b</em> (não apenas onde valeria 1 — aqui <strong>todo</strong> peso participa), usando o mesmo deslocamento dos EPs anteriores: <p style="text-align:center;font-family:monospace;font-size:1.1em;padding:8px;background:#f8f8f8;border-radius:4px;border:1px solid #ddd;"><em>v</em>_<em>y</em> = <em>y</em> + by + <em>o</em>_<em>y</em>,\quad <em>v</em>_<em>x</em> = <em>x</em> + bx + <em>o</em>_<em>x</em>,\quad <em>o</em>_y=-\tfracH_<em>b</em>2+0,5,\quad <em>o</em>_x=-\tfracW_<em>b</em>2+0,5</p> <strong>Descartar</strong> todo (<em>v</em>_<em>y</em>,<em>v</em>_<em>x</em>) fora de [0,<em>L</em>)×[0,<em>C</em>).</li>
-<li><strong>Dilatação ponderada:</strong> Calcular <p style="text-align:center;font-family:monospace;font-size:1.1em;padding:8px;background:#f8f8f8;border-radius:4px;border:1px solid #ddd;"><em>g</em>_dil(<em>y</em>,<em>x</em>) = \max\Big(<em>f</em>(<em>y</em>,<em>x</em>),\ \max_(<em>v</em>_<em>y</em>,<em>v</em>_<em>x</em>)\ <em>v</em>álido \big(<em>f</em>(<em>v</em>_<em>y</em>,<em>v</em>_<em>x</em>) + <em>b</em>(by,bx)\big)\Big)</p></li>
-<li><strong>Erosão ponderada:</strong> Calcular, <strong>usando o mesmo <em>b</em> e sem refletir</strong>: <p style="text-align:center;font-family:monospace;font-size:1.1em;padding:8px;background:#f8f8f8;border-radius:4px;border:1px solid #ddd;"><em>g</em>_ero(<em>y</em>,<em>x</em>) = \min\Big(<em>f</em>(<em>y</em>,<em>x</em>),\ \min_(<em>v</em>_<em>y</em>,<em>v</em>_<em>x</em>)\ <em>v</em>álido \big(<em>f</em>(<em>v</em>_<em>y</em>,<em>v</em>_<em>x</em>) - <em>b</em>(by,bx)\big)\Big)</p></li>
-<li><strong>Saída:</strong> Exibir <strong>primeiro</strong> a matriz <em>g</em>_dil completa, e <strong>depois</strong> a matriz <em>g</em>_ero completa.</li>
+<li><strong>Dimensões da imagem:</strong> Ler os inteiros \(L\) (linhas) e \(C\) (colunas) de \(f\).</li>
+<li><strong>Dimensões de \(b\):</strong> Ler os inteiros \(H_b\) (linhas) e \(W_b\) (colunas) do elemento estruturante ponderado.</li>
+<li><strong>Pesos:</strong> Ler a matriz \(b\) de pesos <strong>inteiros</strong> (podem ser negativos, zero ou positivos), linha a linha.</li>
+<li><strong>Dados:</strong> Ler a matriz \(f\) (a imagem original), linha a linha.</li>
+<li><strong>Vizinhança sem padding:</strong> Para cada pixel \((y,x)\), percorrer <strong>todas</strong> as posições \((by,bx)\) de \(b\) (não apenas onde valeria \(1\) — aqui <strong>todo</strong> peso participa), usando o mesmo deslocamento dos EPs anteriores: <div style="text-align:center;display:block;margin:0.5em 0;">$$v_y = y + by + o_y,\quad v_x = x + bx + o_x,\quad o_y=-\tfrac{H_b}{2}+0{,}5,\quad o_x=-\tfrac{W_b}{2}+0{,}5$$</div> <strong>Descartar</strong> todo \((v_y,v_x)\) fora de \([0,L)\times[0,C)\).</li>
+<li><strong>Dilatação ponderada:</strong> Calcular <div style="text-align:center;display:block;margin:0.5em 0;">$$g_{dil}(y,x) = \max\Big(f(y,x),\ \max_{(v_y,v_x)\ \text{válido}} \big(f(v_y,v_x) + b(by,bx)\big)\Big)$$</div></li>
+<li><strong>Erosão ponderada:</strong> Calcular, <strong>usando o mesmo \(b\) e sem refletir</strong>: <div style="text-align:center;display:block;margin:0.5em 0;">$$g_{ero}(y,x) = \min\Big(f(y,x),\ \min_{(v_y,v_x)\ \text{válido}} \big(f(v_y,v_x) - b(by,bx)\big)\Big)$$</div></li>
+<li><strong>Saída:</strong> Exibir <strong>primeiro</strong> a matriz \(g_{dil}\) completa, e <strong>depois</strong> a matriz \(g_{ero}\) completa.</li>
 </ol>
 </div>
 <div style="background-color:#fffde7;border-left:5px solid #fbc02d;padding:15px;margin-bottom:25px;">
 <h4 style="margin-top:0;color:#856404;">📌 Restrições Computacionais</h4>
 <ul>
-<li><strong>Nenhuma das duas reflete <em>b</em></strong> — a versão ponderada não usa reflexão, mesmo na dilatação (diferente de <code>mm.dil0</code>).</li>
-<li><strong>Todos os pesos participam:</strong> Não existe aqui o filtro “B=1”; mesmo peso 0 entra na conta.</li>
+<li><strong>Nenhuma das duas reflete \(b\)</strong> — a versão ponderada não usa reflexão, mesmo na dilatação (diferente de <code>mm.dil0</code>).</li>
+<li><strong>Todos os pesos participam:</strong> Não existe aqui o filtro “\(B=1\)”; mesmo peso \(0\) entra na conta.</li>
 <li><strong>Sem padding:</strong> vizinhos fora da imagem são ignorados, nunca virtualmente preenchidos.</li>
-<li><strong>Tipo:</strong> A saída pode conter valores negativos ou maiores que 255 — <strong>não</strong> há <em>clipping</em> neste EP.</li>
+<li><strong>Tipo:</strong> A saída pode conter valores negativos ou maiores que \(255\) — <strong>não</strong> há <em>clipping</em> neste EP.</li>
 <li><strong>Dica:</strong> Para remover mensagens de overflow ao ultrapassar limites do tipo uint8, incluir no início do código:</li>
 </ul>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb66"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb66-1"><a aria-hidden="true" href="#cb66-1" tabindex="-1"></a><span class="im">import</span> warnings</span>
@@ -49,7 +49,7 @@
 </tr>
 <tr>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;"><strong>Dualidade ponderada</strong></td>
-<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">ero1(<em>f</em>,<em>b</em>) = -dil1(-<em>f</em>,<em>b</em>)</td>
+<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">\(\text{ero1}(f,b) = -\text{dil1}(-f,b)\)</td>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">A simetria entre as duas operações se mantém mesmo com pesos</td>
 </tr>
 </tbody>
@@ -59,17 +59,17 @@
 <h4 style="margin-top:0;color:#333;">📦 Especificação de Entrada e Saída (VPL)</h4>
 <p><strong>Entrada:</strong></p>
 <ul>
-<li>Linha 1: Inteiro <em>L</em>.</li>
-<li>Linha 2: Inteiro <em>C</em>.</li>
-<li>Linha 3: Inteiro <em>H</em>_<em>b</em>.</li>
-<li>Linha 4: Inteiro <em>W</em>_<em>b</em>.</li>
-<li>Próximas <em>H</em>_<em>b</em> linhas: elementos inteiros (podem ser negativos) da matriz <em>b</em>.</li>
-<li>Próximas <em>L</em> linhas: elementos inteiros da matriz <em>f</em>.</li>
+<li>Linha 1: Inteiro \(L\).</li>
+<li>Linha 2: Inteiro \(C\).</li>
+<li>Linha 3: Inteiro \(H_b\).</li>
+<li>Linha 4: Inteiro \(W_b\).</li>
+<li>Próximas \(H_b\) linhas: elementos inteiros (podem ser negativos) da matriz \(b\).</li>
+<li>Próximas \(L\) linhas: elementos inteiros da matriz \(f\).</li>
 </ul>
 <p><strong>Saída:</strong></p>
 <ul>
-<li>Primeiro a matriz <em>g</em>_dil em <em>L</em> linhas e <em>C</em> colunas.</li>
-<li>Em seguida a matriz <em>g</em>_ero em <em>L</em> linhas e <em>C</em> colunas.</li>
+<li>Primeiro a matriz \(g_{dil}\) em \(L\) linhas e \(C\) colunas.</li>
+<li>Em seguida a matriz \(g_{ero}\) em \(L\) linhas e \(C\) colunas.</li>
 </ul>
 </div>
 <div style="background-color:#fffde7;border-left:5px solid #fbc02d;padding:15px;margin-bottom:25px;">
@@ -100,7 +100,7 @@
 8 9 19<br/>
 9 10 20<br/>
 39 40 50</td>
-<td style="padding:10px;border:1px solid #ddd;vertical-align:top;">Peso central 2 acelera o crescimento na dilatação e o encolhimento na erosão</td>
+<td style="padding:10px;border:1px solid #ddd;vertical-align:top;">Peso central \(2\) acelera o crescimento na dilatação e o encolhimento na erosão</td>
 </tr>
 </tbody>
 </table>

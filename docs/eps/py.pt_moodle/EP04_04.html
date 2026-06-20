@@ -4,20 +4,20 @@
 <div style="background-color:#f8f9fa;padding:15px;border:1px solid #ccc;border-radius:5px;margin-bottom:20px;">
 <h4 style="margin-top:0;color:#333;">📋 Diretrizes de Implementação</h4>
 <ol type="1">
-<li><strong>Dimensões da imagem:</strong> Ler os inteiros <em>L</em> (linhas) e <em>C</em> (colunas) de <em>f</em>.</li>
-<li><strong>Dimensões de <em>B</em>:</strong> Ler os inteiros <em>H</em>_<em>B</em> (linhas) e <em>W</em>_<em>B</em> (colunas) do elemento estruturante.</li>
-<li><strong>Elemento estruturante:</strong> Ler a matriz <em>B</em> com valores 0 ou 1, linha a linha.</li>
-<li><strong>Dados:</strong> Ler a matriz <em>f</em> (a imagem original), linha a linha.</li>
-<li><strong>Vizinhança sem padding (sem reflexão!):</strong> Para cada pixel (<em>y</em>,<em>x</em>), percorrer as posições (by,bx) de <em>B</em> <strong>na ordem original</strong> (sem refletir), usando o mesmo deslocamento do EP04_03: <p style="text-align:center;font-family:monospace;font-size:1.1em;padding:8px;background:#f8f8f8;border-radius:4px;border:1px solid #ddd;"><em>v</em>_<em>y</em> = <em>y</em> + by + <em>o</em>_<em>y</em>,\quad <em>v</em>_<em>x</em> = <em>x</em> + bx + <em>o</em>_<em>x</em>,\quad <em>o</em>_y=-\tfracH_<em>B</em>2+0,5,\quad <em>o</em>_x=-\tfracW_<em>B</em>2+0,5</p></li>
+<li><strong>Dimensões da imagem:</strong> Ler os inteiros \(L\) (linhas) e \(C\) (colunas) de \(f\).</li>
+<li><strong>Dimensões de \(B\):</strong> Ler os inteiros \(H_B\) (linhas) e \(W_B\) (colunas) do elemento estruturante.</li>
+<li><strong>Elemento estruturante:</strong> Ler a matriz \(B\) com valores \(0\) ou \(1\), linha a linha.</li>
+<li><strong>Dados:</strong> Ler a matriz \(f\) (a imagem original), linha a linha.</li>
+<li><strong>Vizinhança sem padding (sem reflexão!):</strong> Para cada pixel \((y,x)\), percorrer as posições \((by,bx)\) de \(B\) <strong>na ordem original</strong> (sem refletir), usando o mesmo deslocamento do EP04_03: <div style="text-align:center;display:block;margin:0.5em 0;">$$v_y = y + by + o_y,\quad v_x = x + bx + o_x,\quad o_y=-\tfrac{H_B}{2}+0{,}5,\quad o_x=-\tfrac{W_B}{2}+0{,}5$$</div></li>
 </ol>
-<p><strong>Descartar</strong> todo (<em>v</em>_<em>y</em>,<em>v</em>_<em>x</em>) fora de [0,<em>L</em>)×[0,<em>C</em>). 6. <strong>Mapeamento:</strong> Calcular cada pixel de saída como o <strong>mínimo</strong> entre <em>f</em>(<em>y</em>,<em>x</em>) e todos os <em>f</em>(<em>v</em>_<em>y</em>,<em>v</em>_<em>x</em>) válidos cuja posição correspondente em <em>B</em> vale 1: <p style="text-align:center;font-family:monospace;font-size:1.1em;padding:8px;background:#f8f8f8;border-radius:4px;border:1px solid #ddd;"><em>g</em>(<em>y</em>,<em>x</em>) = \min\Big(<em>f</em>(<em>y</em>,<em>x</em>),\ \min_\substack(<em>v</em>_<em>y</em>,<em>v</em>_<em>x</em>)\ <em>v</em>álido\\ <em>B</em>(by,bx)=1 <em>f</em>(<em>v</em>_<em>y</em>,<em>v</em>_<em>x</em>)\Big)</p> 7. <strong>Saída:</strong> Exibir a matriz <em>g</em> com dimensões <em>L</em> × <em>C</em>.</p>
+<p><strong>Descartar</strong> todo \((v_y,v_x)\) fora de \([0,L)\times[0,C)\). 6. <strong>Mapeamento:</strong> Calcular cada pixel de saída como o <strong>mínimo</strong> entre \(f(y,x)\) e todos os \(f(v_y,v_x)\) válidos cuja posição correspondente em \(B\) vale \(1\): <div style="text-align:center;display:block;margin:0.5em 0;">$$g(y,x) = \min\Big(f(y,x),\ \min_{\substack{(v_y,v_x)\ \text{válido}\\ B(by,bx)=1}} f(v_y,v_x)\Big)$$</div> 7. <strong>Saída:</strong> Exibir a matriz \(g\) com dimensões \(L \times C\).</p>
 </div>
 <div style="background-color:#fffde7;border-left:5px solid #fbc02d;padding:15px;margin-bottom:25px;">
 <h4 style="margin-top:0;color:#856404;">📌 Restrições Computacionais</h4>
 <ul>
-<li><strong>Sem reflexão:</strong> Diferente da dilatação, <em>B</em> é usado <strong>exatamente como lido</strong> — refletir aqui seria um erro conceitual grave.</li>
-<li><strong>Sem padding:</strong> Vizinhos fora da imagem são simplesmente ignorados, nunca tratados como 0.</li>
-<li><strong>Robustez de borda:</strong> Se nenhuma posição válida de B=1 cair dentro do domínio, o pixel mantém seu valor original.</li>
+<li><strong>Sem reflexão:</strong> Diferente da dilatação, \(B\) é usado <strong>exatamente como lido</strong> — refletir aqui seria um erro conceitual grave.</li>
+<li><strong>Sem padding:</strong> Vizinhos fora da imagem são simplesmente ignorados, nunca tratados como \(0\).</li>
+<li><strong>Robustez de borda:</strong> Se nenhuma posição válida de \(B=1\) cair dentro do domínio, o pixel mantém seu valor original.</li>
 </ul>
 </div>
 <div style="background-color:#f0fff4;border-left:5px solid #2ecc71;padding:15px;margin-bottom:20px;">
@@ -33,16 +33,16 @@
 <tbody>
 <tr>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;"><strong>Erosão</strong></td>
-<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;"><em>g</em> ≤ <em>f</em> sempre (anti-extensiva)</td>
+<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">\(g \leq f\) sempre (anti-extensiva)</td>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Regiões claras encolhem, ruído pontual desaparece</td>
 </tr>
 <tr>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;"><strong>Dualidade</strong></td>
-<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">ero(<em>f</em>,<em>B</em>) = -dil(-<em>f</em>, <em>B</em>_ref)</td>
+<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">\(\text{ero}(f,B) = -\text{dil}(-f, B_{ref})\)</td>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Erosão e dilatação são “espelhos” matemáticos</td>
 </tr>
 <tr>
-<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;"><strong><em>B</em> maior</strong></td>
+<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;"><strong>\(B\) maior</strong></td>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Erosão mais agressiva</td>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Objetos finos somem completamente</td>
 </tr>
@@ -53,16 +53,16 @@
 <h4 style="margin-top:0;color:#333;">📦 Especificação de Entrada e Saída (VPL)</h4>
 <p><strong>Entrada:</strong></p>
 <ul>
-<li>Linha 1: Inteiro <em>L</em>.</li>
-<li>Linha 2: Inteiro <em>C</em>.</li>
-<li>Linha 3: Inteiro <em>H</em>_<em>B</em>.</li>
-<li>Linha 4: Inteiro <em>W</em>_<em>B</em>.</li>
-<li>Próximas <em>H</em>_<em>B</em> linhas: elementos inteiros (0 ou 1) da matriz <em>B</em>.</li>
-<li>Próximas <em>L</em> linhas: elementos inteiros da matriz <em>f</em>.</li>
+<li>Linha 1: Inteiro \(L\).</li>
+<li>Linha 2: Inteiro \(C\).</li>
+<li>Linha 3: Inteiro \(H_B\).</li>
+<li>Linha 4: Inteiro \(W_B\).</li>
+<li>Próximas \(H_B\) linhas: elementos inteiros (\(0\) ou \(1\)) da matriz \(B\).</li>
+<li>Próximas \(L\) linhas: elementos inteiros da matriz \(f\).</li>
 </ul>
 <p><strong>Saída:</strong></p>
 <ul>
-<li>Matriz <em>g</em> em <em>L</em> linhas e <em>C</em> colunas, valores inteiros separados por espaço.</li>
+<li>Matriz \(g\) em \(L\) linhas e \(C\) colunas, valores inteiros separados por espaço.</li>
 </ul>
 </div>
 <div style="background-color:#fffde7;border-left:5px solid #fbc02d;padding:15px;margin-bottom:25px;">
@@ -100,7 +100,7 @@
 1 1 1<br/>
 10 200 5 80</td>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">10 5 5 80</td>
-<td style="padding:10px;border:1px solid #ddd;vertical-align:top;"><em>B</em> horizontal: cada pixel “puxa” o mínimo dos vizinhos da linha</td>
+<td style="padding:10px;border:1px solid #ddd;vertical-align:top;">\(B\) horizontal: cada pixel “puxa” o mínimo dos vizinhos da linha</td>
 </tr>
 </tbody>
 </table>

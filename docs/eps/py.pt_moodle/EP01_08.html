@@ -5,9 +5,9 @@
 <li>Leia dois inteiros <strong>L</strong> e <strong>C</strong>, representando as dimensões da matriz.</li>
 <li>Leia os inteiros <strong>T</strong> (limiar), <strong>δ₁</strong> (delta 1) e <strong>δ₂</strong> (delta 2).</li>
 <li>Leia os valores inteiros da matriz.</li>
-<li>Para cada pixel <em>p</em>, aplique a regra de remapeamento condicional:</li>
+<li>Para cada pixel \(p\), aplique a regra de remapeamento condicional:</li>
 </div>
-<p><p style="text-align:center;font-family:monospace;font-size:1.1em;padding:8px;background:#f8f8f8;border-radius:4px;border:1px solid #ddd;">resultado = <em>p</em> + \delta_1 amp; se <em>p</em> lt; T; <em>p</em> + \delta_2 amp; se <em>p</em> \ge <em>T</em></p></p>
+<p><div style="text-align:center;display:block;margin:0.5em 0;">$$\text{resultado} = \begin{cases} p + \delta_1 & \text{se } p < T \\ p + \delta_2 & \text{se } p \ge T \end{cases}$$</div></p>
 <div>
 <li>Imprima a matriz resultante com os novos valores de intensidade.</li>
 </div>
@@ -33,13 +33,13 @@
 <tbody>
 <tr>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Pixels Escuros</td>
-<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;"><em>p</em> &lt; <em>T</em></td>
-<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;"><em>p</em> + \delta_1</td>
+<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">\(p < T\)</td>
+<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">\(p + \delta_1\)</td>
 </tr>
 <tr>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Pixels Claros</td>
-<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;"><em>p</em> \ge <em>T</em></td>
-<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;"><em>p</em> + \delta_2</td>
+<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">\(p \ge T\)</td>
+<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">\(p + \delta_2\)</td>
 </tr>
 </tbody>
 </table>

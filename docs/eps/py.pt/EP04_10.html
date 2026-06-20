@@ -6,18 +6,18 @@
 <div style="background-color:#f8f9fa;padding:15px;border:1px solid #ccc;border-radius:5px;margin-bottom:20px;">
 <h4 style="margin-top:0;color:#333;">📋 Diretrizes de Implementação</h4>
 <ol type="1">
-<li><p><strong>Dimensões da imagem:</strong> ler os inteiros <em>L</em> (linhas) e <em>C</em> (colunas) de <em>f</em>.</p></li>
-<li><p><strong>Dimensões de <em>B</em>:</strong> ler os inteiros <em>H</em>_<em>B</em> (linhas) e <em>W</em>_<em>B</em> (colunas) do elemento estruturante.</p></li>
-<li><p><strong>Elemento estruturante:</strong> ler a matriz <em>B</em>, contendo valores 0 ou 1, linha a linha.</p></li>
-<li><p><strong>Dados:</strong> ler a matriz binária <em>f</em> (valores 0 ou 1), linha a linha.</p></li>
-<li><p><strong>Separação:</strong> calcular <p style="text-align:center;font-family:monospace;font-size:1.1em;padding:8px;background:#f8f8f8;border-radius:4px;border:1px solid #ddd;"><em>f</em>_ero = <em>f</em> \ominus <em>B</em></p> usando erosão binária plana (como no EP04_04), eliminando conexões frágeis entre objetos.</p></li>
-<li><p><strong>Rotulação:</strong> sobre <em>f</em>_ero, identificar componentes conectados usando conectividade definida pela vizinhança <em>B</em>. A rotulação deve seguir varredura raster: ao encontrar um pixel 1 ainda não rotulado, atribuir um novo rótulo inteiro crescente a partir de 1 e propagar esse rótulo a toda a região conectada (via BFS ou DFS usando essa vizinhança).</p></li>
-<li><p><strong>Descritores:</strong> para cada rótulo <em>k</em>, calcular:</p>
+<li><p><strong>Dimensões da imagem:</strong> ler os inteiros \(L\) (linhas) e \(C\) (colunas) de \(f\).</p></li>
+<li><p><strong>Dimensões de \(B\):</strong> ler os inteiros \(H_B\) (linhas) e \(W_B\) (colunas) do elemento estruturante.</p></li>
+<li><p><strong>Elemento estruturante:</strong> ler a matriz \(B\), contendo valores \(0\) ou \(1\), linha a linha.</p></li>
+<li><p><strong>Dados:</strong> ler a matriz binária \(f\) (valores \(0\) ou \(1\)), linha a linha.</p></li>
+<li><p><strong>Separação:</strong> calcular <div style="text-align:center;display:block;margin:0.5em 0;">$$f_{ero} = f \ominus B$$</div> usando erosão binária plana (como no EP04_04), eliminando conexões frágeis entre objetos.</p></li>
+<li><p><strong>Rotulação:</strong> sobre \(f_{ero}\), identificar componentes conectados usando conectividade definida pela vizinhança \(B\). A rotulação deve seguir varredura raster: ao encontrar um pixel \(1\) ainda não rotulado, atribuir um novo rótulo inteiro crescente a partir de 1 e propagar esse rótulo a toda a região conectada (via BFS ou DFS usando essa vizinhança).</p></li>
+<li><p><strong>Descritores:</strong> para cada rótulo \(k\), calcular:</p>
 <ul>
 <li><strong>Área:</strong> número de pixels pertencentes ao rótulo;</li>
-<li><strong>Caixa delimitadora:</strong> <p style="text-align:center;font-family:monospace;font-size:1.1em;padding:8px;background:#f8f8f8;border-radius:4px;border:1px solid #ddd;">(<em>y</em>_min, <em>x</em>_min, <em>y</em>_max, <em>x</em>_max)</p></li>
+<li><strong>Caixa delimitadora:</strong> <div style="text-align:center;display:block;margin:0.5em 0;">$$(y_{min}, x_{min}, y_{max}, x_{max})$$</div></li>
 </ul></li>
-<li><p><strong>Saída:</strong> exibir o número total de rótulos e, em seguida, uma linha por rótulo no formato: <p style="text-align:center;font-family:monospace;font-size:1.1em;padding:8px;background:#f8f8f8;border-radius:4px;border:1px solid #ddd;"><em>k</em>,\ área,\ <em>y</em>_min,\ <em>x</em>_min,\ <em>y</em>_max,\ <em>x</em>_max</p></p></li>
+<li><p><strong>Saída:</strong> exibir o número total de rótulos e, em seguida, uma linha por rótulo no formato: <div style="text-align:center;display:block;margin:0.5em 0;">$$k,\ \text{área},\ y_{min},\ x_{min},\ y_{max},\ x_{max}$$</div></p></li>
 </ol>
 <hr/>
 </div>
@@ -26,7 +26,7 @@
 <ul>
 <li>A erosão deve ser aplicada antes da rotulação.</li>
 <li>A conectividade é fixa e definida pela vizinhança acima.</li>
-<li>O elemento estruturante <em>B</em> não interfere na conectividade da rotulação.</li>
+<li>O elemento estruturante \(B\) não interfere na conectividade da rotulação.</li>
 <li>Sem padding em qualquer etapa.</li>
 <li>A ordem dos rótulos segue a primeira descoberta em varredura raster.</li>
 </ul>
@@ -50,7 +50,7 @@
 </tr>
 <tr>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Conectividade</td>
-<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Definida pelo conjunto <p style="text-align:center;font-family:monospace;font-size:1.1em;padding:8px;background:#f8f8f8;border-radius:4px;border:1px solid #ddd;">\mathcalN(<em>y</em>,<em>x</em>)</p></td>
+<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Definida pelo conjunto <div style="text-align:center;display:block;margin:0.5em 0;">$$\mathcal{N}(y,x)$$</div></td>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Determina quais pixels pertencem ao mesmo componente</td>
 </tr>
 <tr>
@@ -71,17 +71,17 @@
 <h4 style="margin-top:0;color:#333;">📦 Especificação de Entrada e Saída (VPL)</h4>
 <p><strong>Entrada:</strong></p>
 <ul>
-<li>Linha 1: inteiro <em>L</em></li>
-<li>Linha 2: inteiro <em>C</em></li>
-<li>Linha 3: inteiro <em>H</em>_<em>B</em></li>
-<li>Linha 4: inteiro <em>W</em>_<em>B</em></li>
-<li>Próximas <em>H</em>_<em>B</em> linhas: matriz <em>B</em></li>
-<li>Próximas <em>L</em> linhas: matriz <em>f</em></li>
+<li>Linha 1: inteiro \(L\)</li>
+<li>Linha 2: inteiro \(C\)</li>
+<li>Linha 3: inteiro \(H_B\)</li>
+<li>Linha 4: inteiro \(W_B\)</li>
+<li>Próximas \(H_B\) linhas: matriz \(B\)</li>
+<li>Próximas \(L\) linhas: matriz \(f\)</li>
 </ul>
 <p><strong>Saída:</strong></p>
 <ul>
 <li>Linha 1: número total de rótulos encontrados</li>
-<li>Linhas seguintes: <p style="text-align:center;font-family:monospace;font-size:1.1em;padding:8px;background:#f8f8f8;border-radius:4px;border:1px solid #ddd;"><em>k</em>,\ área,\ <em>y</em>_min,\ <em>x</em>_min,\ <em>y</em>_max,\ <em>x</em>_max</p></li>
+<li>Linhas seguintes: <div style="text-align:center;display:block;margin:0.5em 0;">$$k,\ \text{área},\ y_{min},\ x_{min},\ y_{max},\ x_{max}$$</div></li>
 </ul>
 <div class="cell" id="cell-fig-04-sim-rotulacao">
 <div id="sim-ep0410" style="background-color:#fef9ef;border-radius:18px;border:1px solid #ede6d8;overflow:hidden;margin-top:20px;font-family:sans-serif;">

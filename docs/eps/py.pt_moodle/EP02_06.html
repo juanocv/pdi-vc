@@ -3,25 +3,25 @@
 <p>Nesta atividade, você deve implementar a rotação de uma imagem em torno do seu centro geométrico. Esta operação requer o mapeamento de coordenadas e o uso de técnicas de interpolação para determinar os novos valores dos pixels.</p>
 <div>
 <li>Leia dois inteiros <strong>L</strong> e <strong>C</strong>, representando as dimensões da matriz.</li>
-<li>Leia um valor real <strong>\theta</strong> (ângulo em graus) e uma string representando o <strong>método</strong> de interpolação (<code>nearest</code> ou <code>bilinear</code>).</li>
+<li>Leia um valor real <strong>\(\theta\)</strong> (ângulo em graus) e uma string representando o <strong>método</strong> de interpolação (<code>nearest</code> ou <code>bilinear</code>).</li>
 <li>Leia os valores inteiros da matriz original.</li>
-<li>Realize a rotação em torno do centro da imagem (<em>L</em>/2, <em>C</em>/2).</li>
+<li>Realize a rotação em torno do centro da imagem \((L/2, C/2)\).</li>
 <li>Imprima a matriz resultante com as mesmas dimensões da original.</li>
 <li>Ver na Figura 2.17 uma simulação deste EP.</li>
 </div>
 <p>📌 <strong>Importante</strong>:</p>
 <div>
-<li><p><strong>Mapeamento Inverso:</strong> Para evitar “buracos” na imagem final, percorra cada pixel (<em>x</em>', <em>y</em>') da imagem de destino e calcule sua posição correspondente (<em>x</em>, <em>y</em>) na imagem original usando a matriz de rotação inversa.</p></li>
+<li><p><strong>Mapeamento Inverso:</strong> Para evitar “buracos” na imagem final, percorra cada pixel \((x', y')\) da imagem de destino e calcule sua posição correspondente \((x, y)\) na imagem original usando a matriz de rotação inversa.</p></li>
 <li><p><strong>Interpolação:</strong></p></li>
 <li><p><code>nearest</code>: Atribui o valor do pixel mais próximo da coordenada calculada.</p></li>
 <li><p><code>bilinear</code>: Calcula uma média ponderada baseada nos 4 vizinhos mais próximos.</p></li>
-<li><p><strong>Bordas:</strong> Pixels cuja origem (<em>x</em>, <em>y</em>) caia fora dos limites da imagem original devem ser preenchidos com <strong>0</strong>.</p></li>
+<li><p><strong>Bordas:</strong> Pixels cuja origem \((x, y)\) caia fora dos limites da imagem original devem ser preenchidos com <strong>0</strong>.</p></li>
 </div>
 <div></div>
 <div style="background-color:#f0fff4;border-left:5px solid #2ecc71;padding:15px;margin-bottom:20px;">
 <h4 style="margin-top:0;color:#1e7e34;">🧠 Transformação por Ângulo</h4>
-<p>A rotação de um ponto (<em>x</em>, <em>y</em>) em relação à origem por um ângulo \theta é dada pela matriz de transformação. Para rotacionar em torno de um centro (<em>x</em>_<em>c</em>, <em>y</em>_<em>c</em>), primeiro transladamos o centro para a origem, rotacionamos e transladamos de volta:</p>
-<p><p style="text-align:center;font-family:monospace;font-size:1.1em;padding:8px;background:#f8f8f8;border-radius:4px;border:1px solid #ddd;">\beginbmatrix <em>x</em>' \\ <em>y</em>' \\ 1 \endbmatrix = \beginbmatrix \cos\theta &amp; -\sin\theta &amp; <em>x</em>_<em>c</em> \\ \sin\theta &amp; \cos\theta &amp; <em>y</em>_<em>c</em> \\ 0 &amp; 0 &amp; 1 \endbmatrix \beginbmatrix <em>x</em>-<em>x</em>_<em>c</em> \\ <em>y</em>-<em>y</em>_<em>c</em> \\ 1 \endbmatrix</p></p>
+<p>A rotação de um ponto \((x, y)\) em relação à origem por um ângulo \(\theta\) é dada pela matriz de transformação. Para rotacionar em torno de um centro \((x_c, y_c)\), primeiro transladamos o centro para a origem, rotacionamos e transladamos de volta:</p>
+<p><div style="text-align:center;display:block;margin:0.5em 0;">$$\begin{bmatrix} x' \\ y' \\ 1 \end{bmatrix} = \begin{bmatrix} \cos\theta & -\sin\theta & x_c \\ \sin\theta & \cos\theta & y_c \\ 0 & 0 & 1 \end{bmatrix} \begin{bmatrix} x-x_c \\ y-y_c \\ 1 \end{bmatrix}$$</div></p>
 <blockquote class="blockquote">
 <p><strong>Dica:</strong> Use o mapeamento inverso para garantir que todos os pixels da imagem de saída sejam preenchidos corretamente.</p>
 </blockquote>
@@ -33,7 +33,7 @@
 <p>A primeira linha contém <code>L</code>.</p>
 <p>A segunda linha contém <code>C</code>.</p>
 <p>A terceira linha contém o ângulo <code>theta</code> (em graus) e o método <code>interp</code> (<code>nearest</code> ou <code>bilinear</code>).</p>
-<p>As linhas seguintes contêm os elementos da matriz <em>L</em> × <em>C</em>.</p>
+<p>As linhas seguintes contêm os elementos da matriz \(L \times C\).</p>
 <p><strong>Saída:</strong></p>
 <p>A matriz rotacionada com <code>L</code> linhas e <code>C</code> colunas.</p>
 </div>
@@ -56,7 +56,7 @@
 3 4</td>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">3 1<br/>
 4 2</td>
-<td style="padding:10px;border:1px solid #ddd;vertical-align:top;">Rotação de 90° horário: a coluna 0 vira a linha 0 (de baixo para cima). (0,0)=1→(1,0), (1,0)=3→(0,0), (0,1)=2→(1,1), (1,1)=4→(0,1).</td>
+<td style="padding:10px;border:1px solid #ddd;vertical-align:top;">Rotação de 90° horário: a coluna 0 vira a linha 0 (de baixo para cima). \((0,0)=1→(1,0)\), \((1,0)=3→(0,0)\), \((0,1)=2→(1,1)\), \((1,1)=4→(0,1)\).</td>
 </tr>
 <tr>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">3<br/>
@@ -68,7 +68,7 @@
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">0 180 0<br/>
 180 255 180<br/>
 0 180 0</td>
-<td style="padding:10px;border:1px solid #ddd;vertical-align:top;">Rotação de 45°: o pixel central permanece 255; os vizinhos diretos recebem valor interpolado \approx 180 por bilinear; os cantos permanecem 0.</td>
+<td style="padding:10px;border:1px solid #ddd;vertical-align:top;">Rotação de 45°: o pixel central permanece \(255\); os vizinhos diretos recebem valor interpolado \(\approx 180\) por bilinear; os cantos permanecem \(0\).</td>
 </tr>
 </tbody>
 </table>

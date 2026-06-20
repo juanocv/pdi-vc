@@ -5,17 +5,17 @@
 <li>Leia dois inteiros <strong>L</strong> e <strong>C</strong>, representando as dimensões da matriz.</li>
 <li>Leia um inteiro <strong>T</strong>, que será o valor do limiar (corte).</li>
 <li>Leia os valores inteiros da matriz.</li>
-<li>Para cada pixel <em>p</em>, aplique a seguinte regra de binarização:</li>
+<li>Para cada pixel \(p\), aplique a seguinte regra de binarização:</li>
 </div>
-<p><p style="text-align:center;font-family:monospace;font-size:1.1em;padding:8px;background:#f8f8f8;border-radius:4px;border:1px solid #ddd;">resultado = 255 amp; se <em>p</em> gt; T; 0 amp; se <em>p</em> \le <em>T</em></p></p>
+<p><div style="text-align:center;display:block;margin:0.5em 0;">$$\text{resultado} = \begin{cases} 255 & \text{se } p > T \\ 0 & \text{se } p \le T \end{cases}$$</div></p>
 <div>
 <li>Imprima a matriz resultante contendo apenas os valores 0 ou 255.</li>
 </div>
 <p>📌 <strong>Importante</strong>:</p>
 <div>
-<li>Preste atenção ao operador: o pixel só vira branco (255) se for <strong>estritamente maior</strong> que <em>T</em>.</li>
+<li>Preste atenção ao operador: o pixel só vira branco (255) se for <strong>estritamente maior</strong> que \(T\).</li>
 <li>A saída deve manter a estrutura de matriz (L linhas e C colunas).</li>
-<li>Ver um simulador interativo para esta questão na <strong>Figura 1.18</strong> (ajuste o slider de <em>T</em> para observar como os objetos são isolados do fundo).</li>
+<li>Ver um simulador interativo para esta questão na <strong>Figura 1.18</strong> (ajuste o slider de \(T\) para observar como os objetos são isolados do fundo).</li>
 </div>
 <div></div>
 <div style="background-color:#f0fff4;border-left:5px solid #2ecc71;padding:15px;margin-bottom:20px;">
@@ -24,19 +24,19 @@
 <table style="width:100%;border-collapse:collapse;background-color:#fff;text-align:left;margin-bottom:20px;">
 <thead>
 <tr style="background-color:#f1f1f1;">
-<th style="padding:10px;border:1px solid #ddd;">Valor do Pixel (<em>p</em>)</th>
+<th style="padding:10px;border:1px solid #ddd;">Valor do Pixel (\(p\))</th>
 <th style="padding:10px;border:1px solid #ddd;">Condição</th>
 <th style="padding:10px;border:1px solid #ddd;">Resultado Final</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Escuro (<em>p</em> \le <em>T</em>)</td>
+<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Escuro (\(p \le T\))</td>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Fundo/Ruído</td>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;"><strong>0</strong> (Preto)</td>
 </tr>
 <tr>
-<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Claro (<em>p</em> &gt; <em>T</em>)</td>
+<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Claro (\(p > T\))</td>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Objeto/Destaque</td>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;"><strong>255</strong> (Branco)</td>
 </tr>
@@ -74,7 +74,7 @@
 50 129 255 64</td>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">0 0 0 255<br/>
 0 255 255 0</td>
-<td style="padding:10px;border:1px solid #ddd;vertical-align:top;">Note que o valor 128 virou 0 (pois 128 \le 128)</td>
+<td style="padding:10px;border:1px solid #ddd;vertical-align:top;">Note que o valor 128 virou 0 (pois \(128 \le 128\))</td>
 </tr>
 </tbody>
 </table>
