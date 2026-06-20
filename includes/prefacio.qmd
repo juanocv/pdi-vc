@@ -61,127 +61,98 @@ img = mm.read('lena.jpg')    # leitura da imagem
 mm.show(img)                 # exibição
 neg = mm.neg(img)            # inversão (negativo)
 mm.show(neg)
-
 ```
 
 O código-fonte está disponível em:
 **[github.com/fzampirolli/pdi-vc/tree/master/morph](https://github.com/fzampirolli/pdi-vc/tree/master/morph)**.
 
+
+
 ## Exercícios de Programação (EPs) e Validação Automática {.unnumbered}
 
-Cada unidade inclui **Exercícios de Programação (EPs)**, compostos por problemas que exigem a implementação de programas utilizando a biblioteca `morph.py` e/ou bibliotecas padrão da linguagem adotada. Os EPs têm como objetivo consolidar os conceitos teóricos por meio de atividades práticas com complexidade crescente.
+Cada unidade do livro inclui **Exercícios de Programação (EPs)** práticos e de
+complexidade crescente, projetados para consolidar a teoria por meio da biblioteca
+`morph.py` ou do padrão da linguagem escolhida.
 
-### Estrutura e Validação {.unnumbered}
+### Estrutura e Validação Local {.unnumbered}
 
-A validação automática das soluções é realizada pela classe `TestSuite`, definida no arquivo `testsuite.py`, que deve estar localizado na mesma pasta que `morph.py`:
+A validação das soluções é feita localmente pela classe `TestSuite` (`testsuite.py`),
+que compara a saída do programa com os arquivos de casos de teste (`.cases`):
 
 ```python
 TestSuite("EP01_01.py").run()
 ```
 
-A saída produzida pela implementação é comparada com os resultados esperados, definidos em arquivos de casos de teste (`.cases`), gerando ao final um relatório de conformidade.
+O sistema suporta múltiplas linguagens (Python, Java, C++, C, JavaScript e R), e a
+mesma estrutura pode ser integrada diretamente ao Moodle.
 
-O sistema oferece suporte a múltiplas linguagens de programação, incluindo Python, Java, C++, C, JavaScript e R. Os mesmos EPs e casos de teste também podem ser utilizados na plataforma Moodle para fins de avaliação.
+### Integração com o Moodle (VPL) {.unnumbered}
 
-### EPs como Atividades VPL no Moodle {.unnumbered}
+Os EPs dos *notebooks* podem ser convertidos em atividades
+**VPL (*Virtual Programming Lab*)** no Moodle. O script `ep_tools.py`
+(executado via `make build`) automatiza o processo em duas etapas:
 
-Os EPs presentes nos *notebooks* podem ser convertidos em atividades **VPL (*Virtual Programming Lab*)**, permitindo a correção automática das submissões diretamente no Moodle.
+1. **Extração** (`make eps`): gera um HTML interativo independente por EP,
+   com enunciado, exemplos e simulador, em `gen/book/eps/<versao>/`. Ver exemplo: [https://fzampirolli.github.io/pdi-vc/eps/py.pt/EP01_01.html](https://fzampirolli.github.io/pdi-vc/eps/py.pt/EP01_01.html)
+2. **Conversão** (`make moodle`): transforma o HTML em um fragmento
+   autocontido, sem dependência de CSS externo, pronto para colar no
+   editor do Moodle, em `gen/book/eps/<versao>_moodle/`. Ver exemplo: [https://fzampirolli.github.io/pdi-vc/eps/py.pt_moodle/EP01_01.html](https://fzampirolli.github.io/pdi-vc/eps/py.pt_moodle/EP01_01.html)
 
-O fluxo de geração é realizado em duas etapas pelo script `ep_tools.py`:
+Ao publicar com `make publish`, **duas versões** de cada EP ficam disponíveis
+publicamente:
 
-**Etapa 1 — Extração** (`make eps`): percorre os arquivos HTML gerados pelo Quarto
-(`gen/book/*/cap*/*.html`) e produz um arquivo HTML independente por EP, com enunciado,
-exemplos e simulador interativo. Os arquivos são gerados em:
+| Versão | URL | Fórmulas | Uso |
+|--------|-----|----------|-----|
+| **Completa** | `.../eps/py.pt/EPXX_YY.html` | ✅ MathJax perfeito | Link para o aluno ler o enunciado |
+| **Moodle** | `.../eps/py.pt_moodle/EPXX_YY.html` | ⚠️ HTML puro | Colar no editor VPL |
 
-```text
-gen/book/eps/<versao>/EPXX_YY.html
-```
-
-**Etapa 2 — Conversão para Moodle** (`make moodle`): processa cada `EPXX_YY.html` e
-produz um fragmento HTML pronto para colar no editor do Moodle, sem dependência de CSS
-externo. Os arquivos são gerados em:
-
-```text
-gen/book/eps/<versao>_moodle/EPXX_YY.html
-```
-
-Ambas as etapas são executadas automaticamente ao rodar `make build`.
-Para executar isoladamente:
-
-```bash
-make eps          # só extração  (locale atual)
-make moodle       # só conversão (locale atual)
-make eps-all      # extração de todos os locales
-make moodle-all   # conversão de todos os locales
-make eps-dry      # lista EPs sem gravar arquivos
-```
+O professor pode combinar as duas estratégias: colar a versão Moodle no editor
+VPL (simulador funcional) e incluir no enunciado um link para a versão completa,
+onde as fórmulas são renderizadas corretamente pelo MathJax.
 
 ::: {.callout-warning}
 ### Revisão obrigatória antes de publicar no Moodle {.unnumbered}
 
-A conversão é automática, mas o professor **deve revisar o HTML gerado** antes de publicá-lo
-como enunciado VPL, pois algumas construções do Quarto podem não ser convertidas
-perfeitamente:
+Embora automática, a conversão exige revisão do professor devido a limitações
+do editor TinyMCE/HTML Purifier do Moodle:
 
-- **Fórmulas matemáticas complexas** — expressões LaTeX simples (variáveis, `≥`, `×`,
-  frações) são convertidas para HTML semântico, mas notações avançadas (somatórios,
-  matrizes, integrais) podem sair incompletas ou em texto plano. Verifique especialmente
-  blocos `\begin{cases}`, `\sum`, `\int` e `\matrix`.
-- **Referências cruzadas** (`@fig-...`, `@tbl-...`) — são substituídas pelo texto do
-  rótulo; o link para a figura ou tabela original é removido, pois não existe no contexto
-  do Moodle.
-- **Figuras e imagens externas** — não são copiadas para o Moodle; se o enunciado depender
-  de uma imagem do livro, ela deve ser inserida manualmente na atividade VPL.
-- **Simuladores interativos** — funcionam se o HTML do simulador seguir o padrão
-  estabelecido (estilos *inline*, `var` em vez de `let`/`const`, `getElementById` direto).
-  Simuladores com estrutura diferente podem precisar de ajuste manual.
+- **Fórmulas matemáticas** — O TinyMCE descarta barras invertidas (`\`),
+  corrompendo equações LaTeX. Por isso, a versão Moodle converte fórmulas
+  simples para HTML puro (entidades como `&ge;`, `&times;`). Fórmulas
+  complexas (`\begin{cases}`, matrizes, integrais) podem sair incompletas —
+  revise e, se necessário, reescreva em texto ou indique a versão completa
+  via link.
+- **Referências cruzadas** — Links como `@fig-...` ou `@tbl-...` são
+  removidos, mantendo apenas o texto do rótulo.
+- **Figuras externas** — Imagens complementares devem ser inseridas
+  manualmente na atividade VPL.
+- **Simuladores** — Funcionam apenas se utilizarem JavaScript padrão com
+  estilos *inline* e manipulação direta de DOM (`getElementById`).
 :::
 
-O professor pode então:
+### Como Publicar no Moodle {.unnumbered}
 
-1. Abrir o arquivo `gen/book/eps/<versao>_moodle/EPXX_YY.html` em um editor de texto;
-2. Revisar fórmulas, referências e imagens conforme indicado acima;
-3. Criar uma atividade VPL no Moodle, colar o conteúdo no editor HTML e salvar;
-4. Importar os arquivos `.cases` correspondentes (`all/capXX/casos/`) como casos de teste;
-5. Configurar a linguagem de programação desejada.
+1. Acesse a versão Moodle do EP desejado:
+   ```
+   https://fzampirolli.github.io/pdi-vc/eps/py.pt_moodle/EPXX_YY.html
+   ```
+2. Copie o código-fonte completo da página (`Ctrl+U` → `Ctrl+A` → `Ctrl+C`).
+3. No Moodle, crie a atividade VPL → editor HTML → cole (`Ctrl+V`) e salve.
+4. Opcionalmente, adicione no enunciado VPL um link para a versão completa:
+   ```
+   https://fzampirolli.github.io/pdi-vc/eps/py.pt/EPXX_YY.html
+   ```
+5. Importe os arquivos `.cases` da pasta `all/capXX/casos/` nas configurações
+   de testes do VPL.
 
 ::: {.callout-tip}
 ### Reaproveitamento dos Casos de Teste {.unnumbered}
 
-Os arquivos `.cases` utilizados pelo `TestSuite` são diretamente compatíveis com o VPL.
-Dessa forma, o mesmo conjunto de testes pode ser empregado tanto durante o desenvolvimento
-nos *notebooks* quanto na correção automática das submissões no Moodle.
+Os arquivos `.cases` são 100% compatíveis com o VPL, permitindo usar o mesmo
+conjunto de testes tanto no desenvolvimento local quanto na correção
+automatizada no Moodle.
 :::
 
-
-::: {.callout-note}
-### EPs disponíveis online para o Moodle {.unnumbered}
-
-Os fragmentos HTML prontos para colar no Moodle são publicados automaticamente
-junto com o livro em:
-
-```
-https://fzampirolli.github.io/pdi-vc/eps/py.pt/
-```
-
-Cada EP tem sua própria URL direta. Por exemplo:
-
-```
-https://fzampirolli.github.io/pdi-vc/eps/py.pt/EP01_01.html
-https://fzampirolli.github.io/pdi-vc/eps/py.pt/EP04_01.html
-```
-
-**Como usar no Moodle:**
-
-1. Acesse a URL do EP desejado no browser
-2. Selecione todo o conteúdo da página (`Ctrl+A`)
-3. Copie (`Ctrl+C`)
-4. No Moodle, crie uma atividade VPL → editor HTML → cole (`Ctrl+V`)
-
-Ou copie direto o código-fonte — cada arquivo é um fragmento HTML
-autocontido (sem dependências externas) pronto para colar no editor
-do Moodle.
-:::
 
 
 

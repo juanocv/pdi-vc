@@ -349,13 +349,24 @@ ARIA_DIV_RE = re.compile(
 def _cases_to_inline(m: re.Match) -> str:
     r"""\\begin{cases}...\\end{cases} → versão inline com ponto-e-vírgula."""
     body = m.group(1)
-    cases = [c.strip().replace('&', '').strip() for c in re.split(r'\\\\', body)]
-    return '; '.join(c for c in cases if c)
+    # No HTML do Quarto, \\\\ (quebra de linha LaTeX) aparece como \\ (2 chars reais)
+    cases = re.split(r'\\\\', body)
+    parts = []
+    for case in cases:
+        case = re.sub(r'&amp;\s*', '', case)   # remove & de alinhamento (entidade HTML)
+        case = re.sub(r'&\s*', '', case)        # remove & literal
+        case = case.strip()
+        if case:
+            parts.append(case)
+    return '; '.join(parts)
 
 
 def latex_body_to_html(body: str) -> str:
     """Converte o corpo de uma expressão LaTeX (sem delimitadores) em HTML."""
     s = body.strip()
+
+    # Decodificar entidades HTML que o Quarto injeta no LaTeX (&amp; → &, &lt; → <)
+    s = s.replace('&amp;', '&').replace('&lt;', '<').replace('&gt;', '>').replace('&nbsp;', ' ')
 
     # \begin{cases}...\end{cases} → inline
     s = re.sub(r'\\begin\{cases\}([\s\S]*?)\\end\{cases\}', _cases_to_inline, s)
@@ -405,13 +416,15 @@ def convert_math_spans(html: str) -> str:
         return latex_body_to_html(inner)
 
     def repl_display(m: re.Match) -> str:
-        inner = re.sub(r'^\\\[|\\\]$', '', m.group(1)).strip()
-        converted = latex_body_to_html(inner)
-        return (
-            '<p style="text-align:center;font-family:monospace;font-size:1.1em;'
-            'padding:8px;background:#f8f8f8;border-radius:4px;border:1px solid #ddd;">'
-            f'{converted}</p>'
-        )
+        # IMPORTANTE: NÃO preservar LaTeX com \\ na versão Moodle.
+        # O TinyMCE descarta barras invertidas ao salvar, corrompendo o JavaScript.
+        # Converter para HTML puro (feio mas seguro). Link para versão completa
+        # com MathJax é injetado como banner por inject_moodle_styles.
+        inner = m.group(1)
+        # Strip dos delimitadores \[ \] que o Quarto inclui no conteúdo
+        inner = re.sub(r'^\s*\\\[\s*', '', inner)
+        inner = re.sub(r'\s*\\\]\s*$', '', inner).strip()
+        return latex_body_to_html(inner)
 
     html = re.sub(r'<span class="math inline">([\s\S]*?)</span>', repl_inline, html)
     html = re.sub(r'<span class="math display">([\s\S]*?)</span>', repl_display, html)
@@ -774,7 +787,22 @@ def moodle_sanitize(fragment: str) -> str:
     return fragment
 
 
-def process_ep_file(path: Path, outdir: Path) -> bool:
+def _make_link_banner(ep_name: str, base_url: str) -> str:
+    """Banner HTML com link para a versão completa do EP (fórmulas MathJax perfeitas)."""
+    url = base_url.rstrip('/') + '/' + ep_name + '.html'
+    lines = [
+        '<div style="font-family:sans-serif;background:#e8f4fd;border-left:4px solid #2980b9;'
+        'padding:10px 15px;margin-bottom:16px;border-radius:4px;font-size:13px;color:#1a5276;">',
+        '📐 <strong>Versão com fórmulas matemáticas:</strong> '
+        '<a href="' + url + '" target="_blank" style="color:#2980b9;">' + url + '</a>',
+        '<br><span style="font-size:11px;color:#555;">'
+        '(Fórmulas renderizadas pelo MathJax — abrir em nova aba)</span>',
+        '</div>',
+    ]
+    return '\n'.join(lines)
+
+
+def process_ep_file(path: Path, outdir: Path, base_url: str = '') -> bool:
     html = path.read_text(encoding='utf-8', errors='replace')
     span = find_container_span(html)
     if not span:
@@ -784,6 +812,13 @@ def process_ep_file(path: Path, outdir: Path) -> bool:
     start, end = span
     fragment = moodle_sanitize(html[start:end])
 
+    # Injetar banner com link para versão completa (MathJax) logo após o div raiz
+    if base_url:
+        ep_name = path.stem  # ex: EP04_01
+        banner = _make_link_banner(ep_name, base_url)
+        insert_at = fragment.find('>') + 1
+        fragment = fragment[:insert_at] + '\n' + banner + fragment[insert_at:]
+
     # Relatório rápido de problemas remanescentes
     warnings = []
     if 'accent-color' in fragment:
@@ -792,8 +827,6 @@ def process_ep_file(path: Path, outdir: Path) -> bool:
         warnings.append('querySelector')
     if 'dataset.' in fragment:
         warnings.append('dataset.')
-    if r'\(' in fragment:
-        warnings.append('LaTeX residual')
     if 'class="anchored"' in fragment:
         warnings.append('class=anchored')
     if 'class="math' in fragment:
@@ -816,12 +849,16 @@ def cmd_limpar(args: argparse.Namespace) -> None:
         sys.exit(1)
 
     outdir.mkdir(parents=True, exist_ok=True)
-    print(f"Entrada : {indir}")
-    print(f"Saída   : {outdir}\n")
+    base_url = getattr(args, 'base_url', '') or ''
+    print(f"Entrada  : {indir}")
+    print(f"Saída    : {outdir}")
+    if base_url:
+        print(f"Base URL : {base_url}")
+    print()
 
     ok, fail = 0, 0
     for f in sorted(indir.glob("EP*.html")):
-        if process_ep_file(f, outdir):
+        if process_ep_file(f, outdir, base_url=base_url):
             ok += 1
         else:
             fail += 1
@@ -893,6 +930,17 @@ def main() -> None:
         nargs="?",
         default=None,
         help="Pasta de saída (padrão: <PASTA_ENTRADA>_moodle)",
+    )
+    p_lim.add_argument(
+        "--base-url", "-u",
+        default="",
+        metavar="URL",
+        dest="base_url",
+        help=(
+            "URL base da versão completa dos EPs (com MathJax). "
+            "Ex: https://fzampirolli.github.io/pdi-vc/eps/py.pt "
+            "Quando fornecida, injeta um banner com link no topo de cada EP."
+        ),
     )
     p_lim.set_defaults(func=cmd_limpar)
 

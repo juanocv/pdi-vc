@@ -106,7 +106,8 @@ for lang in "${LANG_LIST[@]}"; do
       echo "      → extraindo EPs de ${versao}..."
       python ep_tools.py extrair --input "$src" --out-dir "$eps_dir" --quiet
       echo "      → gerando fragmentos Moodle para ${versao}..."
-      python ep_tools.py limpar "$eps_dir" "$moodle_dir"
+      python ep_tools.py limpar "$eps_dir" "$moodle_dir" \
+        --base-url "https://fzampirolli.github.io/pdi-vc/eps/${versao}"
       ep_count=$(find "$moodle_dir" -name "EP*.html" 2>/dev/null | wc -l)
       echo "      ✓ ${ep_count} EPs Moodle em ${moodle_dir}/"
     fi
@@ -134,17 +135,34 @@ mkdir -p docs
 cp -rL gen/book/. docs/
 touch docs/.nojekyll
 
-# Copiar fragmentos Moodle para docs/eps/<versao>/
-# URL pública: https://fzampirolli.github.io/pdi-vc/eps/<versao>/EPXX_YY.html
+# Copiar as duas versões de EP para docs/eps/
+#
+#   docs/eps/<versao>/          → HTML completo Quarto (MathJax perfeito, link para aluno)
+#   docs/eps/<versao>_moodle/   → fragmento sem CSS externo (colar no editor VPL)
+#
+# URLs públicas:
+#   https://fzampirolli.github.io/pdi-vc/eps/py.pt/EP01_01.html        (versão completa)
+#   https://fzampirolli.github.io/pdi-vc/eps/py.pt_moodle/EP01_01.html (versão Moodle)
 for lang in "${LANG_LIST[@]}"; do
   for locale in "${LOCALE_LIST[@]}"; do
     versao="${lang}.${locale}"
+    eps_dir="gen/book/eps/${versao}"
     moodle_dir="gen/book/eps/${versao}_moodle"
-    if [ -d "$moodle_dir" ]; then
+
+    # Versão completa Quarto (fórmulas MathJax, para link público ao aluno)
+    if [ -d "$eps_dir" ]; then
       mkdir -p "docs/eps/${versao}"
-      cp "$moodle_dir"/EP*.html "docs/eps/${versao}/" 2>/dev/null || true
+      cp "$eps_dir"/EP*.html "docs/eps/${versao}/" 2>/dev/null || true
       ep_count=$(find "docs/eps/${versao}" -name "EP*.html" 2>/dev/null | wc -l)
-      echo "      ✓ ${ep_count} EPs copiados → docs/eps/${versao}/"
+      echo "      ✓ ${ep_count} EPs (versão completa) → docs/eps/${versao}/"
+    fi
+
+    # Versão Moodle (fragmento sem CSS externo, para colar no editor VPL)
+    if [ -d "$moodle_dir" ]; then
+      mkdir -p "docs/eps/${versao}_moodle"
+      cp "$moodle_dir"/EP*.html "docs/eps/${versao}_moodle/" 2>/dev/null || true
+      ep_count=$(find "docs/eps/${versao}_moodle" -name "EP*.html" 2>/dev/null | wc -l)
+      echo "      ✓ ${ep_count} EPs (versão Moodle)    → docs/eps/${versao}_moodle/"
     fi
   done
 done
@@ -208,17 +226,21 @@ echo ""
 echo "  🌐 GitHub Pages (docs/):"
 echo "    https://fzampirolli.github.io/pdi-vc/"
 echo ""
-echo "  🎓 EPs Moodle (URLs públicas):"
+echo "  🎓 EPs — duas versões publicadas:"
 for lang in "${LANG_LIST[@]}"; do
   for locale in "${LOCALE_LIST[@]}"; do
     versao="${lang}.${locale}"
-    ep_dir="docs/eps/${versao}"
-    if [ -d "$ep_dir" ]; then
-      echo "    https://fzampirolli.github.io/pdi-vc/eps/${versao}/"
-      # Listar os EPs disponíveis
-      for ep in $(find "$ep_dir" -name "EP*.html" | sort); do
+    echo ""
+    echo "    📖 Versão completa (MathJax — link para o aluno):"
+    echo "       https://fzampirolli.github.io/pdi-vc/eps/${versao}/"
+    echo "    📋 Versão Moodle   (HTML puro — colar no editor VPL):"
+    echo "       https://fzampirolli.github.io/pdi-vc/eps/${versao}_moodle/"
+    if [ -d "docs/eps/${versao}" ]; then
+      for ep in $(find "docs/eps/${versao}" -name "EP*.html" | sort); do
         ep_name=$(basename "$ep" .html)
-        echo "      · https://fzampirolli.github.io/pdi-vc/eps/${versao}/${ep_name}.html"
+        echo "      · ${ep_name}"
+        echo "          completo : https://fzampirolli.github.io/pdi-vc/eps/${versao}/${ep_name}.html"
+        echo "          moodle   : https://fzampirolli.github.io/pdi-vc/eps/${versao}_moodle/${ep_name}.html"
       done
     fi
   done
@@ -234,5 +256,5 @@ echo "  📊 Estatísticas:"
 echo "    $(find gen -name "*.ipynb" 2>/dev/null | wc -l) notebooks traduzidos"
 echo "    $(find docs -name "*.html" 2>/dev/null | wc -l) arquivos HTML em docs/"
 echo "    $(find docs -name "*.pdf"  2>/dev/null | wc -l) arquivos PDF em docs/"
-echo "    $(find docs/eps -name "EP*.html" 2>/dev/null | wc -l) fragmentos EP Moodle em docs/eps/"
+echo "    $(find docs/eps -name "EP*.html" 2>/dev/null | wc -l) EPs publicados em docs/eps/ (completo + moodle)"
 echo "=================================================="

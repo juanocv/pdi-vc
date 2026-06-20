@@ -112,6 +112,9 @@ epub:
 
 
 # ── Extração de EPs ───────────────────────────────────────────────────────────
+
+BASE_URL ?= https://fzampirolli.github.io/pdi-vc/eps/py.$(LOCALES)
+
 .PHONY: eps
 eps:
 	python ep_tools.py extrair --input gen/book/$(LOCALES:%=py.%) 2>/dev/null || \
@@ -125,16 +128,22 @@ eps-all:
 eps-dry:
 	python ep_tools.py extrair --input gen/book --dry-run
 
-# ── Geração de fragmentos Moodle ──────────────────────────────────────────────
+# ── Conversão para Moodle ─────────────────────────────────────────────────────
+
 .PHONY: moodle
 moodle:
-	python ep_tools.py limpar gen/book/eps/$(LOCALES:%=py.%) 2>/dev/null || \
-	python ep_tools.py limpar gen/book/eps/py.pt
+	python ep_tools.py limpar \
+		gen/book/eps/py.$(LOCALES) \
+		gen/book/eps/py.$(LOCALES)_moodle \
+		--base-url "$(BASE_URL)"
 
 .PHONY: moodle-all
 moodle-all:
 	@for locale in $(LOCALES); do \
-		python ep_tools.py limpar gen/book/eps/py.$$locale; \
+		python ep_tools.py limpar \
+			gen/book/eps/py.$$locale \
+			gen/book/eps/py.$${locale}_moodle \
+			--base-url "https://fzampirolli.github.io/pdi-vc/eps/py.$$locale"; \
 	done
 
 	
@@ -170,8 +179,8 @@ help:
 	@echo "  make eps           → extrai EPs do locale atual (gen/book/eps/py.pt/)"
 	@echo "  make eps-all       → extrai EPs de todos os locales"
 	@echo "  make eps-dry       → lista EPs sem gravar"
-	@echo "  make moodle        → gera fragmentos Moodle do locale atual"
-	@echo "  make moodle-all    → gera fragmentos Moodle de todos os locales"
+	@echo "  make moodle        → converte EPs para Moodle + banner de link"
+	@echo "  make moodle-all    → converte todos os locales para Moodle"
 	@echo ""
 	@echo "  💡 Overrides: make build LANGS=cpp LOCALES=en"
-	@echo ""
+	@echo "                make moodle BASE_URL=https://meusite.com/eps/py.en"
