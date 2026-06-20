@@ -61,7 +61,7 @@ mkdir -p docs
 # Passo 1: Gerar notebooks traduzidos
 # ===================================================================
 echo ""
-echo "[1/5] Gerando notebooks traduzidos..."
+echo "[1/6] Gerando notebooks traduzidos..."
 if [ -n "$DRY_RUN" ]; then
   echo "      Modo DRY-RUN (sem chamadas à API)"
 fi
@@ -77,7 +77,7 @@ echo "      ✓ Notebooks em gen/"
 # corretamente após \begin{document}. Chamar quarto render --to pdf
 # diretamente bypassa esse patch e o PDF fica sem capa.
 echo ""
-echo "[2/5] Renderizando HTML + PDF via dev.py..."
+echo "[2/6] Renderizando HTML + PDF via dev.py..."
 python dev.py --once --langs "$LANGS" --locales "$LOCALES" --render all $DRY_RUN
 echo "      ✓ HTML e PDF em gen/book/"
 
@@ -85,16 +85,39 @@ echo "      ✓ HTML e PDF em gen/book/"
 # Passo 2b: Gerar notebooks para alunos
 # ===================================================================
 echo ""
-echo "[2b/5] Gerando notebooks para alunos..."
+echo "[2b/6] Gerando notebooks para alunos..."
 python gerar_notebooks_alunos.py --batch references.bib --out-dir notebooks_alunos
 echo "      ✓ notebooks_alunos/"
 
+# ===================================================================
+# Passo 2c: Extrair EPs e gerar fragmentos Moodle
+# ===================================================================
+echo ""
+echo "[2c/6] Extraindo EPs e gerando fragmentos Moodle..."
+IFS=',' read -ra LANG_LIST  <<< "$LANGS"
+IFS=',' read -ra LOCALE_LIST <<< "$LOCALES"
+for lang in "${LANG_LIST[@]}"; do
+  for locale in "${LOCALE_LIST[@]}"; do
+    versao="${lang}.${locale}"
+    src="gen/book/${versao}"
+    eps_dir="gen/book/eps/${versao}"
+    moodle_dir="gen/book/eps/${versao}_moodle"
+    if [ -d "$src" ]; then
+      echo "      → extraindo EPs de ${versao}..."
+      python ep_tools.py extrair --input "$src" --out-dir "$eps_dir" --quiet
+      echo "      → gerando fragmentos Moodle para ${versao}..."
+      python ep_tools.py limpar "$eps_dir" "$moodle_dir"
+      ep_count=$(find "$moodle_dir" -name "EP*.html" 2>/dev/null | wc -l)
+      echo "      ✓ ${ep_count} EPs Moodle em ${moodle_dir}/"
+    fi
+  done
+done
 
 # ===================================================================
 # Passo 3: Gerar página principal (índice) dentro de gen/book/
 # ===================================================================
 echo ""
-echo "[3/5] Gerando página principal..."
+echo "[3/6] Gerando página principal..."
 if python -m pipeline.index_builder 2>/dev/null; then
   echo "      ✓ gen/book/index.html gerado"
 else
@@ -104,23 +127,27 @@ fi
 # ===================================================================
 # Passo 4: Preparar docs/ para GitHub Pages
 # ===================================================================
-# echo ""
-# echo "[4/5] Preparando docs/..."
-# rm -rf docs
-# mkdir -p docs
-# cp -rL gen/book/. docs/
-# touch docs/.nojekyll
-# echo "      ✓ docs/ pronta"
-
-# ===================================================================
-# Passo 4: Preparar docs/ para GitHub Pages
-# ===================================================================
 echo ""
-echo "[4/5] Preparando docs/..."
+echo "[4/6] Preparando docs/..."
 rm -rf docs
 mkdir -p docs
 cp -rL gen/book/. docs/
 touch docs/.nojekyll
+
+# Copiar fragmentos Moodle para docs/eps/<versao>/
+# URL pública: https://fzampirolli.github.io/pdi-vc/eps/<versao>/EPXX_YY.html
+for lang in "${LANG_LIST[@]}"; do
+  for locale in "${LOCALE_LIST[@]}"; do
+    versao="${lang}.${locale}"
+    moodle_dir="gen/book/eps/${versao}_moodle"
+    if [ -d "$moodle_dir" ]; then
+      mkdir -p "docs/eps/${versao}"
+      cp "$moodle_dir"/EP*.html "docs/eps/${versao}/" 2>/dev/null || true
+      ep_count=$(find "docs/eps/${versao}" -name "EP*.html" 2>/dev/null | wc -l)
+      echo "      ✓ ${ep_count} EPs copiados → docs/eps/${versao}/"
+    fi
+  done
+done
 
 # Comprime PDFs grandes (>50MB) com Ghostscript
 find docs -name "*.pdf" | while read pdf; do
@@ -143,12 +170,11 @@ find docs -name "*.pdf" | while read pdf; do
 done
 echo "      ✓ docs/ pronta"
 
-
 # ===================================================================
 # Passo 5: Git commit e push
 # ===================================================================
 echo ""
-echo "[5/5] Git push principal..."
+echo "[5/6] Git push principal..."
 if [ -z "$SKIP_GIT" ]; then
   TIMESTAMP=$(date +"%Y-%m-%d %H:%M")
   git add docs/ notebooks_alunos/
@@ -170,8 +196,6 @@ echo ""
 echo "  📁 Saídas disponíveis:"
 echo "    📄 gen/book/index.html (portal principal)"
 
-IFS=',' read -ra LANG_LIST <<< "$LANGS"
-IFS=',' read -ra LOCALE_LIST <<< "$LOCALES"
 for lang in "${LANG_LIST[@]}"; do
   for locale in "${LOCALE_LIST[@]}"; do
     combo="${lang}.${locale}"
@@ -184,6 +208,22 @@ echo ""
 echo "  🌐 GitHub Pages (docs/):"
 echo "    https://fzampirolli.github.io/pdi-vc/"
 echo ""
+echo "  🎓 EPs Moodle (URLs públicas):"
+for lang in "${LANG_LIST[@]}"; do
+  for locale in "${LOCALE_LIST[@]}"; do
+    versao="${lang}.${locale}"
+    ep_dir="docs/eps/${versao}"
+    if [ -d "$ep_dir" ]; then
+      echo "    https://fzampirolli.github.io/pdi-vc/eps/${versao}/"
+      # Listar os EPs disponíveis
+      for ep in $(find "$ep_dir" -name "EP*.html" | sort); do
+        ep_name=$(basename "$ep" .html)
+        echo "      · https://fzampirolli.github.io/pdi-vc/eps/${versao}/${ep_name}.html"
+      done
+    fi
+  done
+done
+echo ""
 echo "  📂 Local:"
 echo "    open docs/index.html"
 echo "=================================================="
@@ -193,5 +233,6 @@ echo ""
 echo "  📊 Estatísticas:"
 echo "    $(find gen -name "*.ipynb" 2>/dev/null | wc -l) notebooks traduzidos"
 echo "    $(find docs -name "*.html" 2>/dev/null | wc -l) arquivos HTML em docs/"
-echo "    $(find docs -name "*.pdf" 2>/dev/null | wc -l) arquivos PDF em docs/"
+echo "    $(find docs -name "*.pdf"  2>/dev/null | wc -l) arquivos PDF em docs/"
+echo "    $(find docs/eps -name "EP*.html" 2>/dev/null | wc -l) fragmentos EP Moodle em docs/eps/"
 echo "=================================================="

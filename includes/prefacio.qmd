@@ -154,6 +154,36 @@ nos *notebooks* quanto na correção automática das submissões no Moodle.
 :::
 
 
+::: {.callout-note}
+### EPs disponíveis online para o Moodle {.unnumbered}
+
+Os fragmentos HTML prontos para colar no Moodle são publicados automaticamente
+junto com o livro em:
+
+```
+https://fzampirolli.github.io/pdi-vc/eps/py.pt/
+```
+
+Cada EP tem sua própria URL direta. Por exemplo:
+
+```
+https://fzampirolli.github.io/pdi-vc/eps/py.pt/EP01_01.html
+https://fzampirolli.github.io/pdi-vc/eps/py.pt/EP04_01.html
+```
+
+**Como usar no Moodle:**
+
+1. Acesse a URL do EP desejado no browser
+2. Selecione todo o conteúdo da página (`Ctrl+A`)
+3. Copie (`Ctrl+C`)
+4. No Moodle, crie uma atividade VPL → editor HTML → cole (`Ctrl+V`)
+
+Ou copie direto o código-fonte — cada arquivo é um fragmento HTML
+autocontido (sem dependências externas) pronto para colar no editor
+do Moodle.
+:::
+
+
 
 ## Idiomas e Conversão de Código {.unnumbered}
 
