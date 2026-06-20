@@ -1,0 +1,85 @@
+## Exercícios de Programação (EPs) e Validação Automática {.unnumbered}
+
+Cada unidade inclui **Exercícios de Programação (EPs)**, compostos por problemas que exigem a implementação de programas utilizando a biblioteca `morph.py` e/ou bibliotecas padrão da linguagem adotada. Os EPs têm como objetivo consolidar os conceitos teóricos por meio de atividades práticas com complexidade crescente.
+
+### Estrutura e Validação {.unnumbered}
+
+A validação automática das soluções é realizada pela classe `TestSuite`, definida no arquivo `testsuite.py`, que deve estar localizado na mesma pasta que `morph.py`:
+
+```python
+TestSuite("EP01_01.py").run()
+```
+
+A saída produzida pela implementação é comparada com os resultados esperados, definidos em arquivos de casos de teste (`.cases`), gerando ao final um relatório de conformidade.
+
+O sistema oferece suporte a múltiplas linguagens de programação, incluindo Python, Java, C++, C, JavaScript e R. Os mesmos EPs e casos de teste também podem ser utilizados na plataforma Moodle para fins de avaliação.
+
+### EPs como Atividades VPL no Moodle {.unnumbered}
+
+Os EPs presentes nos *notebooks* podem ser convertidos em atividades **VPL (*Virtual Programming Lab*)**, permitindo a correção automática das submissões diretamente no Moodle.
+
+O fluxo de geração é realizado em duas etapas pelo script `ep_tools.py`:
+
+**Etapa 1 — Extração** (`make eps`): percorre os arquivos HTML gerados pelo Quarto
+(`gen/book/*/cap*/*.html`) e produz um arquivo HTML independente por EP, com enunciado,
+exemplos e simulador interativo. Os arquivos são gerados em:
+
+```text
+gen/book/eps/<versao>/EPXX_YY.html
+```
+
+**Etapa 2 — Conversão para Moodle** (`make moodle`): processa cada `EPXX_YY.html` e
+produz um fragmento HTML pronto para colar no editor do Moodle, sem dependência de CSS
+externo. Os arquivos são gerados em:
+
+```text
+gen/book/eps/<versao>_moodle/EPXX_YY.html
+```
+
+Ambas as etapas são executadas automaticamente ao rodar `make build`.
+Para executar isoladamente:
+
+```bash
+make eps          # só extração  (locale atual)
+make moodle       # só conversão (locale atual)
+make eps-all      # extração de todos os locales
+make moodle-all   # conversão de todos os locales
+make eps-dry      # lista EPs sem gravar arquivos
+```
+
+::: {.callout-warning}
+### Revisão obrigatória antes de publicar no Moodle {.unnumbered}
+
+A conversão é automática, mas o professor **deve revisar o HTML gerado** antes de publicá-lo
+como enunciado VPL, pois algumas construções do Quarto podem não ser convertidas
+perfeitamente:
+
+- **Fórmulas matemáticas complexas** — expressões LaTeX simples (variáveis, `≥`, `×`,
+  frações) são convertidas para HTML semântico, mas notações avançadas (somatórios,
+  matrizes, integrais) podem sair incompletas ou em texto plano. Verifique especialmente
+  blocos `\begin{cases}`, `\sum`, `\int` e `\matrix`.
+- **Referências cruzadas** (`@fig-...`, `@tbl-...`) — são substituídas pelo texto do
+  rótulo; o link para a figura ou tabela original é removido, pois não existe no contexto
+  do Moodle.
+- **Figuras e imagens externas** — não são copiadas para o Moodle; se o enunciado depender
+  de uma imagem do livro, ela deve ser inserida manualmente na atividade VPL.
+- **Simuladores interativos** — funcionam se o HTML do simulador seguir o padrão
+  estabelecido (estilos *inline*, `var` em vez de `let`/`const`, `getElementById` direto).
+  Simuladores com estrutura diferente podem precisar de ajuste manual.
+:::
+
+O professor pode então:
+
+1. Abrir o arquivo `gen/book/eps/<versao>_moodle/EPXX_YY.html` em um editor de texto;
+2. Revisar fórmulas, referências e imagens conforme indicado acima;
+3. Criar uma atividade VPL no Moodle, colar o conteúdo no editor HTML e salvar;
+4. Importar os arquivos `.cases` correspondentes (`all/capXX/casos/`) como casos de teste;
+5. Configurar a linguagem de programação desejada.
+
+::: {.callout-tip}
+### Reaproveitamento dos Casos de Teste {.unnumbered}
+
+Os arquivos `.cases` utilizados pelo `TestSuite` são diretamente compatíveis com o VPL.
+Dessa forma, o mesmo conjunto de testes pode ser empregado tanto durante o desenvolvimento
+nos *notebooks* quanto na correção automática das submissões no Moodle.
+:::

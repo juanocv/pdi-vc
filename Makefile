@@ -1,6 +1,6 @@
 # Makefile — PDI+VC  (atalhos de desenvolvimento)
 # ─────────────────────────────────────────────────
-# make build    → build único py+pt + HTML + índice
+# make build    → build único py+pt + HTML + índice + eps + moodle
 # make build-pdf→ build único py+pt + PDF + índice
 # make build-all→ build único py+pt + HTML+PDF + índice
 # make html     → watch py+pt, renderiza HTML ao salvar
@@ -35,9 +35,9 @@ all-formats:
 build:
 	$(PY) --once --langs $(LANGS) --locales $(LOCALES) --render html
 	$(MAKE) index
-#python extrair_eps.py --input gen/book/$(LOCALES:%=py.%) 2>/dev/null || \
-#	python extrair_eps.py --input gen/book
-		
+	$(MAKE) eps
+	$(MAKE) moodle
+
 .PHONY: build-pdf
 build-pdf:
 	$(PY) --once --langs $(LANGS) --locales $(LOCALES) --render pdf
@@ -114,16 +114,28 @@ epub:
 # ── Extração de EPs ───────────────────────────────────────────────────────────
 .PHONY: eps
 eps:
-	python extrair_eps.py --input gen/book/$(LOCALES:%=py.%) 2>/dev/null || \
-	python extrair_eps.py --input gen/book
+	python ep_tools.py extrair --input gen/book/$(LOCALES:%=py.%) 2>/dev/null || \
+	python ep_tools.py extrair --input gen/book
 
 .PHONY: eps-all
 eps-all:
-	python extrair_eps.py --input gen/book
+	python ep_tools.py extrair --input gen/book
 
 .PHONY: eps-dry
 eps-dry:
-	python extrair_eps.py --input gen/book --dry-run
+	python ep_tools.py extrair --input gen/book --dry-run
+
+# ── Geração de fragmentos Moodle ──────────────────────────────────────────────
+.PHONY: moodle
+moodle:
+	python ep_tools.py limpar gen/book/eps/$(LOCALES:%=py.%) 2>/dev/null || \
+	python ep_tools.py limpar gen/book/eps/py.pt
+
+.PHONY: moodle-all
+moodle-all:
+	@for locale in $(LOCALES); do \
+		python ep_tools.py limpar gen/book/eps/py.$$locale; \
+	done
 
 	
 # ── Ajuda ─────────────────────────────────────────────────────────────────────
@@ -131,7 +143,7 @@ eps-dry:
 help:
 	@echo ""
 	@echo "  📚 Build:"
-	@echo "  make build         → py×pt + HTML + índice"
+	@echo "  make build         → py×pt + HTML + índice + eps + moodle"
 	@echo "  make build-pdf     → py×pt + PDF + índice"
 	@echo "  make build-all     → py×pt + HTML+PDF + índice"
 	@echo "  make full          → todas linguagens×idiomas + HTML+PDF"
@@ -153,6 +165,13 @@ help:
 	@echo "  make clean         → apaga gen/, docs/ e .cache/"
 	@echo "  make clean-cache   → apaga só .cache/"
 	@echo "  make clean-gen     → apaga gen/ e docs/"
+	@echo ""
+	@echo "  🎓 EPs e Moodle:"
+	@echo "  make eps           → extrai EPs do locale atual (gen/book/eps/py.pt/)"
+	@echo "  make eps-all       → extrai EPs de todos os locales"
+	@echo "  make eps-dry       → lista EPs sem gravar"
+	@echo "  make moodle        → gera fragmentos Moodle do locale atual"
+	@echo "  make moodle-all    → gera fragmentos Moodle de todos os locales"
 	@echo ""
 	@echo "  💡 Overrides: make build LANGS=cpp LOCALES=en"
 	@echo ""

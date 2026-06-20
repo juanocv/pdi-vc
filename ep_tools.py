@@ -418,85 +418,156 @@ def convert_math_spans(html: str) -> str:
     return html
 
 
-# ── Sanitização de estrutura Quarto → HTML inline ────────────────────────────
+# ── Injeção de estilos inline (gabarito EP03_01) ─────────────────────────────
+#
+# Mapeamento emoji → caixa colorida (padrão EP03_01):
+#   🧠  fundamentação teórica  → caixa verde
+#   📋  diretrizes / cenário   → caixa cinza
+#   📌  requisitos / exemplos  → caixa amarela
+#   📦  especificação I/O      → caixa cinza
+#
+_EMOJI_BOX: dict[str, dict[str, str]] = {
+    '🧠': {
+        'div': 'background-color:#f0fff4;border-left:5px solid #2ecc71;padding:15px;margin-bottom:20px;',
+        'h':   'margin-top:0;color:#1e7e34;',
+    },
+    '📋': {
+        'div': 'background-color:#f8f9fa;padding:15px;border:1px solid #ccc;border-radius:5px;margin-bottom:20px;',
+        'h':   'margin-top:0;color:#333;',
+    },
+    '📌': {
+        'div': 'background-color:#fffde7;border-left:5px solid #fbc02d;padding:15px;margin-bottom:25px;',
+        'h':   'margin-top:0;color:#856404;',
+    },
+    '📦': {
+        'div': 'background-color:#f8f9fa;padding:15px;border:1px solid #ccc;border-radius:5px;margin-bottom:20px;',
+        'h':   'margin-top:0;color:#333;',
+    },
+}
 
-def strip_quarto_structure(html: str) -> str:
+_TABLE_STYLE    = 'width:100%;border-collapse:collapse;background-color:#fff;text-align:left;margin-bottom:20px;'
+_TH_STYLE       = 'padding:10px;border:1px solid #ddd;'
+_TD_CODE_STYLE  = 'padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;'
+_TD_TEXT_STYLE  = 'padding:10px;border:1px solid #ddd;vertical-align:top;'
+_OUTER_STYLE    = ('font-family:sans-serif;line-height:1.6;color:#333;max-width:1200px;'
+                   'margin:auto;border:1px solid #ddd;padding:20px;border-radius:8px;background:white;')
+_H2_STYLE       = 'color:#0056b3;border-bottom:2px solid #0056b3;padding-bottom:10px;'
+
+
+def _style_table(table: Tag, is_examples: bool = False) -> None:
+    """Aplica estilos inline à tabela e suas células (padrão EP03_01)."""
+    table['style'] = _TABLE_STYLE
+    for tr in table.find_all('tr'):
+        # Remove classes Quarto (header, odd, even)
+        tr.attrs.pop('class', None)
+        if tr.parent and tr.parent.name == 'thead':
+            tr['style'] = 'background-color:#f1f1f1;'
+            for th in tr.find_all('th'):
+                th['style'] = _TH_STYLE
+        else:
+            tds = tr.find_all('td')
+            for i, td in enumerate(tds):
+                # Última coluna de exemplos = observação (sem monospace)
+                if is_examples and i == len(tds) - 1:
+                    td['style'] = _TD_TEXT_STYLE
+                else:
+                    td['style'] = _TD_CODE_STYLE
+
+
+def _strip_section_number(text: str) -> str:
+    """Remove '4.9.1.1 ' do início de um texto de heading."""
+    return re.sub(r'^\s*[\d.]+\s+', '', text)
+
+
+def inject_moodle_styles(fragment_html: str) -> str:
     """
-    Remove/simplifica estruturas Quarto que dependem de CSS externo:
-    - <span class="header-section-number">4.9.1</span> → removido
-    - <h3 class="anchored" data-anchor-id="..." data-number="..."> → <h3>
-    - <section class="level4" data-number="..." id="..."> → <div>  (fechamento </section> → </div>)
-    - class="quarto-xref" → removido (mantém o texto do link)
-    - data-anchor-id, data-number, data-execution_count → removidos
-    - quarto-float, figcaption wrappers → desenrolados para o conteúdo interno
-    - accent-color em style= → removido
+    Recebe o fragmento ep-container (já com LaTeX convertido e quarto-float
+    desenrolado) e:
+      1. Converte o h3/h4 de título em <h2> com estilo azul
+      2. Detecta o emoji de cada seção filha e injeta o style= da caixa colorida
+      3. Converte headings das seções para <h4> com estilo inline
+      4. Estiliza tabelas (thead cinza, th/td com bordas)
+      5. Envolve tudo no wrapper externo do EP03_01
     """
-    # 1. Remove <span class="header-section-number">...</span>
-    html = re.sub(r'<span class="header-section-number">[^<]*</span>\s*', '', html)
+    soup = BeautifulSoup(fragment_html, 'html.parser')
+    container = soup.find('div', class_='ep-container')
+    if not container:
+        return fragment_html  # fallback: retorna intacto
 
-    # 2. Limpa atributos Quarto de headings: class="anchored", data-anchor-id, data-number
-    def clean_heading(m: re.Match) -> str:
-        tag = m.group(1)  # h2, h3, h4
-        # Remover class="anchored" e atributos data-*
-        inner = m.group(2)
-        inner = re.sub(r'\s*class="anchored"', '', inner)
-        inner = re.sub(r'\s*data-anchor-id="[^"]*"', '', inner)
-        inner = re.sub(r'\s*data-number="[^"]*"', '', inner)
-        inner = inner.strip()
-        return f'<{tag}{" " + inner if inner else ""}>'
+    # ── 1. Título principal ───────────────────────────────────────────────────
+    title_tag = container.find(['h2', 'h3', 'h4'])
+    if title_tag:
+        for span in title_tag.find_all('span', class_='header-section-number'):
+            span.decompose()
+        ep_title = _strip_section_number(title_tag.get_text(' ', strip=True))
+        new_h2 = soup.new_tag('h2')
+        new_h2['style'] = _H2_STYLE
+        new_h2.string = ep_title
+        title_tag.replace_with(new_h2)
 
-    html = re.sub(
-        r'<(h[2-6])(\s[^>]*)?>',
-        lambda m: clean_heading(m) if m.group(2) and ('anchored' in m.group(2) or 'data-' in m.group(2)) else m.group(0),
-        html,
-    )
+    # ── 2. Seções filhas (section.level* ou div sem estilo) ───────────────────
+    for child in list(container.children):
+        if not isinstance(child, Tag):
+            continue
+        if child.name in ('h2', 'p'):
+            continue  # título e parágrafo de introdução — não tocar
 
-    # 3. <section class="level*" ...> → <div>  |  </section> → </div>
-    html = re.sub(r'<section[^>]+class="level\d+"[^>]*>', '<div>', html, flags=re.IGNORECASE)
-    html = re.sub(r'</section>', '</div>', html, flags=re.IGNORECASE)
+        # Encontrar o heading da seção
+        heading = child.find(['h2', 'h3', 'h4'])
+        if not heading:
+            # Sem heading — só limpar attrs Quarto e converter section→div
+            child.name = 'div'
+            for attr in ['class', 'data-number', 'id']:
+                child.attrs.pop(attr, None)
+            continue
 
-    # 4. Links quarto-xref: remover class e href interno (ref para figura inexistente)
-    html = re.sub(
-        r'<a[^>]*class="quarto-xref"[^>]*>([\s\S]*?)</a>',
-        r'\1',
-        html,
-        flags=re.IGNORECASE,
-    )
+        # Limpar header-section-number
+        for span in heading.find_all('span', class_='header-section-number'):
+            span.decompose()
+        h_text = _strip_section_number(heading.get_text(' ', strip=True))
 
-    # 5. data-execution_count e outros data-* soltos nos divs
-    html = re.sub(r'\s*data-execution_count="[^"]*"', '', html)
-    html = re.sub(r'\s*data-anchor-id="[^"]*"', '', html)
-    html = re.sub(r'\s*data-number="[^"]*"', '', html)
+        # Detectar emoji
+        emoji = next((e for e in _EMOJI_BOX if e in h_text), None)
 
-    # 6. Desenrolar quarto-float figure wrapper:
-    #    <div class="cell-output ... quarto-float ..."><figure ...>CONTEÚDO</figure></div>
-    #    → CONTEÚDO (sem figcaption)
-    def unwrap_float(m: re.Match) -> str:
-        inner = m.group(1)
-        # Remover figcaption
-        inner = FIGCAPTION_RE.sub('', inner)
-        # Remover div aria-describedby wrapper (mantém seu conteúdo)
-        inner = re.sub(r'<div\s+aria-describedby="[^"]*">([\s\S]*?)</div>', r'\1', inner)
-        return inner.strip()
+        # Converter section → div, limpar attrs Quarto
+        child.name = 'div'
+        for attr in ['class', 'data-number', 'id']:
+            child.attrs.pop(attr, None)
 
-    html = QUARTO_FLOAT_OUTER_RE.sub(unwrap_float, html)
+        if emoji:
+            box = _EMOJI_BOX[emoji]
+            child['style'] = box['div']
 
-    # 7. Remove class="cell" wrappers remanescentes (célula do simulador sem id hex)
-    html = re.sub(
-        r'<div[^>]+class="[^"]*\bcell\b[^"]*"[^>]*>\s*(<div[^>]+id="sim-)',
-        r'\1',
-        html,
-        flags=re.IGNORECASE,
-    )
+            # Heading da seção → h4 com estilo inline
+            heading.name = 'h4'
+            heading['style'] = box['h']
+            for attr in ['class', 'data-anchor-id', 'data-number']:
+                heading.attrs.pop(attr, None)
+            heading.string = h_text
 
-    # 8. accent-color: #... → remove só essa propriedade do style
-    html = re.sub(r'\s*accent-color\s*:\s*[^;"\s]+\s*;?', '', html)
+            # Estilizar tabelas dentro da seção
+            is_ex = bool(re.search(r'exemplo|example', h_text, re.IGNORECASE))
+            for table in child.find_all('table'):
+                # Remover classes Quarto da tabela
+                table.attrs.pop('class', None)
+                for colgroup in table.find_all('colgroup'):
+                    colgroup.decompose()
+                _style_table(table, is_examples=is_ex)
+        else:
+            # Emoji não reconhecido — só limpar heading
+            heading.name = 'h4'
+            for attr in ['class', 'data-anchor-id', 'data-number']:
+                heading.attrs.pop(attr, None)
 
-    # 9. Limpar classes Quarto desnecessárias de tabelas
-    html = re.sub(r'\s*class="caption-top table"', '', html)
-    html = re.sub(r'\s*class="(header|odd|even)"', '', html)
+    # ── 3. Links quarto-xref → texto puro ────────────────────────────────────
+    for a in container.find_all('a', class_='quarto-xref'):
+        a.replace_with(a.get_text())
 
-    return html
+    # ── 4. Wrapper externo ────────────────────────────────────────────────────
+    container['style'] = _OUTER_STYLE
+    del container['class']
+
+    return str(soup)
 
 
 # ── Reescrita de scripts de simulador ────────────────────────────────────────
@@ -616,16 +687,90 @@ def find_container_span(html: str) -> tuple[int, int] | None:
 
 # ── Pipeline completa ─────────────────────────────────────────────────────────
 
+def _unwrap_quarto_float(html: str) -> str:
+    """Desenrola <div class="cell-output..."><figure>CONTEÚDO</figure></div> → CONTEÚDO."""
+    def unwrap(m: re.Match) -> str:
+        inner = FIGCAPTION_RE.sub('', m.group(1))
+        inner = re.sub(r'<div\s+aria-describedby="[^"]*">([\s\S]*?)</div>', r'\1', inner)
+        return inner.strip()
+    return QUARTO_FLOAT_OUTER_RE.sub(unwrap, html)
+
+
+def _fix_sim_header(html: str) -> str:
+    """
+    Corrige a estrutura do cabeçalho do simulador gerado pelo Quarto.
+
+    Padrão errado (div de conteúdo aninhado dentro do div do título):
+      <div style="...flex...">          ← barra de título
+        🎮 Simulador: ...
+        <span>...</span>
+        <div style="padding:20px;...">  ← conteúdo fica DENTRO do título
+          ...
+        </div>
+      </div>
+
+    Padrão correto (EP03_01 — conteúdo é irmão do título):
+      <div style="...flex...">          ← barra de título
+        🎮 Simulador: ...
+        <span>...</span>
+      </div>
+      <div style="padding:20px;...">    ← conteúdo como irmão
+        ...
+      </div>
+    """
+    soup = BeautifulSoup(html, 'html.parser')
+
+    for sim in soup.find_all('div', id=re.compile(r'^sim-')):
+        # Localizar o div de título (flex + fundo bege/cinza do simulador)
+        title_div = sim.find(
+            'div',
+            style=re.compile(r'display\s*:\s*flex.*justify-content\s*:\s*space-between', re.S),
+        )
+        if not title_div:
+            continue
+
+        # Verificar se tem um div de conteúdo aninhado dentro do title_div
+        content_div = title_div.find(
+            'div',
+            style=re.compile(r'padding\s*:\s*20px'),
+            recursive=False,
+        )
+        if not content_div:
+            continue
+
+        # Extrair o content_div do interior do title_div e inserir após ele
+        content_div.extract()
+        title_div.insert_after(content_div)
+
+    return str(soup)
+
+
+    """Desenrola <div class="cell-output..."><figure>CONTEÚDO</figure></div> → CONTEÚDO."""
+    def unwrap(m: re.Match) -> str:
+        inner = FIGCAPTION_RE.sub('', m.group(1))
+        inner = re.sub(r'<div\s+aria-describedby="[^"]*">([\s\S]*?)</div>', r'\1', inner)
+        return inner.strip()
+    return QUARTO_FLOAT_OUTER_RE.sub(unwrap, html)
+
+
 def moodle_sanitize(fragment: str) -> str:
-    """Aplica a pipeline completa de sanitização para Moodle ao fragmento HTML."""
-    # 1. Remove células Quarto (%%writefile, TestSuite, outputs com id hex)
-    fragment = CELL_RE.sub('', fragment)
-    # 2. LaTeX → HTML semântico
-    fragment = convert_math_spans(fragment)
-    # 3. Estrutura Quarto → HTML inline puro
-    fragment = strip_quarto_structure(fragment)
-    # 4. Scripts: padrão Quarto → padrão EP03_01
-    fragment = sanitize_scripts(fragment)
+    """
+    Pipeline completa de conversão Quarto → HTML Moodle (padrão EP03_01):
+      1. Remove células Quarto com id hexadecimal (%%writefile, TestSuite, outputs)
+      2. Desenrola quarto-float / figcaption wrappers
+      3. Converte LaTeX inline/display → HTML semântico
+      4. Remove accent-color de inputs (causa erro #rrggbb no TinyMCE)
+      5. Injeta estilos inline: wrapper azul, caixas coloridas, tabelas estilizadas
+      6. Reescreve scripts: init(root)+querySelector+dataset → getElementById (padrão EP03_01)
+    """
+    fragment = CELL_RE.sub('', fragment)            # 1. remove células hex
+    fragment = _unwrap_quarto_float(fragment)        # 2. desenrola figure wrappers
+    fragment = convert_math_spans(fragment)          # 3. LaTeX → HTML
+    fragment = re.sub(                              # 4. accent-color
+        r'\s*accent-color\s*:\s*[^;"\s]+\s*;?', '', fragment)
+    fragment = inject_moodle_styles(fragment)        # 5. estilos inline EP03_01
+    fragment = _fix_sim_header(fragment)             # 6. título do simulador no topo
+    fragment = sanitize_scripts(fragment)            # 7. reescreve scripts
     return fragment
 
 
