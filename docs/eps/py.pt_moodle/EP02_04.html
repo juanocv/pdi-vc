@@ -1,11 +1,11 @@
 <div style="font-family:sans-serif;line-height:1.6;color:#333;max-width:1200px;margin:auto;border:1px solid #ddd;padding:20px;border-radius:8px;background:white;">
 <h2 style="color:#0056b3;border-bottom:2px solid #0056b3;padding-bottom:10px;">EP02_04 📐 Transformada de Distância em Imagem Binária</h2>
 <p>Dada uma imagem binária onde pixels de valor <strong>1</strong> representam o <em>objeto</em> e pixels <strong>0</strong> representam o <em>fundo</em>, a distância de um pixel de fundo recebe a <strong>menor distância ao pixel de objeto mais próximo</strong>. Pixels de objeto recebem distância <strong>0</strong>. Para simplificar, considere que a imagem tem <strong>apenas um único objeto com um pixel de valor 1</strong>.</p>
-<p><strong>Problema:</strong> Leia uma imagem binária \(L \times C\) e uma métrica, e calcule essa distância simplificada aplicando uma das três fórmulas:</p>
-<p><div style="text-align:center;display:block;margin:0.5em 0;">$$d_{\text{Euclidiana}} = \sqrt{(\Delta r)^2 + (\Delta c)^2}$$</div></p>
-<p><div style="text-align:center;display:block;margin:0.5em 0;">$$d_{\text{City-block}} = |\Delta r| + |\Delta c|$$</div></p>
-<p><div style="text-align:center;display:block;margin:0.5em 0;">$$d_{\text{Chessboard}} = \max(|\Delta r|,\; |\Delta c|)$$</div></p>
-<p>onde \(\Delta r\) é a diferença de linhas e \(\Delta c\) a diferença de colunas entre dois pixels.</p>
+<p><strong>Problema:</strong> Leia uma imagem binária <em>L</em> × <em>C</em> e uma métrica, e calcule essa distância simplificada aplicando uma das três fórmulas:</p>
+<p><p style="text-align:center;font-family:monospace;font-size:1.1em;padding:8px;background:#f8f8f8;border-radius:4px;border:1px solid #ddd;"><em>d</em>_Euclidiana = √((\Delta <em>r</em>)^2 + (\Delta <em>c</em>)^2)</p></p>
+<p><p style="text-align:center;font-family:monospace;font-size:1.1em;padding:8px;background:#f8f8f8;border-radius:4px;border:1px solid #ddd;"><em>d</em>_City-block = |\Delta <em>r</em>| + |\Delta <em>c</em>|</p></p>
+<p><p style="text-align:center;font-family:monospace;font-size:1.1em;padding:8px;background:#f8f8f8;border-radius:4px;border:1px solid #ddd;"><em>d</em>_Chessboard = \max(|\Delta <em>r</em>|,\; |\Delta <em>c</em>|)</p></p>
+<p>onde \Delta <em>r</em> é a diferença de linhas e \Delta <em>c</em> a diferença de colunas entre dois pixels.</p>
 <div></div>
 <div>
 <h4> 🖼️ Por que isso importa? - Aplicações da DT</h4>
@@ -26,17 +26,17 @@
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Euclidiana</td>
-<td style="text-align: left;">🔴 \(O(n^2)\) ingênuo</td>
+<td style="text-align: left;">🔴 <em>O</em>(<em>n</em>^2) ingênuo</td>
 <td style="text-align: left;">Esqueletização, matching de formas</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">City-block</td>
-<td style="text-align: left;">🟡 \(O(n)\) com 2 passes</td>
+<td style="text-align: left;">🟡 <em>O</em>(<em>n</em>) com 2 passes</td>
 <td style="text-align: left;">Morfologia, dilatação/erosão</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Chessboard</td>
-<td style="text-align: left;">🟢 \(O(n)\) com 2 passes</td>
+<td style="text-align: left;">🟢 <em>O</em>(<em>n</em>) com 2 passes</td>
 <td style="text-align: left;">Morfologia, dilatação/erosão</td>
 </tr>
 </tbody>
@@ -46,13 +46,13 @@
 <div style="background-color:#fffde7;border-left:5px solid #fbc02d;padding:15px;margin-bottom:25px;">
 <h4 style="margin-top:0;color:#856404;">📌 Requisitos Técnicos</h4>
 <ul>
-<li><strong>Entrada:</strong> * Primeira linha: \(L\) e \(C\) (inteiros).
+<li><strong>Entrada:</strong> * Primeira linha: <em>L</em> e <em>C</em> (inteiros).
 <ul>
 <li>Segunda linha: nome da métrica (<code>euclidean</code>, <code>cityblock</code> ou <code>chessboard</code>).<br/>
 </li>
-<li>Em seguida, a matriz binária \(L \times C\) (valores 0 ou 1).</li>
+<li>Em seguida, a matriz binária <em>L</em> × <em>C</em> (valores 0 ou 1).</li>
 </ul></li>
-<li><strong>Pixels de objeto (1):</strong> distância \(= 0\) (ou \(0.00\) para euclidiana).<br/>
+<li><strong>Pixels de objeto (1):</strong> distância = 0 (ou 0.00 para euclidiana).<br/>
 </li>
 <li><strong>Pixels de fundo (0):</strong> distância ao único pixel de objeto na imagem.<br/>
 </li>
@@ -86,7 +86,7 @@ chessboard<br/>
 2 1 1 1<br/>
 2 1 0 1<br/>
 2 1 1 1</td>
-<td style="padding:10px;border:1px solid #ddd;vertical-align:top;">A distância Chessboard é \(\max(\|dx\|, \|dy\|)\). O único pixel objeto é \((2,2)=0\); os demais armazenam sua distância mínima até ele.</td>
+<td style="padding:10px;border:1px solid #ddd;vertical-align:top;">A distância Chessboard é \max(\|dx\|, \|dy\|). O único pixel objeto é (2,2)=0; os demais armazenam sua distância mínima até ele.</td>
 </tr>
 </tbody>
 </table>
@@ -95,7 +95,7 @@ chessboard<br/>
 <h4 style="margin-top:0;color:#856404;">📌 Observações finais</h4>
 <ul>
 <li>Como a imagem tem <strong>apenas um objeto de um pixel</strong>, a distância de cada pixel de fundo é simplesmente a distância desse pixel ao único ponto objeto.</li>
-<li>A implementação pode usar força bruta (percorrer todos os pixels da imagem e calcular a distância diretamente), pois \(L\) e \(C\) são pequenos nos casos de teste.</li>
+<li>A implementação pode usar força bruta (percorrer todos os pixels da imagem e calcular a distância diretamente), pois <em>L</em> e <em>C</em> são pequenos nos casos de teste.</li>
 <li>Este problema é um aquecimento para a Transformada de Distância geral, que será trabalhada em capítulos posteriores com múltiplos objetos e algoritmos otimizados.</li>
 </ul>
 <div class="cell" id="cell-fig-02-distancia">

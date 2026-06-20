@@ -3,28 +3,28 @@
 <p>Nesta atividade, você deve implementar a transformação de cisalhamento em uma imagem. O cisalhamento é uma transformação afim que desloca cada ponto em uma direção fixada, por um valor proporcional à sua distância de uma reta paralela a essa direção, resultando em um efeito de inclinação.</p>
 <div>
 <li>Leia dois inteiros <strong>L</strong> e <strong>C</strong>, representando as dimensões da matriz.</li>
-<li>Leia dois valores reais <strong>\(sh_x\)</strong> (cisalhamento horizontal) e <strong>\(sh_y\)</strong> (cisalhamento vertical).</li>
+<li>Leia dois valores reais <strong>sh_<em>x</em></strong> (cisalhamento horizontal) e <strong>sh_<em>y</em></strong> (cisalhamento vertical).</li>
 <li>Leia uma string representando o <strong>método</strong> de interpolação (<code>nearest</code> ou <code>bilinear</code>).</li>
 <li>Leia os valores inteiros da matriz original.</li>
 <li>Aplique a transformação mantendo o tamanho original da imagem (cortando o que ultrapassar os limites).</li>
-<li>Imprima a matriz resultante com as dimensões \(L \times C\).</li>
+<li>Imprima a matriz resultante com as dimensões <em>L</em> × <em>C</em>.</li>
 <li>Ver na Figura 2.19 uma simulação deste EP.</li>
 </div>
 <p>📌 <strong>Importante</strong>:</p>
 <div>
-<li><strong>Mapeamento Inverso:</strong> Para cada pixel \((x', y')\) da imagem de destino, calcule a posição correspondente na origem \((x, y)\) utilizando a matriz de cisalhamento inversa.</li>
+<li><strong>Mapeamento Inverso:</strong> Para cada pixel (<em>x</em>', <em>y</em>') da imagem de destino, calcule a posição correspondente na origem (<em>x</em>, <em>y</em>) utilizando a matriz de cisalhamento inversa.</li>
 <li><strong>Preenchimento:</strong> Coordenadas que resultarem em posições fora da matriz original devem ser preenchidas com <strong>0</strong>.</li>
-<li><strong>Coordenadas:</strong> Para fins desta implementação, considere \(x\) como o índice da linha e \(y\) como o índice da coluna.</li>
+<li><strong>Coordenadas:</strong> Para fins desta implementação, considere <em>x</em> como o índice da linha e <em>y</em> como o índice da coluna.</li>
 </div>
 <div></div>
 <div style="background-color:#f0fff4;border-left:5px solid #2ecc71;padding:15px;margin-bottom:20px;">
 <h4 style="margin-top:0;color:#1e7e34;">🧠 Distorção Afim</h4>
-<p>O cisalhamento altera a geometria da imagem inclinando seus eixos. A relação entre as coordenadas originais \((x, y)\) e as transformadas \((x', y')\) é dada por:</p>
-<p><div style="text-align:center;display:block;margin:0.5em 0;">$$\begin{bmatrix} x' \\ y' \\ 1 \end{bmatrix} = \begin{bmatrix} 1 & sh_x & 0 \\ sh_y & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix} \begin{bmatrix} x \\ y \\ 1 \end{bmatrix}$$</div></p>
+<p>O cisalhamento altera a geometria da imagem inclinando seus eixos. A relação entre as coordenadas originais (<em>x</em>, <em>y</em>) e as transformadas (<em>x</em>', <em>y</em>') é dada por:</p>
+<p><p style="text-align:center;font-family:monospace;font-size:1.1em;padding:8px;background:#f8f8f8;border-radius:4px;border:1px solid #ddd;">\beginbmatrix <em>x</em>' \\ <em>y</em>' \\ 1 \endbmatrix = \beginbmatrix 1 &amp; sh_<em>x</em> &amp; 0 \\ sh_<em>y</em> &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 1 \endbmatrix \beginbmatrix <em>x</em> \\ <em>y</em> \\ 1 \endbmatrix</p></p>
 <p>Isso resulta nas equações:</p>
 <ul>
-<li>\(x' = x + sh_x \cdot y\)</li>
-<li>\(y' = y + sh_y \cdot x\)</li>
+<li><em>x</em>' = <em>x</em> + sh_<em>x</em> · <em>y</em></li>
+<li><em>y</em>' = <em>y</em> + sh_<em>y</em> · <em>x</em></li>
 </ul>
 <hr/>
 </div>
@@ -35,9 +35,9 @@
 <p>A segunda linha contém <code>C</code>.</p>
 <p>A terceira linha contém os fatores <code>shx</code> e <code>shy</code>.</p>
 <p>A quarta linha contém o método <code>interp</code> (<code>nearest</code> ou <code>bilinear</code>).</p>
-<p>As linhas seguintes contêm os elementos da matriz \(L \times C\).</p>
+<p>As linhas seguintes contêm os elementos da matriz <em>L</em> × <em>C</em>.</p>
 <p><strong>Saída:</strong></p>
-<p>A matriz transformada com as mesmas dimensões \(L \times C\).</p>
+<p>A matriz transformada com as mesmas dimensões <em>L</em> × <em>C</em>.</p>
 <hr/>
 </div>
 <div style="background-color:#fffde7;border-left:5px solid #fbc02d;padding:15px;margin-bottom:25px;">
@@ -62,7 +62,7 @@ nearest<br/>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">10 20 30<br/>
 0 40 50<br/>
 0 0 70</td>
-<td style="padding:10px;border:1px solid #ddd;vertical-align:top;">Cisalhamento horizontal: linha \(i\) desloca \(\lfloor i \cdot 0.5 \rfloor\) pixels. Linha \(0→0\)px, linha \(1→0\)px, linha \(2→1\)px. Os pixels deslocados para fora são descartados e as posições vazias preenchidas com \(0\).</td>
+<td style="padding:10px;border:1px solid #ddd;vertical-align:top;">Cisalhamento horizontal: linha <em>i</em> desloca \lfloor <em>i</em> · 0.5 \rfloor pixels. Linha 0→0px, linha 1→0px, linha 2→1px. Os pixels deslocados para fora são descartados e as posições vazias preenchidas com 0.</td>
 </tr>
 <tr>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">2<br/>
@@ -73,7 +73,7 @@ nearest<br/>
 30 40</td>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">10 0<br/>
 30 20</td>
-<td style="padding:10px;border:1px solid #ddd;vertical-align:top;">Cisalhamento vertical: coluna \(j\) desloca \(\lfloor j \cdot 1.0 \rfloor\) pixels para baixo. Coluna \(0→0\)px (inalterada), coluna \(1→1\)px: \(20\) desce para \((1,1)\) e \((0,1)\) fica \(0\).</td>
+<td style="padding:10px;border:1px solid #ddd;vertical-align:top;">Cisalhamento vertical: coluna <em>j</em> desloca \lfloor <em>j</em> · 1.0 \rfloor pixels para baixo. Coluna 0→0px (inalterada), coluna 1→1px: 20 desce para (1,1) e (0,1) fica 0.</td>
 </tr>
 </tbody>
 </table>

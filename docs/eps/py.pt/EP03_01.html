@@ -5,23 +5,23 @@
 <div style="background-color:#f8f9fa;padding:15px;border:1px solid #ccc;border-radius:5px;margin-bottom:20px;">
 <h4 style="margin-top:0;color:#333;">📋 Diretrizes de Implementação</h4>
 <ol type="1">
-<li><strong>Dimensões:</strong> Ler os inteiros \(L\) (linhas) e \(C\) (colunas).</li>
-<li><strong>Constante:</strong> Ler o inteiro \(k\) (valor a ser somado).</li>
+<li><strong>Dimensões:</strong> Ler os inteiros <em>L</em> (linhas) e <em>C</em> (colunas).</li>
+<li><strong>Constante:</strong> Ler o inteiro <em>k</em> (valor a ser somado).</li>
 <li><strong>Dados:</strong> Ler os valores inteiros da matriz original linha a linha.</li>
-<li><strong>Mapeamento:</strong> Para cada pixel \(p\), calcular o novo valor pela equação:</li>
+<li><strong>Mapeamento:</strong> Para cada pixel <em>p</em>, calcular o novo valor pela equação:</li>
 </ol>
-<p><div style="text-align:center;display:block;margin:0.5em 0;">$$p' = \text{clip}(p + k)$$</div></p>
+<p><p style="text-align:center;font-family:monospace;font-size:1.1em;padding:8px;background:#f8f8f8;border-radius:4px;border:1px solid #ddd;"><em>p</em>' = clip(<em>p</em> + <em>k</em>)</p></p>
 <ol start="5" type="1">
-<li><strong>Saída:</strong> Exibir a matriz resultante com dimensões \(L \times C\).</li>
+<li><strong>Saída:</strong> Exibir a matriz resultante com dimensões <em>L</em> × <em>C</em>.</li>
 </ol>
 <hr/>
 </div>
 <div style="background-color:#fffde7;border-left:5px solid #fbc02d;padding:15px;margin-bottom:25px;">
 <h4 style="margin-top:0;color:#856404;">📌 Restrições Computacionais</h4>
 <ul>
-<li><strong>Saturação (<em>Clipping</em>):</strong> Os valores devem ser confinados ao intervalo \([0, 255]\): <div style="text-align:center;display:block;margin:0.5em 0;">$$\text{clip}(x) = \max(0, \min(255, x))$$</div></li>
+<li><strong>Saturação (<em>Clipping</em>):</strong> Os valores devem ser confinados ao intervalo [0, 255]: <p style="text-align:center;font-family:monospace;font-size:1.1em;padding:8px;background:#f8f8f8;border-radius:4px;border:1px solid #ddd;">clip(<em>x</em>) = \max(0, \min(255, <em>x</em>))</p></li>
 <li><strong>Tipo:</strong> O resultado final deve ser inteiro (sem casas decimais).</li>
-<li><strong>\(k\) pode ser negativo:</strong> valores negativos escurecem a imagem; positivos clareiam.</li>
+<li><strong><em>k</em> pode ser negativo:</strong> valores negativos escurecem a imagem; positivos clareiam.</li>
 </ul>
 <hr/>
 </div>
@@ -37,17 +37,17 @@
 </thead>
 <tbody>
 <tr>
-<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;"><strong>\(k > 0\)</strong></td>
+<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;"><strong><em>k</em> &gt; 0</strong></td>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Inteiro</td>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Clareia a imagem; pixels próximos de 255 saturam em branco</td>
 </tr>
 <tr>
-<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;"><strong>\(k < 0\)</strong></td>
+<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;"><strong><em>k</em> &lt; 0</strong></td>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Inteiro</td>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Escurece a imagem; pixels próximos de 0 saturam em preto</td>
 </tr>
 <tr>
-<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;"><strong>\(k = 0\)</strong></td>
+<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;"><strong><em>k</em> = 0</strong></td>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Inteiro</td>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Imagem inalterada</td>
 </tr>
@@ -59,14 +59,14 @@
 <h4 style="margin-top:0;color:#333;">📦 Especificação de Entrada e Saída (VPL)</h4>
 <p><strong>Entrada:</strong></p>
 <ul>
-<li>Linha 1: Inteiro \(L\).</li>
-<li>Linha 2: Inteiro \(C\).</li>
-<li>Linha 3: Inteiro \(k\).</li>
+<li>Linha 1: Inteiro <em>L</em>.</li>
+<li>Linha 2: Inteiro <em>C</em>.</li>
+<li>Linha 3: Inteiro <em>k</em>.</li>
 <li>Linhas seguintes: Elementos inteiros da matriz original.</li>
 </ul>
 <p><strong>Saída:</strong></p>
 <ul>
-<li>Matriz transformada em \(L\) linhas e \(C\) colunas, valores inteiros separados por espaço.</li>
+<li>Matriz transformada em <em>L</em> linhas e <em>C</em> colunas, valores inteiros separados por espaço.</li>
 </ul>
 </div>
 <div style="background-color:#fffde7;border-left:5px solid #fbc02d;padding:15px;margin-bottom:25px;">

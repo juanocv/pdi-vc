@@ -6,11 +6,11 @@
 <div style="background-color:#f8f9fa;padding:15px;border:1px solid #ccc;border-radius:5px;margin-bottom:20px;">
 <h4 style="margin-top:0;color:#333;">📋 Diretrizes de Implementação</h4>
 <ol type="1">
-<li><strong>Dimensões da imagem:</strong> ler os inteiros \(L\) (linhas) e \(C\) (colunas) da imagem \(f\).</li>
-<li><strong>Dimensões de \(B\):</strong> ler os inteiros \(H_b\) (linhas) e \(W_b\) (colunas) do elemento estruturante.</li>
-<li><strong>Elemento estruturante:</strong> ler a matriz \(b\), contendo valor \(0\) no centro e valores negativos nas demais posições.</li>
-<li><strong>Imagem:</strong> ler a matriz binária \(f\) (valores \(0\) ou \(1\)), linha a linha.</li>
-<li><strong>Preparação:</strong> multiplicar a imagem por \(L\times C\), garantindo que os pixels internos tenham valor inicial suficientemente alto para a propagação das distâncias.</li>
+<li><strong>Dimensões da imagem:</strong> ler os inteiros <em>L</em> (linhas) e <em>C</em> (colunas) da imagem <em>f</em>.</li>
+<li><strong>Dimensões de <em>B</em>:</strong> ler os inteiros <em>H</em>_<em>b</em> (linhas) e <em>W</em>_<em>b</em> (colunas) do elemento estruturante.</li>
+<li><strong>Elemento estruturante:</strong> ler a matriz <em>b</em>, contendo valor 0 no centro e valores negativos nas demais posições.</li>
+<li><strong>Imagem:</strong> ler a matriz binária <em>f</em> (valores 0 ou 1), linha a linha.</li>
+<li><strong>Preparação:</strong> multiplicar a imagem por <em>L</em>× <em>C</em>, garantindo que os pixels internos tenham valor inicial suficientemente alto para a propagação das distâncias.</li>
 <li><strong>Transformada de distância:</strong> calcular a matriz de distâncias utilizando o método <code>mm.dist1(f,b)</code>.</li>
 <li><strong>Saída:</strong> exibir a matriz resultante da transformada de distância.</li>
 </ol>
@@ -22,7 +22,7 @@
 <li>O elemento estruturante pode conter valores negativos arbitrários.</li>
 <li>A transformada deve ser obtida pela aplicação iterativa de erosões ponderadas até atingir um ponto fixo.</li>
 </ul>
-<p><strong>⚠️ Nota Crucial sobre Leitura de Matrizes:</strong> Como o elemento estruturante pode conter valores inteiros negativos (por exemplo, <code>-1</code> e <code>-99</code>), <strong>não utilize a função <code>mm.readImg</code> para ler a matriz \(b\)</strong>. Essa função converte os dados para o tipo <code>uint8</code>, provocando <em>underflow</em> e corrompendo os valores negativos. Leia as \(H_b\) linhas de \(b\) manualmente utilizando o tipo padrão <code>int</code>. A imagem \(f\) pode continuar sendo lida normalmente por <code>mm.readImg</code>.</p>
+<p><strong>⚠️ Nota Crucial sobre Leitura de Matrizes:</strong> Como o elemento estruturante pode conter valores inteiros negativos (por exemplo, <code>-1</code> e <code>-99</code>), <strong>não utilize a função <code>mm.readImg</code> para ler a matriz <em>b</em></strong>. Essa função converte os dados para o tipo <code>uint8</code>, provocando <em>underflow</em> e corrompendo os valores negativos. Leia as <em>H</em>_<em>b</em> linhas de <em>b</em> manualmente utilizando o tipo padrão <code>int</code>. A imagem <em>f</em> pode continuar sendo lida normalmente por <code>mm.readImg</code>.</p>
 </div>
 <div style="background-color:#f0fff4;border-left:5px solid #2ecc71;padding:15px;margin-bottom:20px;">
 <h4 style="margin-top:0;color:#1e7e34;">🧠 Fundamentação Teórica</h4>
@@ -36,8 +36,8 @@
 </thead>
 <tbody>
 <tr>
-<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;"><strong>\(\text{dist}(y,x)\)</strong></td>
-<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Distância morfológica até a borda mais próxima segundo a métrica definida por \(b\)</td>
+<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;"><strong>dist(<em>y</em>,<em>x</em>)</strong></td>
+<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Distância morfológica até a borda mais próxima segundo a métrica definida por <em>b</em></td>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Pixels mais internos recebem valores maiores</td>
 </tr>
 <tr>
@@ -62,16 +62,16 @@
 <h4 style="margin-top:0;color:#333;">📦 Especificação de Entrada e Saída (VPL)</h4>
 <p><strong>Entrada:</strong></p>
 <ul>
-<li>Linha 1: inteiro \(L\).</li>
-<li>Linha 2: inteiro \(C\).</li>
-<li>Linha 3: inteiro \(H_b\).</li>
-<li>Linha 4: inteiro \(W_b\).</li>
-<li>Próximas \(H_b\) linhas: elementos inteiros da matriz \(b\).</li>
-<li>Próximas \(L\) linhas: elementos binários (\(0\) ou \(1\)) da matriz \(f\).</li>
+<li>Linha 1: inteiro <em>L</em>.</li>
+<li>Linha 2: inteiro <em>C</em>.</li>
+<li>Linha 3: inteiro <em>H</em>_<em>b</em>.</li>
+<li>Linha 4: inteiro <em>W</em>_<em>b</em>.</li>
+<li>Próximas <em>H</em>_<em>b</em> linhas: elementos inteiros da matriz <em>b</em>.</li>
+<li>Próximas <em>L</em> linhas: elementos binários (0 ou 1) da matriz <em>f</em>.</li>
 </ul>
 <p><strong>Saída:</strong></p>
 <ul>
-<li>Matriz da transformada de distância em \(L\) linhas e \(C\) colunas.</li>
+<li>Matriz da transformada de distância em <em>L</em> linhas e <em>C</em> colunas.</li>
 </ul>
 </div>
 <div style="background-color:#fffde7;border-left:5px solid #fbc02d;padding:15px;margin-bottom:25px;">
@@ -107,7 +107,7 @@
 </tr>
 </tbody>
 </table>
-<p><strong>Nota:</strong> o valor <code>-99</code> atua como uma aproximação prática de \(-\infty\), impedindo a propagação pelas diagonais. Dessa forma, apenas os vizinhos horizontal e vertical contribuem para a distância, produzindo a distância de Manhattan.</p>
+<p><strong>Nota:</strong> o valor <code>-99</code> atua como uma aproximação prática de -∈fty, impedindo a propagação pelas diagonais. Dessa forma, apenas os vizinhos horizontal e vertical contribuem para a distância, produzindo a distância de Manhattan.</p>
 <div class="cell" id="cell-fig-04-sim-distancia">
 <div id="sim-ep0409" style="background-color:#fef9ef;border-radius:18px;border:1px solid #ede6d8;overflow:hidden;margin-top:20px;font-family:sans-serif;">
 <div style="background:#f3efe6;padding:8px 16px;font-size:12px;color:#5e5a4a;border-bottom:1px solid #e9dfcf;display:flex;justify-content:space-between;align-items:center;">

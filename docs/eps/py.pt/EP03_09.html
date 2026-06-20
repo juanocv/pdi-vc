@@ -5,28 +5,28 @@
 <div style="background-color:#f8f9fa;padding:15px;border:1px solid #ccc;border-radius:5px;margin-bottom:20px;">
 <h4 style="margin-top:0;color:#333;">📋 Diretrizes de Implementação</h4>
 <ol type="1">
-<li><strong>Dimensões:</strong> Ler os inteiros \(L\) (linhas) e \(C\) (colunas).</li>
-<li><strong>Dados:</strong> Ler a matriz de pixels \(f\).</li>
-<li><strong>Filtro da Mediana 3×3:</strong> Para cada pixel <strong>interno</strong> \((i,j)\) com \(1 \le i < L-1\), \(1 \le j < C-1\):
+<li><strong>Dimensões:</strong> Ler os inteiros <em>L</em> (linhas) e <em>C</em> (colunas).</li>
+<li><strong>Dados:</strong> Ler a matriz de pixels <em>f</em>.</li>
+<li><strong>Filtro da Mediana 3×3:</strong> Para cada pixel <strong>interno</strong> (<em>i</em>,<em>j</em>) com 1 \le <em>i</em> &lt; <em>L</em>-1, 1 \le <em>j</em> &lt; <em>C</em>-1:
 <ul>
-<li>Coletar os 9 pixels da vizinhança \(3 \times 3\): \(\{f(i+s, j+t) : s,t \in \{-1,0,1\}\}\).</li>
+<li>Coletar os 9 pixels da vizinhança 3 × 3: f(<em>i</em>+<em>s</em>, <em>j</em>+<em>t</em>) : <em>s</em>,<em>t</em> ∈ -1,0,1.</li>
 <li>Ordenar os 9 valores em ordem crescente.</li>
-<li>Atribuir \(g(i,j)\) ao valor central (posição índice 4, considerando índice 0).</li>
+<li>Atribuir <em>g</em>(<em>i</em>,<em>j</em>) ao valor central (posição índice 4, considerando índice 0).</li>
 </ul></li>
 </ol>
-<p><div style="text-align:center;display:block;margin:0.5em 0;">$$g(i,j) = \text{mediana}\{f(i+s, j+t) : s,t \in \{-1,0,1\}\}$$</div></p>
+<p><p style="text-align:center;font-family:monospace;font-size:1.1em;padding:8px;background:#f8f8f8;border-radius:4px;border:1px solid #ddd;"><em>g</em>(<em>i</em>,<em>j</em>) = medianaf(<em>i</em>+<em>s</em>, <em>j</em>+<em>t</em>) : <em>s</em>,<em>t</em> ∈ -1,0,1</p></p>
 <ol start="4" type="1">
-<li><strong>Borda:</strong> Copiar diretamente: \(g(i,j) = f(i,j)\).</li>
-<li><strong>Saída:</strong> Exibir a matriz filtrada \(L \times C\).</li>
+<li><strong>Borda:</strong> Copiar diretamente: <em>g</em>(<em>i</em>,<em>j</em>) = <em>f</em>(<em>i</em>,<em>j</em>).</li>
+<li><strong>Saída:</strong> Exibir a matriz filtrada <em>L</em> × <em>C</em>.</li>
 </ol>
 <hr/>
 </div>
 <div style="background-color:#fffde7;border-left:5px solid #fbc02d;padding:15px;margin-bottom:25px;">
 <h4 style="margin-top:0;color:#856404;">📌 Restrições Computacionais</h4>
 <ul>
-<li><strong>Janela:</strong> Sempre \(3 \times 3 = 9\) elementos.</li>
+<li><strong>Janela:</strong> Sempre 3 × 3 = 9 elementos.</li>
 <li><strong>Mediana:</strong> O elemento central da sequência ordenada (índice 4 de 0 a 8).</li>
-<li><strong>Sem clipping:</strong> A mediana de valores em \([0, 255]\) permanece em \([0, 255]\).</li>
+<li><strong>Sem clipping:</strong> A mediana de valores em [0, 255] permanece em [0, 255].</li>
 <li><strong>Não linear:</strong> O filtro mediana não pode ser expresso como convolução linear.</li>
 </ul>
 <hr/>
@@ -60,13 +60,13 @@
 <h4 style="margin-top:0;color:#333;">📦 Especificação de Entrada e Saída (VPL)</h4>
 <p><strong>Entrada:</strong></p>
 <ul>
-<li>Linha 1: Inteiro \(L\).</li>
-<li>Linha 2: Inteiro \(C\).</li>
+<li>Linha 1: Inteiro <em>L</em>.</li>
+<li>Linha 2: Inteiro <em>C</em>.</li>
 <li>Linhas seguintes: Elementos da matriz.</li>
 </ul>
 <p><strong>Saída:</strong></p>
 <ul>
-<li>Matriz filtrada \(L \times C\).</li>
+<li>Matriz filtrada <em>L</em> × <em>C</em>.</li>
 </ul>
 </div>
 <div style="background-color:#fffde7;border-left:5px solid #fbc02d;padding:15px;margin-bottom:25px;">

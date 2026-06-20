@@ -1,11 +1,11 @@
 <div style="font-family:sans-serif;line-height:1.6;color:#333;max-width:1200px;margin:auto;border:1px solid #ddd;padding:20px;border-radius:8px;background:white;">
 <h2 style="color:#0056b3;border-bottom:2px solid #0056b3;padding-bottom:10px;">EP02_11 🎯 Correção de Perspectiva (Homografia) em Imagem Real</h2>
 <p>Nesta atividade, o objetivo é aplicar a transformação de perspectiva (homografia) para “retificar” um objeto inclinado em uma fotografia real. Você lidará com a imagem de um jornal, onde a grade de um jogo de Sudoku está distorcida devido ao ângulo em que a foto foi capturada.</p>
-<p>Seu programa deve ler os parâmetros de entrada do terminal, carregar a imagem, calcular a matriz de homografia \(3 \times 3\), aplicar a transformação geométrica e exibir um indicador global de validação.</p>
+<p>Seu programa deve ler os parâmetros de entrada do terminal, carregar a imagem, calcular a matriz de homografia 3 × 3, aplicar a transformação geométrica e exibir um indicador global de validação.</p>
 <div>
 <li>Leia dois inteiros <strong>L</strong> e <strong>C</strong>, representando as dimensões de linhas e colunas (altura e largura) que a imagem retificada de saída deve ter.</li>
-<li>Leia <strong>quatro pares de coordenadas</strong> \((x, y)\) via terminal, representando os quatro cantos do quadrilátero de origem (o Sudoku distorcido na imagem original).</li>
-<li>Calcule automaticamente os <strong>quatro pares de coordenadas de destino</strong> utilizando as dimensões \(L\) e \(C\) fornecidas, mapeando os cantos para as extremidades da nova imagem: \((0,0)\), \((C-1, 0)\), \((0, L-1)\) e \((C-1, L-1)\).</li>
+<li>Leia <strong>quatro pares de coordenadas</strong> (<em>x</em>, <em>y</em>) via terminal, representando os quatro cantos do quadrilátero de origem (o Sudoku distorcido na imagem original).</li>
+<li>Calcule automaticamente os <strong>quatro pares de coordenadas de destino</strong> utilizando as dimensões <em>L</em> e <em>C</em> fornecidas, mapeando os cantos para as extremidades da nova imagem: (0,0), (<em>C</em>-1, 0), (0, <em>L</em>-1) e (<em>C</em>-1, <em>L</em>-1).</li>
 <li>Carregue a imagem local <code>sudoku.png</code> e converta-a para tons de cinza (grayscale).</li>
 <li>Calcule a matriz de homografia e aplique a transformação espacial na imagem.</li>
 <li><strong>Saída:</strong> Calcule e imprima a <strong>soma de todos os pixels</strong> da imagem resultante.</li>
@@ -69,7 +69,7 @@
 80 440<br/>
 450 460</td>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">32982820</td>
-<td style="padding:10px;border:1px solid #ddd;vertical-align:top;">As duas primeiras entradas são as dimensões de saída (\(L\) e \(C\)). As 4 linhas seguintes são as coordenadas \((x, y)\) dos cantos do Sudoku na imagem original + PAD. A saída é a soma total dos pixels da imagem retificada.</td>
+<td style="padding:10px;border:1px solid #ddd;vertical-align:top;">As duas primeiras entradas são as dimensões de saída (<em>L</em> e <em>C</em>). As 4 linhas seguintes são as coordenadas (<em>x</em>, <em>y</em>) dos cantos do Sudoku na imagem original + PAD. A saída é a soma total dos pixels da imagem retificada.</td>
 </tr>
 <tr>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">200 200<br/>
@@ -78,14 +78,14 @@
 80 440<br/>
 450 460</td>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">5277150</td>
-<td style="padding:10px;border:1px solid #ddd;vertical-align:top;">Mesmos pontos de origem do exemplo anterior, mas gerando uma imagem de saída menor (\(200 \times 200\)). A soma dos pixels reduz proporcionalmente devido à escala.</td>
+<td style="padding:10px;border:1px solid #ddd;vertical-align:top;">Mesmos pontos de origem do exemplo anterior, mas gerando uma imagem de saída menor (200 × 200). A soma dos pixels reduz proporcionalmente devido à escala.</td>
 </tr>
 </tbody>
 </table>
 </div>
 <div>
 <h4> Aquisição da imagem do sudoku e conversão para níveis de cinza</h4>
-<p>A Figura 2.22 mostra a leitura da imagem original seguida da conversão para tons de cinza e redimensionamento para uma matriz de \(500 \times 500\) pixels, preparando os dados para a etapa seguinte. A correção de perspectiva, aplicada na Figura 2.23 via matriz de homografia, elimina as deformações causadas pelo ângulo da câmera e produz uma visão frontal e regular da grade do Sudoku.</p>
+<p>A Figura 2.22 mostra a leitura da imagem original seguida da conversão para tons de cinza e redimensionamento para uma matriz de 500 × 500 pixels, preparando os dados para a etapa seguinte. A correção de perspectiva, aplicada na Figura 2.23 via matriz de homografia, elimina as deformações causadas pelo ângulo da câmera e produz uma visão frontal e regular da grade do Sudoku.</p>
 <div class="cell" id="cell-fig-02-sudoku-original">
 <div class="cell-output cell-output-display">
 <div class="quarto-float quarto-figure quarto-figure-center anchored" id="fig-02-sudoku-original">

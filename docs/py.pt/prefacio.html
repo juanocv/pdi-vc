@@ -253,8 +253,9 @@ document.addEventListener('DOMContentLoaded', function() {
   <li><a href="#a-biblioteca-morph.py" id="toc-a-biblioteca-morph.py" class="nav-link" data-scroll-target="#a-biblioteca-morph.py">A biblioteca <code>morph.py</code></a></li>
   <li><a href="#exercícios-de-programação-eps-e-validação-automática" id="toc-exercícios-de-programação-eps-e-validação-automática" class="nav-link" data-scroll-target="#exercícios-de-programação-eps-e-validação-automática">Exercícios de Programação (EPs) e Validação Automática</a>
   <ul class="collapse">
-  <li><a href="#estrutura-e-validação" id="toc-estrutura-e-validação" class="nav-link" data-scroll-target="#estrutura-e-validação">Estrutura e Validação</a></li>
-  <li><a href="#eps-como-atividades-vpl-no-moodle" id="toc-eps-como-atividades-vpl-no-moodle" class="nav-link" data-scroll-target="#eps-como-atividades-vpl-no-moodle">EPs como Atividades VPL no Moodle</a></li>
+  <li><a href="#estrutura-e-validação-local" id="toc-estrutura-e-validação-local" class="nav-link" data-scroll-target="#estrutura-e-validação-local">Estrutura e Validação Local</a></li>
+  <li><a href="#integração-com-o-moodle-vpl" id="toc-integração-com-o-moodle-vpl" class="nav-link" data-scroll-target="#integração-com-o-moodle-vpl">Integração com o Moodle (VPL)</a></li>
+  <li><a href="#como-publicar-no-moodle" id="toc-como-publicar-no-moodle" class="nav-link" data-scroll-target="#como-publicar-no-moodle">Como Publicar no Moodle</a></li>
   </ul></li>
   <li><a href="#idiomas-e-conversão-de-código" id="toc-idiomas-e-conversão-de-código" class="nav-link" data-scroll-target="#idiomas-e-conversão-de-código">Idiomas e Conversão de Código</a></li>
   <li><a href="#código-aberto" id="toc-código-aberto" class="nav-link" data-scroll-target="#código-aberto">Código aberto</a></li>
@@ -372,28 +373,20 @@ document.addEventListener('DOMContentLoaded', function() {
 </section>
 <section id="exercícios-de-programação-eps-e-validação-automática" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="exercícios-de-programação-eps-e-validação-automática">Exercícios de Programação (EPs) e Validação Automática</h2>
-<p>Cada unidade inclui <strong>Exercícios de Programação (EPs)</strong>, compostos por problemas que exigem a implementação de programas utilizando a biblioteca <code>morph.py</code> e/ou bibliotecas padrão da linguagem adotada. Os EPs têm como objetivo consolidar os conceitos teóricos por meio de atividades práticas com complexidade crescente.</p>
-<section id="estrutura-e-validação" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="estrutura-e-validação">Estrutura e Validação</h3>
-<p>A validação automática das soluções é realizada pela classe <code>TestSuite</code>, definida no arquivo <code>testsuite.py</code>, que deve estar localizado na mesma pasta que <code>morph.py</code>:</p>
+<p>Cada unidade do livro inclui <strong>Exercícios de Programação (EPs)</strong> práticos e de complexidade crescente, projetados para consolidar a teoria por meio da biblioteca <code>morph.py</code> ou do padrão da linguagem escolhida.</p>
+<section id="estrutura-e-validação-local" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="estrutura-e-validação-local">Estrutura e Validação Local</h3>
+<p>A validação das soluções é feita localmente pela classe <code>TestSuite</code> (<code>testsuite.py</code>), que compara a saída do programa com os arquivos de casos de teste (<code>.cases</code>):</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>TestSuite(<span class="st">"EP01_01.py"</span>).run()</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<p>A saída produzida pela implementação é comparada com os resultados esperados, definidos em arquivos de casos de teste (<code>.cases</code>), gerando ao final um relatório de conformidade.</p>
-<p>O sistema oferece suporte a múltiplas linguagens de programação, incluindo Python, Java, C++, C, JavaScript e R. Os mesmos EPs e casos de teste também podem ser utilizados na plataforma Moodle para fins de avaliação.</p>
+<p>O sistema suporta múltiplas linguagens (Python, Java, C++, C, JavaScript e R), e a mesma estrutura pode ser integrada diretamente ao Moodle.</p>
 </section>
-<section id="eps-como-atividades-vpl-no-moodle" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="eps-como-atividades-vpl-no-moodle">EPs como Atividades VPL no Moodle</h3>
-<p>Os EPs presentes nos <em>notebooks</em> podem ser convertidos em atividades <strong>VPL (<em>Virtual Programming Lab</em>)</strong>, permitindo a correção automática das submissões diretamente no Moodle.</p>
-<p>O fluxo de geração é realizado em duas etapas pelo script <code>ep_tools.py</code>:</p>
-<p><strong>Etapa 1 — Extração</strong> (<code>make eps</code>): percorre os arquivos HTML gerados pelo Quarto (<code>gen/book/*/cap*/*.html</code>) e produz um arquivo HTML independente por EP, com enunciado, exemplos e simulador interativo. Os arquivos são gerados em:</p>
-<pre class="text"><code>gen/book/eps/&lt;versao&gt;/EPXX_YY.html</code></pre>
-<p><strong>Etapa 2 — Conversão para Moodle</strong> (<code>make moodle</code>): processa cada <code>EPXX_YY.html</code> e produz um fragmento HTML pronto para colar no editor do Moodle, sem dependência de CSS externo. Os arquivos são gerados em:</p>
-<pre class="text"><code>gen/book/eps/&lt;versao&gt;_moodle/EPXX_YY.html</code></pre>
-<p>Ambas as etapas são executadas automaticamente ao rodar <code>make build</code>. Para executar isoladamente:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> eps          <span class="co"># só extração  (locale atual)</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> moodle       <span class="co"># só conversão (locale atual)</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> eps-all      <span class="co"># extração de todos os locales</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> moodle-all   <span class="co"># conversão de todos os locales</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> eps-dry      <span class="co"># lista EPs sem gravar arquivos</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="integração-com-o-moodle-vpl" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="integração-com-o-moodle-vpl">Integração com o Moodle (VPL)</h3>
+<p>Os EPs dos <em>notebooks</em> podem ser convertidos em atividades <strong>VPL (<em>Virtual Programming Lab</em>)</strong> no Moodle. O script <code>ep_tools.py</code> (executado via <code>make build</code>) automatiza o processo em duas etapas:</p>
+<ol type="1">
+<li><strong>Extração</strong> (<code>make eps</code>): Gera um HTML interativo independente em <code>gen/book/eps/&lt;versao&gt;/</code>.</li>
+<li><strong>Conversão</strong> (<code>make moodle</code>): Transforma o arquivo em um fragmento HTML autocontido e sem CSS externo, pronto para ser colado no editor do Moodle. Ex. <a href="https://fzampirolli.github.io/pdi-vc/eps/py.pt_moodle/EP01_01.html">https://fzampirolli.github.io/pdi-vc/eps/py.pt_moodle/EP01_01.html</a></li>
+</ol>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -404,22 +397,22 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>A conversão é automática, mas o professor <strong>deve revisar o HTML gerado</strong> antes de publicá-lo como enunciado VPL, pois algumas construções do Quarto podem não ser convertidas perfeitamente:</p>
+<p>Embora automática, a conversão exige revisão do professor devido a limitações do editor do Moodle:</p>
 <ul>
-<li><strong>Fórmulas matemáticas complexas</strong> — expressões LaTeX simples (variáveis, <code>≥</code>, <code>×</code>, frações) são convertidas para HTML semântico, mas notações avançadas (somatórios, matrizes, integrais) podem sair incompletas ou em texto plano. Verifique especialmente blocos <code>\begin{cases}</code>, <code>\sum</code>, <code>\int</code> e <code>\matrix</code>.</li>
-<li><strong>Referências cruzadas</strong> (<code>@fig-...</code>, <code>@tbl-...</code>) — são substituídas pelo texto do rótulo; o link para a figura ou tabela original é removido, pois não existe no contexto do Moodle.</li>
-<li><strong>Figuras e imagens externas</strong> — não são copiadas para o Moodle; se o enunciado depender de uma imagem do livro, ela deve ser inserida manualmente na atividade VPL.</li>
-<li><strong>Simuladores interativos</strong> — funcionam se o HTML do simulador seguir o padrão estabelecido (estilos <em>inline</em>, <code>var</code> em vez de <code>let</code>/<code>const</code>, <code>getElementById</code> direto). Simuladores com estrutura diferente podem precisar de ajuste manual.</li>
+<li><strong>Fórmulas e Barras Invertidas (<code>\</code>)</strong> — O TinyMCE/HTML Purifier do Moodle descarta barras invertidas (<code>\</code>), corrompendo equações e travando <em>scripts</em>. Por isso, fórmulas complexas são convertidas estritamente para HTML puro (tabelas e entidades). Evite usar <code>\</code> no enunciado e revise a renderização de matrizes e frações.</li>
+<li><strong>Referências cruzadas</strong> — Links como <code>@fig-...</code> ou <code>@tbl-...</code> são removidos, mantendo-se apenas o texto do rótulo.</li>
+<li><strong>Figuras externas</strong> — Imagens complementares devem ser inseridas manualmente na atividade VPL.</li>
+<li><strong>Simuladores</strong> — Funcionam apenas se utilizarem JavaScript padrão com estilos <em>inline</em> e manipulação direta de DOM.</li>
 </ul>
 </div>
 </div>
-<p>O professor pode então:</p>
+</section>
+<section id="como-publicar-no-moodle" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="como-publicar-no-moodle">Como Publicar no Moodle</h3>
 <ol type="1">
-<li>Abrir o arquivo <code>gen/book/eps/&lt;versao&gt;_moodle/EPXX_YY.html</code> em um editor de texto;</li>
-<li>Revisar fórmulas, referências e imagens conforme indicado acima;</li>
-<li>Criar uma atividade VPL no Moodle, colar o conteúdo no editor HTML e salvar;</li>
-<li>Importar os arquivos <code>.cases</code> correspondentes (<code>all/capXX/casos/</code>) como casos de teste;</li>
-<li>Configurar a linguagem de programação desejada.</li>
+<li>Abra o arquivo gerado em <code>_moodle/EPXX_YY.html</code> e revise fórmulas ou imagens.</li>
+<li>Crie uma atividade VPL no Moodle e cole o código diretamente no editor HTML.</li>
+<li>Importar os arquivos <code>.cases</code> da pasta <code>all/capXX/casos/</code> nas configurações de testes do VPL.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -431,7 +424,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Os arquivos <code>.cases</code> utilizados pelo <code>TestSuite</code> são diretamente compatíveis com o VPL. Dessa forma, o mesmo conjunto de testes pode ser empregado tanto durante o desenvolvimento nos <em>notebooks</em> quanto na correção automática das submissões no Moodle.</p>
+<p>Os arquivos <code>.cases</code> são 100% compatíveis com o VPL, permitindo usar o mesmo conjunto de testes tanto no desenvolvimento local quanto na correção automatizada no Moodle.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -440,19 +433,11 @@ document.addEventListener('DOMContentLoaded', function() {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>EPs disponíveis online para o Moodle
+<span class="screen-reader-only">Nota</span>EPs disponíveis online
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Os fragmentos HTML prontos para colar no Moodle são publicados automaticamente junto com o livro. Cada EP tem sua própria URL direta. Por exemplo: <a href="https://fzampirolli.github.io/pdi-vc/eps/py.pt/EP01_01.html">https://fzampirolli.github.io/pdi-vc/eps/py.pt/EP01_01.html</a></p>
-<p><strong>Como usar no Moodle:</strong></p>
-<ol type="1">
-<li>Acesse a URL do EP desejado no browser</li>
-<li>Selecione todo o conteúdo da página (<code>Ctrl+A</code>)</li>
-<li>Copie (<code>Ctrl+C</code>)</li>
-<li>No Moodle, crie uma atividade VPL → editor HTML → cole (<code>Ctrl+V</code>)</li>
-</ol>
-<p>Ou copie direto o código-fonte — cada arquivo é um fragmento HTML autocontido (sem dependências externas) pronto para colar no editor do Moodle.</p>
+<p>Os fragmentos prontos são publicados com o livro em URLs diretas (ex: <a href="https://fzampirolli.github.io/pdi-vc/eps/py.pt/EP01_01.html">https://fzampirolli.github.io/pdi-vc/eps/py.pt/EP01_01.html</a>). O professor pode acessar a página, copiar todo o conteúdo (<code>Ctrl+A</code> / <code>Ctrl+C</code>) e colá-lo direto no editor do Moodle.</p>
 </div>
 </div>
 </section>
@@ -993,222 +978,171 @@ ZAMPIROLLI, Francisco de Assis <em>et al.</em> <a href="https://doi.org/10.5753/
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Código fonte</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">## Prefácio {.unnumbered}</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>Este livro constitui uma **obra em constante atualização** sobre **Processamento Digital de Imagens (PDI) e Visão Computacional (VC)**, concebido como material didático interativo para cursos de graduação e pós-graduação em Computação, Engenharias e áreas correlatas.</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>::: {.callout-important}</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fu">### Destaque {.unnumbered}</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>A obra segue a metodologia descrita em @zampirolli2025morph — uma extensão de @zampirolli2024practical, trabalho premiado na trilha de "Recursos e Ambientes Educacionais" na **EduComp 2024**. O conteúdo integra a biblioteca <span class="in">`morph.py`</span>, desenvolvida pelo autor.</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="fu">## Um livro vivo {.unnumbered}</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>O material não possui caráter estático. O conteúdo passa por evolução contínua: exemplos são refinados, novas seções são incorporadas e as abordagens pedagógicas são atualizadas conforme o retorno de usuários. Por essa razão, o material é tratado como um *projeto inicial* — uma base em expansão.</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="fu">## Uso de ferramentas de Inteligência Artificial {.unnumbered}</span></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>A produção deste livro conta com o suporte de **ferramentas de Inteligência Artificial** (IA) para elevar a qualidade do texto e do código. A versão inicial dos capítulos foi submetida a processos de revisão por meio de assistentes, em versões gratuitas, como **DeepSeek**, **Gemini** e **Claude**. Mediante *prompts* iterativos, tais ferramentas auxiliaram no seguinte:</span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Refinamento da clareza e precisão das explicações;</span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Detecção e correção de erros de sintaxe, lógica e digitação em exemplos de código;</span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Sugestão de melhorias na organização e fluidez textual.</span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>Adicionalmente, **ilustrações foram geradas pelo Gemini**, com o propósito de auxiliar a visualização de conceitos abstratos da área.</span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="fu">## Como este livro é produzido {.unnumbered}</span></span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>O conteúdo é integralmente redigido em **[Quarto](https://quarto.org)** (armazenado na pasta <span class="in">`all`</span> de <span class="co">[</span><span class="ot">github.com/fzampirolli/pdi-vc</span><span class="co">](https://github.com/fzampirolli/pdi-vc)</span>), um sistema de publicação científica que permite a renderização do código-fonte para múltiplos formatos:</span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Formato <span class="pp">|</span> Descrição <span class="pp">|</span></span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a><span class="pp">| ---</span> <span class="pp">| ---</span> <span class="pp">|</span></span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **HTML** <span class="pp">|</span> Versão web com navegação interativa: <span class="co">[</span><span class="ot">fzampirolli.github.io/pdi-vc</span><span class="co">](https://fzampirolli.github.io/pdi-vc/)</span> <span class="pp">|</span></span>
-<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **PDF** <span class="pp">|</span> Versão para impressão ou leitura *offline*: <span class="co">[</span><span class="ot">livro.pt.py.pdf</span><span class="co">](https://github.com/fzampirolli/pdi-vc/blob/master/gen/book/py.pt/livro.pt.py.pdf)</span> <span class="pp">|</span></span>
-<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> ***Notebooks* (`.ipynb`)** | Versão processada por filtro personalizado que resolve citações e numeração de elementos, formatando referências no padrão ABNT. Compatível com **Jupyter** e **Google Colab**. <span class="pp">|</span></span>
-<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>No início de cada capítulo, botões "*Open in Colab*" direcionam para dois ambientes:</span>
-<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Parte Teórica:** Localizada na abertura do capítulo.</span>
-<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Parte Prática:** Localizada na seção **💻 Parte Prática com Exercícios de Programação** ao final do capítulo.</span>
-<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>O *script* de pós-processamento (<span class="in">`gerar_notebooks_alunos.py`</span>) prepara os arquivos para distribuição, assegurando a funcionalidade em ambientes interativos sem a necessidade de instalação local do Quarto.</span>
-<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a><span class="fu">## A biblioteca `morph.py` {.unnumbered}</span></span>
-<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>A biblioteca **`morph.py`** [@zampirolli2025morph] é empregada em toda a obra. Desenvolvida para fins pedagógicos, a ferramenta oferece uma interface simplificada sobre bibliotecas consolidadas, como **OpenCV**, **NumPy** e **Matplotlib**, permitindo o foco nos conceitos teóricos em detrimento de detalhes específicos de API.</span>
-<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a><span class="fu">### Herança Técnica {.unnumbered}</span></span>
-<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a>A estrutura da <span class="in">`morph.py`</span> fundamenta-se em ferramentas de morfologia matemática desenvolvidas no Brasil, como **MMachLib** [@lotufo1997mmachlib] e **MMach** [@barrera1998mmach], além da **mmorph**, empregada na obra de @dougherty2003hands. Tais ferramentas serviram como referência para o ensino da área por décadas.</span>
-<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a>A biblioteca permite realizar leitura, exibição, conversões de cores, filtragem e morfologia matemática de forma concisa:</span>
-<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a><span class="in">```python</span></span>
-<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> morph <span class="im">as</span> mm</span>
-<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a>img <span class="op">=</span> mm.read(<span class="st">'lena.jpg'</span>)    <span class="co"># leitura da imagem</span></span>
-<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a>mm.show(img)                 <span class="co"># exibição</span></span>
-<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a>neg <span class="op">=</span> mm.neg(img)            <span class="co"># inversão (negativo)</span></span>
-<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a>mm.show(neg)</span>
-<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a>O código-fonte está disponível em:</span>
-<span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a>**[github.com/fzampirolli/pdi-vc/tree/master/morph](https://github.com/fzampirolli/pdi-vc/tree/master/morph)**.</span>
-<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercícios de Programação (EPs) e Validação Automática {.unnumbered}</span></span>
-<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-71"><a href="#cb6-71" aria-hidden="true" tabindex="-1"></a>Cada unidade inclui **Exercícios de Programação (EPs)**, compostos por problemas que exigem a implementação de programas utilizando a biblioteca <span class="in">`morph.py`</span> e/ou bibliotecas padrão da linguagem adotada. Os EPs têm como objetivo consolidar os conceitos teóricos por meio de atividades práticas com complexidade crescente.</span>
-<span id="cb6-72"><a href="#cb6-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-73"><a href="#cb6-73" aria-hidden="true" tabindex="-1"></a><span class="fu">### Estrutura e Validação {.unnumbered}</span></span>
-<span id="cb6-74"><a href="#cb6-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-75"><a href="#cb6-75" aria-hidden="true" tabindex="-1"></a>A validação automática das soluções é realizada pela classe <span class="in">`TestSuite`</span>, definida no arquivo <span class="in">`testsuite.py`</span>, que deve estar localizado na mesma pasta que <span class="in">`morph.py`</span>:</span>
-<span id="cb6-76"><a href="#cb6-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-77"><a href="#cb6-77" aria-hidden="true" tabindex="-1"></a><span class="in">```python</span></span>
-<span id="cb6-78"><a href="#cb6-78" aria-hidden="true" tabindex="-1"></a>TestSuite(<span class="st">"EP01_01.py"</span>).run()</span>
-<span id="cb6-79"><a href="#cb6-79" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb6-80"><a href="#cb6-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-81"><a href="#cb6-81" aria-hidden="true" tabindex="-1"></a>A saída produzida pela implementação é comparada com os resultados esperados, definidos em arquivos de casos de teste (<span class="in">`.cases`</span>), gerando ao final um relatório de conformidade.</span>
-<span id="cb6-82"><a href="#cb6-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-83"><a href="#cb6-83" aria-hidden="true" tabindex="-1"></a>O sistema oferece suporte a múltiplas linguagens de programação, incluindo Python, Java, C++, C, JavaScript e R. Os mesmos EPs e casos de teste também podem ser utilizados na plataforma Moodle para fins de avaliação.</span>
-<span id="cb6-84"><a href="#cb6-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-85"><a href="#cb6-85" aria-hidden="true" tabindex="-1"></a><span class="fu">### EPs como Atividades VPL no Moodle {.unnumbered}</span></span>
-<span id="cb6-86"><a href="#cb6-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-87"><a href="#cb6-87" aria-hidden="true" tabindex="-1"></a>Os EPs presentes nos *notebooks* podem ser convertidos em atividades **VPL (*Virtual Programming Lab*)**, permitindo a correção automática das submissões diretamente no Moodle.</span>
-<span id="cb6-88"><a href="#cb6-88" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-89"><a href="#cb6-89" aria-hidden="true" tabindex="-1"></a>O fluxo de geração é realizado em duas etapas pelo script <span class="in">`ep_tools.py`</span>:</span>
-<span id="cb6-90"><a href="#cb6-90" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-91"><a href="#cb6-91" aria-hidden="true" tabindex="-1"></a>**Etapa 1 — Extração** (<span class="in">`make eps`</span>): percorre os arquivos HTML gerados pelo Quarto</span>
-<span id="cb6-92"><a href="#cb6-92" aria-hidden="true" tabindex="-1"></a>(<span class="in">`gen/book/*/cap*/*.html`</span>) e produz um arquivo HTML independente por EP, com enunciado,</span>
-<span id="cb6-93"><a href="#cb6-93" aria-hidden="true" tabindex="-1"></a>exemplos e simulador interativo. Os arquivos são gerados em:</span>
-<span id="cb6-94"><a href="#cb6-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-95"><a href="#cb6-95" aria-hidden="true" tabindex="-1"></a><span class="in">```text</span></span>
-<span id="cb6-96"><a href="#cb6-96" aria-hidden="true" tabindex="-1"></a><span class="in">gen/book/eps/&lt;versao&gt;/EPXX_YY.html</span></span>
-<span id="cb6-97"><a href="#cb6-97" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb6-98"><a href="#cb6-98" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-99"><a href="#cb6-99" aria-hidden="true" tabindex="-1"></a>**Etapa 2 — Conversão para Moodle** (<span class="in">`make moodle`</span>): processa cada <span class="in">`EPXX_YY.html`</span> e</span>
-<span id="cb6-100"><a href="#cb6-100" aria-hidden="true" tabindex="-1"></a>produz um fragmento HTML pronto para colar no editor do Moodle, sem dependência de CSS</span>
-<span id="cb6-101"><a href="#cb6-101" aria-hidden="true" tabindex="-1"></a>externo. Os arquivos são gerados em:</span>
-<span id="cb6-102"><a href="#cb6-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-103"><a href="#cb6-103" aria-hidden="true" tabindex="-1"></a><span class="in">```text</span></span>
-<span id="cb6-104"><a href="#cb6-104" aria-hidden="true" tabindex="-1"></a><span class="in">gen/book/eps/&lt;versao&gt;_moodle/EPXX_YY.html</span></span>
-<span id="cb6-105"><a href="#cb6-105" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb6-106"><a href="#cb6-106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-107"><a href="#cb6-107" aria-hidden="true" tabindex="-1"></a>Ambas as etapas são executadas automaticamente ao rodar <span class="in">`make build`</span>.</span>
-<span id="cb6-108"><a href="#cb6-108" aria-hidden="true" tabindex="-1"></a>Para executar isoladamente:</span>
-<span id="cb6-109"><a href="#cb6-109" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-110"><a href="#cb6-110" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb6-111"><a href="#cb6-111" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> eps          <span class="co"># só extração  (locale atual)</span></span>
-<span id="cb6-112"><a href="#cb6-112" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> moodle       <span class="co"># só conversão (locale atual)</span></span>
-<span id="cb6-113"><a href="#cb6-113" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> eps-all      <span class="co"># extração de todos os locales</span></span>
-<span id="cb6-114"><a href="#cb6-114" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> moodle-all   <span class="co"># conversão de todos os locales</span></span>
-<span id="cb6-115"><a href="#cb6-115" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> eps-dry      <span class="co"># lista EPs sem gravar arquivos</span></span>
-<span id="cb6-116"><a href="#cb6-116" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb6-117"><a href="#cb6-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-118"><a href="#cb6-118" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning}</span>
-<span id="cb6-119"><a href="#cb6-119" aria-hidden="true" tabindex="-1"></a><span class="fu">### Revisão obrigatória antes de publicar no Moodle {.unnumbered}</span></span>
-<span id="cb6-120"><a href="#cb6-120" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-121"><a href="#cb6-121" aria-hidden="true" tabindex="-1"></a>A conversão é automática, mas o professor **deve revisar o HTML gerado** antes de publicá-lo</span>
-<span id="cb6-122"><a href="#cb6-122" aria-hidden="true" tabindex="-1"></a>como enunciado VPL, pois algumas construções do Quarto podem não ser convertidas</span>
-<span id="cb6-123"><a href="#cb6-123" aria-hidden="true" tabindex="-1"></a>perfeitamente:</span>
-<span id="cb6-124"><a href="#cb6-124" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-125"><a href="#cb6-125" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Fórmulas matemáticas complexas** — expressões LaTeX simples (variáveis, <span class="in">`≥`</span>, <span class="in">`×`</span>,</span>
-<span id="cb6-126"><a href="#cb6-126" aria-hidden="true" tabindex="-1"></a>  frações) são convertidas para HTML semântico, mas notações avançadas (somatórios,</span>
-<span id="cb6-127"><a href="#cb6-127" aria-hidden="true" tabindex="-1"></a>  matrizes, integrais) podem sair incompletas ou em texto plano. Verifique especialmente</span>
-<span id="cb6-128"><a href="#cb6-128" aria-hidden="true" tabindex="-1"></a>  blocos <span class="in">`\begin{cases}`</span>, <span class="in">`\sum`</span>, <span class="in">`\int`</span> e <span class="in">`\matrix`</span>.</span>
-<span id="cb6-129"><a href="#cb6-129" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Referências cruzadas** (<span class="in">`@fig-...`</span>, <span class="in">`@tbl-...`</span>) — são substituídas pelo texto do</span>
-<span id="cb6-130"><a href="#cb6-130" aria-hidden="true" tabindex="-1"></a>  rótulo; o link para a figura ou tabela original é removido, pois não existe no contexto</span>
-<span id="cb6-131"><a href="#cb6-131" aria-hidden="true" tabindex="-1"></a>  do Moodle.</span>
-<span id="cb6-132"><a href="#cb6-132" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Figuras e imagens externas** — não são copiadas para o Moodle; se o enunciado depender</span>
-<span id="cb6-133"><a href="#cb6-133" aria-hidden="true" tabindex="-1"></a>  de uma imagem do livro, ela deve ser inserida manualmente na atividade VPL.</span>
-<span id="cb6-134"><a href="#cb6-134" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Simuladores interativos** — funcionam se o HTML do simulador seguir o padrão</span>
-<span id="cb6-135"><a href="#cb6-135" aria-hidden="true" tabindex="-1"></a>  estabelecido (estilos *inline*, <span class="in">`var`</span> em vez de <span class="in">`let`</span>/<span class="in">`const`</span>, <span class="in">`getElementById`</span> direto).</span>
-<span id="cb6-136"><a href="#cb6-136" aria-hidden="true" tabindex="-1"></a>  Simuladores com estrutura diferente podem precisar de ajuste manual.</span>
-<span id="cb6-137"><a href="#cb6-137" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb6-138"><a href="#cb6-138" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-139"><a href="#cb6-139" aria-hidden="true" tabindex="-1"></a>O professor pode então:</span>
-<span id="cb6-140"><a href="#cb6-140" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-141"><a href="#cb6-141" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Abrir o arquivo <span class="in">`gen/book/eps/&lt;versao&gt;_moodle/EPXX_YY.html`</span> em um editor de texto;</span>
-<span id="cb6-142"><a href="#cb6-142" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Revisar fórmulas, referências e imagens conforme indicado acima;</span>
-<span id="cb6-143"><a href="#cb6-143" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Criar uma atividade VPL no Moodle, colar o conteúdo no editor HTML e salvar;</span>
-<span id="cb6-144"><a href="#cb6-144" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Importar os arquivos <span class="in">`.cases`</span> correspondentes (<span class="in">`all/capXX/casos/`</span>) como casos de teste;</span>
-<span id="cb6-145"><a href="#cb6-145" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>Configurar a linguagem de programação desejada.</span>
-<span id="cb6-146"><a href="#cb6-146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-147"><a href="#cb6-147" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
-<span id="cb6-148"><a href="#cb6-148" aria-hidden="true" tabindex="-1"></a><span class="fu">### Reaproveitamento dos Casos de Teste {.unnumbered}</span></span>
-<span id="cb6-149"><a href="#cb6-149" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-150"><a href="#cb6-150" aria-hidden="true" tabindex="-1"></a>Os arquivos <span class="in">`.cases`</span> utilizados pelo <span class="in">`TestSuite`</span> são diretamente compatíveis com o VPL.</span>
-<span id="cb6-151"><a href="#cb6-151" aria-hidden="true" tabindex="-1"></a>Dessa forma, o mesmo conjunto de testes pode ser empregado tanto durante o desenvolvimento</span>
-<span id="cb6-152"><a href="#cb6-152" aria-hidden="true" tabindex="-1"></a>nos *notebooks* quanto na correção automática das submissões no Moodle.</span>
-<span id="cb6-153"><a href="#cb6-153" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb6-154"><a href="#cb6-154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-155"><a href="#cb6-155" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-156"><a href="#cb6-156" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb6-157"><a href="#cb6-157" aria-hidden="true" tabindex="-1"></a><span class="fu">### EPs disponíveis online para o Moodle {.unnumbered}</span></span>
-<span id="cb6-158"><a href="#cb6-158" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-159"><a href="#cb6-159" aria-hidden="true" tabindex="-1"></a>Os fragmentos HTML prontos para colar no Moodle são publicados automaticamente</span>
-<span id="cb6-160"><a href="#cb6-160" aria-hidden="true" tabindex="-1"></a>junto com o livro. Cada EP tem sua própria URL direta. Por exemplo: <span class="co">[</span><span class="ot">https://fzampirolli.github.io/pdi-vc/eps/py.pt/EP01_01.html</span><span class="co">](https://fzampirolli.github.io/pdi-vc/eps/py.pt/EP01_01.html)</span></span>
-<span id="cb6-161"><a href="#cb6-161" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-162"><a href="#cb6-162" aria-hidden="true" tabindex="-1"></a>**Como usar no Moodle:**</span>
-<span id="cb6-163"><a href="#cb6-163" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-164"><a href="#cb6-164" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Acesse a URL do EP desejado no browser</span>
-<span id="cb6-165"><a href="#cb6-165" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Selecione todo o conteúdo da página (<span class="in">`Ctrl+A`</span>)</span>
-<span id="cb6-166"><a href="#cb6-166" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Copie (<span class="in">`Ctrl+C`</span>)</span>
-<span id="cb6-167"><a href="#cb6-167" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>No Moodle, crie uma atividade VPL → editor HTML → cole (<span class="in">`Ctrl+V`</span>)</span>
-<span id="cb6-168"><a href="#cb6-168" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-169"><a href="#cb6-169" aria-hidden="true" tabindex="-1"></a>Ou copie direto o código-fonte — cada arquivo é um fragmento HTML</span>
-<span id="cb6-170"><a href="#cb6-170" aria-hidden="true" tabindex="-1"></a>autocontido (sem dependências externas) pronto para colar no editor</span>
-<span id="cb6-171"><a href="#cb6-171" aria-hidden="true" tabindex="-1"></a>do Moodle.</span>
-<span id="cb6-172"><a href="#cb6-172" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb6-173"><a href="#cb6-173" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-174"><a href="#cb6-174" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-175"><a href="#cb6-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-176"><a href="#cb6-176" aria-hidden="true" tabindex="-1"></a><span class="fu">## Idiomas e Conversão de Código {.unnumbered}</span></span>
-<span id="cb6-177"><a href="#cb6-177" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-178"><a href="#cb6-178" aria-hidden="true" tabindex="-1"></a>O **núcleo de referência** é escrito em **Português** com exemplos em **Python**. Versões em outros idiomas e linguagens de programação são geradas via **APIs de IA**, passando por um fluxo que automatiza a tradução textual e a conversão de sintaxe de código.</span>
-<span id="cb6-179"><a href="#cb6-179" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-180"><a href="#cb6-180" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb6-181"><a href="#cb6-181" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-182"><a href="#cb6-182" aria-hidden="true" tabindex="-1"></a><span class="fu">### Nota {.unnumbered}</span></span>
-<span id="cb6-183"><a href="#cb6-183" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-184"><a href="#cb6-184" aria-hidden="true" tabindex="-1"></a>As versões traduzidas via IA servem como **ponto de partida** e podem apresentar imprecisões, sendo recomendada a revisão antes da aplicação em sala de aula.</span>
-<span id="cb6-185"><a href="#cb6-185" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb6-186"><a href="#cb6-186" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-187"><a href="#cb6-187" aria-hidden="true" tabindex="-1"></a><span class="fu">## Código aberto {.unnumbered}</span></span>
-<span id="cb6-188"><a href="#cb6-188" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-189"><a href="#cb6-189" aria-hidden="true" tabindex="-1"></a>O projeto é regido por princípios de código aberto. O repositório público contém o texto, códigos, imagens e scripts:</span>
-<span id="cb6-190"><a href="#cb6-190" aria-hidden="true" tabindex="-1"></a>**[github.com/fzampirolli/pdi-vc](https://github.com/fzampirolli/pdi-vc/)**</span>
-<span id="cb6-191"><a href="#cb6-191" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-192"><a href="#cb6-192" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb6-193"><a href="#cb6-193" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-194"><a href="#cb6-194" aria-hidden="true" tabindex="-1"></a><span class="fu">## Antes de começar: *Notebooks* em Python {.unnumbered}</span></span>
-<span id="cb6-195"><a href="#cb6-195" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-196"><a href="#cb6-196" aria-hidden="true" tabindex="-1"></a>O conceito de ***Literate Programming*** (Programação Literária), proposto por Donald Knuth <span class="co">[</span><span class="ot">@knuth_literate_1984</span><span class="co">]</span>, fundamenta a estrutura deste material. A lógica inverte o paradigma tradicional: o programa é escrito para a leitura humana, assemelhando-se a um ensaio, enquanto o código é extraído para execução computacional.</span>
-<span id="cb6-197"><a href="#cb6-197" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-198"><a href="#cb6-198" aria-hidden="true" tabindex="-1"></a>O conteúdo é estruturado em *Notebooks*, documentos que intercalam **células de texto** (em [Markdown](https://www.markdownguide.org)) e **células de código** (em Python).</span>
-<span id="cb6-199"><a href="#cb6-199" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-200"><a href="#cb6-200" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Execução:** Células de código são identificadas por <span class="in">`[ ]`</span>. A execução pode ser realizada com <span class="in">`Shift + Enter`</span> ou pelo botão ▶️ da interface.</span>
-<span id="cb6-201"><a href="#cb6-201" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Ambientes:** Os *notebooks* podem ser executados localmente, por meio do <span class="co">[</span><span class="ot">Jupyter</span><span class="co">](https://jupyter.org/?utm_source=chatgpt.com)</span> ou do <span class="co">[</span><span class="ot">Visual Studio Code (VS Code)</span><span class="co">](https://code.visualstudio.com/?utm_source=chatgpt.com)</span>, bem como em ambientes de nuvem, como o <span class="co">[</span><span class="ot">Google Colab</span><span class="co">](https://colab.research.google.com)</span>.</span>
-<span id="cb6-202"><a href="#cb6-202" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-203"><a href="#cb6-203" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-204"><a href="#cb6-204" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
-<span id="cb6-205"><a href="#cb6-205" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-206"><a href="#cb6-206" aria-hidden="true" tabindex="-1"></a><span class="fu">### Nota sobre o formato {.unnumbered}</span></span>
-<span id="cb6-207"><a href="#cb6-207" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-208"><a href="#cb6-208" aria-hidden="true" tabindex="-1"></a>Em ambientes interativos, o código pode ser modificado e executado. Nas versões estáticas (HTML ou PDF), os blocos de código servem para fins de leitura e referência, mantendo-se a integridade das explicações.</span>
-<span id="cb6-209"><a href="#cb6-209" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb6-210"><a href="#cb6-210" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-211"><a href="#cb6-211" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-212"><a href="#cb6-212" aria-hidden="true" tabindex="-1"></a>::: {.content-visible when-format="html"}</span>
-<span id="cb6-213"><a href="#cb6-213" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-214"><a href="#cb6-214" aria-hidden="true" tabindex="-1"></a><span class="fu">## Referências do Prefácio {.unnumbered}</span></span>
-<span id="cb6-215"><a href="#cb6-215" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-216"><a href="#cb6-216" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">## Prefácio {.unnumbered}</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>Este livro constitui uma **obra em constante atualização** sobre **Processamento Digital de Imagens (PDI) e Visão Computacional (VC)**, concebido como material didático interativo para cursos de graduação e pós-graduação em Computação, Engenharias e áreas correlatas.</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>::: {.callout-important}</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">### Destaque {.unnumbered}</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>A obra segue a metodologia descrita em @zampirolli2025morph — uma extensão de @zampirolli2024practical, trabalho premiado na trilha de "Recursos e Ambientes Educacionais" na **EduComp 2024**. O conteúdo integra a biblioteca <span class="in">`morph.py`</span>, desenvolvida pelo autor.</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="fu">## Um livro vivo {.unnumbered}</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>O material não possui caráter estático. O conteúdo passa por evolução contínua: exemplos são refinados, novas seções são incorporadas e as abordagens pedagógicas são atualizadas conforme o retorno de usuários. Por essa razão, o material é tratado como um *projeto inicial* — uma base em expansão.</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="fu">## Uso de ferramentas de Inteligência Artificial {.unnumbered}</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>A produção deste livro conta com o suporte de **ferramentas de Inteligência Artificial** (IA) para elevar a qualidade do texto e do código. A versão inicial dos capítulos foi submetida a processos de revisão por meio de assistentes, em versões gratuitas, como **DeepSeek**, **Gemini** e **Claude**. Mediante *prompts* iterativos, tais ferramentas auxiliaram no seguinte:</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Refinamento da clareza e precisão das explicações;</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Detecção e correção de erros de sintaxe, lógica e digitação em exemplos de código;</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Sugestão de melhorias na organização e fluidez textual.</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>Adicionalmente, **ilustrações foram geradas pelo Gemini**, com o propósito de auxiliar a visualização de conceitos abstratos da área.</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="fu">## Como este livro é produzido {.unnumbered}</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>O conteúdo é integralmente redigido em **[Quarto](https://quarto.org)** (armazenado na pasta <span class="in">`all`</span> de <span class="co">[</span><span class="ot">github.com/fzampirolli/pdi-vc</span><span class="co">](https://github.com/fzampirolli/pdi-vc)</span>), um sistema de publicação científica que permite a renderização do código-fonte para múltiplos formatos:</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Formato <span class="pp">|</span> Descrição <span class="pp">|</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="pp">| ---</span> <span class="pp">| ---</span> <span class="pp">|</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **HTML** <span class="pp">|</span> Versão web com navegação interativa: <span class="co">[</span><span class="ot">fzampirolli.github.io/pdi-vc</span><span class="co">](https://fzampirolli.github.io/pdi-vc/)</span> <span class="pp">|</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **PDF** <span class="pp">|</span> Versão para impressão ou leitura *offline*: <span class="co">[</span><span class="ot">livro.pt.py.pdf</span><span class="co">](https://github.com/fzampirolli/pdi-vc/blob/master/gen/book/py.pt/livro.pt.py.pdf)</span> <span class="pp">|</span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> ***Notebooks* (`.ipynb`)** | Versão processada por filtro personalizado que resolve citações e numeração de elementos, formatando referências no padrão ABNT. Compatível com **Jupyter** e **Google Colab**. <span class="pp">|</span></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>No início de cada capítulo, botões "*Open in Colab*" direcionam para dois ambientes:</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Parte Teórica:** Localizada na abertura do capítulo.</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Parte Prática:** Localizada na seção **💻 Parte Prática com Exercícios de Programação** ao final do capítulo.</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>O *script* de pós-processamento (<span class="in">`gerar_notebooks_alunos.py`</span>) prepara os arquivos para distribuição, assegurando a funcionalidade em ambientes interativos sem a necessidade de instalação local do Quarto.</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a><span class="fu">## A biblioteca `morph.py` {.unnumbered}</span></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>A biblioteca **`morph.py`** [@zampirolli2025morph] é empregada em toda a obra. Desenvolvida para fins pedagógicos, a ferramenta oferece uma interface simplificada sobre bibliotecas consolidadas, como **OpenCV**, **NumPy** e **Matplotlib**, permitindo o foco nos conceitos teóricos em detrimento de detalhes específicos de API.</span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a><span class="fu">### Herança Técnica {.unnumbered}</span></span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>A estrutura da <span class="in">`morph.py`</span> fundamenta-se em ferramentas de morfologia matemática desenvolvidas no Brasil, como **MMachLib** [@lotufo1997mmachlib] e **MMach** [@barrera1998mmach], além da **mmorph**, empregada na obra de @dougherty2003hands. Tais ferramentas serviram como referência para o ensino da área por décadas.</span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>A biblioteca permite realizar leitura, exibição, conversões de cores, filtragem e morfologia matemática de forma concisa:</span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a><span class="in">```python</span></span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> morph <span class="im">as</span> mm</span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>img <span class="op">=</span> mm.read(<span class="st">'lena.jpg'</span>)    <span class="co"># leitura da imagem</span></span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>mm.show(img)                 <span class="co"># exibição</span></span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>neg <span class="op">=</span> mm.neg(img)            <span class="co"># inversão (negativo)</span></span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>mm.show(neg)</span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>O código-fonte está disponível em:</span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>**[github.com/fzampirolli/pdi-vc/tree/master/morph](https://github.com/fzampirolli/pdi-vc/tree/master/morph)**.</span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercícios de Programação (EPs) e Validação Automática {.unnumbered}</span></span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a>Cada unidade do livro inclui **Exercícios de Programação (EPs)** práticos e de complexidade crescente, projetados para consolidar a teoria por meio da biblioteca <span class="in">`morph.py`</span> ou do padrão da linguagem escolhida.</span>
+<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a><span class="fu">### Estrutura e Validação Local {.unnumbered}</span></span>
+<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a>A validação das soluções é feita localmente pela classe <span class="in">`TestSuite`</span> (<span class="in">`testsuite.py`</span>), que compara a saída do programa com os arquivos de casos de teste (<span class="in">`.cases`</span>):</span>
+<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a><span class="in">```python</span></span>
+<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a>TestSuite(<span class="st">"EP01_01.py"</span>).run()</span>
+<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a>O sistema suporta múltiplas linguagens (Python, Java, C++, C, JavaScript e R), e a mesma estrutura pode ser integrada diretamente ao Moodle.</span>
+<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a><span class="fu">### Integração com o Moodle (VPL) {.unnumbered}</span></span>
+<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a>Os EPs dos *notebooks* podem ser convertidos em atividades **VPL (*Virtual Programming Lab*)** no Moodle. O script <span class="in">`ep_tools.py`</span> (executado via <span class="in">`make build`</span>) automatiza o processo em duas etapas:</span>
+<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Extração** (<span class="in">`make eps`</span>): Gera um HTML interativo independente em <span class="in">`gen/book/eps/&lt;versao&gt;/`</span>. </span>
+<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Conversão** (<span class="in">`make moodle`</span>): Transforma o arquivo em um fragmento HTML autocontido e sem CSS externo, pronto para ser colado no editor do Moodle. Ex. <span class="co">[</span><span class="ot">https://fzampirolli.github.io/pdi-vc/eps/py.pt_moodle/EP01_01.html</span><span class="co">](https://fzampirolli.github.io/pdi-vc/eps/py.pt_moodle/EP01_01.html)</span></span>
+<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning}</span>
+<span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-92"><a href="#cb3-92" aria-hidden="true" tabindex="-1"></a><span class="fu">### Revisão obrigatória antes de publicar no Moodle {.unnumbered}</span></span>
+<span id="cb3-93"><a href="#cb3-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-94"><a href="#cb3-94" aria-hidden="true" tabindex="-1"></a>Embora automática, a conversão exige revisão do professor devido a limitações do editor do Moodle:</span>
+<span id="cb3-95"><a href="#cb3-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-96"><a href="#cb3-96" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Fórmulas e Barras Invertidas (`\`)** — O TinyMCE/HTML Purifier do Moodle descarta barras invertidas (<span class="in">`\`</span>), corrompendo equações e travando *scripts*. Por isso, fórmulas complexas são convertidas estritamente para HTML puro (tabelas e entidades). Evite usar <span class="in">`\ `</span> no enunciado e revise a renderização de matrizes e frações.</span>
+<span id="cb3-97"><a href="#cb3-97" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Referências cruzadas** — Links como <span class="in">`@fig-...`</span> ou <span class="in">`@tbl-...`</span> são removidos, mantendo-se apenas o texto do rótulo.</span>
+<span id="cb3-98"><a href="#cb3-98" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Figuras externas** — Imagens complementares devem ser inseridas manualmente na atividade VPL.</span>
+<span id="cb3-99"><a href="#cb3-99" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Simuladores** — Funcionam apenas se utilizarem JavaScript padrão com estilos *inline* e manipulação direta de DOM.</span>
+<span id="cb3-100"><a href="#cb3-100" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-101"><a href="#cb3-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-102"><a href="#cb3-102" aria-hidden="true" tabindex="-1"></a><span class="fu">### Como Publicar no Moodle {.unnumbered}</span></span>
+<span id="cb3-103"><a href="#cb3-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-104"><a href="#cb3-104" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Abra o arquivo gerado em <span class="in">`_moodle/EPXX_YY.html`</span> e revise fórmulas ou imagens.</span>
+<span id="cb3-105"><a href="#cb3-105" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Crie uma atividade VPL no Moodle e cole o código diretamente no editor HTML.</span>
+<span id="cb3-106"><a href="#cb3-106" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Importar os arquivos <span class="in">`.cases`</span> da pasta <span class="in">`all/capXX/casos/`</span> nas configurações de testes do VPL.</span>
+<span id="cb3-107"><a href="#cb3-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-108"><a href="#cb3-108" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb3-109"><a href="#cb3-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-110"><a href="#cb3-110" aria-hidden="true" tabindex="-1"></a><span class="fu">### Reaproveitamento dos Casos de Teste {.unnumbered}</span></span>
+<span id="cb3-111"><a href="#cb3-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-112"><a href="#cb3-112" aria-hidden="true" tabindex="-1"></a>Os arquivos <span class="in">`.cases`</span> são 100% compatíveis com o VPL, permitindo usar o mesmo conjunto de testes tanto no desenvolvimento local quanto na correção automatizada no Moodle.</span>
+<span id="cb3-113"><a href="#cb3-113" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-114"><a href="#cb3-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-115"><a href="#cb3-115" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb3-116"><a href="#cb3-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-117"><a href="#cb3-117" aria-hidden="true" tabindex="-1"></a><span class="fu">### EPs disponíveis online {.unnumbered}</span></span>
+<span id="cb3-118"><a href="#cb3-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-119"><a href="#cb3-119" aria-hidden="true" tabindex="-1"></a>Os fragmentos prontos são publicados com o livro em URLs diretas (ex: <span class="co">[</span><span class="ot">https://fzampirolli.github.io/pdi-vc/eps/py.pt/EP01_01.html</span><span class="co">](https://fzampirolli.github.io/pdi-vc/eps/py.pt/EP01_01.html)</span>). O professor pode acessar a página, copiar todo o conteúdo (<span class="in">`Ctrl+A`</span> / <span class="in">`Ctrl+C`</span>) e colá-lo direto no editor do Moodle.</span>
+<span id="cb3-120"><a href="#cb3-120" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-121"><a href="#cb3-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-122"><a href="#cb3-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-123"><a href="#cb3-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-124"><a href="#cb3-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-125"><a href="#cb3-125" aria-hidden="true" tabindex="-1"></a><span class="fu">## Idiomas e Conversão de Código {.unnumbered}</span></span>
+<span id="cb3-126"><a href="#cb3-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-127"><a href="#cb3-127" aria-hidden="true" tabindex="-1"></a>O **núcleo de referência** é escrito em **Português** com exemplos em **Python**. Versões em outros idiomas e linguagens de programação são geradas via **APIs de IA**, passando por um fluxo que automatiza a tradução textual e a conversão de sintaxe de código.</span>
+<span id="cb3-128"><a href="#cb3-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-129"><a href="#cb3-129" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb3-130"><a href="#cb3-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-131"><a href="#cb3-131" aria-hidden="true" tabindex="-1"></a><span class="fu">### Nota {.unnumbered}</span></span>
+<span id="cb3-132"><a href="#cb3-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-133"><a href="#cb3-133" aria-hidden="true" tabindex="-1"></a>As versões traduzidas via IA servem como **ponto de partida** e podem apresentar imprecisões, sendo recomendada a revisão antes da aplicação em sala de aula.</span>
+<span id="cb3-134"><a href="#cb3-134" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-135"><a href="#cb3-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-136"><a href="#cb3-136" aria-hidden="true" tabindex="-1"></a><span class="fu">## Código aberto {.unnumbered}</span></span>
+<span id="cb3-137"><a href="#cb3-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-138"><a href="#cb3-138" aria-hidden="true" tabindex="-1"></a>O projeto é regido por princípios de código aberto. O repositório público contém o texto, códigos, imagens e scripts:</span>
+<span id="cb3-139"><a href="#cb3-139" aria-hidden="true" tabindex="-1"></a>**[github.com/fzampirolli/pdi-vc](https://github.com/fzampirolli/pdi-vc/)**</span>
+<span id="cb3-140"><a href="#cb3-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-141"><a href="#cb3-141" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb3-142"><a href="#cb3-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-143"><a href="#cb3-143" aria-hidden="true" tabindex="-1"></a><span class="fu">## Antes de começar: *Notebooks* em Python {.unnumbered}</span></span>
+<span id="cb3-144"><a href="#cb3-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-145"><a href="#cb3-145" aria-hidden="true" tabindex="-1"></a>O conceito de ***Literate Programming*** (Programação Literária), proposto por Donald Knuth <span class="co">[</span><span class="ot">@knuth_literate_1984</span><span class="co">]</span>, fundamenta a estrutura deste material. A lógica inverte o paradigma tradicional: o programa é escrito para a leitura humana, assemelhando-se a um ensaio, enquanto o código é extraído para execução computacional.</span>
+<span id="cb3-146"><a href="#cb3-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-147"><a href="#cb3-147" aria-hidden="true" tabindex="-1"></a>O conteúdo é estruturado em *Notebooks*, documentos que intercalam **células de texto** (em [Markdown](https://www.markdownguide.org)) e **células de código** (em Python).</span>
+<span id="cb3-148"><a href="#cb3-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-149"><a href="#cb3-149" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Execução:** Células de código são identificadas por <span class="in">`[ ]`</span>. A execução pode ser realizada com <span class="in">`Shift + Enter`</span> ou pelo botão ▶️ da interface.</span>
+<span id="cb3-150"><a href="#cb3-150" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>**Ambientes:** Os *notebooks* podem ser executados localmente, por meio do <span class="co">[</span><span class="ot">Jupyter</span><span class="co">](https://jupyter.org/?utm_source=chatgpt.com)</span> ou do <span class="co">[</span><span class="ot">Visual Studio Code (VS Code)</span><span class="co">](https://code.visualstudio.com/?utm_source=chatgpt.com)</span>, bem como em ambientes de nuvem, como o <span class="co">[</span><span class="ot">Google Colab</span><span class="co">](https://colab.research.google.com)</span>.</span>
+<span id="cb3-151"><a href="#cb3-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-152"><a href="#cb3-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-153"><a href="#cb3-153" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb3-154"><a href="#cb3-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-155"><a href="#cb3-155" aria-hidden="true" tabindex="-1"></a><span class="fu">### Nota sobre o formato {.unnumbered}</span></span>
+<span id="cb3-156"><a href="#cb3-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-157"><a href="#cb3-157" aria-hidden="true" tabindex="-1"></a>Em ambientes interativos, o código pode ser modificado e executado. Nas versões estáticas (HTML ou PDF), os blocos de código servem para fins de leitura e referência, mantendo-se a integridade das explicações.</span>
+<span id="cb3-158"><a href="#cb3-158" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-159"><a href="#cb3-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-160"><a href="#cb3-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-161"><a href="#cb3-161" aria-hidden="true" tabindex="-1"></a>::: {.content-visible when-format="html"}</span>
+<span id="cb3-162"><a href="#cb3-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-163"><a href="#cb3-163" aria-hidden="true" tabindex="-1"></a><span class="fu">## Referências do Prefácio {.unnumbered}</span></span>
+<span id="cb3-164"><a href="#cb3-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-165"><a href="#cb3-165" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

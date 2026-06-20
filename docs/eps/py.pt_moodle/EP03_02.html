@@ -5,14 +5,14 @@
 <div style="background-color:#f8f9fa;padding:15px;border:1px solid #ccc;border-radius:5px;margin-bottom:20px;">
 <h4 style="margin-top:0;color:#333;">📋 Diretrizes de Implementação</h4>
 <ol type="1">
-<li><strong>Dimensões:</strong> Ler os inteiros \(L\) (linhas) e \(C\) (colunas).</li>
-<li><strong>Parâmetro:</strong> Ler o valor real \(\alpha \in [0, 1]\).</li>
-<li><strong>Dados:</strong> Ler os valores inteiros da matriz \(f_1\) (imagem 1) e em seguida da matriz \(f_2\) (imagem 2).</li>
-<li><strong>Mapeamento:</strong> Para cada posição \((i, j)\), calcular:</li>
+<li><strong>Dimensões:</strong> Ler os inteiros <em>L</em> (linhas) e <em>C</em> (colunas).</li>
+<li><strong>Parâmetro:</strong> Ler o valor real α ∈ [0, 1].</li>
+<li><strong>Dados:</strong> Ler os valores inteiros da matriz <em>f</em>_1 (imagem 1) e em seguida da matriz <em>f</em>_2 (imagem 2).</li>
+<li><strong>Mapeamento:</strong> Para cada posição (<em>i</em>, <em>j</em>), calcular:</li>
 </ol>
-<p><div style="text-align:center;display:block;margin:0.5em 0;">$$g(i,j) = \text{clip}\left(\text{round}\left(\alpha \cdot f_1(i,j) + (1-\alpha) \cdot f_2(i,j)\right)\right)$$</div></p>
+<p><p style="text-align:center;font-family:monospace;font-size:1.1em;padding:8px;background:#f8f8f8;border-radius:4px;border:1px solid #ddd;"><em>g</em>(<em>i</em>,<em>j</em>) = clip\left(round\left(α · <em>f</em>_1(<em>i</em>,<em>j</em>) + (1-α) · <em>f</em>_2(<em>i</em>,<em>j</em>)\right)\right)</p></p>
 <ol start="5" type="1">
-<li><strong>Saída:</strong> Exibir a matriz resultante \(L \times C\).</li>
+<li><strong>Saída:</strong> Exibir a matriz resultante <em>L</em> × <em>C</em>.</li>
 </ol>
 <hr/>
 </div>
@@ -20,7 +20,7 @@
 <h4 style="margin-top:0;color:#856404;">📌 Restrições Computacionais</h4>
 <ul>
 <li><strong>Arredondamento:</strong> Aplicar <code>round</code> antes da conversão para inteiro.</li>
-<li><strong>Saturação:</strong> Confinar ao intervalo \([0, 255]\) com \(\text{clip}(x) = \max(0, \min(255, x))\).</li>
+<li><strong>Saturação:</strong> Confinar ao intervalo [0, 255] com clip(<em>x</em>) = \max(0, \min(255, <em>x</em>)).</li>
 <li><strong>Operação em float:</strong> Realize a operação em ponto flutuante antes de arredondar.</li>
 </ul>
 <hr/>
@@ -30,22 +30,22 @@
 <table style="width:100%;border-collapse:collapse;background-color:#fff;text-align:left;margin-bottom:20px;">
 <thead>
 <tr style="background-color:#f1f1f1;">
-<th style="padding:10px;border:1px solid #ddd;">Valor de \(\alpha\)</th>
+<th style="padding:10px;border:1px solid #ddd;">Valor de α</th>
 <th style="padding:10px;border:1px solid #ddd;">Resultado</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">\(\alpha = 1.0\)</td>
-<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Apenas \(f_1\)</td>
+<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">α = 1.0</td>
+<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Apenas <em>f</em>_1</td>
 </tr>
 <tr>
-<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">\(\alpha = 0.5\)</td>
-<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Média aritmética de \(f_1\) e \(f_2\)</td>
+<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">α = 0.5</td>
+<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Média aritmética de <em>f</em>_1 e <em>f</em>_2</td>
 </tr>
 <tr>
-<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">\(\alpha = 0.0\)</td>
-<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Apenas \(f_2\)</td>
+<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">α = 0.0</td>
+<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Apenas <em>f</em>_2</td>
 </tr>
 </tbody>
 </table>
@@ -55,15 +55,15 @@
 <h4 style="margin-top:0;color:#333;">📦 Especificação de Entrada e Saída (VPL)</h4>
 <p><strong>Entrada:</strong></p>
 <ul>
-<li>Linha 1: Inteiro \(L\).</li>
-<li>Linha 2: Inteiro \(C\).</li>
-<li>Linha 3: Real \(\alpha\).</li>
-<li>Linhas seguintes: Elementos de \(f_1\) (\(L\) linhas com \(C\) valores cada).</li>
-<li>Linhas seguintes: Elementos de \(f_2\) (\(L\) linhas com \(C\) valores cada).</li>
+<li>Linha 1: Inteiro <em>L</em>.</li>
+<li>Linha 2: Inteiro <em>C</em>.</li>
+<li>Linha 3: Real α.</li>
+<li>Linhas seguintes: Elementos de <em>f</em>_1 (<em>L</em> linhas com <em>C</em> valores cada).</li>
+<li>Linhas seguintes: Elementos de <em>f</em>_2 (<em>L</em> linhas com <em>C</em> valores cada).</li>
 </ul>
 <p><strong>Saída:</strong></p>
 <ul>
-<li>Matriz resultante \(L \times C\).</li>
+<li>Matriz resultante <em>L</em> × <em>C</em>.</li>
 </ul>
 </div>
 <div style="background-color:#fffde7;border-left:5px solid #fbc02d;padding:15px;margin-bottom:25px;">
@@ -93,7 +93,7 @@
 10 20 30<br/>
 90 80 70</td>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">10 20 30</td>
-<td style="padding:10px;border:1px solid #ddd;vertical-align:top;">Apenas \(f_1\) (alpha=1)</td>
+<td style="padding:10px;border:1px solid #ddd;vertical-align:top;">Apenas <em>f</em>_1 (alpha=1)</td>
 </tr>
 </tbody>
 </table>

@@ -44,9 +44,9 @@
 Calcule VP, FP, FN, VN e obtenha Precisão((t)) e Sensibilidade((t)).</p></li>
 <li><p>Monte a curva P‑S: pares (Sensibilidade((t)), Precisão((t))), ordenados por Sensibilidade crescente.</p></li>
 <li><p><strong>Monotonize a Precisão</strong>:<br/>
-<div style="text-align:center;display:block;margin:0.5em 0;">$$P_{\text{mono}}[i] = \max_{j \ge i} P[j]$$</div></p></li>
+<p style="text-align:center;font-family:monospace;font-size:1.1em;padding:8px;background:#f8f8f8;border-radius:4px;border:1px solid #ddd;"><em>P</em>_mono[<em>i</em>] = \max_j \ge <em>i</em> <em>P</em>[<em>j</em>]</p></p></li>
 <li><p>Calcule a <strong>AP</strong> (área sob a curva monotônica) usando a <strong>regra do trapézio</strong> (aproximação mais precisa que a simples soma de Riemann):<br/>
-<div style="text-align:center;display:block;margin:0.5em 0;">$$AP = \sum_{i=1}^{m-1} \frac{P_{\text{mono}}[i-1] + P_{\text{mono}}[i]}{2} \cdot (S[i] - S[i-1])$$</div></p></li>
+<p style="text-align:center;font-family:monospace;font-size:1.1em;padding:8px;background:#f8f8f8;border-radius:4px;border:1px solid #ddd;">AP = ∑_i=1^m-1 \fracP_mono[<em>i</em>-1] + <em>P</em>_mono[<em>i</em>]2 · (<em>S</em>[<em>i</em>] - <em>S</em>[<em>i</em>-1])</p></p></li>
 <li><p><strong>mAP</strong> = média das APs de todas as classes. Neste EP há apenas <strong>1 classe</strong>, portanto mAP = AP.</p></li>
 </ol>
 <div class="callout callout-style-default callout-note callout-titled">

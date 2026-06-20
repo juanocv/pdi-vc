@@ -1,24 +1,24 @@
 <div style="font-family:sans-serif;line-height:1.6;color:#333;max-width:1200px;margin:auto;border:1px solid #ddd;padding:20px;border-radius:8px;background:white;">
 <h2 style="color:#0056b3;border-bottom:2px solid #0056b3;padding-bottom:10px;">EP03_10 ✨ Unsharp Masking (USM)</h2>
-<p>Em sistemas de digitalização de documentos históricos e obras de arte, a nitidez das imagens é fundamental para leitura de textos manuscritos e detalhes ornamentais. O <strong><em>Unsharp Masking</em> (USM)</strong> é o algoritmo de realce de nitidez padrão utilizado em <em>scanners</em> profissionais e softwares como Adobe Photoshop, controlado pelo parâmetro \(k\) que determina a intensidade do realce.</p>
+<p>Em sistemas de digitalização de documentos históricos e obras de arte, a nitidez das imagens é fundamental para leitura de textos manuscritos e detalhes ornamentais. O <strong><em>Unsharp Masking</em> (USM)</strong> é o algoritmo de realce de nitidez padrão utilizado em <em>scanners</em> profissionais e softwares como Adobe Photoshop, controlado pelo parâmetro <em>k</em> que determina a intensidade do realce.</p>
 <p>Ver na Figura 3.35 uma simulação deste EP.</p>
 <div style="background-color:#f8f9fa;padding:15px;border:1px solid #ccc;border-radius:5px;margin-bottom:20px;">
 <h4 style="margin-top:0;color:#333;">📋 Diretrizes de Implementação</h4>
 <ol type="1">
-<li><strong>Dimensões:</strong> Ler os inteiros \(L\) (linhas) e \(C\) (colunas).</li>
-<li><strong>Parâmetro:</strong> Ler o valor real \(k\) (intensidade do realce, \(k \ge 0\)).</li>
-<li><strong>Dados:</strong> Ler a matriz de pixels \(f\).</li>
-<li><strong>Suavização:</strong> Calcular \(\bar{f}\) com filtro de média \(3\times3\) (apenas pixels internos; bordas mantidas):</li>
+<li><strong>Dimensões:</strong> Ler os inteiros <em>L</em> (linhas) e <em>C</em> (colunas).</li>
+<li><strong>Parâmetro:</strong> Ler o valor real <em>k</em> (intensidade do realce, <em>k</em> \ge 0).</li>
+<li><strong>Dados:</strong> Ler a matriz de pixels <em>f</em>.</li>
+<li><strong>Suavização:</strong> Calcular \barf com filtro de média 3×3 (apenas pixels internos; bordas mantidas):</li>
 </ol>
-<p><div style="text-align:center;display:block;margin:0.5em 0;">$$\bar{f}(i,j) = \frac{1}{9} \sum_{s=-1}^{1} \sum_{t=-1}^{1} f(i+s, j+t)$$</div></p>
+<p><p style="text-align:center;font-family:monospace;font-size:1.1em;padding:8px;background:#f8f8f8;border-radius:4px;border:1px solid #ddd;">\barf(<em>i</em>,<em>j</em>) = (1)/(9) ∑_s=-1^1 ∑_t=-1^1 <em>f</em>(<em>i</em>+<em>s</em>, <em>j</em>+<em>t</em>)</p></p>
 <ol start="5" type="1">
-<li><strong>Máscara de alta frequência:</strong> \(m(i,j) = f(i,j) - \bar{f}(i,j)\).</li>
+<li><strong>Máscara de alta frequência:</strong> <em>m</em>(<em>i</em>,<em>j</em>) = <em>f</em>(<em>i</em>,<em>j</em>) - \barf(<em>i</em>,<em>j</em>).</li>
 <li><strong>Realce USM:</strong> Para cada pixel interno:</li>
 </ol>
-<p><div style="text-align:center;display:block;margin:0.5em 0;">$$g(i,j) = \text{clip}\left(\text{round}\left(f(i,j) + k \cdot m(i,j)\right)\right)$$</div></p>
+<p><p style="text-align:center;font-family:monospace;font-size:1.1em;padding:8px;background:#f8f8f8;border-radius:4px;border:1px solid #ddd;"><em>g</em>(<em>i</em>,<em>j</em>) = clip\left(round\left(<em>f</em>(<em>i</em>,<em>j</em>) + <em>k</em> · <em>m</em>(<em>i</em>,<em>j</em>)\right)\right)</p></p>
 <ol start="7" type="1">
-<li><strong>Borda:</strong> \(g(i,j) = f(i,j)\) (cópia direta).</li>
-<li><strong>Saída:</strong> Exibir a matriz realçada \(L \times C\).</li>
+<li><strong>Borda:</strong> <em>g</em>(<em>i</em>,<em>j</em>) = <em>f</em>(<em>i</em>,<em>j</em>) (cópia direta).</li>
+<li><strong>Saída:</strong> Exibir a matriz realçada <em>L</em> × <em>C</em>.</li>
 </ol>
 <hr/>
 </div>
@@ -26,9 +26,9 @@
 <h4 style="margin-top:0;color:#856404;">📌 Restrições Computacionais</h4>
 <ul>
 <li><strong>Arredondamento:</strong> Aplicar <code>round</code> antes do clipping.</li>
-<li><strong>Saturação:</strong> \(\text{clip}(x) = \max(0, \min(255, x))\).</li>
-<li><strong>Operações em float:</strong> Calcular \(\bar{f}\) e \(m\) em ponto flutuante antes de arredondar o resultado final.</li>
-<li><strong>\(k = 0\):</strong> Sem realce — a saída é idêntica à entrada (exceto pelas bordas).</li>
+<li><strong>Saturação:</strong> clip(<em>x</em>) = \max(0, \min(255, <em>x</em>)).</li>
+<li><strong>Operações em float:</strong> Calcular \barf e <em>m</em> em ponto flutuante antes de arredondar o resultado final.</li>
+<li><strong><em>k</em> = 0:</strong> Sem realce — a saída é idêntica à entrada (exceto pelas bordas).</li>
 </ul>
 <hr/>
 </div>
@@ -45,17 +45,17 @@
 <tbody>
 <tr>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">1</td>
-<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">\(\bar{f} = f * \frac{1}{9}\mathbf{1}_{3\times3}\)</td>
+<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">\barf = <em>f</em> * (1)/(9)<strong>1</strong>_3×3</td>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Suavização (baixas frequências)</td>
 </tr>
 <tr>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">2</td>
-<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">\(m = f - \bar{f}\)</td>
+<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;"><em>m</em> = <em>f</em> - \barf</td>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Máscara (altas frequências)</td>
 </tr>
 <tr>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">3</td>
-<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">\(g = \text{clip}(\text{round}(f + k \cdot m))\)</td>
+<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;"><em>g</em> = clip(round(<em>f</em> + <em>k</em> · <em>m</em>))</td>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Realce ponderado</td>
 </tr>
 </tbody>
@@ -66,14 +66,14 @@
 <h4 style="margin-top:0;color:#333;">📦 Especificação de Entrada e Saída (VPL)</h4>
 <p><strong>Entrada:</strong></p>
 <ul>
-<li>Linha 1: Inteiro \(L\).</li>
-<li>Linha 2: Inteiro \(C\).</li>
-<li>Linha 3: Real \(k\).</li>
+<li>Linha 1: Inteiro <em>L</em>.</li>
+<li>Linha 2: Inteiro <em>C</em>.</li>
+<li>Linha 3: Real <em>k</em>.</li>
 <li>Linhas seguintes: Elementos da matriz original.</li>
 </ul>
 <p><strong>Saída:</strong></p>
 <ul>
-<li>Matriz realçada \(L \times C\).</li>
+<li>Matriz realçada <em>L</em> × <em>C</em>.</li>
 </ul>
 </div>
 <div style="background-color:#fffde7;border-left:5px solid #fbc02d;padding:15px;margin-bottom:25px;">

@@ -4,20 +4,20 @@
 <div style="background-color:#f8f9fa;padding:15px;border:1px solid #ccc;border-radius:5px;margin-bottom:20px;">
 <h4 style="margin-top:0;color:#333;">📋 Diretrizes de Implementação</h4>
 <ol type="1">
-<li><strong>Dimensões da imagem:</strong> Ler os inteiros \(L\) (linhas) e \(C\) (colunas) de \(f\).</li>
-<li><strong>Dimensões de \(B\):</strong> Ler os inteiros \(H_B\) (linhas) e \(W_B\) (colunas) do elemento estruturante.</li>
-<li><strong>Elemento estruturante:</strong> Ler a matriz \(B\) com valores \(0\) ou \(1\), linha a linha.</li>
-<li><strong>Dados:</strong> Ler a matriz \(f\) (a imagem original, em tons de cinza), linha a linha.</li>
+<li><strong>Dimensões da imagem:</strong> Ler os inteiros <em>L</em> (linhas) e <em>C</em> (colunas) de <em>f</em>.</li>
+<li><strong>Dimensões de <em>B</em>:</strong> Ler os inteiros <em>H</em>_<em>B</em> (linhas) e <em>W</em>_<em>B</em> (colunas) do elemento estruturante.</li>
+<li><strong>Elemento estruturante:</strong> Ler a matriz <em>B</em> com valores 0 ou 1, linha a linha.</li>
+<li><strong>Dados:</strong> Ler a matriz <em>f</em> (a imagem original, em tons de cinza), linha a linha.</li>
 <li><strong>Operadores de base:</strong> Calcular, exatamente como nos EPs 04_03 a 04_06:
 <ul>
-<li>\(d = f \oplus B\) (dilatação),</li>
-<li>\(e = f \ominus B\) (erosão),</li>
-<li>\(\text{abertura} = e \oplus B\),</li>
-<li>\(\text{fechamento} = d \ominus B\).</li>
+<li><em>d</em> = <em>f</em> \oplus <em>B</em> (dilatação),</li>
+<li><em>e</em> = <em>f</em> \ominus <em>B</em> (erosão),</li>
+<li>abertura = <em>e</em> \oplus <em>B</em>,</li>
+<li>fechamento = <em>d</em> \ominus <em>B</em>.</li>
 </ul></li>
-<li><strong>Gradiente morfológico:</strong> \(\text{grad}(y,x) = d(y,x) - e(y,x)\).</li>
-<li><strong>Top-hat:</strong> \(\text{tophat}(y,x) = f(y,x) - \text{abertura}(y,x)\).</li>
-<li><strong>Black-hat:</strong> \(\text{blackhat}(y,x) = \text{fechamento}(y,x) - f(y,x)\).</li>
+<li><strong>Gradiente morfológico:</strong> grad(<em>y</em>,<em>x</em>) = <em>d</em>(<em>y</em>,<em>x</em>) - <em>e</em>(<em>y</em>,<em>x</em>).</li>
+<li><strong>Top-hat:</strong> tophat(<em>y</em>,<em>x</em>) = <em>f</em>(<em>y</em>,<em>x</em>) - abertura(<em>y</em>,<em>x</em>).</li>
+<li><strong>Black-hat:</strong> blackhat(<em>y</em>,<em>x</em>) = fechamento(<em>y</em>,<em>x</em>) - <em>f</em>(<em>y</em>,<em>x</em>).</li>
 <li><strong>Saída:</strong> Exibir, <strong>nesta ordem</strong>, as três matrizes completas: gradiente, top-hat, black-hat.</li>
 </ol>
 </div>
@@ -25,8 +25,8 @@
 <h4 style="margin-top:0;color:#856404;">📌 Restrições Computacionais</h4>
 <ul>
 <li><strong>Sem padding em nenhuma etapa intermediária</strong> — dilatação, erosão, abertura e fechamento seguem as mesmas regras de vizinhança dos EPs anteriores.</li>
-<li><strong>Não há <em>clipping</em>:</strong> as três saídas podem conter qualquer valor inteiro (o gradiente é sempre \(\geq 0\), mas top-hat e black-hat também).</li>
-<li><strong>Reaproveitamento:</strong> \(d\) e \(e\) devem ser calculados <strong>uma única vez</strong> e reaproveitados para montar abertura, fechamento e gradiente.</li>
+<li><strong>Não há <em>clipping</em>:</strong> as três saídas podem conter qualquer valor inteiro (o gradiente é sempre ≥ 0, mas top-hat e black-hat também).</li>
+<li><strong>Reaproveitamento:</strong> <em>d</em> e <em>e</em> devem ser calculados <strong>uma única vez</strong> e reaproveitados para montar abertura, fechamento e gradiente.</li>
 </ul>
 </div>
 <div style="background-color:#f0fff4;border-left:5px solid #2ecc71;padding:15px;margin-bottom:20px;">
@@ -42,18 +42,18 @@
 <tbody>
 <tr>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;"><strong>Gradiente</strong></td>
-<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">\(d - e\)</td>
+<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;"><em>d</em> - <em>e</em></td>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Bordas: zero em regiões planas, alto nas transições</td>
 </tr>
 <tr>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;"><strong>Top-hat</strong></td>
-<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">\(f - \text{abertura}(f)\)</td>
-<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Elementos <strong>claros e finos</strong>, menores que \(B\)</td>
+<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;"><em>f</em> - abertura(<em>f</em>)</td>
+<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Elementos <strong>claros e finos</strong>, menores que <em>B</em></td>
 </tr>
 <tr>
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;"><strong>Black-hat</strong></td>
-<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">\(\text{fechamento}(f) - f\)</td>
-<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Elementos <strong>escuros e finos</strong>, menores que \(B\)</td>
+<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">fechamento(<em>f</em>) - <em>f</em></td>
+<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">Elementos <strong>escuros e finos</strong>, menores que <em>B</em></td>
 </tr>
 </tbody>
 </table>
@@ -62,18 +62,18 @@
 <h4 style="margin-top:0;color:#333;">📦 Especificação de Entrada e Saída (VPL)</h4>
 <p><strong>Entrada:</strong></p>
 <ul>
-<li>Linha 1: Inteiro \(L\).</li>
-<li>Linha 2: Inteiro \(C\).</li>
-<li>Linha 3: Inteiro \(H_B\).</li>
-<li>Linha 4: Inteiro \(W_B\).</li>
-<li>Próximas \(H_B\) linhas: elementos inteiros (\(0\) ou \(1\)) da matriz \(B\).</li>
-<li>Próximas \(L\) linhas: elementos inteiros da matriz \(f\).</li>
+<li>Linha 1: Inteiro <em>L</em>.</li>
+<li>Linha 2: Inteiro <em>C</em>.</li>
+<li>Linha 3: Inteiro <em>H</em>_<em>B</em>.</li>
+<li>Linha 4: Inteiro <em>W</em>_<em>B</em>.</li>
+<li>Próximas <em>H</em>_<em>B</em> linhas: elementos inteiros (0 ou 1) da matriz <em>B</em>.</li>
+<li>Próximas <em>L</em> linhas: elementos inteiros da matriz <em>f</em>.</li>
 </ul>
 <p><strong>Saída:</strong></p>
 <ul>
-<li>Matriz gradiente em \(L\) linhas e \(C\) colunas.</li>
-<li>Matriz top-hat em \(L\) linhas e \(C\) colunas.</li>
-<li>Matriz black-hat em \(L\) linhas e \(C\) colunas.</li>
+<li>Matriz gradiente em <em>L</em> linhas e <em>C</em> colunas.</li>
+<li>Matriz top-hat em <em>L</em> linhas e <em>C</em> colunas.</li>
+<li>Matriz black-hat em <em>L</em> linhas e <em>C</em> colunas.</li>
 </ul>
 </div>
 <div style="background-color:#fffde7;border-left:5px solid #fbc02d;padding:15px;margin-bottom:25px;">
@@ -104,9 +104,9 @@
 10 10 10 10 10 10 2 10 10<br/>
 10 10 10 10 10 10 10 10 10<br/>
 10 10 10 10 10 10 10 10 10</td>
-<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">(gradiente: halo \(3\times3=70\) em torno de \((2,2)\) e halo \(3\times3=8\) em torno de \((6,6)\), resto \(0\))<br/>
-(top-hat: único \(70\) em \((2,2)\), resto \(0\))<br/>
-(black-hat: único \(8\) em \((6,6)\), resto \(0\))</td>
+<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">(gradiente: halo 3×3=70 em torno de (2,2) e halo 3×3=8 em torno de (6,6), resto 0)<br/>
+(top-hat: único 70 em (2,2), resto 0)<br/>
+(black-hat: único 8 em (6,6), resto 0)</td>
 <td style="padding:10px;border:1px solid #ddd;vertical-align:top;">Pico isolado vira top-hat; vale isolado vira black-hat; ambos aparecem no gradiente</td>
 </tr>
 </tbody>
