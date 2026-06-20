@@ -103,8 +103,8 @@ publicamente:
 
 | Versão | URL | Fórmulas | Uso |
 |--------|-----|----------|-----|
-| **Completa** | `.../eps/py.pt/EPXX_YY.html` | ✅ MathJax perfeito | Link para o aluno ler o enunciado |
-| **Moodle** | `.../eps/py.pt_moodle/EPXX_YY.html` | ⚠️ HTML puro | Colar no editor VPL |
+| **Completa** | `py.pt/*.html` | ✅ MathJax perfeito | Link para o aluno ler o enunciado |
+| **Moodle** | `py.pt_moodle/*.html` | ⚠️ HTML puro | Colar no editor VPL |
 
 O professor pode combinar as duas estratégias: colar a versão Moodle no editor
 VPL (simulador funcional) e incluir no enunciado um link para a versão completa,
