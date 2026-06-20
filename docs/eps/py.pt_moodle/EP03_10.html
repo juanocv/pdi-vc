@@ -1,4 +1,8 @@
 <div style="font-family:sans-serif;line-height:1.6;color:#333;max-width:1200px;margin:auto;border:1px solid #ddd;padding:20px;border-radius:8px;background:white;">
+<div style="font-family:sans-serif;background:#e8f4fd;border-left:4px solid #2980b9;padding:10px 15px;margin-bottom:16px;border-radius:4px;font-size:13px;color:#1a5276;">
+📐 <strong>Versão com fórmulas matemáticas:</strong> <a href="https://fzampirolli.github.io/pdi-vc/eps/py.pt/EP03_10.html" target="_blank" style="color:#2980b9;">https://fzampirolli.github.io/pdi-vc/eps/py.pt/EP03_10.html</a>
+<br><span style="font-size:11px;color:#555;">(Fórmulas renderizadas pelo MathJax — abrir em nova aba)</span>
+</div>
 <h2 style="color:#0056b3;border-bottom:2px solid #0056b3;padding-bottom:10px;">EP03_10 ✨ Unsharp Masking (USM)</h2>
 <p>Em sistemas de digitalização de documentos históricos e obras de arte, a nitidez das imagens é fundamental para leitura de textos manuscritos e detalhes ornamentais. O <strong><em>Unsharp Masking</em> (USM)</strong> é o algoritmo de realce de nitidez padrão utilizado em <em>scanners</em> profissionais e softwares como Adobe Photoshop, controlado pelo parâmetro <em>k</em> que determina a intensidade do realce.</p>
 <p>Ver na Figura 3.35 uma simulação deste EP.</p>
@@ -10,12 +14,12 @@
 <li><strong>Dados:</strong> Ler a matriz de pixels <em>f</em>.</li>
 <li><strong>Suavização:</strong> Calcular \barf com filtro de média 3×3 (apenas pixels internos; bordas mantidas):</li>
 </ol>
-<p><p style="text-align:center;font-family:monospace;font-size:1.1em;padding:8px;background:#f8f8f8;border-radius:4px;border:1px solid #ddd;">\barf(<em>i</em>,<em>j</em>) = (1)/(9) ∑_s=-1^1 ∑_t=-1^1 <em>f</em>(<em>i</em>+<em>s</em>, <em>j</em>+<em>t</em>)</p></p>
+<p>\barf(<em>i</em>,<em>j</em>) = (1)/(9) ∑_s=-1^1 ∑_t=-1^1 <em>f</em>(<em>i</em>+<em>s</em>, <em>j</em>+<em>t</em>)</p>
 <ol start="5" type="1">
 <li><strong>Máscara de alta frequência:</strong> <em>m</em>(<em>i</em>,<em>j</em>) = <em>f</em>(<em>i</em>,<em>j</em>) - \barf(<em>i</em>,<em>j</em>).</li>
 <li><strong>Realce USM:</strong> Para cada pixel interno:</li>
 </ol>
-<p><p style="text-align:center;font-family:monospace;font-size:1.1em;padding:8px;background:#f8f8f8;border-radius:4px;border:1px solid #ddd;"><em>g</em>(<em>i</em>,<em>j</em>) = clip\left(round\left(<em>f</em>(<em>i</em>,<em>j</em>) + <em>k</em> · <em>m</em>(<em>i</em>,<em>j</em>)\right)\right)</p></p>
+<p><em>g</em>(<em>i</em>,<em>j</em>) = clip\left(round\left(<em>f</em>(<em>i</em>,<em>j</em>) + <em>k</em> · <em>m</em>(<em>i</em>,<em>j</em>)\right)\right)</p>
 <ol start="7" type="1">
 <li><strong>Borda:</strong> <em>g</em>(<em>i</em>,<em>j</em>) = <em>f</em>(<em>i</em>,<em>j</em>) (cópia direta).</li>
 <li><strong>Saída:</strong> Exibir a matriz realçada <em>L</em> × <em>C</em>.</li>

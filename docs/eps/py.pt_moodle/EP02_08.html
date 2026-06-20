@@ -1,4 +1,8 @@
 <div style="font-family:sans-serif;line-height:1.6;color:#333;max-width:1200px;margin:auto;border:1px solid #ddd;padding:20px;border-radius:8px;background:white;">
+<div style="font-family:sans-serif;background:#e8f4fd;border-left:4px solid #2980b9;padding:10px 15px;margin-bottom:16px;border-radius:4px;font-size:13px;color:#1a5276;">
+📐 <strong>Versão com fórmulas matemáticas:</strong> <a href="https://fzampirolli.github.io/pdi-vc/eps/py.pt/EP02_08.html" target="_blank" style="color:#2980b9;">https://fzampirolli.github.io/pdi-vc/eps/py.pt/EP02_08.html</a>
+<br><span style="font-size:11px;color:#555;">(Fórmulas renderizadas pelo MathJax — abrir em nova aba)</span>
+</div>
 <h2 style="color:#0056b3;border-bottom:2px solid #0056b3;padding-bottom:10px;">EP02_08 🔀 Cisalhamento (Shear)</h2>
 <p>Nesta atividade, você deve implementar a transformação de cisalhamento em uma imagem. O cisalhamento é uma transformação afim que desloca cada ponto em uma direção fixada, por um valor proporcional à sua distância de uma reta paralela a essa direção, resultando em um efeito de inclinação.</p>
 <div>
@@ -20,7 +24,7 @@
 <div style="background-color:#f0fff4;border-left:5px solid #2ecc71;padding:15px;margin-bottom:20px;">
 <h4 style="margin-top:0;color:#1e7e34;">🧠 Distorção Afim</h4>
 <p>O cisalhamento altera a geometria da imagem inclinando seus eixos. A relação entre as coordenadas originais (<em>x</em>, <em>y</em>) e as transformadas (<em>x</em>', <em>y</em>') é dada por:</p>
-<p><p style="text-align:center;font-family:monospace;font-size:1.1em;padding:8px;background:#f8f8f8;border-radius:4px;border:1px solid #ddd;">\beginbmatrix <em>x</em>' \\ <em>y</em>' \\ 1 \endbmatrix = \beginbmatrix 1 &amp; sh_<em>x</em> &amp; 0 \\ sh_<em>y</em> &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 1 \endbmatrix \beginbmatrix <em>x</em> \\ <em>y</em> \\ 1 \endbmatrix</p></p>
+<p>\beginbmatrix <em>x</em>' \\ <em>y</em>' \\ 1 \endbmatrix = \beginbmatrix 1 &amp; sh_<em>x</em> &amp; 0 \\ sh_<em>y</em> &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 1 \endbmatrix \beginbmatrix <em>x</em> \\ <em>y</em> \\ 1 \endbmatrix</p>
 <p>Isso resulta nas equações:</p>
 <ul>
 <li><em>x</em>' = <em>x</em> + sh_<em>x</em> · <em>y</em></li>

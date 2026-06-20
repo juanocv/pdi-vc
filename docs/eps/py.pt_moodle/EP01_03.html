@@ -1,4 +1,8 @@
 <div style="font-family:sans-serif;line-height:1.6;color:#333;max-width:1200px;margin:auto;border:1px solid #ddd;padding:20px;border-radius:8px;background:white;">
+<div style="font-family:sans-serif;background:#e8f4fd;border-left:4px solid #2980b9;padding:10px 15px;margin-bottom:16px;border-radius:4px;font-size:13px;color:#1a5276;">
+📐 <strong>Versão com fórmulas matemáticas:</strong> <a href="https://fzampirolli.github.io/pdi-vc/eps/py.pt/EP01_03.html" target="_blank" style="color:#2980b9;">https://fzampirolli.github.io/pdi-vc/eps/py.pt/EP01_03.html</a>
+<br><span style="font-size:11px;color:#555;">(Fórmulas renderizadas pelo MathJax — abrir em nova aba)</span>
+</div>
 <h2 style="color:#0056b3;border-bottom:2px solid #0056b3;padding-bottom:10px;">EP01_03 📈 Mean Average Precision (mAP) — Curva Precisão‑Sensibilidade</h2>
 <p>Nesta atividade, você avaliará um classificador binário (ex.: detecção de desmatamento em imagens de satélite, ver <a href="https://www.dgi.inpe.br/catalogo/explore">dgi.inpe.br</a>) através da <strong>curva Precisão‑Sensibilidade</strong> e da métrica <strong>mAP (<em>Mean Average Precision</em>)</strong>. O mAP é padrão em competições como <a href="https://cocodataset.org/">COCO (<em>Common Objects in Context</em>)</a> e <a href="http://host.robots.ox.ac.uk/pascal/VOC/">PASCAL VOC (<em>Visual Object Classes</em>)</a> e dos modelos <a href="https://github.com/ultralytics/ultralytics">YOLO (<em>You Only Look Once</em>)</a>.</p>
 <div style="background-color:#f0fff4;border-left:5px solid #2ecc71;padding:15px;margin-bottom:20px;">
@@ -44,9 +48,9 @@
 Calcule VP, FP, FN, VN e obtenha Precisão((t)) e Sensibilidade((t)).</p></li>
 <li><p>Monte a curva P‑S: pares (Sensibilidade((t)), Precisão((t))), ordenados por Sensibilidade crescente.</p></li>
 <li><p><strong>Monotonize a Precisão</strong>:<br/>
-<p style="text-align:center;font-family:monospace;font-size:1.1em;padding:8px;background:#f8f8f8;border-radius:4px;border:1px solid #ddd;"><em>P</em>_mono[<em>i</em>] = \max_j \ge <em>i</em> <em>P</em>[<em>j</em>]</p></p></li>
+<em>P</em>_mono[<em>i</em>] = \max_j \ge <em>i</em> <em>P</em>[<em>j</em>]</p></li>
 <li><p>Calcule a <strong>AP</strong> (área sob a curva monotônica) usando a <strong>regra do trapézio</strong> (aproximação mais precisa que a simples soma de Riemann):<br/>
-<p style="text-align:center;font-family:monospace;font-size:1.1em;padding:8px;background:#f8f8f8;border-radius:4px;border:1px solid #ddd;">AP = ∑_i=1^m-1 \fracP_mono[<em>i</em>-1] + <em>P</em>_mono[<em>i</em>]2 · (<em>S</em>[<em>i</em>] - <em>S</em>[<em>i</em>-1])</p></p></li>
+AP = ∑_i=1^m-1 \fracP_mono[<em>i</em>-1] + <em>P</em>_mono[<em>i</em>]2 · (<em>S</em>[<em>i</em>] - <em>S</em>[<em>i</em>-1])</p></li>
 <li><p><strong>mAP</strong> = média das APs de todas as classes. Neste EP há apenas <strong>1 classe</strong>, portanto mAP = AP.</p></li>
 </ol>
 <div class="callout callout-style-default callout-note callout-titled">

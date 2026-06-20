@@ -1,4 +1,8 @@
 <div style="font-family:sans-serif;line-height:1.6;color:#333;max-width:1200px;margin:auto;border:1px solid #ddd;padding:20px;border-radius:8px;background:white;">
+<div style="font-family:sans-serif;background:#e8f4fd;border-left:4px solid #2980b9;padding:10px 15px;margin-bottom:16px;border-radius:4px;font-size:13px;color:#1a5276;">
+📐 <strong>Versão com fórmulas matemáticas:</strong> <a href="https://fzampirolli.github.io/pdi-vc/eps/py.pt/EP02_09.html" target="_blank" style="color:#2980b9;">https://fzampirolli.github.io/pdi-vc/eps/py.pt/EP02_09.html</a>
+<br><span style="font-size:11px;color:#555;">(Fórmulas renderizadas pelo MathJax — abrir em nova aba)</span>
+</div>
 <h2 style="color:#0056b3;border-bottom:2px solid #0056b3;padding-bottom:10px;">EP02_09 🧩 Transformação Afim Genérica</h2>
 <p>Nesta atividade, você deve implementar uma transformação afim arbitrária em uma imagem. Esta operação é a generalização de todas as transformações lineares (escala, rotação, cisalhamento) combinadas com a translação, permitindo manipulações geométricas complexas através de uma única matriz.</p>
 <div>
@@ -27,9 +31,9 @@
 <div style="background-color:#f0fff4;border-left:5px solid #2ecc71;padding:15px;margin-bottom:20px;">
 <h4 style="margin-top:0;color:#1e7e34;">🧠 Combinação de Operações</h4>
 <p>A transformação afim preserva pontos, retas e planos. No processamento de imagens, ela mapeia a posição (<em>x</em>, <em>y</em>) para (<em>x</em>', <em>y</em>') seguindo o sistema:</p>
-<p><p style="text-align:center;font-family:monospace;font-size:1.1em;padding:8px;background:#f8f8f8;border-radius:4px;border:1px solid #ddd;">\beginbmatrix <em>x</em>' \\ <em>y</em>' \endbmatrix = \beginbmatrix <em>a</em> &amp; <em>b</em> \\ <em>c</em> &amp; <em>d</em> \endbmatrix \beginbmatrix <em>x</em> \\ <em>y</em> \endbmatrix + \beginbmatrix <em>t</em>_<em>x</em> \\ <em>t</em>_<em>y</em> \endbmatrix</p></p>
+<p>\beginbmatrix <em>x</em>' \\ <em>y</em>' \endbmatrix = \beginbmatrix <em>a</em> &amp; <em>b</em> \\ <em>c</em> &amp; <em>d</em> \endbmatrix \beginbmatrix <em>x</em> \\ <em>y</em> \endbmatrix + \beginbmatrix <em>t</em>_<em>x</em> \\ <em>t</em>_<em>y</em> \endbmatrix</p>
 <p>Ou, de forma compacta em coordenadas homogêneas:</p>
-<p><p style="text-align:center;font-family:monospace;font-size:1.1em;padding:8px;background:#f8f8f8;border-radius:4px;border:1px solid #ddd;">\beginbmatrix <em>x</em>' \\ <em>y</em>' \\ 1 \endbmatrix = \beginbmatrix <em>a</em> &amp; <em>b</em> &amp; <em>t</em>_<em>x</em> \\ <em>c</em> &amp; <em>d</em> &amp; <em>t</em>_<em>y</em> \\ 0 &amp; 0 &amp; 1 \endbmatrix \beginbmatrix <em>x</em> \\ <em>y</em> \\ 1 \endbmatrix</p></p>
+<p>\beginbmatrix <em>x</em>' \\ <em>y</em>' \\ 1 \endbmatrix = \beginbmatrix <em>a</em> &amp; <em>b</em> &amp; <em>t</em>_<em>x</em> \\ <em>c</em> &amp; <em>d</em> &amp; <em>t</em>_<em>y</em> \\ 0 &amp; 0 &amp; 1 \endbmatrix \beginbmatrix <em>x</em> \\ <em>y</em> \\ 1 \endbmatrix</p>
 <hr/>
 </div>
 <div style="background-color:#f8f9fa;padding:15px;border:1px solid #ccc;border-radius:5px;margin-bottom:20px;">

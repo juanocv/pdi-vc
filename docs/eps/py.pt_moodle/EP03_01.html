@@ -1,4 +1,8 @@
 <div style="font-family:sans-serif;line-height:1.6;color:#333;max-width:1200px;margin:auto;border:1px solid #ddd;padding:20px;border-radius:8px;background:white;">
+<div style="font-family:sans-serif;background:#e8f4fd;border-left:4px solid #2980b9;padding:10px 15px;margin-bottom:16px;border-radius:4px;font-size:13px;color:#1a5276;">
+📐 <strong>Versão com fórmulas matemáticas:</strong> <a href="https://fzampirolli.github.io/pdi-vc/eps/py.pt/EP03_01.html" target="_blank" style="color:#2980b9;">https://fzampirolli.github.io/pdi-vc/eps/py.pt/EP03_01.html</a>
+<br><span style="font-size:11px;color:#555;">(Fórmulas renderizadas pelo MathJax — abrir em nova aba)</span>
+</div>
 <h2 style="color:#0056b3;border-bottom:2px solid #0056b3;padding-bottom:10px;">EP03_01 ➕ Adição Saturada de Constante</h2>
 <p>Em sistemas de vigilância por vídeo, câmeras em ambientes com iluminação variável produzem imagens subexpostas. O ajuste de brilho por <strong>adição saturada de uma constante</strong> é a operação mais simples para correção imediata, sendo aplicada em tempo real nos <em>chips</em> de câmeras embarcadas e em <em>pipelines</em> de pré-processamento de robôs móveis.</p>
 <p>Ver na <span class="quarto-unresolved-ref">?fig-03-sim-adicao</span> uma simulação deste EP.</p>
@@ -10,7 +14,7 @@
 <li><strong>Dados:</strong> Ler os valores inteiros da matriz original linha a linha.</li>
 <li><strong>Mapeamento:</strong> Para cada pixel <em>p</em>, calcular o novo valor pela equação:</li>
 </ol>
-<p><p style="text-align:center;font-family:monospace;font-size:1.1em;padding:8px;background:#f8f8f8;border-radius:4px;border:1px solid #ddd;"><em>p</em>' = clip(<em>p</em> + <em>k</em>)</p></p>
+<p><em>p</em>' = clip(<em>p</em> + <em>k</em>)</p>
 <ol start="5" type="1">
 <li><strong>Saída:</strong> Exibir a matriz resultante com dimensões <em>L</em> × <em>C</em>.</li>
 </ol>
@@ -19,7 +23,7 @@
 <div style="background-color:#fffde7;border-left:5px solid #fbc02d;padding:15px;margin-bottom:25px;">
 <h4 style="margin-top:0;color:#856404;">📌 Restrições Computacionais</h4>
 <ul>
-<li><strong>Saturação (<em>Clipping</em>):</strong> Os valores devem ser confinados ao intervalo [0, 255]: <p style="text-align:center;font-family:monospace;font-size:1.1em;padding:8px;background:#f8f8f8;border-radius:4px;border:1px solid #ddd;">clip(<em>x</em>) = \max(0, \min(255, <em>x</em>))</p></li>
+<li><strong>Saturação (<em>Clipping</em>):</strong> Os valores devem ser confinados ao intervalo [0, 255]: clip(<em>x</em>) = \max(0, \min(255, <em>x</em>))</li>
 <li><strong>Tipo:</strong> O resultado final deve ser inteiro (sem casas decimais).</li>
 <li><strong><em>k</em> pode ser negativo:</strong> valores negativos escurecem a imagem; positivos clareiam.</li>
 </ul>

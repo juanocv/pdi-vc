@@ -1,10 +1,14 @@
 <div style="font-family:sans-serif;line-height:1.6;color:#333;max-width:1200px;margin:auto;border:1px solid #ddd;padding:20px;border-radius:8px;background:white;">
+<div style="font-family:sans-serif;background:#e8f4fd;border-left:4px solid #2980b9;padding:10px 15px;margin-bottom:16px;border-radius:4px;font-size:13px;color:#1a5276;">
+📐 <strong>Versão com fórmulas matemáticas:</strong> <a href="https://fzampirolli.github.io/pdi-vc/eps/py.pt/EP02_04.html" target="_blank" style="color:#2980b9;">https://fzampirolli.github.io/pdi-vc/eps/py.pt/EP02_04.html</a>
+<br><span style="font-size:11px;color:#555;">(Fórmulas renderizadas pelo MathJax — abrir em nova aba)</span>
+</div>
 <h2 style="color:#0056b3;border-bottom:2px solid #0056b3;padding-bottom:10px;">EP02_04 📐 Transformada de Distância em Imagem Binária</h2>
 <p>Dada uma imagem binária onde pixels de valor <strong>1</strong> representam o <em>objeto</em> e pixels <strong>0</strong> representam o <em>fundo</em>, a distância de um pixel de fundo recebe a <strong>menor distância ao pixel de objeto mais próximo</strong>. Pixels de objeto recebem distância <strong>0</strong>. Para simplificar, considere que a imagem tem <strong>apenas um único objeto com um pixel de valor 1</strong>.</p>
 <p><strong>Problema:</strong> Leia uma imagem binária <em>L</em> × <em>C</em> e uma métrica, e calcule essa distância simplificada aplicando uma das três fórmulas:</p>
-<p><p style="text-align:center;font-family:monospace;font-size:1.1em;padding:8px;background:#f8f8f8;border-radius:4px;border:1px solid #ddd;"><em>d</em>_Euclidiana = √((\Delta <em>r</em>)^2 + (\Delta <em>c</em>)^2)</p></p>
-<p><p style="text-align:center;font-family:monospace;font-size:1.1em;padding:8px;background:#f8f8f8;border-radius:4px;border:1px solid #ddd;"><em>d</em>_City-block = |\Delta <em>r</em>| + |\Delta <em>c</em>|</p></p>
-<p><p style="text-align:center;font-family:monospace;font-size:1.1em;padding:8px;background:#f8f8f8;border-radius:4px;border:1px solid #ddd;"><em>d</em>_Chessboard = \max(|\Delta <em>r</em>|,\; |\Delta <em>c</em>|)</p></p>
+<p><em>d</em>_Euclidiana = √((\Delta <em>r</em>)^2 + (\Delta <em>c</em>)^2)</p>
+<p><em>d</em>_City-block = |\Delta <em>r</em>| + |\Delta <em>c</em>|</p>
+<p><em>d</em>_Chessboard = \max(|\Delta <em>r</em>|,\; |\Delta <em>c</em>|)</p>
 <p>onde \Delta <em>r</em> é a diferença de linhas e \Delta <em>c</em> a diferença de colunas entre dois pixels.</p>
 <div></div>
 <div>

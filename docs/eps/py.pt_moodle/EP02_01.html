@@ -1,4 +1,8 @@
 <div style="font-family:sans-serif;line-height:1.6;color:#333;max-width:1200px;margin:auto;border:1px solid #ddd;padding:20px;border-radius:8px;background:white;">
+<div style="font-family:sans-serif;background:#e8f4fd;border-left:4px solid #2980b9;padding:10px 15px;margin-bottom:16px;border-radius:4px;font-size:13px;color:#1a5276;">
+📐 <strong>Versão com fórmulas matemáticas:</strong> <a href="https://fzampirolli.github.io/pdi-vc/eps/py.pt/EP02_01.html" target="_blank" style="color:#2980b9;">https://fzampirolli.github.io/pdi-vc/eps/py.pt/EP02_01.html</a>
+<br><span style="font-size:11px;color:#555;">(Fórmulas renderizadas pelo MathJax — abrir em nova aba)</span>
+</div>
 <h2 style="color:#0056b3;border-bottom:2px solid #0056b3;padding-bottom:10px;">EP02_01 ☀️ Ajuste de Brilho e Contraste</h2>
 <p>Nesta atividade, o objetivo é implementar um operador de ponto para <strong>transformação linear de intensidade</strong>, aplicando o ajuste dinâmico de brilho e contraste em uma imagem digital.</p>
 <div style="background-color:#f8f9fa;padding:15px;border:1px solid #ccc;border-radius:5px;margin-bottom:20px;">
@@ -10,7 +14,7 @@
 <li><strong>Dados:</strong> Ler os valores inteiros da matriz original.</li>
 <li><strong>Mapeamento:</strong> Para cada pixel <em>p</em>, calcular o novo valor <em>p</em>' pela equação:</li>
 </ol>
-<p><p style="text-align:center;font-family:monospace;font-size:1.1em;padding:8px;background:#f8f8f8;border-radius:4px;border:1px solid #ddd;"><em>p</em>' = clip(round(α · <em>p</em> + β))</p></p>
+<p><em>p</em>' = clip(round(α · <em>p</em> + β))</p>
 <ol start="5" type="1">
 <li><strong>Saída:</strong> Exibir a matriz resultante com as dimensões <em>L</em> × <em>C</em>.</li>
 </ol>
@@ -22,7 +26,7 @@
 <li><strong>Arredondamento (<em>Round</em>):</strong> Aplica-se o arredondamento matemático para o inteiro mais próximo antes da conversão de tipo.</li>
 <li><strong>Saturação (<em>Clipping</em>):</strong> Os valores devem ser confinados ao intervalo [0, 255] para preservar o padrão de 8 bits:</li>
 </ul>
-<p><p style="text-align:center;font-family:monospace;font-size:1.1em;padding:8px;background:#f8f8f8;border-radius:4px;border:1px solid #ddd;">clip(<em>x</em>) = \max(0, \min(255, <em>x</em>))</p></p>
+<p>clip(<em>x</em>) = \max(0, \min(255, <em>x</em>))</p>
 <ul>
 <li><strong>Simulação:</strong> O efeito dos parâmetros α e β na correção histogramática pode ser observado na Figura 2.12.</li>
 </ul>
