@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+title: "PDI+VC — Processamento Digital de Imagens e Visão Computacional"
+abstract: >
+  Material didático interativo para cursos de graduação e pós-graduação
+  em Processamento Digital de Imagens e Visão Computacional. Desenvolvido
+  em Python com Quarto e Jupyter, com simuladores interativos, notebooks
+  para alunos e integração com Google Colab.
+authors:
+  - family-names: Zampirolli
+    given-names: Francisco de Assis
+    affiliation: "Universidade Federal do ABC (UFABC)"
+    orcid: "https://orcid.org/0000-0002-7707-1793"
+version: 0.1.1
+date-released: 2026-06-21
+license: CC-BY-NC-SA-4.0
+repository-code: "https://github.com/fzampirolli/pdi-vc"
+url: "https://fzampirolli.github.io/pdi-vc"
+keywords:
+  - processamento digital de imagens
+  - visão computacional
+  - image processing
+  - computer vision
+  - jupyter
+  - quarto
+  - python
+  - livro didático
+type: software
