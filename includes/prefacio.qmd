@@ -1,32 +1,31 @@
-
 ## Prefácio {.unnumbered}
 
-Este livro constitui uma **obra em constante atualização** sobre **Processamento Digital de Imagens (PDI) e Visão Computacional (VC)**, concebido como material didático interativo para cursos de graduação e pós-graduação em Computação, Engenharias e áreas correlatas.
+Este livro é uma **obra em constante atualização** sobre **Processamento Digital de Imagens (PDI) e Visão Computacional (VC)**, concebido como material didático interativo para cursos de graduação e pós-graduação em Computação, Engenharia e áreas correlatas.
 
 ::: {.callout-important}
 
 ### Destaque {.unnumbered}
 
-A obra segue a metodologia descrita em @zampirolli2025morph — uma extensão de @zampirolli2024practical, trabalho premiado na trilha de "Recursos e Ambientes Educacionais" na **EduComp 2024**. O conteúdo integra a biblioteca `morph.py`, desenvolvida pelo autor.
+A obra segue a metodologia descrita em @zampirolli2025morph — extensão de @zampirolli2024practical, trabalho premiado na trilha de "Recursos e Ambientes Educacionais" da **EduComp 2024**. O conteúdo integra a biblioteca `morph.py`, desenvolvida pelo autor.
 :::
 
 ## Um livro vivo {.unnumbered}
 
-O material não possui caráter estático. O conteúdo passa por evolução contínua: exemplos são refinados, novas seções são incorporadas e as abordagens pedagógicas são atualizadas conforme o retorno de usuários. Por essa razão, o material é tratado como um *projeto inicial* — uma base em expansão.
+O material não é estático: o conteúdo evolui continuamente à medida que exemplos são refinados, novas seções são incorporadas e as abordagens pedagógicas são atualizadas com base no retorno dos usuários. Por essa razão, o material é tratado como um *projeto em andamento* — uma base em permanente expansão.
 
 ## Uso de ferramentas de Inteligência Artificial {.unnumbered}
 
-A produção deste livro conta com o suporte de **ferramentas de Inteligência Artificial** (IA) para elevar a qualidade do texto e do código. A versão inicial dos capítulos foi submetida a processos de revisão por meio de assistentes, em versões gratuitas, como **DeepSeek**, **Gemini** e **Claude**. Mediante *prompts* iterativos, tais ferramentas auxiliaram no seguinte:
+A produção deste livro conta com o apoio de **ferramentas de Inteligência Artificial** (IA) para elevar a qualidade do texto e do código. A versão inicial dos capítulos foi submetida a processos de revisão por meio de assistentes em versões gratuitas, como **DeepSeek**, **Gemini** e **Claude**. Por meio de *prompts* iterativos, tais ferramentas auxiliaram nas seguintes tarefas:
 
-* Refinamento da clareza e precisão das explicações;
-* Detecção e correção de erros de sintaxe, lógica e digitação em exemplos de código;
-* Sugestão de melhorias na organização e fluidez textual.
+* refinamento da clareza e da precisão das explicações;
+* detecção e correção de erros de sintaxe, lógica e digitação nos exemplos de código;
+* sugestão de melhorias na organização e na fluidez textual.
 
-Adicionalmente, **ilustrações foram geradas pelo Gemini**, com o propósito de auxiliar a visualização de conceitos abstratos da área.
+Adicionalmente, **ilustrações foram geradas com o Gemini** com o propósito de auxiliar a visualização de conceitos abstratos da área.
 
 ## Como este livro é produzido {.unnumbered}
 
-O conteúdo é integralmente redigido em **[Quarto](https://quarto.org)** (armazenado na pasta `all` de [github.com/fzampirolli/pdi-vc](https://github.com/fzampirolli/pdi-vc)), um sistema de publicação científica que permite a renderização do código-fonte para múltiplos formatos:
+O conteúdo é integralmente redigido em **[Quarto](https://quarto.org)** (armazenado na pasta `all` do repositório [github.com/fzampirolli/pdi-vc](https://github.com/fzampirolli/pdi-vc)), um sistema de publicação científica que permite renderizar o código-fonte em múltiplos formatos:
 
 | Formato | Descrição |
 | --- | --- |
@@ -36,20 +35,20 @@ O conteúdo é integralmente redigido em **[Quarto](https://quarto.org)** (armaz
 
 No início de cada capítulo, botões "*Open in Colab*" direcionam para dois ambientes:
 
-1. **Parte Teórica:** Localizada na abertura do capítulo.
-2. **Parte Prática:** Localizada na seção **💻 Parte Prática com Exercícios de Programação** ao final do capítulo.
+1. **Parte Teórica:** localizada na abertura do capítulo.
+2. **Parte Prática:** localizada na seção **💻 Parte Prática com Exercícios de Programação**, ao final do capítulo.
 
-O *script* de pós-processamento (`gerar_notebooks_alunos.py`) prepara os arquivos para distribuição, assegurando a funcionalidade em ambientes interativos sem a necessidade de instalação local do Quarto.
+O *script* de pós-processamento (`gerar_notebooks_alunos.py`) prepara os arquivos para distribuição, garantindo seu funcionamento em ambientes interativos sem necessidade de instalação local do Quarto.
 
 ## A biblioteca `morph.py` {.unnumbered}
 
-A biblioteca **`morph.py`** [@zampirolli2025morph] é empregada em toda a obra. Desenvolvida para fins pedagógicos, a ferramenta oferece uma interface simplificada sobre bibliotecas consolidadas, como **OpenCV**, **NumPy** e **Matplotlib**, permitindo o foco nos conceitos teóricos em detrimento de detalhes específicos de API.
+A biblioteca **`morph.py`** [@zampirolli2025morph] é utilizada ao longo de toda a obra. Desenvolvida para fins pedagógicos, ela oferece uma interface simplificada sobre bibliotecas consolidadas — como **OpenCV**, **NumPy** e **Matplotlib** —, permitindo que o leitor concentre-se nos conceitos teóricos sem se preocupar com detalhes específicos de API.
 
 ::: {.callout-note}
 
 ### Herança Técnica {.unnumbered}
 
-A estrutura da `morph.py` fundamenta-se em ferramentas de morfologia matemática desenvolvidas no Brasil, como **MMachLib** [@lotufo1997mmachlib] e **MMach** [@barrera1998mmach], além da **mmorph**, empregada na obra de @dougherty2003hands. Tais ferramentas serviram como referência para o ensino da área por décadas.
+A estrutura da `morph.py` tem como base ferramentas de morfologia matemática desenvolvidas no Brasil, como **MMachLib** [@lotufo1997mmachlib] e **MMach** [@barrera1998mmach], além da **mmorph**, empregada na obra de @dougherty2003hands. Essas ferramentas serviram de referência para o ensino da área por décadas.
 :::
 
 A biblioteca permite realizar leitura, exibição, conversões de cores, filtragem e morfologia matemática de forma concisa:
@@ -66,68 +65,38 @@ mm.show(neg)
 O código-fonte está disponível em:
 **[github.com/fzampirolli/pdi-vc/tree/master/morph](https://github.com/fzampirolli/pdi-vc/tree/master/morph)**.
 
-
-
 ## Exercícios de Programação (EPs) e Validação Automática {.unnumbered}
 
-Cada unidade do livro inclui **Exercícios de Programação (EPs)** práticos e de
-complexidade crescente, projetados para consolidar a teoria por meio da biblioteca
-`morph.py` ou do padrão da linguagem escolhida.
+Cada unidade do livro inclui **Exercícios de Programação (EPs)** práticos e de complexidade crescente, projetados para consolidar a teoria por meio da biblioteca `morph.py` ou do padrão da linguagem escolhida.
 
 ### Estrutura e Validação Local {.unnumbered}
 
-A validação das soluções é feita localmente pela classe `TestSuite` (`testsuite.py`),
-que compara a saída do programa com os arquivos de casos de teste (`.cases`):
+A validação das soluções é feita localmente pela classe `TestSuite` (`testsuite.py`), que compara a saída do programa com os arquivos de casos de teste (`.cases`):
 
 ```python
 TestSuite("EP01_01.py").run()
 ```
 
-O sistema suporta múltiplas linguagens (Python, Java, C++, C, JavaScript e R), e a
-mesma estrutura pode ser integrada diretamente ao Moodle.
+O sistema suporta múltiplas linguagens (Python, Java, C++, C, JavaScript e R) e pode ser integrado diretamente ao Moodle.
 
 ### Integração com o Moodle (VPL) {.unnumbered}
 
-Os EPs dos *notebooks* podem ser convertidos em atividades
-**VPL (*Virtual Programming Lab*)** no Moodle. O script `ep_tools.py`
-(executado via `make build`) automatiza o processo em duas etapas:
+Os EPs dos *notebooks* podem ser convertidos em atividades **VPL (*Virtual Programming Lab*)** no Moodle. O *script* `ep_tools.py` (executado via `make build`) automatiza a exportação dos EPs do final de cada capítulo em duas etapas:
 
-1. **Extração** (`make eps`): gera um HTML interativo independente por EP,
-   com enunciado, exemplos e simulador, em `gen/book/eps/<versao>/`. Ver exemplo: [https://fzampirolli.github.io/pdi-vc/eps/py.pt/EP01_01.html](https://fzampirolli.github.io/pdi-vc/eps/py.pt/EP01_01.html)
-2. **Conversão** (`make moodle`): transforma o HTML em um fragmento
-   autocontido, sem dependência de CSS externo, pronto para colar no
-   editor do Moodle, em `gen/book/eps/<versao>_moodle/`. Ver exemplo: [https://fzampirolli.github.io/pdi-vc/eps/py.pt_moodle/EP01_01.html](https://fzampirolli.github.io/pdi-vc/eps/py.pt_moodle/EP01_01.html)
+1. **Extração** (`make eps`): gera um HTML interativo independente por EP, com enunciado, exemplos e simulador, em `gen/book/eps/<versao>/`. Veja um exemplo em: [https://fzampirolli.github.io/pdi-vc/eps/py.pt/EP01_01.html](https://fzampirolli.github.io/pdi-vc/eps/py.pt/EP01_01.html)
+2. **Conversão** (`make moodle`): transforma o HTML em um fragmento autocontido, sem dependência de CSS externo, pronto para ser colado no editor do Moodle, em `gen/book/eps/<versao>_moodle/`. Veja um exemplo em: [https://fzampirolli.github.io/pdi-vc/eps/py.pt_moodle/EP01_01.html](https://fzampirolli.github.io/pdi-vc/eps/py.pt_moodle/EP01_01.html)
 
-Ao publicar com `make publish`, **duas versões** de cada EP ficam disponíveis
-publicamente:
-
-| Versão | URL | Fórmulas | Uso |
-|--------|-----|----------|-----|
-| **Completa** | `py.pt/*.html` | ✅ MathJax perfeito | Link para o aluno ler o enunciado |
-| **Moodle** | `py.pt_moodle/*.html` | ⚠️ HTML puro | Colar no editor VPL |
-
-O professor pode combinar as duas estratégias: colar a versão Moodle no editor
-VPL (simulador funcional) e incluir no enunciado um link para a versão completa,
-onde as fórmulas são renderizadas corretamente pelo MathJax.
+Ao publicar com `make publish`, essas **duas versões** de cada EP ficam disponíveis nos links indicados. O professor pode combinar as duas estratégias: colar a versão Moodle no editor VPL (com simulador funcional) e incluir no enunciado um link para a versão completa, onde as fórmulas são renderizadas corretamente pelo MathJax.
 
 ::: {.callout-warning}
 ### Revisão obrigatória antes de publicar no Moodle {.unnumbered}
 
-Embora automática, a conversão exige revisão do professor devido a limitações
-do editor TinyMCE/HTML Purifier do Moodle:
+Embora automatizada, a conversão exige revisão do professor em razão das limitações do editor TinyMCE/HTML Purifier do Moodle:
 
-- **Fórmulas matemáticas** — O TinyMCE descarta barras invertidas (`\`),
-  corrompendo equações LaTeX. Por isso, a versão Moodle converte fórmulas
-  simples para HTML puro (entidades como `&ge;`, `&times;`). Fórmulas
-  complexas (`\begin{cases}`, matrizes, integrais) podem sair incompletas —
-  revise e, se necessário, reescreva em texto ou indique a versão completa
-  via link.
-- **Referências cruzadas** — Links como `@fig-...` ou `@tbl-...` são
-  removidos, mantendo apenas o texto do rótulo.
-- **Figuras externas** — Imagens complementares devem ser inseridas
-  manualmente na atividade VPL.
-- **Simuladores** — Funcionam apenas se utilizarem JavaScript padrão com
-  estilos *inline* e manipulação direta de DOM (`getElementById`).
+- **Fórmulas matemáticas** — O TinyMCE descarta barras invertidas (`\`), corrompendo equações LaTeX. Por isso, a versão Moodle converte fórmulas simples para HTML puro (entidades como `&ge;`, `&times;`). Fórmulas complexas (`\begin{cases}`, matrizes, integrais) podem sair incompletas — revise e, se necessário, reescreva-as em texto ou indique a versão completa via link.
+- **Referências cruzadas** — Links como `@fig-...` ou `@tbl-...` são removidos, mantendo apenas o texto do rótulo.
+- **Figuras externas** — Imagens complementares devem ser inseridas manualmente na atividade VPL.
+- **Simuladores** — Funcionam apenas se utilizarem JavaScript padrão com estilos *inline* e manipulação direta do DOM (`getElementById`).
 :::
 
 ### Como Publicar no Moodle {.unnumbered}
@@ -137,60 +106,52 @@ do editor TinyMCE/HTML Purifier do Moodle:
    https://fzampirolli.github.io/pdi-vc/eps/py.pt_moodle/EPXX_YY.html
    ```
 2. Copie o código-fonte completo da página (`Ctrl+U` → `Ctrl+A` → `Ctrl+C`).
-3. No Moodle, crie a atividade VPL → editor HTML → cole (`Ctrl+V`) e salve.
-4. Opcionalmente, adicione no enunciado VPL um link para a versão completa:
+3. No Moodle, crie a atividade VPL, acesse o editor HTML, cole o conteúdo (`Ctrl+V`) e salve.
+4. Opcionalmente, inclua no enunciado VPL um link para a versão completa:
    ```
    https://fzampirolli.github.io/pdi-vc/eps/py.pt/EPXX_YY.html
    ```
-5. Importe os arquivos `.cases` da pasta `all/capXX/casos/` nas configurações
-   de testes do VPL.
+5. Importe os arquivos `.cases` da pasta `all/capXX/casos/` nas configurações de testes do VPL.
 
 ::: {.callout-tip}
 ### Reaproveitamento dos Casos de Teste {.unnumbered}
 
-Os arquivos `.cases` são 100% compatíveis com o VPL, permitindo usar o mesmo
-conjunto de testes tanto no desenvolvimento local quanto na correção
-automatizada no Moodle.
+Os arquivos `.cases` são 100% compatíveis com o VPL, permitindo usar o mesmo conjunto de testes tanto no desenvolvimento local quanto na correção automatizada no Moodle.
 :::
-
-
-
 
 ## Idiomas e Conversão de Código {.unnumbered}
 
-O **núcleo de referência** é escrito em **Português** com exemplos em **Python**. Versões em outros idiomas e linguagens de programação são geradas via **APIs de IA**, passando por um fluxo que automatiza a tradução textual e a conversão de sintaxe de código.
+O **núcleo de referência** é escrito em **Português** com exemplos em **Python**. Versões em outros idiomas e linguagens de programação são geradas via **APIs de IA**, por meio de um fluxo automatizado que realiza a tradução textual e a conversão de sintaxe do código.
 
 ::: {.callout-note}
 
 ### Nota {.unnumbered}
 
-As versões traduzidas via IA servem como **ponto de partida** e podem apresentar imprecisões, sendo recomendada a revisão antes da aplicação em sala de aula.
+As versões traduzidas via IA servem como **ponto de partida** e podem conter imprecisões; recomenda-se revisão antes da aplicação em sala de aula.
 :::
 
 ## Código aberto {.unnumbered}
 
-O projeto é regido por princípios de código aberto. O repositório público contém o texto, códigos, imagens e scripts:
+O projeto é regido por princípios de código aberto. O repositório público reúne o texto, os códigos, as imagens e os *scripts*:
 **[github.com/fzampirolli/pdi-vc](https://github.com/fzampirolli/pdi-vc/)**
 
 ---
 
 ## Antes de começar: *Notebooks* em Python {.unnumbered}
 
-O conceito de ***Literate Programming*** (Programação Literária), proposto por Donald Knuth [@knuth_literate_1984], fundamenta a estrutura deste material. A lógica inverte o paradigma tradicional: o programa é escrito para a leitura humana, assemelhando-se a um ensaio, enquanto o código é extraído para execução computacional.
+O conceito de ***Literate Programming*** (Programação Literária), proposto por Donald Knuth [@knuth_literate_1984], fundamenta a estrutura deste material. A lógica inverte o paradigma tradicional: o programa é escrito para a leitura humana, assemelhando-se a um ensaio, enquanto o código é extraído separadamente para execução computacional.
 
-O conteúdo é estruturado em *Notebooks*, documentos que intercalam **células de texto** (em [Markdown](https://www.markdownguide.org)) e **células de código** (em Python).
+O conteúdo é estruturado em *notebooks* — documentos que intercalam **células de texto** (em [Markdown](https://www.markdownguide.org)) e **células de código** (em Python).
 
-* **Execução:** Células de código são identificadas por `[ ]`. A execução pode ser realizada com `Shift + Enter` ou pelo botão ▶️ da interface.
-* **Ambientes:** Os *notebooks* podem ser executados localmente, por meio do [Jupyter](https://jupyter.org/?utm_source=chatgpt.com) ou do [Visual Studio Code (VS Code)](https://code.visualstudio.com/?utm_source=chatgpt.com), bem como em ambientes de nuvem, como o [Google Colab](https://colab.research.google.com).
-
+* **Execução:** células de código são identificadas por `[ ]`. A execução pode ser realizada com `Shift + Enter` ou pelo botão ▶️ da interface.
+* **Ambientes:** os *notebooks* podem ser executados localmente, por meio do [Jupyter](https://jupyter.org) ou do [Visual Studio Code (VS Code)](https://code.visualstudio.com), bem como em ambientes de nuvem, como o [Google Colab](https://colab.research.google.com).
 
 ::: {.callout-tip}
 
 ### Nota sobre o formato {.unnumbered}
 
-Em ambientes interativos, o código pode ser modificado e executado. Nas versões estáticas (HTML ou PDF), os blocos de código servem para fins de leitura e referência, mantendo-se a integridade das explicações.
+Em ambientes interativos, o código pode ser modificado e executado. Nas versões estáticas (HTML ou PDF), os blocos de código têm finalidade de leitura e referência, sem prejuízo à integridade das explicações.
 :::
-
 
 ::: {.content-visible when-format="html"}
 
