@@ -84,7 +84,7 @@
     "href": "prefacio.html#código-aberto",
     "title": "Prefácio",
     "section": "Código aberto",
-    "text": "Código aberto\nO projeto é regido por princípios de código aberto. O repositório público reúne o texto, os códigos, as imagens e os scripts: github.com/fzampirolli/pdi-vc",
+    "text": "Código aberto\nO projeto é regido por princípios de código aberto. O repositório público reúne o texto, os códigos, as imagens e os scripts: github.com/fzampirolli/pdi-vc\nCada versão do livro é arquivada permanentemente no Zenodo com um DOI citable. Para citar este material em trabalhos acadêmicos:\n\nZAMPIROLLI, Francisco de Assis. PDI+VC — Processamento Digital de Imagens e Visão Computacional. UFABC, 2026. DOI: 10.5281/zenodo.20784606",
     "crumbs": [
       "Prefácio"
     ]
