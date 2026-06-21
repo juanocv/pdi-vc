@@ -1,8 +1,15 @@
 # PDI+VC — Processamento Digital de Imagens e Visão Computacional
 
 **Material didático interativo para cursos de graduação e pós-graduação**
-
 > Escreva **uma vez** em Python + Português. O pipeline traduz o resto.
+
+🚧 **Em construção!**
+Este material está sendo preparado e aplicado em 3 turmas de PDI na UFABC (até o capítulo 4 no momento).
+
+[![Livro Online](https://img.shields.io/badge/Livro-Online-blue?logo=github)](https://fzampirolli.github.io/pdi-vc)
+[![Abrir no Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/fzampirolli/pdi-vc/blob/master/notebooks_alunos/cap01/cap01_aluno.ipynb)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20784606.svg)](https://doi.org/10.5281/zenodo.20784606)
+[![Licença](https://img.shields.io/badge/Licença-CC--BY--NC--SA--4.0-green)](LICENSE)
 
 ---
 
