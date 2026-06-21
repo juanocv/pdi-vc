@@ -130,10 +130,18 @@ O **núcleo de referência** é escrito em **Português** com exemplos em **Pyth
 As versões traduzidas via IA servem como **ponto de partida** e podem conter imprecisões; recomenda-se revisão antes da aplicação em sala de aula.
 :::
 
+
 ## Código aberto {.unnumbered}
 
 O projeto é regido por princípios de código aberto. O repositório público reúne o texto, os códigos, as imagens e os *scripts*:
 **[github.com/fzampirolli/pdi-vc](https://github.com/fzampirolli/pdi-vc/)**
+
+Cada versão do livro é arquivada permanentemente no **[Zenodo](https://zenodo.org)** 
+com um DOI citable. Para citar este material em trabalhos acadêmicos:
+
+> ZAMPIROLLI, Francisco de Assis. **PDI+VC — Processamento Digital de Imagens 
+> e Visão Computacional**. UFABC, 2026. DOI: 
+> [10.5281/zenodo.20784606](https://doi.org/10.5281/zenodo.20784606)
 
 ---
 
