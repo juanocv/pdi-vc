@@ -96,7 +96,13 @@ div.csl-indent {
 \sigma_B^2(T) = \frac{n_0 \cdot n_1}{N^2}\,(m_0 - m_1)^2
 \]</span> onde <span class="math inline">\(n_0,n_1\)</span> são as quantidades de pixels com valor <span class="math inline">\(&lt;T\)</span> e <span class="math inline">\(\geq T\)</span>, <span class="math inline">\(m_0,m_1\)</span> são suas médias, e <span class="math inline">\(N=L\times C\)</span>.</p></li>
 <li><p><strong>Escolha:</strong> O limiar ótimo <span class="math inline">\(T^*\)</span> é o que maximiza <span class="math inline">\(\sigma_B^2(T)\)</span> (em caso de empate, manter o <strong>primeiro</strong> encontrado).</p></li>
-<li><p><strong>Aplicação:</strong> Binarizar a imagem usando <span class="math inline">\(T^*\)</span>, com o mesmo critério <span class="math inline">\(p\geq T^*\Rightarrow 255\)</span>.</p></li>
+<li><p>Aplicação: Binarizar a imagem usando T*, aplicando: <span class="math display">\[
+p' =
+\begin{cases}
+255, &amp; \text{se } p &gt; T^* \\
+0, &amp; \text{se } p \le T^*
+\end{cases}
+\]</span></p></li>
 <li><p><strong>Saída:</strong> Exibir <span class="math inline">\(T^*\)</span> e, em seguida, a matriz binarizada.</p></li>
 </ol>
 </section>
@@ -106,6 +112,7 @@ div.csl-indent {
 <li><strong>Candidatos válidos:</strong> Ignorar <span class="math inline">\(T\)</span> que deixe <span class="math inline">\(n_0=0\)</span> ou <span class="math inline">\(n_1=0\)</span> (classe vazia).</li>
 <li><strong>Empate:</strong> Sempre manter o <strong>primeiro</strong> <span class="math inline">\(T\)</span> que atingiu o valor máximo de <span class="math inline">\(\sigma_B^2\)</span>.</li>
 <li><strong>Tipo:</strong> <span class="math inline">\(T^*\)</span> e a matriz de saída devem ser inteiros.</li>
+<li><strong>Convenção OpenCV:</strong> A binarização segue <code>cv2.THRESH_BINARY</code>; pixels com valor exatamente igual a <span class="math inline">\(T^*\)</span> tornam-se pretos.</li>
 </ul>
 </section>
 <section class="level4" data-number="4.9.2.3" id="fundamentação-teórica-1">
@@ -190,7 +197,7 @@ div.csl-indent {
 <td>1<br/>
 2<br/>
 10 250</td>
-<td>250</td>
+<td>0 250</td>
 <td>Apenas dois valores: <span class="math inline">\(T^*\)</span> fica no maior</td>
 </tr>
 </tbody>
@@ -2281,7 +2288,7 @@ draw();
     function render(){
       var T = parseInt(slT.value, 10);
       vlT.innerText = T;
-      db.innerHTML = 'Fórmula aplicada: <b>(p ≥ '+T+') ? 255 : 0</b>';
+      db.innerHTML = 'Fórmula aplicada: <b>(p > '+T+') ? 255 : 0</b>';
       renderOrig();
       gN.innerHTML = '';
       pixels.forEach(function(p){

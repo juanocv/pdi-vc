@@ -13,7 +13,8 @@
 <li><p><strong>Histograma:</strong> Construir o histograma <em>h</em>[<em>i</em>], i=0,\dots,255, contando quantos pixels têm valor <em>i</em>.</p></li>
 <li><p><strong>Busca do limiar:</strong> Para cada candidato <em>T</em> de 1 a 255, calcular a <strong>variância entre classes</strong>: σ_<em>B</em>^2(<em>T</em>) = (<em>n</em>_0 · <em>n</em>_1)/(<em>N</em>^2)\,(<em>m</em>_0 - <em>m</em>_1)^2 onde <em>n</em>_0,<em>n</em>_1 são as quantidades de pixels com valor &lt;<em>T</em> e ≥ <em>T</em>, <em>m</em>_0,<em>m</em>_1 são suas médias, e N=<em>L</em>× <em>C</em>.</p></li>
 <li><p><strong>Escolha:</strong> O limiar ótimo <em>T</em>^* é o que maximiza σ_<em>B</em>^2(<em>T</em>) (em caso de empate, manter o <strong>primeiro</strong> encontrado).</p></li>
-<li><p><strong>Aplicação:</strong> Binarizar a imagem usando <em>T</em>^*, com o mesmo critério <em>p</em>≥ <em>T</em>^*\Rightarrow 255.</p></li>
+<li><p>Aplicação: Binarizar a imagem usando T*, aplicando: <em>p</em>' =
+255, se <em>p</em> &gt; <em>T</em>^*; 0, se <em>p</em> \le <em>T</em>^*</p></li>
 <li><p><strong>Saída:</strong> Exibir <em>T</em>^* e, em seguida, a matriz binarizada.</p></li>
 </ol>
 </div>
@@ -23,6 +24,7 @@
 <li><strong>Candidatos válidos:</strong> Ignorar <em>T</em> que deixe <em>n</em>_0=0 ou <em>n</em>_1=0 (classe vazia).</li>
 <li><strong>Empate:</strong> Sempre manter o <strong>primeiro</strong> <em>T</em> que atingiu o valor máximo de σ_<em>B</em>^2.</li>
 <li><strong>Tipo:</strong> <em>T</em>^* e a matriz de saída devem ser inteiros.</li>
+<li><strong>Convenção OpenCV:</strong> A binarização segue <code>cv2.THRESH_BINARY</code>; pixels com valor exatamente igual a <em>T</em>^* tornam-se pretos.</li>
 </ul>
 </div>
 <div style="background-color:#f0fff4;border-left:5px solid #2ecc71;padding:15px;margin-bottom:20px;">
@@ -97,7 +99,7 @@
 <td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">1<br/>
 2<br/>
 10 250</td>
-<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">250</td>
+<td style="padding:10px;border:1px solid #ddd;font-family:monospace;vertical-align:top;">0 250</td>
 <td style="padding:10px;border:1px solid #ddd;vertical-align:top;">Apenas dois valores: <em>T</em>^* fica no maior</td>
 </tr>
 </tbody>

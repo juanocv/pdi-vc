@@ -113,7 +113,7 @@
 \contentsline {figure}{\numberline {4.27}{\ignorespaces \emph {Bounding boxes} derivadas dos componentes conexos sobrepostas à imagem original. As anotações são exportadas no formato YOLO (\emph {classe cx cy w h}), com coordenadas normalizadas para o intervalo {[}0,1{]}.}}{224}{figure.caption.162}%
 \contentsline {figure}{\numberline {4.28}{\ignorespaces Simulador: Limiarização Global por Limiar Fixo}}{230}{figure.caption.164}%
 \contentsline {figure}{\numberline {4.29}{\ignorespaces Simulador: Limiarização Automática de Otsu}}{232}{figure.caption.165}%
-\contentsline {figure}{\numberline {4.30}{\ignorespaces Simulador: Dilatação Binária Plana (mm.dil0)}}{234}{figure.caption.166}%
+\contentsline {figure}{\numberline {4.30}{\ignorespaces Simulador: Dilatação Binária Plana (mm.dil0)}}{235}{figure.caption.166}%
 \contentsline {figure}{\numberline {4.31}{\ignorespaces Simulador: Erosão Binária Plana (mm.ero0)}}{237}{figure.caption.167}%
 \contentsline {figure}{\numberline {4.32}{\ignorespaces Simulador: Abertura Morfológica (erosão + dilatação)}}{239}{figure.caption.168}%
 \contentsline {figure}{\numberline {4.33}{\ignorespaces Simulador: Fechamento Morfológico (dilatação + erosão)}}{241}{figure.caption.169}%

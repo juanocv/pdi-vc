@@ -2301,7 +2301,7 @@ draw();
     function render(){
       var T = parseInt(slT.value, 10);
       vlT.innerText = T;
-      db.innerHTML = 'Fórmula aplicada: <b>(p ≥ '+T+') ? 255 : 0</b>';
+      db.innerHTML = 'Fórmula aplicada: <b>(p > '+T+') ? 255 : 0</b>';
       renderOrig();
       gN.innerHTML = '';
       pixels.forEach(function(p){

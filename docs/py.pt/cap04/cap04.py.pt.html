@@ -5838,7 +5838,7 @@ Figura&nbsp;4.27: <em>Bounding boxes</em> derivadas dos componentes conexos sobr
 <section id="download" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="download">Download</h4>
 <p>Baixe <code>morph.py</code> e <code>testsuite.py</code> executando a célula abaixo:</p>
-<div id="4769fd80" class="cell">
+<div id="8f25e4c1" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os, sys, importlib, inspect, urllib.request</span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="co"># URLs do repositório</span></span>
@@ -5972,7 +5972,7 @@ por isso, 99 e 100 tornam-se pretos.</td>
 </tbody>
 </table>
 <div id="cell-fig-04-sim-limiar" class="cell">
-<div id="fig-04-sim-limiar" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="119">
+<div id="fig-04-sim-limiar" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="24">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-04-sim-limiar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 
@@ -6043,7 +6043,7 @@ por isso, 99 e 100 tornam-se pretos.</td>
     function render(){
       var T = parseInt(slT.value, 10);
       vlT.innerText = T;
-      db.innerHTML = 'Fórmula aplicada: <b>(p ≥ '+T+') ? 255 : 0</b>';
+      db.innerHTML = 'Fórmula aplicada: <b>(p > '+T+') ? 255 : 0</b>';
       renderOrig();
       gN.innerHTML = '';
       pixels.forEach(function(p){
@@ -6088,12 +6088,7 @@ Figura&nbsp;4.28: Simulador: Limiarização Global por Limiar Fixo
 </div>
 <div id="8aae6e08" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>writefile EP04_01.py</span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Código Python</span></span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> morph <span class="im">import</span> mm</span>
-<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>L, C, T <span class="op">=</span> <span class="bu">int</span>(<span class="bu">input</span>()), <span class="bu">int</span>(<span class="bu">input</span>()), <span class="bu">int</span>(<span class="bu">input</span>())</span>
-<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> mm.readImg(L, C)</span>
-<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>r <span class="op">=</span> mm.threshold(f, T)</span>
-<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mm.drawImg(r))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Código Python</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Overwriting EP04_01.py</code></pre>
 </div>
@@ -6106,7 +6101,7 @@ Figura&nbsp;4.28: Simulador: Limiarização Global por Limiar Fixo
 
 🔍 Testando Python: EP04_01.py
 <span style="color:#27ae60;font-weight:500">✔️ Caso1_Exemplo_Enunciado: OK</span>
-<span style="color:#27ae60;font-weight:500">✔️ Caso2_Limiar_Zero: OK</span>
+<span style="color:#27ae60;font-weight:500">✔️ Caso2_Limiar_Um: OK</span>
 <span style="color:#27ae60;font-weight:500">✔️ Caso3_Limiar_Maximo: OK</span>
 <span style="color:#27ae60;font-weight:500">✔️ Caso4_Todos_Iguais_ao_Limiar: OK</span>
 <span style="color:#27ae60;font-weight:500">✔️ Caso5_Alternado_Simples: OK</span>
@@ -6132,7 +6127,13 @@ Figura&nbsp;4.28: Simulador: Limiarização Global por Limiar Fixo
 \sigma_B^2(T) = \frac{n_0 \cdot n_1}{N^2}\,(m_0 - m_1)^2
 \]</span> onde <span class="math inline">\(n_0,n_1\)</span> são as quantidades de pixels com valor <span class="math inline">\(&lt;T\)</span> e <span class="math inline">\(\geq T\)</span>, <span class="math inline">\(m_0,m_1\)</span> são suas médias, e <span class="math inline">\(N=L\times C\)</span>.</p></li>
 <li><p><strong>Escolha:</strong> O limiar ótimo <span class="math inline">\(T^*\)</span> é o que maximiza <span class="math inline">\(\sigma_B^2(T)\)</span> (em caso de empate, manter o <strong>primeiro</strong> encontrado).</p></li>
-<li><p><strong>Aplicação:</strong> Binarizar a imagem usando <span class="math inline">\(T^*\)</span>, com o mesmo critério <span class="math inline">\(p\geq T^*\Rightarrow 255\)</span>.</p></li>
+<li><p>Aplicação: Binarizar a imagem usando T*, aplicando: <span class="math display">\[
+p' =
+\begin{cases}
+255, &amp; \text{se } p &gt; T^* \\
+0, &amp; \text{se } p \le T^*
+\end{cases}
+\]</span></p></li>
 <li><p><strong>Saída:</strong> Exibir <span class="math inline">\(T^*\)</span> e, em seguida, a matriz binarizada.</p></li>
 </ol>
 </section>
@@ -6142,6 +6143,7 @@ Figura&nbsp;4.28: Simulador: Limiarização Global por Limiar Fixo
 <li><strong>Candidatos válidos:</strong> Ignorar <span class="math inline">\(T\)</span> que deixe <span class="math inline">\(n_0=0\)</span> ou <span class="math inline">\(n_1=0\)</span> (classe vazia).</li>
 <li><strong>Empate:</strong> Sempre manter o <strong>primeiro</strong> <span class="math inline">\(T\)</span> que atingiu o valor máximo de <span class="math inline">\(\sigma_B^2\)</span>.</li>
 <li><strong>Tipo:</strong> <span class="math inline">\(T^*\)</span> e a matriz de saída devem ser inteiros.</li>
+<li><strong>Convenção OpenCV:</strong> A binarização segue <code>cv2.THRESH_BINARY</code>; pixels com valor exatamente igual a <span class="math inline">\(T^*\)</span> tornam-se pretos.</li>
 </ul>
 </section>
 <section id="fundamentação-teórica-1" class="level4" data-number="4.9.2.3">
@@ -6226,7 +6228,7 @@ Figura&nbsp;4.28: Simulador: Limiarização Global por Limiar Fixo
 <td>1<br>
 2<br>
 10 250</td>
-<td>250</td>
+<td>0 250</td>
 <td>Apenas dois valores: <span class="math inline">\(T^*\)</span> fica no maior</td>
 </tr>
 </tbody>

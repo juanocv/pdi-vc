@@ -192,7 +192,7 @@ por isso, 99 e 100 tornam-se pretos.</td>
 </tbody>
 </table>
 <div class="cell" id="cell-fig-04-sim-limiar">
-<div class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="119" id="fig-04-sim-limiar">
+<div class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="24" id="fig-04-sim-limiar">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-04-sim-limiar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div id="sim-ep0401b" style="background-color:#fef9ef;border-radius:18px;border:1px solid #ede6d8;overflow:hidden;margin-top:20px;font-family:sans-serif;">
@@ -262,7 +262,7 @@ por isso, 99 e 100 tornam-se pretos.</td>
     function render(){
       var T = parseInt(slT.value, 10);
       vlT.innerText = T;
-      db.innerHTML = 'Fórmula aplicada: <b>(p ≥ '+T+') ? 255 : 0</b>';
+      db.innerHTML = 'Fórmula aplicada: <b>(p > '+T+') ? 255 : 0</b>';
       renderOrig();
       gN.innerHTML = '';
       pixels.forEach(function(p){
@@ -307,12 +307,7 @@ Figura 4.28: Simulador: Limiarização Global por Limiar Fixo
 </div>
 <div class="cell" id="8aae6e08">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a aria-hidden="true" href="#cb48-1" tabindex="-1"></a><span class="op">%%</span>writefile EP04_01.py</span>
-<span id="cb48-2"><a aria-hidden="true" href="#cb48-2" tabindex="-1"></a><span class="co"># Código Python</span></span>
-<span id="cb48-3"><a aria-hidden="true" href="#cb48-3" tabindex="-1"></a><span class="im">from</span> morph <span class="im">import</span> mm</span>
-<span id="cb48-4"><a aria-hidden="true" href="#cb48-4" tabindex="-1"></a>L, C, T <span class="op">=</span> <span class="bu">int</span>(<span class="bu">input</span>()), <span class="bu">int</span>(<span class="bu">input</span>()), <span class="bu">int</span>(<span class="bu">input</span>())</span>
-<span id="cb48-5"><a aria-hidden="true" href="#cb48-5" tabindex="-1"></a>f <span class="op">=</span> mm.readImg(L, C)</span>
-<span id="cb48-6"><a aria-hidden="true" href="#cb48-6" tabindex="-1"></a>r <span class="op">=</span> mm.threshold(f, T)</span>
-<span id="cb48-7"><a aria-hidden="true" href="#cb48-7" tabindex="-1"></a><span class="bu">print</span>(mm.drawImg(r))</span></code></pre></div><button class="code-copy-button" title="Copiar para a área de transferência"><i class="bi"></i></button></div>
+<span id="cb48-2"><a aria-hidden="true" href="#cb48-2" tabindex="-1"></a><span class="co"># Código Python</span></span></code></pre></div><button class="code-copy-button" title="Copiar para a área de transferência"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Overwriting EP04_01.py</code></pre>
 </div>
@@ -325,7 +320,7 @@ Figura 4.28: Simulador: Limiarização Global por Limiar Fixo
 
 🔍 Testando Python: EP04_01.py
 <span style="color:#27ae60;font-weight:500">✔️ Caso1_Exemplo_Enunciado: OK</span>
-<span style="color:#27ae60;font-weight:500">✔️ Caso2_Limiar_Zero: OK</span>
+<span style="color:#27ae60;font-weight:500">✔️ Caso2_Limiar_Um: OK</span>
 <span style="color:#27ae60;font-weight:500">✔️ Caso3_Limiar_Maximo: OK</span>
 <span style="color:#27ae60;font-weight:500">✔️ Caso4_Todos_Iguais_ao_Limiar: OK</span>
 <span style="color:#27ae60;font-weight:500">✔️ Caso5_Alternado_Simples: OK</span>
@@ -2263,7 +2258,7 @@ draw();
     function render(){
       var T = parseInt(slT.value, 10);
       vlT.innerText = T;
-      db.innerHTML = 'Fórmula aplicada: <b>(p ≥ '+T+') ? 255 : 0</b>';
+      db.innerHTML = 'Fórmula aplicada: <b>(p > '+T+') ? 255 : 0</b>';
       renderOrig();
       gN.innerHTML = '';
       pixels.forEach(function(p){
