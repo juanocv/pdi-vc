@@ -4,7 +4,7 @@
 <br><span style="font-size:11px;color:#555;">(Fórmulas renderizadas pelo MathJax — abrir em nova aba)</span>
 </div>
 <h2 style="color:#0056b3;border-bottom:2px solid #0056b3;padding-bottom:10px;">EP04_07 ⛰️ Dilatação e Erosão com Pesos (mm.dil1 / mm.ero1)</h2>
-<p>Até agora, o elemento estruturante só dizia “este vizinho conta” ou “não conta” — mas em <strong>modelos digitais de elevação</strong> (usados em SIG e em planejamento de drenagem urbana), cada vizinho deveria ter um <strong>peso diferente</strong> dependendo da distância ou da direção do relevo. As versões <strong>ponderadas</strong> da dilatação e da erosão, implementadas em <code>morph.py</code> como <code>mm.dil1(f, b)</code> e <code>mm.ero1(f, b)</code>, somam (ou subtraem) o peso de cada vizinho antes de tomar o máximo (ou mínimo) — generalizando tudo o que foi feito nos EPs anteriores. Ver na Figura 4.34 uma simulação deste EP.</p>
+<p>Até agora, o elemento estruturante só dizia “este vizinho conta” ou “não conta” — mas em <strong>modelos digitais de elevação</strong> (usados em SIG e em planejamento de drenagem urbana), cada vizinho deveria ter um <strong>peso diferente</strong> dependendo da distância ou da direção do relevo. As versões <strong>ponderadas</strong> da dilatação e da erosão, implementadas em <code>morph.py</code> como <code>mm.dil1(f, b)</code> e <code>mm.ero1(f, b)</code>, somam (ou subtraem) o peso de cada vizinho antes de tomar o máximo (ou mínimo) — generalizando tudo o que foi feito nos EPs anteriores. Ver na Figura 4.36 uma simulação deste EP.</p>
 <div style="background-color:#f8f9fa;padding:15px;border:1px solid #ccc;border-radius:5px;margin-bottom:20px;">
 <h4 style="margin-top:0;color:#333;">📋 Diretrizes de Implementação</h4>
 <ol type="1">
@@ -27,8 +27,8 @@
 <li><strong>Tipo:</strong> A saída pode conter valores negativos ou maiores que 255 — <strong>não</strong> há <em>clipping</em> neste EP.</li>
 <li><strong>Dica:</strong> Para remover mensagens de overflow ao ultrapassar limites do tipo uint8, incluir no início do código:</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb66"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb66-1"><a aria-hidden="true" href="#cb66-1" tabindex="-1"></a><span class="im">import</span> warnings</span>
-<span id="cb66-2"><a aria-hidden="true" href="#cb66-2" tabindex="-1"></a>warnings.filterwarnings(<span class="st">"ignore"</span>)</span></code></pre></div><button class="code-copy-button" title="Copiar para a área de transferência"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb68"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb68-1"><a aria-hidden="true" href="#cb68-1" tabindex="-1"></a><span class="im">import</span> warnings</span>
+<span id="cb68-2"><a aria-hidden="true" href="#cb68-2" tabindex="-1"></a>warnings.filterwarnings(<span class="st">"ignore"</span>)</span></code></pre></div><button class="code-copy-button" title="Copiar para a área de transferência"><i class="bi"></i></button></div>
 </div>
 <div style="background-color:#f0fff4;border-left:5px solid #2ecc71;padding:15px;margin-bottom:20px;">
 <h4 style="margin-top:0;color:#1e7e34;">🧠 Fundamentação Teórica</h4>

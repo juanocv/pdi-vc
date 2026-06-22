@@ -85,7 +85,7 @@ div.csl-indent {
 <body class="ep-standalone">
 <div class="ep-container">
 <h3 class="anchored" data-anchor-id="ep04_03-dilatação-binária-plana-mm.dil0" data-number="4.9.3"><span class="header-section-number">4.9.3</span> EP04_03 🌱 Dilatação Binária Plana (mm.dil0)</h3>
-<p>Em <strong>microscopia de partículas</strong> e em <strong>OCR de placas de carro desgastadas</strong>, traços finos ou descontínuos precisam ser “engrossados” para que o reconhecimento funcione. A <strong>dilatação morfológica</strong> faz exatamente isso: expande regiões claras usando um elemento estruturante <span class="math inline">\(B\)</span> — a mesma operação implementada em <code>morph.py</code> como <code>mm.dil0(f, B)</code>, usada quando <span class="math inline">\(B\)</span> é <strong>plano</strong> (sem pesos, só <span class="math inline">\(0\)</span>/<span class="math inline">\(1\)</span>). Ver na <a class="quarto-xref" href="#fig-04-sim-dil0">Figura <span>4.30</span></a> uma simulação deste EP.</p>
+<p>Em <strong>microscopia de partículas</strong> e em <strong>OCR de placas de carro desgastadas</strong>, traços finos ou descontínuos precisam ser “engrossados” para que o reconhecimento funcione. A <strong>dilatação morfológica</strong> faz exatamente isso: expande regiões claras usando um elemento estruturante <span class="math inline">\(B\)</span> — a mesma operação implementada em <code>morph.py</code> como <code>mm.dil0(f, B)</code>, usada quando <span class="math inline">\(B\)</span> é <strong>plano</strong> (sem pesos, só <span class="math inline">\(0\)</span>/<span class="math inline">\(1\)</span>). Ver na <a class="quarto-xref" href="#fig-04-sim-dil0">Figura <span>4.32</span></a> uma simulação deste EP.</p>
 <section class="level4" data-number="4.9.3.1" id="diretrizes-de-implementação-2">
 <h4 class="anchored" data-anchor-id="diretrizes-de-implementação-2" data-number="4.9.3.1"><span class="header-section-number">4.9.3.1</span> 📋 Diretrizes de Implementação</h4>
 <ol type="1">
@@ -337,20 +337,20 @@ g(y,x) = \max\Big(f(y,x),\ \max_{\substack{(v_y,v_x)\ \text{válido}\\ B_{ref}(b
 </script>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-04-sim-dil0-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura 4.30: Simulador: Dilatação Binária Plana (mm.dil0)
+Figura 4.32: Simulador: Dilatação Binária Plana (mm.dil0)
 </figcaption>
 </figure>
 </div>
 </div>
 <div class="cell" id="b5b12b77">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a aria-hidden="true" href="#cb54-1" tabindex="-1"></a><span class="op">%%</span>writefile EP04_03.py</span>
-<span id="cb54-2"><a aria-hidden="true" href="#cb54-2" tabindex="-1"></a><span class="co"># Código Python</span></span></code></pre></div><button class="code-copy-button" title="Copiar para a área de transferência"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a aria-hidden="true" href="#cb56-1" tabindex="-1"></a><span class="op">%%</span>writefile EP04_03.py</span>
+<span id="cb56-2"><a aria-hidden="true" href="#cb56-2" tabindex="-1"></a><span class="co"># Código Python</span></span></code></pre></div><button class="code-copy-button" title="Copiar para a área de transferência"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Writing EP04_03.py</code></pre>
 </div>
 </div>
 <div class="cell" id="8bcaa2de">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a aria-hidden="true" href="#cb56-1" tabindex="-1"></a>TestSuite(<span class="st">"EP04_03.py"</span>).run()</span></code></pre></div><button class="code-copy-button" title="Copiar para a área de transferência"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a aria-hidden="true" href="#cb58-1" tabindex="-1"></a>TestSuite(<span class="st">"EP04_03.py"</span>).run()</span></code></pre></div><button class="code-copy-button" title="Copiar para a área de transferência"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">✔️ EP04_03.cases já existe em casos/
 📋 5 caso(s) carregado(s) de casos/EP04_03.cases
@@ -1016,7 +1016,7 @@ draw();
 
     if(gc_hy < 0 || gc_hy >= ROWS) return;
 
-    document.getElementById('gc_profileLabel').innerHTML = `<span style='color:#EF4444; font-weight:bold;'>Perfil 1D da Linha ${gc_hy}</span> — Azul: Original $f(x)$ | Cor da Aba: Operação Atual`;
+    document.getElementById('gc_profileLabel').innerHTML = `<span style='color:#EF4444; font-weight:bold;'>Perfil 1D da Linha ${gc_hy}</span> — Tracejado: Original f(x) | Cor da Aba: Operação Atual`;
 
     const dataOrig = MORPH_DATA.orig[gc_hy];
     const dataCurrent = MORPH_DATA[gc_mode][gc_hy];
@@ -1913,6 +1913,252 @@ draw();
   td_grid = td_PRESETS.corner0(); // Inicia com o novo preset para demonstração imediata
   td_updateSEUI();
   td_refresh();
+})();
+</script>
+<script>
+(function(){
+const COLS=4, ROWS=4, CELL=50, PAD=20, INF=9999;
+const cv=document.getElementById('edtv3_cvs');
+const CTX=cv.getContext('2d');
+
+cv.width = COLS * CELL + PAD * 2;
+cv.height = ROWS * CELL + PAD * 2;
+
+let grid = [
+  [1, 1, 0, 1],
+  [1, 1, 1, 1],
+  [1, 0, 1, 1],
+  [0, 1, 1, 1]
+];
+
+let mode='final';
+let steps=[], stepIdx=0;
+let playing=false, playTimer=null;
+
+function getCol(d) {
+  if(d === 0) return { fill: 'transparent', txt: '#888780', bdr: '#D3D1C7' };
+  if(d >= INF) return { fill: '#FCEBEB', txt: '#A32D2D', bdr: '#F7C1C1' };
+  const colors = ['#E6F1FB', '#B5D4F4', '#85B7EB', '#378ADD', '#185FA5', '#0C447C', '#042C53'];
+  let idx = Math.min(colors.length - 1, Math.floor(d / 1.5));
+  return { fill: colors[idx], txt: idx > 3 ? '#E6F1FB' : '#042C53', bdr: colors[Math.min(idx+1, colors.length-1)] };
+}
+
+function drawMatrix(matrix, opts={}) {
+  CTX.clearRect(0, 0, cv.width, cv.height);
+  for(let r=0; r<ROWS; r++) {
+    for(let c=0; c<COLS; c++) {
+      const px = PAD + c * CELL; const py = PAD + r * CELL;
+      const d = matrix[r][c]; const col = getCol(d);
+
+      CTX.fillStyle = col.fill; CTX.fillRect(px+1, py+1, CELL-2, CELL-2);
+
+      const isCur = opts.cursor && opts.cursor.r === r && opts.cursor.c === c;
+      const isChg = opts.changed && opts.changed[r][c];
+
+      CTX.strokeStyle = isCur ? '#E24B4A' : isChg ? '#EF9F27' : col.bdr;
+      CTX.lineWidth = isCur ? 3 : isChg ? 2.5 : 0.5;
+      CTX.strokeRect(px+0.5, py+0.5, CELL-1, CELL-1);
+
+      CTX.fillStyle = col.txt; CTX.font = 'bold 14px monospace';
+      CTX.textAlign = 'center'; CTX.textBaseline = 'middle';
+      CTX.fillText(d >= INF ? '∞' : String(d), px + CELL/2, py + CELL/2);
+
+      if (r === 0) { CTX.fillStyle='#888780'; CTX.font='9px monospace'; CTX.fillText('c'+c, px+CELL/2, PAD/2); }
+      if (c === 0) { CTX.fillStyle='#888780'; CTX.font='9px monospace'; CTX.fillText('r'+r, PAD/2, py+CELL/2); }
+    }
+  }
+}
+
+function copyMat(m) { return m.map(row => [...row]); }
+
+function computeEdt1(gInit) {
+  const all = [];
+  let g = copyMat(gInit);
+  all.push({ phase: 'edt1_init', g: copyMat(g), cursor: null, b: 0, changed: null, label: 'edt1 · Matriz de entrada inicializada' });
+
+  // Raster ↓ (por coluna)
+  for(let c=0; c<COLS; c++) {
+    let b = 1;
+    for(let r=1; r<ROWS; r++) {
+      let chg = Array.from({length:ROWS}, () => new Array(COLS).fill(0));
+      if(grid[r][c] && g[r-1][c] < INF) {
+        if(g[r][c] > g[r-1][c] + b) {
+          g[r][c] = g[r-1][c] + b; chg[r][c] = 1;
+          all.push({ phase: 'edt1_raster', g: copyMat(g), cursor: {r, c}, b, changed: chg, label: `edt1 raster ↓ · f(${r},${c}) = f(${r-1},${c}) + b(${b}) = ${g[r][c]}` });
+          b += 2;
+        } else {
+          b = 1;
+          all.push({ phase: 'edt1_raster', g: copyMat(g), cursor: {r, c}, b, changed: null, label: `edt1 raster ↓ · f(${r},${c}) já menor · b=1` });
+        }
+      } else { b = 1; }
+    }
+  }
+
+  // Anti-raster ↑ (por coluna)
+  for(let c=0; c<COLS; c++) {
+    let b = 1;
+    for(let r=ROWS-2; r>=0; r--) {
+      let chg = Array.from({length:ROWS}, () => new Array(COLS).fill(0));
+      if(grid[r][c] && g[r+1][c] < INF) {
+        if(g[r][c] > g[r+1][c] + b) {
+          g[r][c] = g[r+1][c] + b; chg[r][c] = 1;
+          all.push({ phase: 'edt1_anti', g: copyMat(g), cursor: {r, c}, b, changed: chg, label: `edt1 anti-raster ↑ · f(${r},${c}) = f(${r+1},${c}) + b(${b}) = ${g[r][c]}` });
+          b += 2;
+        } else {
+          b = 1;
+          all.push({ phase: 'edt1_anti', g: copyMat(g), cursor: {r, c}, b, changed: null, label: `edt1 anti-raster ↑ · f(${r},${c}) já menor · b=1` });
+        }
+      } else { b = 1; }
+    }
+  }
+  return { steps: all, g: copyMat(g) };
+}
+
+// edt2 CORRIGIDO: mesma estrutura do edt1, porém percorrendo cada LINHA na
+// horizontal (raster → direita, depois anti-raster ← esquerda), com seu
+// próprio contador b por linha que cresce 2 em 2 enquanto melhora e
+// reinicia em 1 quando não há melhora. A varredura sequencial in-place
+// (em vez de "ondas" globais por b fixo) é o que garante que uma célula
+// sem vizinho-fonte direto receba o valor já atualizado do vizinho
+// imediatamente anterior na mesma passada — é isso que faltava para a
+// coluna mais distante de qualquer feature convergir corretamente.
+function computeEdt2(gIn) {
+  const all = [];
+  let g = copyMat(gIn);
+  all.push({ phase: 'edt2_init', g: copyMat(g), cursor: null, b: 0, changed: null, label: 'edt2 · Estado inicial f_v antes da propagação horizontal' });
+
+  // Raster → (por linha, esquerda para a direita)
+  for(let r=0; r<ROWS; r++) {
+    let b = 1;
+    for(let c=1; c<COLS; c++) {
+      let chg = Array.from({length:ROWS}, () => new Array(COLS).fill(0));
+      if(grid[r][c] && g[r][c-1] < INF) {
+        if(g[r][c] > g[r][c-1] + b) {
+          g[r][c] = g[r][c-1] + b; chg[r][c] = 1;
+          all.push({ phase: 'edt2_raster', g: copyMat(g), cursor: {r, c}, b, changed: chg, label: `edt2 raster → · f(${r},${c}) = f(${r},${c-1}) + b(${b}) = ${g[r][c]}` });
+          b += 2;
+        } else {
+          b = 1;
+          all.push({ phase: 'edt2_raster', g: copyMat(g), cursor: {r, c}, b, changed: null, label: `edt2 raster → · f(${r},${c}) já menor · b=1` });
+        }
+      } else { b = 1; }
+    }
+  }
+
+  // Anti-raster ← (por linha, direita para a esquerda)
+  for(let r=0; r<ROWS; r++) {
+    let b = 1;
+    for(let c=COLS-2; c>=0; c--) {
+      let chg = Array.from({length:ROWS}, () => new Array(COLS).fill(0));
+      if(grid[r][c] && g[r][c+1] < INF) {
+        if(g[r][c] > g[r][c+1] + b) {
+          g[r][c] = g[r][c+1] + b; chg[r][c] = 1;
+          all.push({ phase: 'edt2_anti', g: copyMat(g), cursor: {r, c}, b, changed: chg, label: `edt2 anti-raster ← · f(${r},${c}) = f(${r},${c+1}) + b(${b}) = ${g[r][c]}` });
+          b += 2;
+        } else {
+          b = 1;
+          all.push({ phase: 'edt2_anti', g: copyMat(g), cursor: {r, c}, b, changed: null, label: `edt2 anti-raster ← · f(${r},${c}) já menor · b=1` });
+        }
+      } else { b = 1; }
+    }
+  }
+
+  all.push({ phase: 'edt2_done', g: copyMat(g), cursor: null, b: 0, changed: null, label: 'Convergência final atingida!' });
+  return { steps: all, g: copyMat(g) };
+}
+
+function computeAll() {
+  const gInit = Array.from({length: ROWS}, (_, r) => Array.from({length: COLS}, (_, c) => grid[r][c] ? INF : 0));
+  const r1 = computeEdt1(gInit); const r2 = computeEdt2(r1.g);
+  return [...r1.steps, ...r2.steps];
+}
+
+window.edtv3_setMode = function(m) {
+  mode = m; window.edtv3_stopPlay();
+  document.getElementById('edtv3_btnFinal').className = m === 'final' ? 'edt_act' : '';
+  document.getElementById('edtv3_btnStep').className = m === 'step' ? 'edt_act' : '';
+  document.getElementById('edtv3_stepCtrl').style.display = m === 'step' ? 'block' : 'none';
+
+  if(m === 'step') {
+    steps = computeAll(); stepIdx = 0; window.edtv3_drawFrame();
+  } else {
+    const finalSteps = computeAll();
+    drawMatrix(finalSteps[finalSteps.length - 1].g);
+    document.getElementById('edtv3_sStep').textContent = 'Final';
+    document.getElementById('edtv3_sPhase').textContent = 'Concluído';
+    document.getElementById('edtv3_sB').textContent = '–';
+  }
+};
+
+window.edtv3_drawFrame = function() {
+  if(!steps.length) return;
+  const s = steps[Math.min(stepIdx, steps.length - 1)];
+  drawMatrix(s.g, { cursor: s.cursor, changed: s.changed });
+  document.getElementById('edtv3_sStep').textContent = `${stepIdx + 1}/${steps.length}`;
+  document.getElementById('edtv3_sPhase').textContent = s.phase;
+  document.getElementById('edtv3_sB').textContent = s.b > 0 ? s.b : '–';
+  document.getElementById('edtv3_stepLabel').textContent = s.label;
+};
+
+window.edtv3_goStep = function(d) {
+  stepIdx = Math.max(0, Math.min(steps.length - 1, stepIdx + d));
+  window.edtv3_drawFrame();
+};
+
+window.edtv3_togglePlay = function() { playing ? window.edtv3_stopPlay() : window.edtv3_startPlay(); };
+window.edtv3_startPlay = function() {
+  playing = true; document.getElementById('edtv3_btnPlay').textContent = '⏸ Pausar';
+  function tick() {
+    if(stepIdx >= steps.length - 1) { window.edtv3_stopPlay(); return; }
+    stepIdx++; window.edtv3_drawFrame();
+    playTimer = setTimeout(tick, Math.round(1300 - (+document.getElementById('edtv3_speedSlider').value) * 110));
+  }
+  tick();
+};
+window.edtv3_stopPlay = function() { playing = false; if(playTimer) clearTimeout(playTimer); const b = document.getElementById('edtv3_btnPlay'); if(b) b.textContent = '▶ Play'; };
+
+window.edtv3_loadArtigoPreset = function() {
+  grid = [[1, 1, 0, 1], [1, 1, 1, 1], [1, 0, 1, 1], [0, 1, 1, 1]];
+  window.edtv3_refresh();
+};
+window.edtv3_clearGrid = function() { grid = Array.from({length: ROWS}, () => new Array(COLS).fill(0)); window.edtv3_refresh(); };
+window.edtv3_refresh = function() { window.edtv3_stopPlay(); if(mode === 'step') { steps = computeAll(); stepIdx = Math.min(stepIdx, steps.length - 1); window.edtv3_drawFrame(); } else { window.edtv3_setMode('final'); } };
+
+cv.addEventListener('mousedown', e => {
+  const rect = cv.getBoundingClientRect();
+  const c = Math.floor(((e.clientX - rect.left) * (cv.width / rect.width) - PAD) / CELL);
+  const r = Math.floor(((e.clientY - rect.top) * (cv.height / rect.height) - PAD) / CELL);
+  if(r >= 0 && r < ROWS && c >= 0 && c < COLS) { grid[r][c] = grid[r][c] ? 0 : 1; window.edtv3_refresh(); }
+});
+
+window.edtv3_loadArtigoPreset();
+})();
+</script>
+<script>
+(function() {
+  var container = document.getElementById('wat0-tabs-container');
+  if (!container) return;
+
+  var tabs = container.querySelectorAll('.wat0-tab');
+  var panels = [
+    document.getElementById('wat0-p-0'),
+    document.getElementById('wat0-p-1'),
+    document.getElementById('wat0-p-2'),
+    document.getElementById('wat0-p-3'),
+    document.getElementById('wat0-p-4')
+  ];
+
+  tabs.forEach(function(tab) {
+    tab.onclick = function() {
+      var idx = parseInt(this.getAttribute('data-idx'));
+
+      tabs.forEach(function(t) { t.classList.remove('active'); });
+      panels.forEach(function(p) { if(p) p.classList.remove('active'); });
+
+      this.classList.add('active');
+      if(panels[idx]) panels[idx].classList.add('active');
+    };
+  });
 })();
 </script>
 <script>
