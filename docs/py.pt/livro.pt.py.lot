@@ -24,6 +24,6 @@
 \contentsline {table}{\numberline {4.7}{\ignorespaces \emph {Pipeline} simplificado utilizado no exemplo didático da Figure~\ref {fig-04-watershed-didatico}.}}{216}{table.4.7}%
 \contentsline {table}{\numberline {4.8}{\ignorespaces Comparação entre as abordagens baseadas em componentes conexos e em contornos.}}{219}{table.4.8}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {5.1}{\ignorespaces Comparação de complexidade entre convolução direta, separável e via FFT.}}{257}{table.5.1}%
-\contentsline {table}{\numberline {5.2}{\ignorespaces Tipos de redundância em imagens e como são exploradas.}}{273}{table.5.2}%
-\contentsline {table}{\numberline {5.3}{\ignorespaces Comparação entre os principais formatos de imagem rasterizados.}}{280}{table.5.3}%
+\contentsline {table}{\numberline {5.1}{\ignorespaces Comparação de complexidade entre convolução direta, separável e via FFT.}}{256}{table.5.1}%
+\contentsline {table}{\numberline {5.2}{\ignorespaces Tipos de redundância em imagens e como são exploradas.}}{272}{table.5.2}%
+\contentsline {table}{\numberline {5.3}{\ignorespaces Comparação entre os principais formatos de imagem rasterizados.}}{279}{table.5.3}%
