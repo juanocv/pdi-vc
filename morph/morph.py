@@ -1100,35 +1100,94 @@ class mm:
     # ── WATERSHED ────────────────────────────────────────────────────────────
 
     @staticmethod
-    def watershedB(f, m, b=np.zeros((3,3),dtype='uint8'), op='region'):
-        m = mm.label0(m, b); h,w = m.shape; queue=[]
-        for x in range(h):
-            for y in range(w):
-                if m[x,y]:
-                    for vy,vx,_ in mm._viz(f,b,x,y):
-                        if not m[vy,vx]:
-                            queue.append([abs(int(f[x,y])-int(f[vy,vx])),x,y])
-        while queue:
-            _,x,y = queue.pop(0); cor = m[x,y]
-            for vy,vx,_ in mm._viz(f,b,x,y):
-                if not m[vy,vx]:
-                    m[vy,vx]=cor
-                    queue.append([abs(int(f[x,y])-int(f[vy,vx])),vy,vx])
-        return m if op=='region' else mm.gradm(m, mm.secross())
-    
-    @staticmethod
-    def watershed0(f, b=np.zeros((3,3),dtype='uint8'), op='region'):
+    def watershed0(f, mask=None, b=np.zeros((3,3),dtype='uint8'), op='region'):
         f = mm.label0(f, b); g = f.copy()
-        while g.min()==0:
+        mask = np.ones_like(f) if mask is None else (mask > 0)
+        
+        while g.min() == 0:
+            mudou = False
             for x in range(f.shape[0]):
                 for y in range(f.shape[1]):
-                    for vy,vx,_ in mm._viz(f,b,x,y):
-                        if g[x,y]==0 and g[x,y]<f[vy,vx]: g[x,y]=f[vy,vx]
+                    if g[x,y] == 0 and mask[x,y]:
+                        for vy,vx,_ in mm._viz(f, b, x, y):
+                            if g[x,y] < f[vy,vx]: 
+                                g[x,y] = f[vy,vx]
+                                mudou = True
+            if not mudou: break
             f = g.copy()
+            
         return g if op=='region' else mm.gradm(g, mm.secross())
 
     @staticmethod
-    def watershed(f, mark, op='region'):
+    def watershedB(f, mask=None, b=np.zeros((3,3),dtype='uint8'), op='region'):
+        m = mm.label0(f, b)
+        h, w = m.shape
+        mask = np.ones_like(m) if mask is None else (mask > 0)
+        
+        queue = []
+        for x in range(h):
+            for y in range(w):
+                if m[x,y] > 0:
+                    for vy, vx, _ in mm._viz(m, b, x, y):
+                        if m[vy,vx] == 0 and mask[vy,vx]:
+                            queue.append((x, y))
+                            break
+
+        while queue:
+            x, y = queue.pop(0)
+            cor = m[x, y]
+            for vy, vx, _ in mm._viz(m, b, x, y):
+                if m[vy, vx] == 0 and mask[vy, vx]:
+                    m[vy, vx] = cor
+                    queue.append((vy, vx))
+                    
+        return m if op == 'region' else mm.gradm(m, mm.secross())
+    
+    @staticmethod
+    def watershed(f, seguro_bg=None, op='region'):
+        """
+        f: imagem binária dos picos (foreground seguro)
+        seguro_bg: imagem binária do fundo seguro (onde temos certeza que é fundo)
+        """
+        # 1. Rotular os componentes do foreground seguro (moedas)
+        _, markers = cv2.connectedComponents(f.astype('uint8'))
+        
+        # No OpenCV, o marcador 0 é a área desconhecida. 
+        # Como as moedas começam em 1, incrementamos todos para liberar o 1 para o fundo.
+        markers = markers + 1
+        
+        # 2. Definir o fundo seguro como marcador 1
+        if seguro_bg is not None:
+            markers[seguro_bg > 0] = 1
+        else:
+            # Se não for passado, assume que as bordas externas distantes são fundo
+            markers[0, :] = 1; markers[-1, :] = 1; markers[:, 0] = 1; markers[:, -1] = 1
+            
+        # Definir a região de incerteza (borda das moedas) de volta para 0
+        # Se você usou uma máscara 'opening', a incerteza é o que não é pico e não é fundo seguro
+        if seguro_bg is not None:
+            incerteza = cv2.bitwise_not(f | seguro_bg)
+            markers[incerteza > 0] = 0
+
+        # 3. O OpenCV precisa de uma imagem de 3 canais (BGR) para guiar o gradiente.
+        # Usar uma imagem preta de 3 canais funciona perfeitamente quando guiado estritamente pelos marcadores.
+        f_bgr = np.zeros((f.shape[0], f.shape[1], 3), dtype=np.uint8)
+        
+        # Aplica o Watershed do OpenCV (modifica a matriz 'markers' in-place)
+        cv2.watershed(f_bgr, markers)
+        
+        # 4. Processa o retorno com base na opção desejada
+        if op == 'line':
+            # O OpenCV marca as cristas divisórias com -1
+            res = np.where(markers == -1, 255, 0).astype('uint8')
+            return res
+            
+        # Modo 'region': Limpa o fundo (que era 1) para 0 e normaliza as regiões
+        res_reg = np.where(markers > 1, markers - 1, 0).astype('uint8')
+        return res_reg
+    
+    @staticmethod
+    def watershed_old(f, mark, op='region'):
         mark = mark*255 if mark.max()==1 else mark
         if len(f):
             _, markers = cv2.connectedComponents(mark)
