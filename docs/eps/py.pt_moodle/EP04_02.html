@@ -8,13 +8,13 @@
 <div style="background-color:#f8f9fa;padding:15px;border:1px solid #ccc;border-radius:5px;margin-bottom:20px;">
 <h4 style="margin-top:0;color:#333;">📋 Diretrizes de Implementação</h4>
 <ol type="1">
-<li><strong>Dimensões:</strong> Ler os inteiros <em>L</em> (linhas) e <em>C</em> (colunas).</li>
-<li><strong>Dados:</strong> Ler os valores inteiros da matriz original linha a linha.</li>
-<li><strong>Histograma:</strong> Construir o histograma <em>h</em>[<em>i</em>], i=0,\dots,255, contando quantos pixels têm valor <em>i</em>.</li>
-<li><strong>Busca do limiar:</strong> Para cada candidato <em>T</em> de 1 a 255, calcular a <strong>variância entre classes</strong>: σ_<em>B</em>^2(<em>T</em>) = (<em>n</em>_0 · <em>n</em>_1)/(<em>N</em>^2)\,(<em>m</em>_0 - <em>m</em>_1)^2 onde <em>n</em>_0,<em>n</em>_1 são as quantidades de pixels com valor &lt;<em>T</em> e ≥ <em>T</em>, <em>m</em>_0,<em>m</em>_1 são suas médias, e N=<em>L</em>× <em>C</em>.</li>
-<li><strong>Escolha:</strong> O limiar ótimo <em>T</em>^* é o que maximiza σ_<em>B</em>^2(<em>T</em>) (em caso de empate, manter o <strong>primeiro</strong> encontrado).</li>
-<li><strong>Aplicação:</strong> Binarizar a imagem usando <em>T</em>^*, com o mesmo critério <em>p</em>≥ <em>T</em>^*\Rightarrow 255.</li>
-<li><strong>Saída:</strong> Exibir <em>T</em>^* e, em seguida, a matriz binarizada.</li>
+<li><p><strong>Dimensões:</strong> Ler os inteiros <em>L</em> (linhas) e <em>C</em> (colunas).</p></li>
+<li><p><strong>Dados:</strong> Ler os valores inteiros da matriz original linha a linha.</p></li>
+<li><p><strong>Histograma:</strong> Construir o histograma <em>h</em>[<em>i</em>], i=0,\dots,255, contando quantos pixels têm valor <em>i</em>.</p></li>
+<li><p><strong>Busca do limiar:</strong> Para cada candidato <em>T</em> de 1 a 255, calcular a <strong>variância entre classes</strong>: σ_<em>B</em>^2(<em>T</em>) = (<em>n</em>_0 · <em>n</em>_1)/(<em>N</em>^2)\,(<em>m</em>_0 - <em>m</em>_1)^2 onde <em>n</em>_0,<em>n</em>_1 são as quantidades de pixels com valor &lt;<em>T</em> e ≥ <em>T</em>, <em>m</em>_0,<em>m</em>_1 são suas médias, e N=<em>L</em>× <em>C</em>.</p></li>
+<li><p><strong>Escolha:</strong> O limiar ótimo <em>T</em>^* é o que maximiza σ_<em>B</em>^2(<em>T</em>) (em caso de empate, manter o <strong>primeiro</strong> encontrado).</p></li>
+<li><p><strong>Aplicação:</strong> Binarizar a imagem usando <em>T</em>^*, com o mesmo critério <em>p</em>≥ <em>T</em>^*\Rightarrow 255.</p></li>
+<li><p><strong>Saída:</strong> Exibir <em>T</em>^* e, em seguida, a matriz binarizada.</p></li>
 </ol>
 </div>
 <div style="background-color:#fffde7;border-left:5px solid #fbc02d;padding:15px;margin-bottom:25px;">

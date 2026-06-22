@@ -89,15 +89,15 @@ div.csl-indent {
 <section class="level4" data-number="4.9.2.1" id="diretrizes-de-implementação-1">
 <h4 class="anchored" data-anchor-id="diretrizes-de-implementação-1" data-number="4.9.2.1"><span class="header-section-number">4.9.2.1</span> 📋 Diretrizes de Implementação</h4>
 <ol type="1">
-<li><strong>Dimensões:</strong> Ler os inteiros <span class="math inline">\(L\)</span> (linhas) e <span class="math inline">\(C\)</span> (colunas).</li>
-<li><strong>Dados:</strong> Ler os valores inteiros da matriz original linha a linha.</li>
-<li><strong>Histograma:</strong> Construir o histograma <span class="math inline">\(h[i]\)</span>, <span class="math inline">\(i=0,\dots,255\)</span>, contando quantos pixels têm valor <span class="math inline">\(i\)</span>.</li>
-<li><strong>Busca do limiar:</strong> Para cada candidato <span class="math inline">\(T\)</span> de <span class="math inline">\(1\)</span> a <span class="math inline">\(255\)</span>, calcular a <strong>variância entre classes</strong>: <span class="math display">\[
+<li><p><strong>Dimensões:</strong> Ler os inteiros <span class="math inline">\(L\)</span> (linhas) e <span class="math inline">\(C\)</span> (colunas).</p></li>
+<li><p><strong>Dados:</strong> Ler os valores inteiros da matriz original linha a linha.</p></li>
+<li><p><strong>Histograma:</strong> Construir o histograma <span class="math inline">\(h[i]\)</span>, <span class="math inline">\(i=0,\dots,255\)</span>, contando quantos pixels têm valor <span class="math inline">\(i\)</span>.</p></li>
+<li><p><strong>Busca do limiar:</strong> Para cada candidato <span class="math inline">\(T\)</span> de <span class="math inline">\(1\)</span> a <span class="math inline">\(255\)</span>, calcular a <strong>variância entre classes</strong>: <span class="math display">\[
 \sigma_B^2(T) = \frac{n_0 \cdot n_1}{N^2}\,(m_0 - m_1)^2
-\]</span> onde <span class="math inline">\(n_0,n_1\)</span> são as quantidades de pixels com valor <span class="math inline">\(&lt;T\)</span> e <span class="math inline">\(\geq T\)</span>, <span class="math inline">\(m_0,m_1\)</span> são suas médias, e <span class="math inline">\(N=L\times C\)</span>.</li>
-<li><strong>Escolha:</strong> O limiar ótimo <span class="math inline">\(T^*\)</span> é o que maximiza <span class="math inline">\(\sigma_B^2(T)\)</span> (em caso de empate, manter o <strong>primeiro</strong> encontrado).</li>
-<li><strong>Aplicação:</strong> Binarizar a imagem usando <span class="math inline">\(T^*\)</span>, com o mesmo critério <span class="math inline">\(p\geq T^*\Rightarrow 255\)</span>.</li>
-<li><strong>Saída:</strong> Exibir <span class="math inline">\(T^*\)</span> e, em seguida, a matriz binarizada.</li>
+\]</span> onde <span class="math inline">\(n_0,n_1\)</span> são as quantidades de pixels com valor <span class="math inline">\(&lt;T\)</span> e <span class="math inline">\(\geq T\)</span>, <span class="math inline">\(m_0,m_1\)</span> são suas médias, e <span class="math inline">\(N=L\times C\)</span>.</p></li>
+<li><p><strong>Escolha:</strong> O limiar ótimo <span class="math inline">\(T^*\)</span> é o que maximiza <span class="math inline">\(\sigma_B^2(T)\)</span> (em caso de empate, manter o <strong>primeiro</strong> encontrado).</p></li>
+<li><p><strong>Aplicação:</strong> Binarizar a imagem usando <span class="math inline">\(T^*\)</span>, com o mesmo critério <span class="math inline">\(p\geq T^*\Rightarrow 255\)</span>.</p></li>
+<li><p><strong>Saída:</strong> Exibir <span class="math inline">\(T^*\)</span> e, em seguida, a matriz binarizada.</p></li>
 </ol>
 </section>
 <section class="level4" data-number="4.9.2.2" id="restrições-computacionais-1">
