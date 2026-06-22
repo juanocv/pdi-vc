@@ -193,7 +193,7 @@ Três linhas, cada uma com um número real de duas casas decimais (Euclidiana, C
 </table>
 <hr/>
 <p><strong>Exemplo de teste de <code>sqrt</code> em Python, com <code>timeit</code> isolando cada operação:</strong></p>
-<div class="cell" id="7c49d478">
+<div class="cell" id="ec52f426">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a aria-hidden="true" href="#cb20-1" tabindex="-1"></a><span class="im">import</span> math</span>
 <span id="cb20-2"><a aria-hidden="true" href="#cb20-2" tabindex="-1"></a><span class="im">import</span> timeit</span>
 <span id="cb20-3"><a aria-hidden="true" href="#cb20-3" tabindex="-1"></a></span>
@@ -523,7 +523,7 @@ Figura 1.12: Simulador: Distâncias Euclidiana, <em>City-block</em> e <em>Chess
 <h4 class="anchored" data-anchor-id="python" data-number="1.16.1.4"><span class="header-section-number">1.16.1.4</span> 🐍 Python</h4>
 <p>Basta criar uma célula de código normal e inserir o código Python. A entrada pode ser simulada usando <code>input()</code>, que funciona normalmente.</p>
 <p>Exemplo de célula:</p>
-<div class="cell" id="60c3205c">
+<div class="cell" id="9023cb97">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a aria-hidden="true" href="#cb22-1" tabindex="-1"></a><span class="op">%%</span>writefile EP01_01.py</span>
 <span id="cb22-2"><a aria-hidden="true" href="#cb22-2" tabindex="-1"></a><span class="co"># Código Python</span></span>
 <span id="cb22-3"><a aria-hidden="true" href="#cb22-3" tabindex="-1"></a>x1,y1,x2,y2 <span class="op">=</span> <span class="bu">int</span>(<span class="bu">input</span>()), <span class="bu">int</span>(<span class="bu">input</span>()), <span class="bu">int</span>(<span class="bu">input</span>()), <span class="bu">int</span>(<span class="bu">input</span>())</span>
@@ -548,14 +548,14 @@ Figura 1.12: Simulador: Distâncias Euclidiana, <em>City-block</em> e <em>Chess
 <pre><code>Overwriting EP01_01.py</code></pre>
 </div>
 </div>
-<div class="cell" id="e08b46cf">
+<div class="cell" id="099578b4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a aria-hidden="true" href="#cb24-1" tabindex="-1"></a><span class="co"># Espera que você digite 4 números inteiros ao executar esta célula.</span></span>
 <span id="cb24-2"><a aria-hidden="true" href="#cb24-2" tabindex="-1"></a><span class="co"># No Jupyter ou Google Colab, a mágica %run -i permite que o script leia do teclado.</span></span>
 <span id="cb24-3"><a aria-hidden="true" href="#cb24-3" tabindex="-1"></a><span class="co"># No terminal comum, você usaria: python3 EP01_01.py (sem o '!' e sem '%run').</span></span>
 <span id="cb24-4"><a aria-hidden="true" href="#cb24-4" tabindex="-1"></a></span>
 <span id="cb24-5"><a aria-hidden="true" href="#cb24-5" tabindex="-1"></a><span class="co"># %run -i EP01_01.py</span></span></code></pre></div><button class="code-copy-button" title="Copiar para a área de transferência"><i class="bi"></i></button></div>
 </div>
-<div class="cell" id="44b4cdc7">
+<div class="cell" id="aad31ca4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a aria-hidden="true" href="#cb25-1" tabindex="-1"></a><span class="co"># Envia 4 inteiros como entrada padrão (stdin) para o script EP01_01.py usando um pipe</span></span>
 <span id="cb25-2"><a aria-hidden="true" href="#cb25-2" tabindex="-1"></a><span class="op">!</span>echo <span class="op">-</span>e <span class="st">"0</span><span class="ch">\n</span><span class="st">0</span><span class="ch">\n</span><span class="st">4</span><span class="ch">\n</span><span class="st">4"</span> <span class="op">|</span> python3 EP01_01.py</span></code></pre></div><button class="code-copy-button" title="Copiar para a área de transferência"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -564,7 +564,7 @@ Figura 1.12: Simulador: Distâncias Euclidiana, <em>City-block</em> e <em>Chess
 4.00</code></pre>
 </div>
 </div>
-<div class="cell" id="a1167f8b">
+<div class="cell" id="dd015164">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a aria-hidden="true" href="#cb27-1" tabindex="-1"></a>TestSuite(<span class="st">"EP01_01.py"</span>).run()</span></code></pre></div><button class="code-copy-button" title="Copiar para a área de transferência"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">✔️ EP01_01.cases já existe em casos/
