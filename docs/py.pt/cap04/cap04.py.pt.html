@@ -4981,7 +4981,7 @@ Figura&nbsp;4.22: Menor caminho geodésico em um labirinto. As distâncias geod�
 </div>
 </div>
 <div id="cell-fig-04-algoritmo-watershed2" class="cell">
-<div id="fig-04-algoritmo-watershed2" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="36">
+<div id="fig-04-algoritmo-watershed2" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="68">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-04-algoritmo-watershed2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 
@@ -5075,42 +5075,43 @@ body{font-family:var(--font-sans)}
 <div class="algo-wrap">
   <div class="algo-header">
     <div class="algo-icon"><i class="ti ti-bucket" aria-hidden="true"></i></div>
-    <div><div class="algo-title">Crescimento de Regiões Confinado por Máscara</div><div class="algo-sub">Inundação concorrente com barreira geométrica interna e controle de convergência estagnada</div></div>
+    <div><div class="algo-title">Crescimento de Regiões Confinado por Máscara</div><div class="algo-sub">Inundação concorrente com restrição geométrica de suporte e sincronização síncrona por malha</div></div>
   </div>
   <div class="algo-body">
-    <div class="step"><div class="step-num num-teal">1</div><div class="step-text">Rotular os marcadores iniciais fornecidos em <code>f</code> usando <code>mm.label0(f, b)</code> e instanciar a cópia de trabalho <code>g ← f.copy()</code>. Configurar a restrição lógica da máscara booleana.</div></div>
+    <div class="step"><div class="step-num num-teal">1</div><div class="step-text">Rotular os marcadores sementes em <code>f</code> via <code>mm.label0(f, b)</code>, instanciar a malha dinâmica <code>g ← f.copy()</code> e binarizar a <code>mask</code>.</div></div>
     <div class="step">
       <div class="step-num num-coral">2</div>
       <div class="step-text">
-        Entrar no laço de expansão condicional (<code>while g.min() == 0</code>), controlando a estabilização por meio de uma flag booleana (<code>mudou ← False</code>):
+        Enquanto houver pixels não rotulados (<code>while g.min() == 0</code>), reiniciar o controle de atividade <code>mudou ← False</code> e varrer a imagem:
         <div class="step-sub">
-          <div class="step-sub-item">Navegar espacialmente pelas coordenadas bidimensionais <code>(x, y)</code>.</div>
-          <div class="step-sub-item">Validar se o pixel está sem rótulo <b>E</b> pertence aos limites válidos definidos (<code>g[x,y] == 0 and mask[x,y]</code>).</div>
-          <div class="step-sub-item">Buscar na vizinhança <code>mm._viz</code>: caso o vizinho possua rótulo maior, o pixel o absorve e sinaliza-se <code>mudou ← True</code>.</div>
+          <div class="step-sub-item">Identificar se a coordenada atual é um vazio contido no escopo: <code>g[x,y] == 0 and mask[x,y]</code>.</div>
+          <div class="step-sub-item">Avaliar a vizinhança estrutural em <code>mm._viz(f, b, x, y)</code> baseada no estado síncrono estável <code>f</code>.</div>
+          <div class="step-sub-item">Se um vizinho possuir rótulo dominante (<code>g[x,y] &lt; f[vy,vx]</code>), a célula em <code>g</code> absorve esse identificador e marca-se <code>mudou ← True</code>.</div>
         </div>
       </div>
     </div>
-    <div class="step"><div class="step-num num-purple">3</div><div class="step-text">Verificar estagnação: se nenhuma semente expandiu durante o ciclo completo (<code>not mudou</code>), interrompe-se o laço (<code>break</code>), prevenindo loops infinitos gerados pelas barreiras da máscara.</div></div>
-    <div class="step"><div class="step-num num-blue">4</div><div class="step-text">Duplicar o estado para o controle síncrono (<code>f ← g.copy()</code>) e, ao fim, retornar a matriz preenchida ou suas bordas de transição morfológica.</div></div>
-    <div class="note">Nota de implementação: Como a máscara binária impede a inundação do fundo externo, a matriz de trabalho <code>g</code> manterá pixels nulos em sua periferia estável. A flag <code>mudou</code> é essencial para detectar que o crescimento parou mesmo sem zerar totalmente o mapa.</div>
+    <div class="step"><div class="step-num num-purple">3</div><div class="step-text">Verificar ponto fixo: caso uma varredura completa não expanda nenhuma fronteira (<code>not mudou</code>), interrompe-se o laço (<code>break</code>).</div></div>
+    <div class="step"><div class="step-num num-blue">4</div><div class="step-text">Atualizar o estado de referência de forma síncrona para a próxima iteração: <code>f ← g.copy()</code>.</div></div>
+    <div class="step"><div class="step-num num-blue">5</div><div class="step-text">Se <code>op == 'region'</code>, retornar o mapa de bacias <code>g</code>; caso contrário, extrair as cristas divisórias via <code>mm.gradm(g)</code>.</div></div>
+    <div class="note">A sincronização <code>f = g.copy()</code> ao final de cada ciclo impede o crescimento assimétrico ou dependente da ordem da varredura raster (propagação em estilo Jacobi).</div>
   </div>
 </div>
 
 <div class="metric-grid">
   <div class="metric-card">
-    <div class="metric-title" style="color:#0F6E56">Filtro de Escopo</div>
-    <div class="metric-formula">mask[x,y] == True</div>
-    <div class="metric-desc">Fronteiras espaciais rígidas além das quais nenhum rótulo avança.</div>
+    <div class="metric-title" style="color:#0F6E56">Escopo Geométrico</div>
+    <div class="metric-formula">mask[x,y] &gt; 0</div>
+    <div class="metric-desc">Restrição binária rígida impedindo o avanço periférico de rótulos.</div>
   </div>
   <div class="metric-card">
     <div class="metric-title" style="color:#993C1D">Estabilização</div>
     <div class="metric-formula">if not mudou: break</div>
-    <div class="metric-desc">Garante parada assim que a inundação satura a máscara.</div>
+    <div class="metric-desc">Evita loops infinitos interrompendo ao saturar o domínio da máscara.</div>
   </div>
   <div class="metric-card">
-    <div class="metric-title" style="color:#185FA5">Sincronismo</div>
+    <div class="metric-title" style="color:#185FA5">Mapeamento Jacobi</div>
     <div class="metric-formula">f = g.copy()</div>
-    <div class="metric-desc">Atualização em bloco ao término de cada varredura completa.</div>
+    <div class="metric-desc">Sincronização em bloco após inspeção de todas as coordenadas.</div>
   </div>
 </div>
 </div>
@@ -5119,29 +5120,29 @@ body{font-family:var(--font-sans)}
   <div class="card-step">
     <div class="card-badge num-teal">01</div>
     <div class="card-content">
-      <div class="card-label" style="color:#0F6E56">Inicialização Compartimentada</div>
-      <div class="card-text">O mapa base de sementes isoladas recebe identificadores via <code>mm.label0(f, b)</code>. A restrição binária é mapeada por <code>mask &gt; 0</code>.</div>
+      <div class="card-label" style="color:#0F6E56">Inicialização</div>
+      <div class="card-text">Geração dos identificadores iniciais pelo mapeamento de componentes conexas e binarização da máscara de suporte.</div>
     </div>
   </div>
   <div class="card-step">
     <div class="card-badge num-coral">02</div>
     <div class="card-content">
-      <div class="card-label" style="color:#993C1D">Análise Condicional 2D</div>
-      <div class="card-text">Cada pixel avança apenas se sua coordenada for neutra (0) e estiver contida no domínio de interesse da imagem: <code>mask[x,y]</code>.</div>
+      <div class="card-label" style="color:#993C1D">Expansão Concorrente</div>
+      <div class="card-text">Varredura 2D inspecionando vazios internos autorizados. A malha de trabalho <code>g</code> absorve os rótulos lidos da referência estável <code>f</code>.</div>
     </div>
   </div>
   <div class="card-step">
-    <div class="card-badge num-coral">03</div>
+    <div class="card-badge num-purple">03</div>
     <div class="card-content">
-      <div class="card-label" style="color:#993C1D">Saturação e Critério de Quebra</div>
-      <div class="card-text">A flag <code>mudou</code> monitora interações ativas. Se o crescimento estacionar contra as paredes da máscara, o processo aborta de forma segura.</div>
+      <div class="card-label" style="color:#534AB7">Ponto Fixo Local</div>
+      <div class="card-text">A flag <code>mudou</code> monitora mudanças estruturais. Se nenhuma frente avançar, o laço de inundação é finalizado via <code>break</code>.</div>
     </div>
   </div>
   <div class="card-step">
     <div class="card-badge num-blue">04</div>
     <div class="card-content">
-      <div class="card-label" style="color:#185FA5">Partição Morfológica</div>
-      <div class="card-text">A imagem final devolve os territórios preenchidos restritos à máscara ou suas respectivas linhas estruturais através de <code>mm.gradm</code>.</div>
+      <div class="card-label" style="color:#185FA5">Sincronização e Saída</div>
+      <div class="card-text">Atualização em bloco do estado referencial. A saída pode ser moldada como partições regionais ou linhas de cristas (linhas de watershed).</div>
     </div>
   </div>
 </div>
@@ -5151,26 +5152,26 @@ body{font-family:var(--font-sans)}
   <div class="tl-line"></div>
   <div class="tl-step">
     <div class="tl-dot-wrap"><div class="tl-dot"></div><span class="tl-num">01</span></div>
-    <div><div class="tl-title">Isolamento dos Marcadores</div><div class="tl-desc">Rotulação inicial e conversão lógica da máscara restritiva.</div></div>
+    <div><div class="tl-title">Condicionamento Prévio</div><div class="tl-desc">Rotulagem preliminar de marcadores e isolamento booleano do domínio.</div></div>
   </div>
   <div class="tl-step">
     <div class="tl-dot-wrap"><div class="tl-dot"></div><span class="tl-num">02</span></div>
     <div>
-      <div class="tl-title">Inundação Seletiva Concorrente</div>
+      <div class="tl-title">Laço Síncrono Iterativo</div>
       <div class="while-box">
         <div class="while-head">while g.min() == 0</div>
         <div class="step-sub" style="border-color:var(--color-border-tertiary)">
-          <div class="step-sub-item">Reseta flag de atividade: <code>mudou = False</code></div>
-          <div class="step-sub-item">Validação espacial conjunta: <code>g[x,y] == 0 and mask[x,y]</code></div>
-          <div class="step-sub-item">Atribuição por vizinhos dominantes e disparo de flag: <code>mudou = True</code></div>
-          <div class="step-sub-item">Filtro de estagnação: <code>if not mudou: break</code></div>
+          <div class="step-sub-item">Redefinição de flag: <code>mudou = False</code></div>
+          <div class="step-sub-item">Crescimento condicional: se <code>g[x,y] == 0</code> e estiver na máscara, expande lendo <code>f</code></div>
+          <div class="step-sub-item">Controle de estabilidade: <code>if not mudou: break</code></div>
+          <div class="step-sub-item">Atualização síncrona: <code>f = g.copy()</code></div>
         </div>
       </div>
     </div>
   </div>
   <div class="tl-step">
     <div class="tl-dot-wrap"><div class="tl-dot"></div><span class="tl-num">03</span></div>
-    <div><div class="tl-title">Normalização de Saída</div><div class="tl-desc">Exportação do mapa de bacias internas ou isolamento das cristas divisórias.</div></div>
+    <div><div class="tl-title">Extração Topológica</div><div class="tl-desc">Retorno condicional das bacias preenchidas ou cálculo morfológico do gradiente de transição.</div></div>
   </div>
 </div>
 </div>
@@ -5193,7 +5194,7 @@ body{font-family:var(--font-sans)}
             <span class="kw">for</span> y <span class="kw">in</span> <span class="fn">range</span>(f.shape[<span class="num-lit">1</span>]):
                 <span class="kw">if</span> g[x,y] == <span class="num-lit">0</span> <span class="kw">and</span> mask[x,y]:
                     <span class="kw">for</span> vy,vx,bv <span class="kw">in</span> mm._viz(f, b, x, y):
-                        <span class="kw">if</span> bv <span class="kw">and</span> g[x,y] &lt; f[vy,vx]: 
+                        <span class="kw">if</span> bv <span class="kw">and g[x,y] &lt; f[vy,vx]</span>: 
                             g[x,y] = f[vy,vx]
                             mudou = <span class="fn">True</span>
         <span class="kw">if</span> <span class="kw">not</span> mudou: 
@@ -5207,96 +5208,89 @@ body{font-family:var(--font-sans)}
 <div style="margin-top:16px;display:flex;flex-direction:column;gap:8px;text-align:left">
   <div class="ann-line"><div class="ann-badge num-teal">1</div><div class="ann-text"><code>mask = (mask &gt; 0)</code> — Converte a imagem de suporte informada para um mapa Booleano indexável.</div></div>
   <div class="ann-line"><div class="ann-badge num-coral">2</div><div class="ann-text"><code>g[x,y] == 0 and mask[x,y]</code> — Filtro ativo: pixels fora da máscara (fundo zero) são ignorados de imediato, confinando as frentes de expansão.</div></div>
-  <div class="ann-line"><div class="ann-badge num-purple">3</div><div class="ann-text"><code>if not mudou: break</code> — Mecanismo de escape. Quando todos os espaços internos permitidos forem preenchidos, o ponto fixo local é atingido.</div></div>
+  <div class="ann-line"><div class="ann-badge num-purple">3</div><div class="ann-text"><code>if not mudou: break</code> — Mecanismo de escape. Quando todos os espaços internos permitidos forem preenchidos ou estabilizados contra a barreira, o laço aborta de forma limpa.</div></div>
 </div>
 </div>
 
 <div class="wat0-panel" id="wat0-p-4">
-<svg viewbox="0 0 560 840" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:560px;display:block">
+<svg viewbox="0 0 580 840" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:580px;display:block;margin:0 auto">
   <defs>
     <marker id="arr" markerwidth="8" markerheight="8" refx="6" refy="3" orient="auto"><path d="M1,1 L1,5 L7,3 Z" fill="#888780"></path></marker>
     <marker id="arr-b" markerwidth="8" markerheight="8" refx="6" refy="3" orient="auto"><path d="M1,1 L1,5 L7,3 Z" fill="#185FA5"></path></marker>
     <marker id="arr-r" markerwidth="8" markerheight="8" refx="6" refy="3" orient="auto"><path d="M1,1 L1,5 L7,3 Z" fill="#993C1D"></path></marker>
     <marker id="arr-g" markerwidth="8" markerheight="8" refx="6" refy="3" orient="auto"><path d="M1,1 L1,5 L7,3 Z" fill="#0F6E56"></path></marker>
+    <marker id="arr-p" markerwidth="8" markerheight="8" refx="6" refy="3" orient="auto"><path d="M1,1 L1,5 L7,3 Z" fill="#534AB7"></path></marker>
   </defs>
 
   <ellipse cx="280" cy="36" rx="60" ry="22" fill="#E1F5EE" stroke="#0F6E56" stroke-width="1"></ellipse>
   <text x="280" y="41" text-anchor="middle" font-size="13" font-weight="500" fill="#085041">início</text>
 
-  <rect x="140" y="85" width="280" height="52" rx="6" fill="#E1F5EE" stroke="#9FE1CB" stroke-width="1"></rect>
+  <rect x="130" y="85" width="300" height="52" rx="6" fill="#E1F5EE" stroke="#9FE1CB" stroke-width="1"></rect>
   <text x="280" y="104" text-anchor="middle" font-size="12" font-weight="500" fill="#0F6E56">rotular sementes e normalizar máscara</text>
-  <text x="280" y="121" text-anchor="middle" font-size="11" fill="#085041">f ← mm.label0(f, b) ; mask ← mask &gt; 0</text>
+  <text x="280" y="121" text-anchor="middle" font-size="11" fill="#085041">f ← mm.label0(f, b) ; g ← f.copy() ; mask ← mask &gt; 0</text>
 
-  <polygon points="280,170 390,200 280,230 170,200" fill="#E6F1FB" stroke="#85B7EB" stroke-width="1"></polygon>
-  <text x="280" y="196" text-anchor="middle" font-size="12" fill="#0C447C">g.min() == 0?</text>
+  <polygon points="280,166 390,196 280,226 170,196" fill="#E6F1FB" stroke="#85B7EB" stroke-width="1"></polygon>
+  <text x="280" y="201" text-anchor="middle" font-size="12" fill="#0C447C">g.min() == 0?</text>
 
-  <rect x="140" y="270" width="280" height="42" rx="6" fill="#FAECE7" stroke="#F0997B" stroke-width="1"></rect>
-  <text x="280" y="295" text-anchor="middle" font-size="12" fill="#712B13">iniciar ciclo: mudou ← False</text>
+  <rect x="150" y="256" width="260" height="40" rx="6" fill="#FAECE7" stroke="#F0997B" stroke-width="1"></rect>
+  <text x="280" y="281" text-anchor="middle" font-size="12" fill="#712B13">reiniciar ciclo: mudou ← False</text>
 
-  <rect x="120" y="345" width="320" height="72" rx="6" fill="#FAECE7" stroke="#F0997B" stroke-width="1"></rect>
-  <text x="280" y="364" text-anchor="middle" font-size="12" font-weight="500" fill="#993C1D">filtrar pixels sob a máscara binária</text>
-  <text x="280" y="383" text-anchor="middle" font-size="11.5" fill="#712B13">se g[x,y] == 0 e mask[x,y] e vizinho &gt; g[x,y]:</text>
-  <text x="280" y="401" text-anchor="middle" font-size="11.5" font-weight="500" fill="#712B13">g[x,y] ← f[vy,vx] ; mudou ← True</text>
+  <rect x="120" y="326" width="320" height="72" rx="6" fill="#FAECE7" stroke="#F0997B" stroke-width="1"></rect>
+  <text x="280" y="345" text-anchor="middle" font-size="12" font-weight="500" fill="#993C1D">varredura espacial e expansão</text>
+  <text x="280" y="364" text-anchor="middle" font-size="11.5" fill="#712B13">se g[x,y] == 0 e mask[x,y] e f[vy,vx] &gt; g[x,y]:</text>
+  <text x="280" y="382" text-anchor="middle" font-size="11.5" font-weight="500" fill="#712B13">g[x,y] ← f[vy,vx] ; mudou ← True</text>
 
-  <polygon points="280,450 390,480 280,510 170,480" fill="#FAECE7" stroke="#F0997B" stroke-width="1"></polygon>
-  <text x="280" y="476" text-anchor="middle" font-size="11.5" fill="#712B13">not mudou?</text>
+  <polygon points="280,430 380,460 280,490 180,460" fill="#FAECE7" stroke="#F0997B" stroke-width="1"></polygon>
+  <text x="280" y="465" text-anchor="middle" font-size="11.5" fill="#712B13">not mudou?</text>
 
-  <rect x="150" y="545" width="260" height="38" rx="6" fill="#FAECE7" stroke="#F0997B" stroke-width="1"></rect>
-  <text x="280" y="568" text-anchor="middle" font-size="12" fill="#712B13">sincronizar malha: f ← g.copy()</text>
+  <rect x="150" y="520" width="260" height="40" rx="6" fill="#E6F1FB" stroke="#85B7EB" stroke-width="1"></rect>
+  <text x="280" y="545" text-anchor="middle" font-size="12" fill="#0C447C">sincronizar malha de ref: f ← g.copy()</text>
 
-  <polygon points="280,620 390,650 280,680 170,650" fill="#EEEDFE" stroke="#B4AFFE" stroke-width="1"></polygon>
-  <text x="280" y="654" text-anchor="middle" font-size="12" fill="#3B32A3">op == 'region'?</text>
+  <polygon points="280,600 390,630 280,660 170,630" fill="#EEEDFE" stroke="#AFA9EC" stroke-width="1"></polygon>
+  <text x="280" y="635" text-anchor="middle" font-size="12" fill="#3C3489">op == 'region'?</text>
 
-  <rect x="60" y="710" width="180" height="40" rx="6" fill="#EEEDFE" stroke="#B4AFFE" stroke-width="1"></rect>
-  <text x="150" y="734" text-anchor="middle" font-size="12" fill="#3B32A3">retornar g</text>
+  <rect x="70" y="695" width="170" height="40" rx="6" fill="#EEEDFE" stroke="#AFA9EC" stroke-width="1"></rect>
+  <text x="155" y="719" text-anchor="middle" font-size="11.5" fill="#3C3489">retornar g ( bacias )</text>
 
-  <rect x="320" y="710" width="180" height="40" rx="6" fill="#EEEDFE" stroke="#B4AFFE" stroke-width="1"></rect>
-  <text x="410" y="734" text-anchor="middle" font-size="12" fill="#3B32A3">retornar mm.gradm(g)</text>
+  <rect x="320" y="695" width="200" height="40" rx="6" fill="#EEEDFE" stroke="#AFA9EC" stroke-width="1"></rect>
+  <text x="420" y="719" text-anchor="middle" font-size="11.5" fill="#3C3489">retornar mm.gradm(g)</text>
 
-  <ellipse cx="280" cy="800" rx="50" ry="20" fill="#EAF3DE" stroke="#97C459" stroke-width="1"></ellipse>
-  <text x="280" y="804" text-anchor="middle" font-size="13" font-weight="500" fill="#27500A">fim</text>
-
-  <line x1="280" y1="230" x2="280" y2="270" stroke="#993C1D" stroke-width="1.2" marker-end="url(#arr-r)"></line>
-  <text x="295" y="248" font-size="11" fill="#993C1D">sim</text>
-
-  <line x1="280" y1="312" x2="280" y2="345" stroke="#993C1D" stroke-width="1.2" marker-end="url(#arr-r)"></line>
-  <line x1="280" y1="417" x2="280" y2="450" stroke="#993C1D" stroke-width="1.2" marker-end="url(#arr-r)"></line>
-
-  <line x1="280" y1="510" x2="280" y2="545" stroke="#993C1D" stroke-width="1.2" marker-end="url(#arr-r)"></line>
-  <text x="295" y="525" font-size="11" fill="#993C1D">não</text>
-
-  <line x1="170" y1="480" x2="100" y2="480" stroke="#0F6E56" stroke-width="1.2"></line>
-  <line x1="100" y1="480" x2="100" y2="605" stroke="#0F6E56" stroke-width="1.2"></line>
-  <line x1="100" y1="605" x2="280" y2="605" stroke="#0F6E56" stroke-width="1.2"></line>
-  <line x1="280" y1="605" x2="280" y2="620" stroke="#0F6E56" stroke-width="1.2" marker-end="url(#arr-g)"></line>
-  <text x="125" y="470" font-size="11" fill="#0F6E56">sim (estagnou)</text>
-
-  <line x1="150" y1="564" x2="48" y2="564" stroke="#888780" stroke-width="1.2"></line>
-  <line x1="48" y1="564" x2="48" y2="200" stroke="#888780" stroke-width="1.2"></line>
-  <line x1="48" y1="200" x2="170" y2="200" stroke="#888780" stroke-width="1.2" marker-end="url(#arr)"></line>
-
-  <line x1="390" y1="200" x2="510" y2="200" stroke="#0F6E56" stroke-width="1.2"></line>
-  <line x1="510" y1="200" x2="510" y2="605" stroke="#0F6E56" stroke-width="1.2"></line>
-  <line x1="510" y1="605" x2="280" y2="605" stroke="#0F6E56" stroke-width="1.2"></line>
-  <text x="440" y="190" font-size="11" fill="#0F6E56">não</text>
-
-  <line x1="220" y1="650" x2="150" y2="650" stroke="#3B32A3" stroke-width="1.2"></line>
-  <line x1="150" y1="650" x2="150" y2="710" stroke="#3B32A3" stroke-width="1.2" marker-end="url(#arr-b)"></line>
-  <text x="180" y="642" font-size="11" fill="#3B32A3">sim</text>
-
-  <line x1="390" y1="650" x2="410" y2="650" stroke="#3B32A3" stroke-width="1.2"></line>
-  <line x1="410" y1="650" x2="410" y2="710" stroke="#3B32A3" stroke-width="1.2" marker-end="url(#arr-b)"></line>
-  <text x="392" y="642" font-size="11" fill="#3B32A3">não</text>
-
-  <line x1="150" y1="750" x2="150" y2="772" stroke="#888780" stroke-width="1.2"></line>
-  <line x1="150" y1="772" x2="280" y2="772" stroke="#888780" stroke-width="1.2"></line>
-  <line x1="410" y1="750" x2="410" y2="772" stroke="#888780" stroke-width="1.2"></line>
-  <line x1="410" y1="772" x2="280" y2="772" stroke="#888780" stroke-width="1.2"></line>
-  <line x1="280" y1="772" x2="280" y2="780" stroke="#888780" stroke-width="1.2" marker-end="url(#arr)"></line>
+  <ellipse cx="280" cy="790" rx="55" ry="22" fill="#EAF3DE" stroke="#97C459" stroke-width="1"></ellipse>
+  <text x="280" y="795" text-anchor="middle" font-size="13" font-weight="500" fill="#27500A">fim</text>
 
   <line x1="280" y1="58" x2="280" y2="85" stroke="#888780" stroke-width="1.2" marker-end="url(#arr)"></line>
+  <line x1="280" y1="137" x2="280" y2="166" stroke="#888780" stroke-width="1.2" marker-end="url(#arr)"></line>
 
-  <text x="280" y="710" text-anchor="middle" font-size="11.5" fill="#888780" font-style="italic"></text>
+  <line x1="280" y1="226" x2="280" y2="256" stroke="#185FA5" stroke-width="1.2" marker-end="url(#arr-b)"></line>
+  <text x="295" y="240" font-size="11" fill="#185FA5">sim</text>
+
+  <line x1="280" y1="296" x2="280" y2="326" stroke="#993C1D" stroke-width="1.2" marker-end="url(#arr-r)"></line>
+  <line x1="280" y1="398" x2="280" y2="430" stroke="#993C1D" stroke-width="1.2" marker-end="url(#arr-r)"></line>
+
+  <line x1="280" y1="490" x2="280" y2="520" stroke="#993C1D" stroke-width="1.2" marker-end="url(#arr-r)"></line>
+  <text x="295" y="504" font-size="11" fill="#993C1D">não</text>
+
+  <path d="M 150,540 L 45,540 L 45,196 L 170,196" fill="none" stroke="#185FA5" stroke-width="1.2" marker-end="url(#arr-b)"></path>
+
+  <path d="M 380,460 L 460,460 L 460,580 L 280,580 L 280,600" fill="none" stroke="#993C1D" stroke-width="1.2" marker-end="url(#arr-r)"></path>
+  <text x="420" y="450" text-anchor="middle" font-size="11" fill="#993C1D">sim (break)</text>
+
+  <path d="M 390,196 L 500,196 L 500,580 L 280,580" fill="none" stroke="#185FA5" stroke-width="1.2"></path>
+  <text x="445" y="186" font-size="11" fill="#185FA5">não</text>
+
+  <line x1="170" y1="630" x2="155" y2="630" stroke="#534AB7" stroke-width="1.2"></line>
+  <line x1="155" y1="630" x2="155" y2="695" stroke="#534AB7" stroke-width="1.2" marker-end="url(#arr-p)"></line>
+  <text x="140" y="620" font-size="11" fill="#534AB7">sim</text>
+
+  <line x1="390" y1="630" x2="420" y2="630" stroke="#534AB7" stroke-width="1.2"></line>
+  <line x1="420" y1="630" x2="420" y2="695" stroke="#534AB7" stroke-width="1.2" marker-end="url(#arr-p)"></line>
+  <text x="402" y="620" font-size="11" fill="#534AB7">não</text>
+
+  <line x1="155" y1="735" x2="155" y2="755" stroke="#888780" stroke-width="1.2"></line>
+  <line x1="155" y1="755" x2="280" y2="755" stroke="#888780" stroke-width="1.2"></line>
+  <line x1="420" y1="735" x2="420" y2="755" stroke="#888780" stroke-width="1.2"></line>
+  <line x1="420" y1="755" x2="280" y2="755" stroke="#888780" stroke-width="1.2"></line>
+  <line x1="280" y1="755" x2="280" y2="768" stroke="#888780" stroke-width="1.2" marker-end="url(#arr)"></line>
 </svg>
 </div>
 
@@ -6454,7 +6448,7 @@ Figura&nbsp;4.29: <em>Bounding boxes</em> derivadas dos componentes conexos sobr
 <section id="download" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="download">Download</h4>
 <p>Baixe <code>morph.py</code> e <code>testsuite.py</code> executando a célula abaixo:</p>
-<div id="3951f450" class="cell">
+<div id="d4211421" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os, sys, importlib, inspect, urllib.request</span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="co"># URLs do repositório</span></span>
@@ -6831,8 +6825,7 @@ p' =
 12 12 200 200<br>
 12 200 200 200<br>
 200 200 200 200</td>
-<td>13<br>
-0 0 0 255<br>
+<td>0 0 0 255<br>
 0 0 255 255<br>
 0 255 255 255<br>
 255 255 255 255</td>
