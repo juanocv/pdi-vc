@@ -2744,7 +2744,7 @@ Tabela&nbsp;4.5: Taxonomia simplificada das principais abordagens de segmentaç�
 <p>A escolha da conectividade influencia diretamente a formação das componentes conexas e, consequentemente, o resultado da rotulação, como ilustrado na <a href="#fig-04-rotulacao-didatico" class="quarto-xref">Figura&nbsp;<span>4.17</span></a>. Um exemplo adicional pode ser explorado interativamente no simulador apresentado na <a href="#fig-04-rotulacao" class="quarto-xref">Figura&nbsp;<span>4.16</span></a>.</p>
 <p>A implementação em <code>morph.py</code> disponibiliza duas versões desse operador. A função <code>mm.label0</code> reproduz explicitamente o algoritmo de <em>flood-fill</em> utilizando uma pilha e permite controlar a conectividade por meio do elemento estruturante adotado. Já <code>mm.label</code> delega a operação à implementação otimizada do OpenCV (<code>cv2.connectedComponents</code>). Em ambos os casos, o resultado é uma imagem rotulada na qual cada componente conexa recebe um identificador inteiro distinto.</p>
 <div id="cell-fig-04-algoritmo-rotulagem2" class="cell">
-<div id="fig-04-algoritmo-rotulagem2" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="23">
+<div id="fig-04-algoritmo-rotulagem2" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="67">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-04-algoritmo-rotulagem2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 
@@ -2818,7 +2818,7 @@ body{font-family:var(--font-sans)}
 .ann-text code{font-family:var(--font-mono);font-size:11.5px;background:var(--color-background-secondary);padding:1px 5px;border-radius:3px;color:var(--color-text-primary)}
 </style>
 
-<h2 class="sr-only anchored" style="position:absolute;left:-9999px" data-anchor-id="rotulação">Algoritmo de rotulação por flood-fill com pilha — painel interativo com cinco visualizações</h2>
+<h2 class="sr-only anchored" style="position:absolute;left:-9999px" data-anchor-id="rotulação">Algoritmo de rotulação por flood-fill com pilha — painel interativo com HTML e SVG</h2>
 
 <div class="lbl2-tabs" id="lbl2-tabs-container">
   <div class="lbl2-tab active" data-idx="0"><i class="ti ti-list-numbers" aria-hidden="true"></i> Passo a passo</div>
@@ -2970,89 +2970,84 @@ body{font-family:var(--font-sans)}
 </div>
 
 <div class="lbl2-panel" id="lbl2-p-4">
-<svg viewbox="0 0 560 780" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:560px;display:block">
+<svg viewbox="0 0 580 820" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:580px;display:block;margin:0 auto">
   <defs>
     <marker id="arr" markerwidth="8" markerheight="8" refx="6" refy="3" orient="auto"><path d="M1,1 L1,5 L7,3 Z" fill="#888780"></path></marker>
     <marker id="arr-b" markerwidth="8" markerheight="8" refx="6" refy="3" orient="auto"><path d="M1,1 L1,5 L7,3 Z" fill="#534AB7"></path></marker>
     <marker id="arr-r" markerwidth="8" markerheight="8" refx="6" refy="3" orient="auto"><path d="M1,1 L1,5 L7,3 Z" fill="#993C1D"></path></marker>
     <marker id="arr-g" markerwidth="8" markerheight="8" refx="6" refy="3" orient="auto"><path d="M1,1 L1,5 L7,3 Z" fill="#0F6E56"></path></marker>
   </defs>
+
   <ellipse cx="280" cy="36" rx="60" ry="22" fill="#E1F5EE" stroke="#0F6E56" stroke-width="1"></ellipse>
   <text x="280" y="41" text-anchor="middle" font-size="13" font-weight="500" fill="#085041">início</text>
 
-  <rect x="160" y="74" width="240" height="48" rx="6" fill="#E1F5EE" stroke="#9FE1CB" stroke-width="1"></rect>
-  <text x="280" y="93" text-anchor="middle" font-size="12" font-weight="500" fill="#0F6E56">inicializar saída</text>
-  <text x="280" y="110" text-anchor="middle" font-size="12" fill="#085041">g ← zeros(f.shape);  cor ← 1</text>
+  <rect x="160" y="80" width="240" height="48" rx="6" fill="#E1F5EE" stroke="#9FE1CB" stroke-width="1"></rect>
+  <text x="280" y="99" text-anchor="middle" font-size="12" font-weight="500" fill="#0F6E56">inicializar saída</text>
+  <text x="280" y="116" text-anchor="middle" font-size="12" fill="#085041">g ← zeros(f.shape);  cor ← 1</text>
 
-  <rect x="160" y="140" width="240" height="48" rx="6" fill="#EEEDFE" stroke="#AFA9EC" stroke-width="1"></rect>
-  <text x="280" y="159" text-anchor="middle" font-size="12" font-weight="500" fill="#534AB7">varredura raster</text>
-  <text x="280" y="176" text-anchor="middle" font-size="12" fill="#3C3489">próximo pixel (x, y) em f</text>
+  <rect x="160" y="150" width="240" height="48" rx="6" fill="#EEEDFE" stroke="#AFA9EC" stroke-width="1"></rect>
+  <text x="280" y="169" text-anchor="middle" font-size="12" font-weight="500" fill="#534AB7">varredura raster</text>
+  <text x="280" y="186" text-anchor="middle" font-size="12" fill="#3C3489">próximo pixel (x, y) em f</text>
 
-  <polygon points="280,212 370,240 280,268 190,240" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1"></polygon>
-  <text x="280" y="236" text-anchor="middle" font-size="11.5" fill="#444441">imagem toda</text>
-  <text x="280" y="252" text-anchor="middle" font-size="11.5" fill="#444441">varrida?</text>
+  <polygon points="280,224 370,252 280,280 190,252" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1"></polygon>
+  <text x="280" y="248" text-anchor="middle" font-size="11.5" fill="#444441">imagem toda</text>
+  <text x="280" y="264" text-anchor="middle" font-size="11.5" fill="#444441">varrida?</text>
 
-  <ellipse cx="460" cy="240" rx="52" ry="22" fill="#EAF3DE" stroke="#97C459" stroke-width="1"></ellipse>
-  <text x="460" y="245" text-anchor="middle" font-size="13" font-weight="500" fill="#27500A">fim</text>
+  <ellipse cx="450" cy="252" rx="52" ry="22" fill="#EAF3DE" stroke="#97C459" stroke-width="1"></ellipse>
+  <text x="450" y="257" text-anchor="middle" font-size="13" font-weight="500" fill="#27500A">fim</text>
 
-  <line x1="280" y1="58" x2="280" y2="74" stroke="#888780" stroke-width="1.2" marker-end="url(#arr)"></line>
-  <line x1="280" y1="122" x2="280" y2="140" stroke="#888780" stroke-width="1.2" marker-end="url(#arr)"></line>
-  <line x1="280" y1="188" x2="280" y2="212" stroke="#888780" stroke-width="1.2" marker-end="url(#arr)"></line>
-  <line x1="370" y1="240" x2="408" y2="240" stroke="#3B6D11" stroke-width="1.2" marker-end="url(#arr-g)"></line>
-  <text x="386" y="233" text-anchor="middle" font-size="11" fill="#3B6D11">sim</text>
+  <polygon points="280,304 380,334 280,364 180,334" fill="#EEEDFE" stroke="#AFA9EC" stroke-width="1"></polygon>
+  <text x="280" y="329" text-anchor="middle" font-size="11.5" fill="#3C3489">f[x,y] ≠ 0  e</text>
+  <text x="280" y="344" text-anchor="middle" font-size="11.5" fill="#3C3489">g[x,y] = 0?</text>
 
-  <polygon points="280,290 380,320 280,350 180,320" fill="#EEEDFE" stroke="#AFA9EC" stroke-width="1"></polygon>
-  <text x="280" y="315" text-anchor="middle" font-size="11.5" fill="#3C3489">f[x,y] ≠ 0  e</text>
-  <text x="280" y="330" text-anchor="middle" font-size="11.5" fill="#3C3489">g[x,y] = 0?</text>
+  <rect x="170" y="388" width="220" height="44" rx="6" fill="#FAEEDA" stroke="#FAC775" stroke-width="1"></rect>
+  <text x="280" y="406" text-anchor="middle" font-size="12" font-weight="500" fill="#854F0B">inserir semente</text>
+  <text x="280" y="422" text-anchor="middle" font-size="12" fill="#633806">pilha ← [[x, y]]</text>
 
-  <line x1="180" y1="320" x2="130" y2="320" stroke="#888780" stroke-width="1.2"></line>
-  <line x1="130" y1="320" x2="130" y2="165" stroke="#888780" stroke-width="1.2"></line>
-  <line x1="130" y1="165" x2="160" y2="165" stroke="#888780" stroke-width="1.2" marker-end="url(#arr)"></line>
-  <text x="152" y="315" text-anchor="middle" font-size="11" fill="#5F5E5A">não</text>
+  <polygon points="280,456 370,486 280,516 190,486" fill="#FAECE7" stroke="#F0997B" stroke-width="1"></polygon>
+  <text x="280" y="491" text-anchor="middle" font-size="11.5" fill="#712B13">pilha vazia?</text>
 
-  <line x1="280" y1="268" x2="280" y2="290" stroke="#888780" stroke-width="1.2" marker-end="url(#arr)"></line>
-  <line x1="280" y1="350" x2="280" y2="368" stroke="#534AB7" stroke-width="1.2" marker-end="url(#arr-b)"></line>
-  <text x="292" y="363" font-size="11" fill="#534AB7">sim</text>
+  <rect x="160" y="542" width="240" height="48" rx="6" fill="#FAECE7" stroke="#F0997B" stroke-width="1"></rect>
+  <text x="280" y="561" text-anchor="middle" font-size="12" font-weight="500" fill="#993C1D">i, j ← pilha.pop()</text>
+  <text x="280" y="578" text-anchor="middle" font-size="12" fill="#712B13">g[i, j] ← cor</text>
 
-  <rect x="170" y="368" width="220" height="44" rx="6" fill="#FAEEDA" stroke="#FAC775" stroke-width="1"></rect>
-  <text x="280" y="386" text-anchor="middle" font-size="12" font-weight="500" fill="#854F0B">inserir semente</text>
-  <text x="280" y="402" text-anchor="middle" font-size="12" fill="#633806">pilha ← [[x, y]]</text>
+  <rect x="150" y="614" width="260" height="60" rx="6" fill="#E6F1FB" stroke="#85B7EB" stroke-width="1"></rect>
+  <text x="280" y="634" text-anchor="middle" font-size="12" font-weight="500" fill="#185FA5">inspecionar vizinhos</text>
+  <text x="280" y="650" text-anchor="middle" font-size="12" fill="#0C447C">se ativo e não rotulado</text>
+  <text x="280" y="666" text-anchor="middle" font-size="12" fill="#0C447C">→ pilha.append([vy, vx])</text>
 
-  <line x1="280" y1="412" x2="280" y2="428" stroke="#888780" stroke-width="1.2" marker-end="url(#arr)"></line>
+  <rect x="435" y="466" width="110" height="40" rx="6" fill="#EEEDFE" stroke="#AFA9EC" stroke-width="1"></rect>
+  <text x="490" y="482" text-anchor="middle" font-size="12" font-weight="500" fill="#534AB7">cor ← cor + 1</text>
+  <text x="490" y="496" text-anchor="middle" font-size="10.5" fill="#3C3489">próximo rótulo</text>
 
-  <polygon points="280,448 370,476 280,504 190,476" fill="#FAECE7" stroke="#F0997B" stroke-width="1"></polygon>
-  <text x="280" y="471" text-anchor="middle" font-size="11.5" fill="#712B13">pilha vazia?</text>
+  <line x1="280" y1="58" x2="280" y2="80" stroke="#888780" stroke-width="1.2" marker-end="url(#arr)"></line>
+  <line x1="280" y1="128" x2="280" y2="150" stroke="#888780" stroke-width="1.2" marker-end="url(#arr)"></line>
+  <line x1="280" y1="198" x2="280" y2="224" stroke="#888780" stroke-width="1.2" marker-end="url(#arr)"></line>
 
-  <line x1="370" y1="476" x2="440" y2="476" stroke="#993C1D" stroke-width="1.2" marker-end="url(#arr-r)"></line>
-  <text x="402" y="470" text-anchor="middle" font-size="11" fill="#993C1D">sim</text>
+  <line x1="370" y1="252" x2="398" y2="252" stroke="#3B6D11" stroke-width="1.2" marker-end="url(#arr-g)"></line>
+  <text x="384" y="245" text-anchor="middle" font-size="11" fill="#3B6D11">sim</text>
 
-  <rect x="440" y="456" width="100" height="40" rx="6" fill="#FAECE7" stroke="#F0997B" stroke-width="1"></rect>
-  <text x="490" y="472" text-anchor="middle" font-size="12" font-weight="500" fill="#993C1D">cor ← cor + 1</text>
-  <text x="490" y="488" text-anchor="middle" font-size="11" fill="#712B13">próximo rótulo</text>
+  <line x1="280" y1="280" x2="280" y2="304" stroke="#888780" stroke-width="1.2" marker-end="url(#arr)"></line>
 
-  <line x1="490" y1="496" x2="490" y2="530" stroke="#888780" stroke-width="1.2"></line>
-  <line x1="490" y1="530" x2="118" y2="530" stroke="#888780" stroke-width="1.2"></line>
-  <line x1="118" y1="530" x2="118" y2="165" stroke="#888780" stroke-width="1.2"></line>
-  <line x1="118" y1="165" x2="160" y2="165" stroke="#888780" stroke-width="1.2" marker-end="url(#arr)"></line>
+  <path d="M 180,334 L 130,334 L 130,174 L 160,174" fill="none" stroke="#534AB7" stroke-width="1.2" marker-end="url(#arr-b)"></path>
+  <text x="152" y="327" text-anchor="middle" font-size="11" fill="#534AB7">não</text>
 
-  <line x1="280" y1="504" x2="280" y2="522" stroke="#993C1D" stroke-width="1.2" marker-end="url(#arr-r)"></line>
-  <text x="292" y="517" font-size="11" fill="#993C1D">não</text>
+  <line x1="280" y1="364" x2="280" y2="388" stroke="#888780" stroke-width="1.2" marker-end="url(#arr)"></line>
+  <text x="292" y="378" font-size="11" fill="#534AB7">sim</text>
 
-  <rect x="160" y="522" width="240" height="48" rx="6" fill="#FAECE7" stroke="#F0997B" stroke-width="1"></rect>
-  <text x="280" y="541" text-anchor="middle" font-size="12" font-weight="500" fill="#993C1D">i, j ← pilha.pop()</text>
-  <text x="280" y="558" text-anchor="middle" font-size="12" fill="#712B13">g[i, j] ← cor</text>
+  <line x1="280" y1="432" x2="280" y2="456" stroke="#888780" stroke-width="1.2" marker-end="url(#arr)"></line>
 
-  <line x1="280" y1="570" x2="280" y2="588" stroke="#888780" stroke-width="1.2" marker-end="url(#arr)"></line>
+  <line x1="280" y1="516" x2="280" y2="542" stroke="#993C1D" stroke-width="1.2" marker-end="url(#arr-r)"></line>
+  <text x="292" y="531" font-size="11" fill="#993C1D">não</text>
 
-  <rect x="150" y="588" width="260" height="60" rx="6" fill="#E6F1FB" stroke="#85B7EB" stroke-width="1"></rect>
-  <text x="280" y="608" text-anchor="middle" font-size="12" font-weight="500" fill="#185FA5">inspecionar vizinhos</text>
-  <text x="280" y="624" text-anchor="middle" font-size="12" fill="#0C447C">se ativo e não rotulado</text>
-  <text x="280" y="640" text-anchor="middle" font-size="12" fill="#0C447C">→ pilha.append([vy, vx])</text>
+  <line x1="280" y1="590" x2="280" y2="614" stroke="#888780" stroke-width="1.2" marker-end="url(#arr)"></line>
 
-  <line x1="280" y1="648" x2="280" y2="670" stroke="#888780" stroke-width="1.2"></line>
-  <line x1="280" y1="670" x2="70" y2="670" stroke="#888780" stroke-width="1.2"></line>
-  <line x1="70" y1="670" x2="70" y2="476" stroke="#888780" stroke-width="1.2"></line>
-  <line x1="70" y1="476" x2="190" y2="476" stroke="#888780" stroke-width="1.2" marker-end="url(#arr)"></line>
+  <path d="M 280,674 L 280,694 L 110,694 L 110,486 L 190,486" fill="none" stroke="#993C1D" stroke-width="1.2" marker-end="url(#arr-r)"></path>
+
+  <line x1="370" y1="486" x2="435" y2="486" stroke="#993C1D" stroke-width="1.2" marker-end="url(#arr-r)"></line>
+  <text x="402" y="479" text-anchor="middle" font-size="11" fill="#993C1D">sim</text>
+
+  <path d="M 490,466 L 490,174 L 400,174" fill="none" stroke="#534AB7" stroke-width="1.2" marker-end="url(#arr-b)"></path>
 </svg>
 </div>
 
@@ -6459,7 +6454,7 @@ Figura&nbsp;4.29: <em>Bounding boxes</em> derivadas dos componentes conexos sobr
 <section id="download" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="download">Download</h4>
 <p>Baixe <code>morph.py</code> e <code>testsuite.py</code> executando a célula abaixo:</p>
-<div id="5e0c9258" class="cell">
+<div id="3951f450" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os, sys, importlib, inspect, urllib.request</span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="co"># URLs do repositório</span></span>
@@ -6755,7 +6750,6 @@ p' =
 0, &amp; \text{se } p \le T^*
 \end{cases}
 \]</span></p></li>
-<li><p><strong>Saída:</strong> Exibir <span class="math inline">\(T^*\)</span> e, em seguida, a matriz binarizada.</p></li>
 </ol>
 </section>
 <section id="restrições-computacionais-1" class="level4" data-number="4.9.2.2">
@@ -6811,8 +6805,7 @@ p' =
 </ul>
 <p><strong>Saída:</strong></p>
 <ul>
-<li>Linha 1: Inteiro <span class="math inline">\(T^*\)</span> (limiar ótimo encontrado).</li>
-<li>Linhas seguintes: Matriz binarizada em <span class="math inline">\(L\)</span> linhas e <span class="math inline">\(C\)</span> colunas, valores <span class="math inline">\(0\)</span> ou <span class="math inline">\(255\)</span>.</li>
+<li>Matriz binarizada em <span class="math inline">\(L\)</span> linhas e <span class="math inline">\(C\)</span> colunas, valores <span class="math inline">\(0\)</span> ou <span class="math inline">\(255\)</span>.</li>
 </ul>
 </section>
 <section id="exemplos-1" class="level4" data-number="4.9.2.5">
