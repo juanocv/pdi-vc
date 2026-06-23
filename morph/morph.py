@@ -1103,7 +1103,7 @@ class mm:
     # ── WATERSHED ────────────────────────────────────────────────────────────
 
     @staticmethod
-    def watershed0(f, mask=None, b=np.zeros((3,3),dtype='uint8'), op='region'):
+    def watershed0(f, mask=None, b=np.ones((3,3),dtype='uint8'), op='region'):
         f = mm.label0(f, b); g = f.copy()
         mask = np.ones_like(f) if mask is None else (mask > 0)
         
@@ -1112,8 +1112,8 @@ class mm:
             for x in range(f.shape[0]):
                 for y in range(f.shape[1]):
                     if g[x,y] == 0 and mask[x,y]:
-                        for vy,vx,_ in mm._viz(f, b, x, y):
-                            if g[x,y] < f[vy,vx]: 
+                        for vy,vx,bv in mm._viz(f, b, x, y):
+                            if bv and g[x,y] < f[vy,vx]: 
                                 g[x,y] = f[vy,vx]
                                 mudou = True
             if not mudou: break
@@ -1122,7 +1122,7 @@ class mm:
         return g if op=='region' else mm.gradm(g, mm.secross())
 
     @staticmethod
-    def watershedB(f, mask=None, b=np.zeros((3,3),dtype='uint8'), op='region'):
+    def watershedB(f, mask=None, b=np.ones((3,3),dtype='uint8'), op='region'):
         m = mm.label0(f, b)
         h, w = m.shape
         mask = np.ones_like(m) if mask is None else (mask > 0)
@@ -1131,8 +1131,8 @@ class mm:
         for x in range(h):
             for y in range(w):
                 if m[x,y] > 0:
-                    for vy, vx, _ in mm._viz(m, b, x, y):
-                        if m[vy,vx] == 0 and mask[vy,vx]:
+                    for vy, vx, bv in mm._viz(m, b, x, y):
+                        if bv and m[vy,vx] == 0 and mask[vy,vx]:
                             queue.append((x, y))
                             break
 
