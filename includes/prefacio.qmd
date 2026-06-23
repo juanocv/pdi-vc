@@ -160,9 +160,3 @@ O conteúdo é estruturado em *notebooks* — documentos que intercalam **célul
 
 Em ambientes interativos, o código pode ser modificado e executado. Nas versões estáticas (HTML ou PDF), os blocos de código têm finalidade de leitura e referência, sem prejuízo à integridade das explicações.
 :::
-
-::: {.content-visible when-format="html"}
-
-## Referências do Prefácio {.unnumbered}
-
-:::

@@ -429,10 +429,13 @@ class mm:
     def bnot(f):      return cv2.bitwise_not(f)
 
     @staticmethod
-    def threshold(img, limiar=0):
-        """Limiarização binária. limiar=0 usa Otsu."""
-        flags = cv2.THRESH_BINARY + (cv2.THRESH_OTSU if limiar == 0 else 0)
-        _, th = cv2.threshold(img, limiar, 255, flags)
+    def threshold(img, limiar=None):
+        """Limiarização binária. Se limiar for None, utiliza o método de Otsu."""
+        # Se limiar for None, ativa o Otsu e passa 0 como valor inicial para a OpenCV
+        flags = cv2.THRESH_BINARY + (cv2.THRESH_OTSU if limiar is None else 0)
+        valor_limiar = 0 if limiar is None else limiar
+        
+        _, th = cv2.threshold(img, valor_limiar, 255, flags)
         return th
 
     # ── HISTOGRAMA / EQUALIZAÇÃO ─────────────────────────────────────────────
