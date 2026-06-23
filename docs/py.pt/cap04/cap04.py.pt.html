@@ -6180,6 +6180,7 @@ Figura&nbsp;4.27: Componentes conexos extraídos após o <em>pipeline</em> CLAHE
 <p>Enquanto <code>connectedComponentsWithStats</code> opera sobre regiões, <code>cv2.findContours</code> atua diretamente sobre suas fronteiras. O operador retorna, para cada objeto, uma sequência ordenada de pontos que descreve seu contorno.</p>
 <p>A partir dessa representação é possível calcular descritores geométricos que não são fornecidos diretamente pela rotulação de componentes:</p>
 <ul>
+<li><p><strong>Área</strong> (<code>cv2.contourArea</code>)</p></li>
 <li><p><strong>Perímetro</strong> (<code>cv2.arcLength</code>);</p></li>
 <li><p><strong>Circularidade</strong> (<span class="math inline">\(C = \frac{4\pi A}{P^2}\)</span>, onde <span class="math inline">\(A\)</span> é a área e <span class="math inline">\(P\)</span> o perímetro);</p></li>
 <li><p><strong>Aproximação poligonal</strong> (<code>cv2.approxPolyDP</code>);</p></li>
@@ -6372,7 +6373,7 @@ Figura&nbsp;4.29: <em>Bounding boxes</em> derivadas dos componentes conexos sobr
 </section>
 <section id="resumo" class="level2" data-number="4.6">
 <h2 data-number="4.6" class="anchored" data-anchor-id="resumo"><span class="header-section-number">4.6</span> Resumo</h2>
-<p>Neste capítulo foram apresentadas as principais técnicas de segmentação e morfologia matemática, concluindo o estudo do Processamento Digital de Imagens no domínio espacial.</p>
+<p>Neste capítulo foram apresentadas as principais técnicas de segmentação e morfologia matemática, concluindo o estudo do PDI no domínio espacial.</p>
 <ul>
 <li><strong>Pré-processamento e limiarização:</strong> A combinação entre equalização adaptativa CLAHE e o método de Otsu mostrou-se eficaz para induzir separação bimodal no histograma e simplificar a binarização de imagens com iluminação não uniforme.</li>
 <li><strong>Erosão e dilatação:</strong> Operadores morfológicos fundamentais baseados na busca por mínimos e máximos locais em uma vizinhança definida pelo elemento estruturante <span class="math inline">\(B\)</span>. São operadores duais pelo complemento e foram implementados por meio das funções <code>mm.ero</code> e <code>mm.dil</code>.</li>
@@ -6458,7 +6459,7 @@ Figura&nbsp;4.29: <em>Bounding boxes</em> derivadas dos componentes conexos sobr
 <section id="download" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="download">Download</h4>
 <p>Baixe <code>morph.py</code> e <code>testsuite.py</code> executando a célula abaixo:</p>
-<div id="79b59a6f" class="cell">
+<div id="db935b97" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os, sys, importlib, inspect, urllib.request</span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="co"># URLs do repositório</span></span>
