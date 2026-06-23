@@ -349,14 +349,14 @@ Figura 4.34: Simulador: Abertura Morfológica (erosão + dilatação)
 </div>
 </div>
 <div class="cell" id="9f5eeda4">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb62-1"><a aria-hidden="true" href="#cb62-1" tabindex="-1"></a><span class="op">%%</span>writefile EP04_05.py</span>
-<span id="cb62-2"><a aria-hidden="true" href="#cb62-2" tabindex="-1"></a><span class="co"># Código Python</span></span></code></pre></div><button class="code-copy-button" title="Copiar para a área de transferência"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb63-1"><a aria-hidden="true" href="#cb63-1" tabindex="-1"></a><span class="op">%%</span>writefile EP04_05.py</span>
+<span id="cb63-2"><a aria-hidden="true" href="#cb63-2" tabindex="-1"></a><span class="co"># Código Python</span></span></code></pre></div><button class="code-copy-button" title="Copiar para a área de transferência"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Writing EP04_05.py</code></pre>
 </div>
 </div>
 <div class="cell" id="d86c2a05">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb64-1"><a aria-hidden="true" href="#cb64-1" tabindex="-1"></a>TestSuite(<span class="st">"EP04_05.py"</span>).run()</span></code></pre></div><button class="code-copy-button" title="Copiar para a área de transferência"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb65-1"><a aria-hidden="true" href="#cb65-1" tabindex="-1"></a>TestSuite(<span class="st">"EP04_05.py"</span>).run()</span></code></pre></div><button class="code-copy-button" title="Copiar para a área de transferência"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">✔️ EP04_05.cases já existe em casos/
 📋 5 caso(s) carregado(s) de casos/EP04_05.cases
@@ -2542,7 +2542,7 @@ window.edtv3_loadArtigoPreset();
       renderOrig();
       gN.innerHTML = '';
       pixels.forEach(function(p){
-        var res = (p>=T) ? 255 : 0;
+        var res = (p>T) ? 255 : 0;
         var c = document.createElement('div');
         c.style.cssText='width:42px;height:42px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:bold;border-radius:4px;border:1px solid #ddd;';
         c.style.background='rgb('+res+','+res+','+res+')';

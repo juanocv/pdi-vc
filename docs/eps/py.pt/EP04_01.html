@@ -192,13 +192,13 @@ por isso, 99 e 100 tornam-se pretos.</td>
 </tbody>
 </table>
 <div class="cell" id="cell-fig-04-sim-limiar">
-<div class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="24" id="fig-04-sim-limiar">
+<div class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="2" id="fig-04-sim-limiar">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-04-sim-limiar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div id="sim-ep0401b" style="background-color:#fef9ef;border-radius:18px;border:1px solid #ede6d8;overflow:hidden;margin-top:20px;font-family:sans-serif;">
 <div style="background:#f3efe6;padding:8px 16px;font-size:12px;color:#5e5a4a;border-bottom:1px solid #e9dfcf;display:flex;justify-content:space-between;align-items:center;">
 <span>🎮 Simulador: Limiarização Global</span>
-<span style="background:#e8e0cf;border-radius:40px;padding:2px 10px;font-weight:600;font-size:10px;">🎚️ p' = (p ≥ T) ? 255 : 0</span>
+<span style="background:#e8e0cf;border-radius:40px;padding:2px 10px;font-weight:600;font-size:10px;">🎚️ p' = (p &gt; T) ? 255 : 0</span>
 </div>
 <div style="padding:20px;background:white;">
 <p style="font-size:11px;color:#777;margin-bottom:14px;text-align:center;">👆 Clique numa célula de <b>Entrada Original</b> para escurecer o pixel (e clique direito para clarear)</p>
@@ -266,7 +266,7 @@ por isso, 99 e 100 tornam-se pretos.</td>
       renderOrig();
       gN.innerHTML = '';
       pixels.forEach(function(p){
-        var res = (p>=T) ? 255 : 0;
+        var res = (p>T) ? 255 : 0;
         var c = document.createElement('div');
         c.style.cssText='width:42px;height:42px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:bold;border-radius:4px;border:1px solid #ddd;';
         c.style.background='rgb('+res+','+res+','+res+')';
@@ -306,14 +306,14 @@ Figura 4.30: Simulador: Limiarização Global por Limiar Fixo
 </div>
 </div>
 <div class="cell" id="8aae6e08">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a aria-hidden="true" href="#cb50-1" tabindex="-1"></a><span class="op">%%</span>writefile EP04_01.py</span>
-<span id="cb50-2"><a aria-hidden="true" href="#cb50-2" tabindex="-1"></a><span class="co"># Código Python</span></span></code></pre></div><button class="code-copy-button" title="Copiar para a área de transferência"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a aria-hidden="true" href="#cb51-1" tabindex="-1"></a><span class="op">%%</span>writefile EP04_01.py</span>
+<span id="cb51-2"><a aria-hidden="true" href="#cb51-2" tabindex="-1"></a><span class="co"># Código Python</span></span></code></pre></div><button class="code-copy-button" title="Copiar para a área de transferência"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Overwriting EP04_01.py</code></pre>
 </div>
 </div>
 <div class="cell" id="ed1f62da">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a aria-hidden="true" href="#cb52-1" tabindex="-1"></a>TestSuite(<span class="st">"EP04_01.py"</span>).run()</span></code></pre></div><button class="code-copy-button" title="Copiar para a área de transferência"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a aria-hidden="true" href="#cb53-1" tabindex="-1"></a>TestSuite(<span class="st">"EP04_01.py"</span>).run()</span></code></pre></div><button class="code-copy-button" title="Copiar para a área de transferência"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">✔️ EP04_01.cases já existe em casos/
 📋 7 caso(s) carregado(s) de casos/EP04_01.cases
@@ -2508,7 +2508,7 @@ window.edtv3_loadArtigoPreset();
       renderOrig();
       gN.innerHTML = '';
       pixels.forEach(function(p){
-        var res = (p>=T) ? 255 : 0;
+        var res = (p>T) ? 255 : 0;
         var c = document.createElement('div');
         c.style.cssText='width:42px;height:42px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:bold;border-radius:4px;border:1px solid #ddd;';
         c.style.background='rgb('+res+','+res+','+res+')';

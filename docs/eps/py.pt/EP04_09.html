@@ -359,14 +359,14 @@ Figura 4.38: Simulador: Transformada de Distância
 </div>
 </div>
 <div class="cell" id="3c0c37c2">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb75"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb75-1"><a aria-hidden="true" href="#cb75-1" tabindex="-1"></a><span class="op">%%</span>writefile EP04_09.py</span>
-<span id="cb75-2"><a aria-hidden="true" href="#cb75-2" tabindex="-1"></a><span class="co"># Código Python</span></span></code></pre></div><button class="code-copy-button" title="Copiar para a área de transferência"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb76"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb76-1"><a aria-hidden="true" href="#cb76-1" tabindex="-1"></a><span class="op">%%</span>writefile EP04_09.py</span>
+<span id="cb76-2"><a aria-hidden="true" href="#cb76-2" tabindex="-1"></a><span class="co"># Código Python</span></span></code></pre></div><button class="code-copy-button" title="Copiar para a área de transferência"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Writing EP04_09.py</code></pre>
 </div>
 </div>
 <div class="cell" id="3512aa10">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb77"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb77-1"><a aria-hidden="true" href="#cb77-1" tabindex="-1"></a>TestSuite(<span class="st">"EP04_09.py"</span>).run()</span></code></pre></div><button class="code-copy-button" title="Copiar para a área de transferência"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb78"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb78-1"><a aria-hidden="true" href="#cb78-1" tabindex="-1"></a>TestSuite(<span class="st">"EP04_09.py"</span>).run()</span></code></pre></div><button class="code-copy-button" title="Copiar para a área de transferência"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">✔️ EP04_09.cases já existe em casos/
 📋 4 caso(s) carregado(s) de casos/EP04_09.cases
@@ -2552,7 +2552,7 @@ window.edtv3_loadArtigoPreset();
       renderOrig();
       gN.innerHTML = '';
       pixels.forEach(function(p){
-        var res = (p>=T) ? 255 : 0;
+        var res = (p>T) ? 255 : 0;
         var c = document.createElement('div');
         c.style.cssText='width:42px;height:42px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:bold;border-radius:4px;border:1px solid #ddd;';
         c.style.background='rgb('+res+','+res+','+res+')';
