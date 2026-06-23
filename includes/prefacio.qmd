@@ -96,7 +96,7 @@ Embora automatizada, a conversão exige revisão do professor em razão das limi
 - **Fórmulas matemáticas** — O TinyMCE descarta barras invertidas (`\`), corrompendo equações LaTeX. Por isso, a versão Moodle converte fórmulas simples para HTML puro (entidades como `&ge;`, `&times;`). Fórmulas complexas (`\begin{cases}`, matrizes, integrais) podem sair incompletas — revise e, se necessário, reescreva-as em texto ou indique a versão completa via link.
 - **Referências cruzadas** — Links como `@fig-...` ou `@tbl-...` são removidos, mantendo apenas o texto do rótulo.
 - **Figuras externas** — Imagens complementares devem ser inseridas manualmente na atividade VPL.
-- **Simuladores** — Funcionam apenas se utilizarem JavaScript padrão com estilos *inline* e manipulação direta do DOM (`getElementById`).
+- **Simuladores** — Funcionam perfeitamente desde que utilizem JavaScript padrão com estilos *inline* e manipulação direta do DOM (`getElementById`). **Atenção:** se incluir fórmulas em LaTeX que contenham o caractere `\` no Moodle, os simuladores podem parar de funcionar.
 :::
 
 ### Como Publicar no Moodle {.unnumbered}
@@ -160,3 +160,4 @@ O conteúdo é estruturado em *notebooks* — documentos que intercalam **célul
 
 Em ambientes interativos, o código pode ser modificado e executado. Nas versões estáticas (HTML ou PDF), os blocos de código têm finalidade de leitura e referência, sem prejuízo à integridade das explicações.
 :::
+
