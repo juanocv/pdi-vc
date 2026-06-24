@@ -836,29 +836,16 @@ class mm:
         return g
     
     @staticmethod
-    def ero1(f, b=np.zeros((3,3),dtype='uint8')):
+    def ero1(f, b=np.zeros((3,3), dtype='uint8')):
         """Erosão com pesos: mínimo de f[viz]-b."""
         g = np.empty_like(f)
         for y in range(f.shape[0]):
             for x in range(f.shape[1]):
                 g[y,x] = 255
-                for vy,vx,bv in mm._viz(f,b,y,x):
-                    if g[y,x] > f[vy,vx]-bv: 
-                        g[y,x] = f[vy,vx]-bv
-        return g
-
-    @staticmethod
-    def ero1_new(f, b=np.zeros((3,3),dtype='uint8')):
-        """Erosão com pesos: mínimo de f[viz]-b."""
-        g = np.empty_like(f)
-        for y in range(f.shape[0]):
-            for x in range(f.shape[1]):
-                g[y,x] = 255
-                for vy,vx,bv in mm._viz(f,b,y,x):
-                    if np.isneginf(bv): continue
-                    val_sub = int(f[vy,vx]) - int(bv)
-                    if val_sub < 0: val_sub = 0
-                    if g[y,x] > val_sub: g[y,x] = val_sub
+                for vy, vx, bv in mm._viz(f, b, y, x):
+                    val = int(f[vy,vx]) - int(bv)   # cast antes de subtrair
+                    if int(g[y,x]) > val:
+                        g[y,x] = max(0, val)          # clamp para não guardar negativo em uint8
         return g
 
     @staticmethod
@@ -879,33 +866,20 @@ class mm:
                     if bv and g[y,x] < f[vy,vx]:
                         g[y,x] = f[vy,vx]
         return g
-    
+
+
     @staticmethod
-    def dil1(f, b=np.zeros((3,3),dtype='uint8')):
+    def dil1(f, b=np.zeros((3,3), dtype='uint8')):
         """Dilatação com pesos: máximo de f[viz]+b."""
         g = np.empty_like(f)
         b = np.flip(b)
         for y in range(f.shape[0]):
             for x in range(f.shape[1]):
                 g[y,x] = 0
-                for vy,vx,bv in mm._viz(f,b,y,x):
-                    val_soma = int(f[vy,vx]) + int(bv)
-                    if g[y,x] < val_soma: 
-                        g[y,x] = val_soma
-        return g
-
-    @staticmethod
-    def dil1_new(f, b=np.zeros((3,3),dtype='uint8')):
-        """Dilatação com pesos: máximo de f[viz]+b."""
-        g = np.empty_like(f) 
-        b = np.flip(b)
-        for y in range(f.shape[0]):
-            for x in range(f.shape[1]):
-                g[y,x] = 0 
-                for vy,vx,bv in mm._viz(f,b,y,x):
-                    # Usamos min para garantir que a adição de uint8 não estoure acima de 255
-                    val_soma = min(255, int(f[vy,vx]) + int(bv))
-                    if g[y,x] < val_soma: g[y,x] = val_soma
+                for vy, vx, bv in mm._viz(f, b, y, x):
+                    val = int(f[vy,vx]) + int(bv)       # cast evita overflow uint8
+                    if int(g[y,x]) < val:
+                        g[y,x] = min(255, val)           # clamp: dilatação nunca acima de 255
         return g
 
     # ── OPERADORES MORFOLÓGICOS ──────────────────────────────────────────────
@@ -970,6 +944,19 @@ class mm:
         return y
 
     @staticmethod
+    def dil1(f, b=np.zeros((3,3), dtype='uint8')):
+        """Dilatação com pesos: máximo de f[viz]+b."""
+        g = np.empty_like(f)
+        b = np.flip(b)
+        for y in range(f.shape[0]):
+            for x in range(f.shape[1]):
+                g[y,x] = 0
+                for vy, vx, bv in mm._viz(f, b, y, x):
+                    val = int(f[vy,vx]) + int(bv)       # cast evita overflow uint8
+                    if int(g[y,x]) < val:
+                        g[y,x] = min(255, val)           # clamp: dilatação nunca acima de 255
+        return g
+
     def cero(f, g, b=np.zeros((3,3),dtype='uint8'), n=1):
         """Erosão geodésica do marcador f sob a máscara g."""
         y = f.copy()
