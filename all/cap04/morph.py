@@ -943,6 +943,20 @@ class mm:
             y = np.minimum(cv2.dilate(y, b), g)
         return y
 
+    @staticmethod
+    def dil1(f, b=np.zeros((3,3), dtype='uint8')):
+        """Dilatação com pesos: máximo de f[viz]+b."""
+        g = np.empty_like(f)
+        b = np.flip(b)
+        for y in range(f.shape[0]):
+            for x in range(f.shape[1]):
+                g[y,x] = 0
+                for vy, vx, bv in mm._viz(f, b, y, x):
+                    val = int(f[vy,vx]) + int(bv)       # cast evita overflow uint8
+                    if int(g[y,x]) < val:
+                        g[y,x] = min(255, val)           # clamp: dilatação nunca acima de 255
+        return g
+
     def cero(f, g, b=np.zeros((3,3),dtype='uint8'), n=1):
         """Erosão geodésica do marcador f sob a máscara g."""
         y = f.copy()

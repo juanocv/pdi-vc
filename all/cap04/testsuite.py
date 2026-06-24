@@ -2,7 +2,7 @@
 # testsuite.py - Baixa casos de teste do GitHub e executa testes locais
 import subprocess, sys, os, warnings, urllib.request, re
 
-__version__ = "1.1.0"
+__version__ = "1.1.1"
 
 warnings.filterwarnings("ignore")
 
@@ -53,6 +53,65 @@ class TestSuite:
 
         self._flush()
 
+    def run_code(self, codigo: str, casos_dict: dict = None):
+        """
+        Executa código Python diretamente (sem salvar arquivo).
+        
+        Parâmetros
+        ----------
+        codigo : str
+            Código Python do aluno como string.
+        casos_dict : dict, opcional
+            Dicionário {nome: {"input": ..., "output": ...}}.
+            Se None, baixa os casos normalmente do GitHub.
+        """
+        import builtins, sys
+        from io import StringIO
+
+        if casos_dict:
+            casos = [(nome, v["input"], v["output"]) for nome, v in casos_dict.items()]
+            self._p(f"📋 {len(casos)} caso(s) fornecido(s) diretamente")
+        else:
+            nome_caso     = f"{self.base_norm}.cases"
+            caminho_casos = os.path.join(LOCAL_CASES_DIR, nome_caso)
+            if not self._baixar(nome_caso, caminho_casos):
+                self._flush(); return
+            casos = self._carregar(caminho_casos)
+            if not casos:
+                self._flush(); return
+
+        self._p(f"\n🔍 Testando Python (inline)")
+        acertos = 0
+        for nome, entrada, gabarito_raw in casos:
+            dados  = StringIO(entrada)
+            saida  = StringIO()
+            _input_orig  = builtins.input
+            _stdout_orig = sys.stdout
+            builtins.input = lambda *args: dados.readline().rstrip("\n")
+            sys.stdout = saida
+            try:
+                exec(codigo, {})
+                resultado = saida.getvalue().strip()
+                if self._comparar(resultado, gabarito_raw):
+                    self._p(f"{GREEN}✔️ {nome}: OK{NC}")
+                    acertos += 1
+                else:
+                    self._p(f"{RED}❌ {nome}: FALHOU{NC}")
+                    self._p(f"   📥 Entrada:\n{entrada}")
+                    self._p(f"   🎯 Esperado:\n{gabarito_raw.split('<OU>')[0].strip()}")
+                    self._p(f"   📤 Obtido:\n{resultado}")
+            except Exception as e:
+                self._p(f"{RED}💥 {nome}: Erro - {e}{NC}")
+            finally:
+                builtins.input = _input_orig
+                sys.stdout     = _stdout_orig
+
+        pct = acertos / len(casos) * 100 if casos else 0
+        self._p(f"\n📊 Resultado: {acertos}/{len(casos)} ({pct:.1f}%)")
+        if acertos == len(casos):
+            self._p(f"{GREEN}🎉 Parabéns! Todos os testes passaram.{NC}")
+        self._flush()
+        
     # ------------------------------------------------------------------ #
     #  Internos                                                            #
     # ------------------------------------------------------------------ #
