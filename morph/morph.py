@@ -825,7 +825,7 @@ class mm:
 
 
     @staticmethod
-    def ero0(f, Bc=np.zeros((3,3),dtype='uint8')):
+    def ero0(f, Bc=np.ones((3,3),dtype='uint8')):
         """Erosão clássica sem pesos."""
         g = np.empty_like(f)
         for y in range(f.shape[0]):
@@ -855,7 +855,7 @@ class mm:
         except: return mm.dil1(f, Bc)
 
     @staticmethod
-    def dil0(f, Bc=np.zeros((3,3),dtype='uint8')):
+    def dil0(f, Bc=np.ones((3,3),dtype='uint8')):
         """Dilatação plana seguindo rigorosamente a teoria."""
         g = np.empty_like(f) 
         Bc = np.flip(Bc)     # reflexão explícita: B̂
@@ -1017,21 +1017,21 @@ class mm:
     def gradm(f, b=np.zeros((3,3),dtype='uint8')):
         """Gradiente morfológico: dil(f,b) - ero(f,b)."""
         return mm.subm(mm.dil(f,b), mm.ero(f,b))
+     @staticmethod
+    def grad0(f, b=np.ones((3,3), dtype='uint8')):
+        """Gradiente Morfológico Plano: dil0(f, b) - ero0(f, b). Evidencia contornos."""
+        return mm.subm(mm.dil0(f, b), mm.ero0(f, b))
     @staticmethod
     def gradm1(f, b=np.zeros((3,3),dtype='uint8')):
         """Gradiente morfológico: dil(f,b) - ero(f,b)."""
         return mm.subm(mm.dil1(f,b), mm.ero1(f,b))
-    @staticmethod
-    def grad0(f, b=np.zeros((3,3), dtype='uint8')):
-        """Gradiente Morfológico Plano: dil0(f, b) - ero0(f, b). Evidencia contornos."""
-        return mm.subm(mm.dil0(f, b), mm.ero0(f, b))
 
     @staticmethod
     def tophat(f, b=np.zeros((3,3), dtype='uint8')):
         """Top-hat: f - open(f, b). Realça detalhes brilhantes sobre fundo escuro."""
         return mm.subm(f, mm.open(f, b))
     @staticmethod
-    def tophat0(f, b=np.zeros((3,3), dtype='uint8')):
+    def tophat0(f, b=np.ones((3,3), dtype='uint8')):
         """Top-hat Plano: f - open0(f, b). Realça picos brilhantes sem padding."""
         return mm.subm(f, mm.open0(f, b))
     @staticmethod
@@ -1044,7 +1044,7 @@ class mm:
         """Black-hat: close(f, b) - f. Realça detalhes escuros sobre fundo claro."""
         return mm.subm(mm.close(f, b), f)
     @staticmethod
-    def blackhat0(f, b=np.zeros((3,3), dtype='uint8')):
+    def blackhat0(f, b=np.ones((3,3), dtype='uint8')):
         """Black-hat Plano: close0(f, b) - f. Realça vales escuros sem padding."""
         return mm.subm(mm.close0(f, b), f)
     @staticmethod
