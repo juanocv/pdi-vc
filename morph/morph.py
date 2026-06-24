@@ -1017,7 +1017,7 @@ class mm:
     def gradm(f, b=np.zeros((3,3),dtype='uint8')):
         """Gradiente morfológico: dil(f,b) - ero(f,b)."""
         return mm.subm(mm.dil(f,b), mm.ero(f,b))
-     @staticmethod
+    @staticmethod
     def grad0(f, b=np.ones((3,3), dtype='uint8')):
         """Gradiente Morfológico Plano: dil0(f, b) - ero0(f, b). Evidencia contornos."""
         return mm.subm(mm.dil0(f, b), mm.ero0(f, b))
