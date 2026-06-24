@@ -843,6 +843,7 @@ class mm:
             for x in range(f.shape[1]):
                 g[y,x] = 255
                 for vy, vx, bv in mm._viz(f, b, y, x):
+                    if np.isinf(bv): continue
                     val = int(f[vy,vx]) - int(bv)   # cast antes de subtrair
                     if int(g[y,x]) > val:
                         g[y,x] = max(0, val)          # clamp para não guardar negativo em uint8
