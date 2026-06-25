@@ -76,9 +76,9 @@ div.csl-indent {
   margin-left: 2em;
 }</style>
   <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet"/>
-  <link href="../site_libs/quarto-html/quarto-syntax-highlighting-1d541e707deb911ee702dcbe28eecf08.css" id="quarto-text-highlighting-styles" rel="stylesheet"/>
+  <link href="../site_libs/quarto-html/quarto-syntax-highlighting-de63f62b328812d8e578a4d74e282472.css" id="quarto-text-highlighting-styles" rel="stylesheet"/>
   <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet"/>
-  <link append-hash="true" data-mode="light" href="../site_libs/bootstrap/bootstrap-1854e60e0a72f37cbacc43ef673120f4.min.css" id="quarto-bootstrap" rel="stylesheet"/>
+  <link append-hash="true" data-mode="light" href="../site_libs/bootstrap/bootstrap-d024cad0e32bf2110a1b02cbacc0c8bd.min.css" id="quarto-bootstrap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..900;1,8..60,300..900&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
   <link href="../custom.css" rel="stylesheet"/>
 </head>
@@ -193,26 +193,26 @@ Três linhas, cada uma com um número real de duas casas decimais (Euclidiana, C
 </table>
 <hr/>
 <p><strong>Exemplo de teste de <code>sqrt</code> em Python, com <code>timeit</code> isolando cada operação:</strong></p>
-<div class="cell" id="4e0067ad">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a aria-hidden="true" href="#cb20-1" tabindex="-1"></a><span class="im">import</span> math</span>
-<span id="cb20-2"><a aria-hidden="true" href="#cb20-2" tabindex="-1"></a><span class="im">import</span> timeit</span>
-<span id="cb20-3"><a aria-hidden="true" href="#cb20-3" tabindex="-1"></a></span>
-<span id="cb20-4"><a aria-hidden="true" href="#cb20-4" tabindex="-1"></a>N <span class="op">=</span> <span class="dv">50_000_000</span></span>
-<span id="cb20-5"><a aria-hidden="true" href="#cb20-5" tabindex="-1"></a></span>
-<span id="cb20-6"><a aria-hidden="true" href="#cb20-6" tabindex="-1"></a><span class="kw">def</span> apenas_soma():</span>
-<span id="cb20-7"><a aria-hidden="true" href="#cb20-7" tabindex="-1"></a>    a, b <span class="op">=</span> <span class="fl">3.0</span>, <span class="fl">4.0</span></span>
-<span id="cb20-8"><a aria-hidden="true" href="#cb20-8" tabindex="-1"></a>    <span class="cf">return</span> a <span class="op">+</span> b</span>
-<span id="cb20-9"><a aria-hidden="true" href="#cb20-9" tabindex="-1"></a></span>
-<span id="cb20-10"><a aria-hidden="true" href="#cb20-10" tabindex="-1"></a><span class="kw">def</span> soma_e_sqrt():</span>
-<span id="cb20-11"><a aria-hidden="true" href="#cb20-11" tabindex="-1"></a>    a, b <span class="op">=</span> <span class="fl">3.0</span>, <span class="fl">4.0</span></span>
-<span id="cb20-12"><a aria-hidden="true" href="#cb20-12" tabindex="-1"></a>    <span class="cf">return</span> math.sqrt(a<span class="op">*</span>a <span class="op">+</span> b<span class="op">*</span>b)</span>
-<span id="cb20-13"><a aria-hidden="true" href="#cb20-13" tabindex="-1"></a></span>
-<span id="cb20-14"><a aria-hidden="true" href="#cb20-14" tabindex="-1"></a>t_soma <span class="op">=</span> timeit.timeit(apenas_soma, number<span class="op">=</span>N)</span>
-<span id="cb20-15"><a aria-hidden="true" href="#cb20-15" tabindex="-1"></a>t_sqrt <span class="op">=</span> timeit.timeit(soma_e_sqrt, number<span class="op">=</span>N)</span>
-<span id="cb20-16"><a aria-hidden="true" href="#cb20-16" tabindex="-1"></a></span>
-<span id="cb20-17"><a aria-hidden="true" href="#cb20-17" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Soma simples       : </span><span class="sc">{</span>t_soma<span class="sc">:.3f}</span><span class="ss"> s"</span>)</span>
-<span id="cb20-18"><a aria-hidden="true" href="#cb20-18" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Soma + sqrt        : </span><span class="sc">{</span>t_sqrt<span class="sc">:.3f}</span><span class="ss"> s"</span>)</span>
-<span id="cb20-19"><a aria-hidden="true" href="#cb20-19" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Razão (sqrt/soma)  : </span><span class="sc">{</span>t_sqrt<span class="op">/</span>t_soma<span class="sc">:.2f}</span><span class="ss">x"</span>)</span></code></pre></div><button class="code-copy-button" title="Copiar para a área de transferência"><i class="bi"></i></button></div>
+<div class="cell" id="32f64331">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a aria-hidden="true" href="#cb21-1" tabindex="-1"></a><span class="im">import</span> math</span>
+<span id="cb21-2"><a aria-hidden="true" href="#cb21-2" tabindex="-1"></a><span class="im">import</span> timeit</span>
+<span id="cb21-3"><a aria-hidden="true" href="#cb21-3" tabindex="-1"></a></span>
+<span id="cb21-4"><a aria-hidden="true" href="#cb21-4" tabindex="-1"></a>N <span class="op">=</span> <span class="dv">50_000_000</span></span>
+<span id="cb21-5"><a aria-hidden="true" href="#cb21-5" tabindex="-1"></a></span>
+<span id="cb21-6"><a aria-hidden="true" href="#cb21-6" tabindex="-1"></a><span class="kw">def</span> apenas_soma():</span>
+<span id="cb21-7"><a aria-hidden="true" href="#cb21-7" tabindex="-1"></a>    a, b <span class="op">=</span> <span class="fl">3.0</span>, <span class="fl">4.0</span></span>
+<span id="cb21-8"><a aria-hidden="true" href="#cb21-8" tabindex="-1"></a>    <span class="cf">return</span> a <span class="op">+</span> b</span>
+<span id="cb21-9"><a aria-hidden="true" href="#cb21-9" tabindex="-1"></a></span>
+<span id="cb21-10"><a aria-hidden="true" href="#cb21-10" tabindex="-1"></a><span class="kw">def</span> soma_e_sqrt():</span>
+<span id="cb21-11"><a aria-hidden="true" href="#cb21-11" tabindex="-1"></a>    a, b <span class="op">=</span> <span class="fl">3.0</span>, <span class="fl">4.0</span></span>
+<span id="cb21-12"><a aria-hidden="true" href="#cb21-12" tabindex="-1"></a>    <span class="cf">return</span> math.sqrt(a<span class="op">*</span>a <span class="op">+</span> b<span class="op">*</span>b)</span>
+<span id="cb21-13"><a aria-hidden="true" href="#cb21-13" tabindex="-1"></a></span>
+<span id="cb21-14"><a aria-hidden="true" href="#cb21-14" tabindex="-1"></a>t_soma <span class="op">=</span> timeit.timeit(apenas_soma, number<span class="op">=</span>N)</span>
+<span id="cb21-15"><a aria-hidden="true" href="#cb21-15" tabindex="-1"></a>t_sqrt <span class="op">=</span> timeit.timeit(soma_e_sqrt, number<span class="op">=</span>N)</span>
+<span id="cb21-16"><a aria-hidden="true" href="#cb21-16" tabindex="-1"></a></span>
+<span id="cb21-17"><a aria-hidden="true" href="#cb21-17" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Soma simples       : </span><span class="sc">{</span>t_soma<span class="sc">:.3f}</span><span class="ss"> s"</span>)</span>
+<span id="cb21-18"><a aria-hidden="true" href="#cb21-18" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Soma + sqrt        : </span><span class="sc">{</span>t_sqrt<span class="sc">:.3f}</span><span class="ss"> s"</span>)</span>
+<span id="cb21-19"><a aria-hidden="true" href="#cb21-19" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Razão (sqrt/soma)  : </span><span class="sc">{</span>t_sqrt<span class="op">/</span>t_soma<span class="sc">:.2f}</span><span class="ss">x"</span>)</span></code></pre></div><button class="code-copy-button" title="Copiar para a área de transferência"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Soma simples       : 2.967 s
 Soma + sqrt        : 5.276 s
@@ -523,49 +523,49 @@ Figura 1.12: Simulador: Distâncias Euclidiana, <em>City-block</em> e <em>Chess
 <h4 class="anchored" data-anchor-id="python" data-number="1.16.1.4"><span class="header-section-number">1.16.1.4</span> 🐍 Python</h4>
 <p>Basta criar uma célula de código normal e inserir o código Python. A entrada pode ser simulada usando <code>input()</code>, que funciona normalmente.</p>
 <p>Exemplo de célula:</p>
-<div class="cell" id="876ccb82">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a aria-hidden="true" href="#cb22-1" tabindex="-1"></a><span class="op">%%</span>writefile EP01_01.py</span>
-<span id="cb22-2"><a aria-hidden="true" href="#cb22-2" tabindex="-1"></a><span class="co"># Código Python</span></span>
-<span id="cb22-3"><a aria-hidden="true" href="#cb22-3" tabindex="-1"></a>x1,y1,x2,y2 <span class="op">=</span> <span class="bu">int</span>(<span class="bu">input</span>()), <span class="bu">int</span>(<span class="bu">input</span>()), <span class="bu">int</span>(<span class="bu">input</span>()), <span class="bu">int</span>(<span class="bu">input</span>())</span>
-<span id="cb22-4"><a aria-hidden="true" href="#cb22-4" tabindex="-1"></a><span class="co"># Cálculo das diferenças</span></span>
-<span id="cb22-5"><a aria-hidden="true" href="#cb22-5" tabindex="-1"></a>dx <span class="op">=</span> <span class="bu">abs</span>(x2 <span class="op">-</span> x1)</span>
-<span id="cb22-6"><a aria-hidden="true" href="#cb22-6" tabindex="-1"></a>dy <span class="op">=</span> <span class="bu">abs</span>(y2 <span class="op">-</span> y1)</span>
-<span id="cb22-7"><a aria-hidden="true" href="#cb22-7" tabindex="-1"></a></span>
-<span id="cb22-8"><a aria-hidden="true" href="#cb22-8" tabindex="-1"></a><span class="co"># 1. Distância Euclidiana (L2)</span></span>
-<span id="cb22-9"><a aria-hidden="true" href="#cb22-9" tabindex="-1"></a>dist_euclidiana <span class="op">=</span> (dx<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> dy<span class="op">**</span><span class="dv">2</span>)<span class="op">**</span><span class="fl">0.5</span></span>
-<span id="cb22-10"><a aria-hidden="true" href="#cb22-10" tabindex="-1"></a></span>
-<span id="cb22-11"><a aria-hidden="true" href="#cb22-11" tabindex="-1"></a><span class="co"># 2. Distância City-block / Manhattan (L1)</span></span>
-<span id="cb22-12"><a aria-hidden="true" href="#cb22-12" tabindex="-1"></a>dist_city_block <span class="op">=</span> dx <span class="op">+</span> dy</span>
-<span id="cb22-13"><a aria-hidden="true" href="#cb22-13" tabindex="-1"></a></span>
-<span id="cb22-14"><a aria-hidden="true" href="#cb22-14" tabindex="-1"></a><span class="co"># 3. Distância Chessboard / Chebyshev (Linf)</span></span>
-<span id="cb22-15"><a aria-hidden="true" href="#cb22-15" tabindex="-1"></a>dist_chessboard <span class="op">=</span> <span class="bu">max</span>(dx, dy)</span>
-<span id="cb22-16"><a aria-hidden="true" href="#cb22-16" tabindex="-1"></a></span>
-<span id="cb22-17"><a aria-hidden="true" href="#cb22-17" tabindex="-1"></a><span class="co"># Saída formatada conforme os casos de teste</span></span>
-<span id="cb22-18"><a aria-hidden="true" href="#cb22-18" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>dist_euclidiana<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
-<span id="cb22-19"><a aria-hidden="true" href="#cb22-19" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>dist_city_block<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
-<span id="cb22-20"><a aria-hidden="true" href="#cb22-20" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>dist_chessboard<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code></pre></div><button class="code-copy-button" title="Copiar para a área de transferência"><i class="bi"></i></button></div>
+<div class="cell" id="22a37950">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a aria-hidden="true" href="#cb23-1" tabindex="-1"></a><span class="op">%%</span>writefile EP01_01.py</span>
+<span id="cb23-2"><a aria-hidden="true" href="#cb23-2" tabindex="-1"></a><span class="co"># Código Python</span></span>
+<span id="cb23-3"><a aria-hidden="true" href="#cb23-3" tabindex="-1"></a>x1,y1,x2,y2 <span class="op">=</span> <span class="bu">int</span>(<span class="bu">input</span>()), <span class="bu">int</span>(<span class="bu">input</span>()), <span class="bu">int</span>(<span class="bu">input</span>()), <span class="bu">int</span>(<span class="bu">input</span>())</span>
+<span id="cb23-4"><a aria-hidden="true" href="#cb23-4" tabindex="-1"></a><span class="co"># Cálculo das diferenças</span></span>
+<span id="cb23-5"><a aria-hidden="true" href="#cb23-5" tabindex="-1"></a>dx <span class="op">=</span> <span class="bu">abs</span>(x2 <span class="op">-</span> x1)</span>
+<span id="cb23-6"><a aria-hidden="true" href="#cb23-6" tabindex="-1"></a>dy <span class="op">=</span> <span class="bu">abs</span>(y2 <span class="op">-</span> y1)</span>
+<span id="cb23-7"><a aria-hidden="true" href="#cb23-7" tabindex="-1"></a></span>
+<span id="cb23-8"><a aria-hidden="true" href="#cb23-8" tabindex="-1"></a><span class="co"># 1. Distância Euclidiana (L2)</span></span>
+<span id="cb23-9"><a aria-hidden="true" href="#cb23-9" tabindex="-1"></a>dist_euclidiana <span class="op">=</span> (dx<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> dy<span class="op">**</span><span class="dv">2</span>)<span class="op">**</span><span class="fl">0.5</span></span>
+<span id="cb23-10"><a aria-hidden="true" href="#cb23-10" tabindex="-1"></a></span>
+<span id="cb23-11"><a aria-hidden="true" href="#cb23-11" tabindex="-1"></a><span class="co"># 2. Distância City-block / Manhattan (L1)</span></span>
+<span id="cb23-12"><a aria-hidden="true" href="#cb23-12" tabindex="-1"></a>dist_city_block <span class="op">=</span> dx <span class="op">+</span> dy</span>
+<span id="cb23-13"><a aria-hidden="true" href="#cb23-13" tabindex="-1"></a></span>
+<span id="cb23-14"><a aria-hidden="true" href="#cb23-14" tabindex="-1"></a><span class="co"># 3. Distância Chessboard / Chebyshev (Linf)</span></span>
+<span id="cb23-15"><a aria-hidden="true" href="#cb23-15" tabindex="-1"></a>dist_chessboard <span class="op">=</span> <span class="bu">max</span>(dx, dy)</span>
+<span id="cb23-16"><a aria-hidden="true" href="#cb23-16" tabindex="-1"></a></span>
+<span id="cb23-17"><a aria-hidden="true" href="#cb23-17" tabindex="-1"></a><span class="co"># Saída formatada conforme os casos de teste</span></span>
+<span id="cb23-18"><a aria-hidden="true" href="#cb23-18" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>dist_euclidiana<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb23-19"><a aria-hidden="true" href="#cb23-19" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>dist_city_block<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb23-20"><a aria-hidden="true" href="#cb23-20" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>dist_chessboard<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code></pre></div><button class="code-copy-button" title="Copiar para a área de transferência"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Overwriting EP01_01.py</code></pre>
 </div>
 </div>
-<div class="cell" id="852e00c9">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a aria-hidden="true" href="#cb24-1" tabindex="-1"></a><span class="co"># Espera que você digite 4 números inteiros ao executar esta célula.</span></span>
-<span id="cb24-2"><a aria-hidden="true" href="#cb24-2" tabindex="-1"></a><span class="co"># No Jupyter ou Google Colab, a mágica %run -i permite que o script leia do teclado.</span></span>
-<span id="cb24-3"><a aria-hidden="true" href="#cb24-3" tabindex="-1"></a><span class="co"># No terminal comum, você usaria: python3 EP01_01.py (sem o '!' e sem '%run').</span></span>
-<span id="cb24-4"><a aria-hidden="true" href="#cb24-4" tabindex="-1"></a></span>
-<span id="cb24-5"><a aria-hidden="true" href="#cb24-5" tabindex="-1"></a><span class="co"># %run -i EP01_01.py</span></span></code></pre></div><button class="code-copy-button" title="Copiar para a área de transferência"><i class="bi"></i></button></div>
+<div class="cell" id="00c68f62">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a aria-hidden="true" href="#cb25-1" tabindex="-1"></a><span class="co"># Espera que você digite 4 números inteiros ao executar esta célula.</span></span>
+<span id="cb25-2"><a aria-hidden="true" href="#cb25-2" tabindex="-1"></a><span class="co"># No Jupyter ou Google Colab, a mágica %run -i permite que o script leia do teclado.</span></span>
+<span id="cb25-3"><a aria-hidden="true" href="#cb25-3" tabindex="-1"></a><span class="co"># No terminal comum, você usaria: python3 EP01_01.py (sem o '!' e sem '%run').</span></span>
+<span id="cb25-4"><a aria-hidden="true" href="#cb25-4" tabindex="-1"></a></span>
+<span id="cb25-5"><a aria-hidden="true" href="#cb25-5" tabindex="-1"></a><span class="co"># %run -i EP01_01.py</span></span></code></pre></div><button class="code-copy-button" title="Copiar para a área de transferência"><i class="bi"></i></button></div>
 </div>
-<div class="cell" id="dbea7c46">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a aria-hidden="true" href="#cb25-1" tabindex="-1"></a><span class="co"># Envia 4 inteiros como entrada padrão (stdin) para o script EP01_01.py usando um pipe</span></span>
-<span id="cb25-2"><a aria-hidden="true" href="#cb25-2" tabindex="-1"></a><span class="op">!</span>echo <span class="op">-</span>e <span class="st">"0</span><span class="ch">\n</span><span class="st">0</span><span class="ch">\n</span><span class="st">4</span><span class="ch">\n</span><span class="st">4"</span> <span class="op">|</span> python3 EP01_01.py</span></code></pre></div><button class="code-copy-button" title="Copiar para a área de transferência"><i class="bi"></i></button></div>
+<div class="cell" id="0d157c1f">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a aria-hidden="true" href="#cb26-1" tabindex="-1"></a><span class="co"># Envia 4 inteiros como entrada padrão (stdin) para o script EP01_01.py usando um pipe</span></span>
+<span id="cb26-2"><a aria-hidden="true" href="#cb26-2" tabindex="-1"></a><span class="op">!</span>echo <span class="op">-</span>e <span class="st">"0</span><span class="ch">\n</span><span class="st">0</span><span class="ch">\n</span><span class="st">4</span><span class="ch">\n</span><span class="st">4"</span> <span class="op">|</span> python3 EP01_01.py</span></code></pre></div><button class="code-copy-button" title="Copiar para a área de transferência"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>5.66
 8.00
 4.00</code></pre>
 </div>
 </div>
-<div class="cell" id="ff202fbe">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a aria-hidden="true" href="#cb27-1" tabindex="-1"></a>TestSuite(<span class="st">"EP01_01.py"</span>).run()</span></code></pre></div><button class="code-copy-button" title="Copiar para a área de transferência"><i class="bi"></i></button></div>
+<div class="cell" id="d8c63db0">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a aria-hidden="true" href="#cb28-1" tabindex="-1"></a>TestSuite(<span class="st">"EP01_01.py"</span>).run()</span></code></pre></div><button class="code-copy-button" title="Copiar para a área de transferência"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">✔️ EP01_01.cases já existe em casos/
 📋 5 caso(s) carregado(s) de casos/EP01_01.cases

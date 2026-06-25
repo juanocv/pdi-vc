@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>6&nbsp; Inspeção Industrial e Análise de Documentos – Processamento Digital de Imagens e Visão Computacional</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../referencias.html" rel="next">
+<link href="../cap05/cap05.py.pt.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-de63f62b328812d8e578a4d74e282472.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-d024cad0e32bf2110a1b02cbacc0c8bd.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..900;1,8..60,300..900&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('a[href="./"], a[href="."]').forEach(function(a) {
+    a.setAttribute('href', '../index.html');
+  });
+});
+</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../custom.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../cap06/cap06.py.pt.html">Parte II — Visão Computacional</a></li><li class="breadcrumb-item"><a href="../cap06/cap06.py.pt.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Inspeção Industrial e Análise de Documentos</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Processamento Digital de Imagens e Visão Computacional</a> 
+        <div class="sidebar-tools-main">
+    <a href="../livro.pt.py.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Procurar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">PDI e VC — Python</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../prefacio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Prefácio</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Parte I — Fundamentos de PDI</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar seção">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cap01/cap01.py.pt.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Fundamentos e Primeiros Passos</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cap02/cap02.py.pt.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Da Captura ao Pixel - Amostragem, Quantização e Conectividade</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cap03/cap03.py.pt.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Operações Espaciais: Intensidade, Histograma e Filtragem</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cap04/cap04.py.pt.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Morfologia Matemática e Segmentação de Imagens</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cap05/cap05.py.pt.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Transformadas e Compressão</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Parte II — Visão Computacional</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Alternar seção">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cap06/cap06.py.pt.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Inspeção Industrial e Análise de Documentos</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../referencias.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Referências</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Índice</h2>
+   
+  <ul>
+  <li><a href="#objetivos-do-capítulo" id="toc-objetivos-do-capítulo" class="nav-link active" data-scroll-target="#objetivos-do-capítulo"><span class="header-section-number">6.1</span> Objetivos do Capítulo</a></li>
+  <li><a href="#configuração-do-ambiente" id="toc-configuração-do-ambiente" class="nav-link" data-scroll-target="#configuração-do-ambiente"><span class="header-section-number">6.2</span> Configuração do Ambiente</a></li>
+  <li><a href="#bases-de-imagens-para-experimentação" id="toc-bases-de-imagens-para-experimentação" class="nav-link" data-scroll-target="#bases-de-imagens-para-experimentação"><span class="header-section-number">6.3</span> Bases de Imagens para Experimentação</a>
+  <ul class="collapse">
+  <li><a href="#imagens-públicas-com-skimage.data" id="toc-imagens-públicas-com-skimage.data" class="nav-link" data-scroll-target="#imagens-públicas-com-skimage.data"><span class="header-section-number">6.3.1</span> Imagens Públicas com <code>skimage.data</code></a></li>
+  <li><a href="#imagens-reais-com-opencv" id="toc-imagens-reais-com-opencv" class="nav-link" data-scroll-target="#imagens-reais-com-opencv"><span class="header-section-number">6.3.2</span> Imagens Reais com OpenCV</a></li>
+  </ul></li>
+  <li><a href="#fundamentos-de-omr-e-inspeção-industrial" id="toc-fundamentos-de-omr-e-inspeção-industrial" class="nav-link" data-scroll-target="#fundamentos-de-omr-e-inspeção-industrial"><span class="header-section-number">6.4</span> Fundamentos de OMR e Inspeção Industrial</a></li>
+  <li><a href="#projetos-práticos-construção-de-um-pipeline-de-análise-documental" id="toc-projetos-práticos-construção-de-um-pipeline-de-análise-documental" class="nav-link" data-scroll-target="#projetos-práticos-construção-de-um-pipeline-de-análise-documental"><span class="header-section-number">6.5</span> Projetos Práticos: Construção de um Pipeline de Análise Documental</a>
+  <ul class="collapse">
+  <li><a href="#alinhamento-automático-de-documentos-ocromr-pre-processing" id="toc-alinhamento-automático-de-documentos-ocromr-pre-processing" class="nav-link" data-scroll-target="#alinhamento-automático-de-documentos-ocromr-pre-processing"><span class="header-section-number">6.5.1</span> Alinhamento Automático de Documentos (<em>OCR/OMR Pre-processing</em>)</a></li>
+  <li><a href="#algoritmo-de-retificação-de-inclinação-deskew" id="toc-algoritmo-de-retificação-de-inclinação-deskew" class="nav-link" data-scroll-target="#algoritmo-de-retificação-de-inclinação-deskew"><span class="header-section-number">6.5.2</span> Algoritmo de Retificação de Inclinação (<em>Deskew</em>)</a></li>
+  <li><a href="#modelagem-matemática" id="toc-modelagem-matemática" class="nav-link" data-scroll-target="#modelagem-matemática"><span class="header-section-number">6.5.3</span> Modelagem Matemática</a></li>
+  <li><a href="#limitações-práticas" id="toc-limitações-práticas" class="nav-link" data-scroll-target="#limitações-práticas"><span class="header-section-number">6.5.4</span> Limitações Práticas</a></li>
+  </ul></li>
+  <li><a href="#equalização-local-de-contraste-com-clahe" id="toc-equalização-local-de-contraste-com-clahe" class="nav-link" data-scroll-target="#equalização-local-de-contraste-com-clahe"><span class="header-section-number">6.6</span> Equalização Local de Contraste com CLAHE</a></li>
+  <li><a href="#mão-na-massa-exercícios-práticos" id="toc-mão-na-massa-exercícios-práticos" class="nav-link" data-scroll-target="#mão-na-massa-exercícios-práticos"><span class="header-section-number">6.7</span> Mão na Massa: Exercícios Práticos</a>
+  <ul class="collapse">
+  <li><a href="#exercício-1-validação-robusta-contra-ruídos-valor-40-pontos" id="toc-exercício-1-validação-robusta-contra-ruídos-valor-40-pontos" class="nav-link" data-scroll-target="#exercício-1-validação-robusta-contra-ruídos-valor-40-pontos"><span class="header-section-number">6.7.1</span> Exercício 1: Validação Robusta contra Ruídos (Valor: 4,0 pontos)</a></li>
+  <li><a href="#exercício-2-detecção-de-fraudes-e-dupla-marcação-valor-60-pontos" id="toc-exercício-2-detecção-de-fraudes-e-dupla-marcação-valor-60-pontos" class="nav-link" data-scroll-target="#exercício-2-detecção-de-fraudes-e-dupla-marcação-valor-60-pontos"><span class="header-section-number">6.7.2</span> Exercício 2: Detecção de Fraudes e Dupla Marcação (Valor: 6,0 pontos)</a></li>
+  <li><a href="#exercício-3-pipeline-completo-de-end-to-end-valor-100-pontos-desafio" id="toc-exercício-3-pipeline-completo-de-end-to-end-valor-100-pontos-desafio" class="nav-link" data-scroll-target="#exercício-3-pipeline-completo-de-end-to-end-valor-100-pontos-desafio"><span class="header-section-number">6.7.3</span> Exercício 3: Pipeline Completo de End-to-End (Valor: 10,0 pontos — Desafio)</a></li>
+  </ul></li>
+  <li><a href="#próximos-passos" id="toc-próximos-passos" class="nav-link" data-scroll-target="#próximos-passos"><span class="header-section-number">6.8</span> Próximos Passos</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../cap06/cap06.py.pt.html">Parte II — Visão Computacional</a></li><li class="breadcrumb-item"><a href="../cap06/cap06.py.pt.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Inspeção Industrial e Análise de Documentos</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Inspeção Industrial e Análise de Documentos</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><a href="https://colab.research.google.com/github/fzampirolli/pdi-vc/blob/master/notebooks_alunos/cap06/cap06_aluno.ipynb"><img src="imagens/colab-badge.png" class="img-fluid" style="width:16.0%"></a> <a href="https://github.com/fzampirolli/pdi-vc"><img src="imagens/github-badge.png" class="img-fluid" style="width:20.0%"></a></p>
+<p>🚧 <strong>Em construção!</strong></p>
+<p>Este capítulo está sendo preparado e será disponibilizado em breve com exercícios práticos, desafios de programação e exemplos.</p>
+<hr>
+<p>Até o momento, na <strong>Parte I: Processamento Digital de Imagens (PDI)</strong>, exploramos o <strong>tratamento matricial da imagem</strong>: filtros morfológicos, convoluções, limiarizações espaciais e transformações de frequência. Essas técnicas transformam pixels em pixels melhorados.</p>
+<p>Agora, na <strong>Parte II: Visão Computacional (VC)</strong>, fazemos a transição fundamental: de <strong>dados visuais brutos para inteligência</strong>. Não se trata mais apenas de melhorar ou transformar pixels—trata-se de <strong>extrair semântica, geometria e estrutura</strong> das imagens para resolver problemas do mundo real.</p>
+<p>Este capítulo marca esse ponto de virada com duas aplicações práticas:</p>
+<ol type="1">
+<li><strong>Inspeção Industrial Automatizada</strong> — sistemas que inspecionam qualidade em tempo real em linhas de produção, substituindo olhos humanos</li>
+<li><strong>Análise Automatizada de Documentos</strong> — reconhecimento de formulários, gabaritos e documentos, utilizado em plataformas educacionais, bancos e governos (como o ecossistema <strong>MCTest</strong>)</li>
+</ol>
+<p>Essas aplicações unificam conceitos de <strong>detecção de padrões geométricos</strong>, <strong>extração de propriedades invariantes</strong> e <strong>tomada de decisão automática</strong>—os pilares da Visão Computacional moderna.</p>
+<hr>
+<section id="objetivos-do-capítulo" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="objetivos-do-capítulo"><span class="header-section-number">6.1</span> Objetivos do Capítulo</h2>
+<p>Ao final deste capítulo, você será capaz de:</p>
+<ul>
+<li><strong>Alinhar documentos automaticamente</strong> usando a Transformada de Hough, corrigindo inclinações introduzidas na digitalização</li>
+<li><strong>Detectar e isolar marcadores</strong> (bolhas de resposta, códigos) com base em propriedades geométricas invariantes (área, circularidade, momentos de Hu)</li>
+<li><strong>Extrair informações estruturadas</strong> de documentos desorganizados via reconhecimento de padrões espaciais e QR Codes</li>
+<li><strong>Implementar um sistema completo de OMR</strong> (Optical Mark Recognition) para correção automatizada de avaliações</li>
+<li><strong>Validar robustez</strong> contra ruídos de aquisição, rotações e variações de iluminação</li>
+<li><strong>Aplicar conceitos de VC em sistemas reais</strong> de inspeção e análise documental</li>
+</ul>
+</section>
+<section id="configuração-do-ambiente" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="configuração-do-ambiente"><span class="header-section-number">6.2</span> Configuração do Ambiente</h2>
+<p>Os exemplos deste capítulo utilizam bibliotecas amplamente empregadas PDI-VC. Caso necessário, instale previamente os pacotes utilizados nos experimentos.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Instalação das bibliotecas necessárias</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install opencv<span class="op">-</span>python scikit<span class="op">-</span>image numpy matplotlib</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Além das bibliotecas tradicionais, os exemplos utilizam o módulo didático <code>morph.py</code>, desenvolvido para simplificar operações de leitura, visualização e processamento de imagens. O código a seguir importa as bibliotecas necessárias, verifica a disponibilidade do arquivo <code>morph.py</code>, realiza seu download quando necessário e carrega o módulo para utilização ao longo do capítulo.</p>
+<div id="ede7291f" class="cell" data-quarto-raw="true">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os, importlib, urllib.request</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cv2 </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> skimage <span class="im">import</span> io, data, color </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>BASE_URL <span class="op">=</span> <span class="st">"https://raw.githubusercontent.com/fzampirolli/pdi-vc/master/morph"</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> f <span class="kw">in</span> [<span class="st">"morph.py"</span>]:</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> os.path.exists(f):</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        urllib.request.urlretrieve(<span class="ss">f"</span><span class="sc">{</span>BASE_URL<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>f<span class="sc">}</span><span class="ss">"</span>, f)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> morph</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>importlib.<span class="bu">reload</span>(morph)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> morph <span class="im">import</span> mm</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>version <span class="op">=</span> <span class="bu">getattr</span>(morph, <span class="st">"__version__"</span>, <span class="st">"local_file"</span>)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"✅ Ambiente pronto. Módulo 'morph' carregado (versão: </span><span class="sc">{</span>version<span class="sc">}</span><span class="ss">)."</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>✅ Ambiente pronto. Módulo 'morph' carregado (versão: 1.1.2).</code></pre>
+</div>
+</div>
+</section>
+<section id="bases-de-imagens-para-experimentação" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="bases-de-imagens-para-experimentação"><span class="header-section-number">6.3</span> Bases de Imagens para Experimentação</h2>
+<p>Os códigos apresentados nesta segunda parte do livro serão aplicados, sempre que possível, a documentos digitalizados, folhas de respostas, códigos de barras, QR Codes e outros exemplos provenientes de aplicações reais. Entretanto, para facilitar a experimentação e a reprodução dos resultados, também serão utilizadas imagens públicas amplamente adotadas no ensino e na pesquisa em Visão Computacional.</p>
+<section id="imagens-públicas-com-skimage.data" class="level3" data-number="6.3.1">
+<h3 data-number="6.3.1" class="anchored" data-anchor-id="imagens-públicas-com-skimage.data"><span class="header-section-number">6.3.1</span> Imagens Públicas com <code>skimage.data</code></h3>
+<p>A biblioteca <code>skimage.data</code> fornece uma coleção de imagens de referência frequentemente utilizada em Processamento Digital de Imagens e Visão Computacional. O conjunto inclui fotografias, documentos digitalizados, padrões sintéticos e objetos adequados para experimentos de segmentação, extração de contornos, análise geométrica e reconhecimento de padrões.</p>
+<p>A Tabela <a href="#tbl-skimage-data" class="quarto-xref">Tabela&nbsp;<span>6.1</span></a> apresenta algumas das principais imagens disponíveis nessa coleção, enquanto a Figura <a href="#fig-skimage-data" class="quarto-xref">Figura&nbsp;<span>6.1</span></a> ilustra exemplos representativos. Para os tópicos abordados neste capítulo, destacam-se as imagens <code>page()</code> e <code>text()</code>, particularmente adequadas para experimentos de OCR (<em>Optical Character Recognition</em>), OMR (<em>Optical Mark Recognition</em>) e análise documental.</p>
+</section>
+<section id="imagens-reais-com-opencv" class="level3" data-number="6.3.2">
+<h3 data-number="6.3.2" class="anchored" data-anchor-id="imagens-reais-com-opencv"><span class="header-section-number">6.3.2</span> Imagens Reais com OpenCV</h3>
+<p>Embora as imagens do <code>skimage.data</code> sejam úteis para demonstrações didáticas e validação de algoritmos, aplicações práticas normalmente utilizam imagens obtidas por digitalização, câmeras ou outros dispositivos de aquisição.</p>
+<p>Nesse contexto, a biblioteca OpenCV (<code>cv2</code>) fornece funções para leitura de arquivos de imagem, captura de vídeo e acesso a dispositivos de aquisição. Ao longo deste livro, essas funções são encapsuladas pela biblioteca didática <code>morph.py</code>, por meio de rotinas como <code>mm.read</code>, simplificando a manipulação de imagens e mantendo uma interface consistente entre os exemplos. Dessa forma, os mesmos algoritmos desenvolvidos neste capítulo podem ser aplicados tanto às imagens públicas utilizadas para demonstração quanto a documentos e cenas reais, preservando o mesmo fluxo de processamento.</p>
+<div id="tbl-skimage-data" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-quarto-raw="true">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-skimage-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabela&nbsp;6.1: Principais imagens públicas disponíveis no módulo <em>skimage.data</em>.
+</figcaption>
+<div aria-describedby="tbl-skimage-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 24%">
+<col style="width: 75%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Função</th>
+<th style="text-align: left;">Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>data.astronaut()</code></td>
+<td style="text-align: left;">Fotografia colorida de um astronauta.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>data.camera()</code></td>
+<td style="text-align: left;">Fotografia clássica em tons de cinza amplamente utilizada em PDI.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>data.cat()</code></td>
+<td style="text-align: left;">Fotografia colorida de um gato.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>data.chelsea()</code></td>
+<td style="text-align: left;">Retrato colorido da gata Chelsea.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>data.clock()</code></td>
+<td style="text-align: left;">Relógio analógico para detecção de formas e contornos.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>data.coins()</code></td>
+<td style="text-align: left;">Conjunto de moedas utilizado em segmentação e <em>watershed</em>.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>data.coffee()</code></td>
+<td style="text-align: left;">Fotografia colorida de uma xícara de café.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>data.horse()</code></td>
+<td style="text-align: left;">Silhueta binária de um cavalo.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>data.moon()</code></td>
+<td style="text-align: left;">Imagem da Lua em tons de cinza.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>data.page()</code></td>
+<td style="text-align: left;">Página digitalizada de documento.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>data.text()</code></td>
+<td style="text-align: left;">Imagem contendo texto impresso para experimentos de OCR.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>data.checkerboard()</code></td>
+<td style="text-align: left;">Padrão xadrez para calibração e transformações geométricas.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>data.binary_blobs()</code></td>
+<td style="text-align: left;">Blobs binários sintéticos para estudos de conectividade e morfologia.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<div id="cell-fig-skimage-data" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> skimage <span class="im">import</span> data</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>imgs <span class="op">=</span> {</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"camera"</span>: data.camera(),</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"coins"</span>: data.coins(),</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"text"</span>: data.text(),</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"page"</span>: data.page(),</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"moon"</span>: data.moon(),</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"clock"</span>: data.clock(),</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"horse"</span>: data.horse()</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">4</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>))</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> a, (nome, img) <span class="kw">in</span> <span class="bu">zip</span>(ax.ravel(), imgs.items()):</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    a.imshow(img, cmap<span class="op">=</span><span class="st">"gray"</span>)</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    a.set_title(nome)</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    a.axis(<span class="st">"off"</span>)</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="fig-skimage-data" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-skimage-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="cap06.py.pt_files/figure-html/fig-skimage-data-output-1.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-skimage-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;6.1: Algumas imagens públicas disponíveis em <em>skimage.data</em>.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="fundamentos-de-omr-e-inspeção-industrial" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="fundamentos-de-omr-e-inspeção-industrial"><span class="header-section-number">6.4</span> Fundamentos de OMR e Inspeção Industrial</h2>
+<p>O <strong>Reconhecimento Óptico de Marcas</strong> (<em>Optical Mark Recognition</em> — OMR) é uma técnica de Visão Computacional destinada à identificação automática de marcações realizadas em posições previamente definidas de um formulário. Suas aplicações incluem folhas de respostas, questionários, formulários administrativos, pesquisas de opinião e diversos outros documentos estruturados.</p>
+<p>Diferentemente do OCR (<em>Optical Character Recognition</em>), cujo objetivo é reconhecer caracteres e palavras, o OMR concentra-se na análise da presença, ausência ou intensidade de marcas em regiões específicas da imagem. Enquanto o OCR busca interpretar conteúdo textual, o OMR explora propriedades geométricas e estatísticas associadas ao preenchimento de áreas previamente conhecidas.</p>
+<p>Os sistemas modernos de OMR operam sobre imagens obtidas por scanners, câmeras ou dispositivos móveis, utilizando técnicas de Processamento Digital de Imagens e Visão Computacional para automatizar tarefas que, tradicionalmente, dependiam de equipamentos especializados.</p>
+<p>De forma geral, um pipeline de OMR é composto pelas seguintes etapas:</p>
+<ol type="1">
+<li><strong>Aquisição da imagem:</strong> conversão do documento físico em uma representação digital.</li>
+<li><strong>Pré-processamento:</strong> correção geométrica, redução de ruídos e binarização.</li>
+<li><strong>Localização das regiões de interesse:</strong> identificação das áreas destinadas às marcações.</li>
+<li><strong>Análise das marcações:</strong> avaliação do preenchimento das regiões candidatas.</li>
+<li><strong>Interpretação dos resultados:</strong> conversão das marcações detectadas em respostas, dados ou indicadores quantitativos.</li>
+</ol>
+<p>Os mesmos princípios são amplamente utilizados em sistemas de <strong>Inspeção Industrial</strong>, nos quais imagens são analisadas automaticamente para verificar a qualidade de produtos e processos. Entre as aplicações mais comuns estão a verificação da presença de componentes, a detecção de defeitos, a medição de dimensões e a validação de características geométricas.</p>
+<p>Sob a perspectiva computacional, tanto o OMR quanto a inspeção industrial compartilham um mesmo fluxo de processamento: aquisição da imagem, segmentação de regiões relevantes, extração de características e tomada de decisão automatizada. Por esse motivo, as técnicas estudadas neste capítulo possuem aplicação direta em ambos os domínios.</p>
+</section>
+<section id="projetos-práticos-construção-de-um-pipeline-de-análise-documental" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="projetos-práticos-construção-de-um-pipeline-de-análise-documental"><span class="header-section-number">6.5</span> Projetos Práticos: Construção de um Pipeline de Análise Documental</h2>
+<p>Os conceitos apresentados neste capítulo serão desenvolvidos por meio de projetos práticos que reproduzem etapas típicas de sistemas reais de análise documental. Cada projeto introduz técnicas fundamentais que serão reutilizadas em tarefas de OCR, OMR, inspeção visual e processamento de formulários.</p>
+<section id="alinhamento-automático-de-documentos-ocromr-pre-processing" class="level3" data-number="6.5.1">
+<h3 data-number="6.5.1" class="anchored" data-anchor-id="alinhamento-automático-de-documentos-ocromr-pre-processing"><span class="header-section-number">6.5.1</span> Alinhamento Automático de Documentos (<em>OCR/OMR Pre-processing</em>)</h3>
+<p>A correção de inclinação (<em>deskew</em>) é uma das etapas mais importantes no processamento de documentos. Durante a digitalização ou captura por dispositivos móveis, pequenas rotações podem ser introduzidas na imagem, dificultando a localização de regiões de interesse e comprometendo a precisão dos algoritmos de segmentação e reconhecimento.</p>
+<p>Neste projeto será desenvolvido um sistema capaz de estimar automaticamente a orientação predominante de um documento e corrigir sua inclinação. Para isso, serão utilizadas técnicas clássicas de detecção de bordas e de identificação de retas baseadas no operador de Canny e na Transformada de Hough.</p>
+<p>A partir das linhas estruturais detectadas, será estimado o ângulo de rotação do documento. Em seguida, uma transformação afim será aplicada para produzir uma versão alinhada da imagem, preservando sua estrutura geométrica e facilitando as etapas posteriores de análise.</p>
+<p>Antes da correção geométrica, o documento precisa ser convertido para um formato compatível com as bibliotecas de Visão Computacional. Como muitos formulários e folhas de resposta são distribuídos em formato PDF, a primeira etapa do pipeline consiste na rasterização de cada página, transformando-a em uma imagem digital composta por uma matriz de pixels.</p>
+<p>Neste capítulo, essa conversão será realizada com a biblioteca <code>pdf2image</code>, gerando imagens PNG com resolução de 200 DPI (<em>dots per inch</em>). A partir dessas imagens, torna-se possível aplicar técnicas de detecção de bordas, Transformada de Hough, segmentação, extração de contornos e reconhecimento automático de padrões.</p>
+<div id="cell-fig-06-pdf-para-imagem" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cv2</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pdf2image <span class="im">import</span> convert_from_path</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> skimage <span class="im">import</span> data</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> morph <span class="im">import</span> mm</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Diretório dos microdados e folhas de respostas do exame institucional</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>file_path <span class="op">=</span> <span class="st">"dados/provas_qrcode_EP.pdf"</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> os.path.exists(file_path):</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Rasterização das páginas com resolução otimizada de 200 DPI</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    pages <span class="op">=</span> convert_from_path(file_path, dpi<span class="op">=</span><span class="dv">200</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i, page <span class="kw">in</span> <span class="bu">enumerate</span>(pages):</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>        saida <span class="op">=</span> <span class="ss">f"test</span><span class="sc">{</span>i<span class="op">+</span><span class="dv">1</span><span class="sc">:02d}</span><span class="ss">.png"</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>        page.save(saida)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"[INGESTÃO] Página PDF convertida com sucesso: </span><span class="sc">{</span>saida<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"[AVISO] Arquivo PDF não localizado no path. Ativando fallback via skimage.data."</span>)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Injeta matriz de texto pública para garantir a execução contínua do pipeline</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    img_fallback <span class="op">=</span> data.text()</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    cv2.imwrite(<span class="st">"test02.png"</span>, img_fallback)</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"[INGESTÃO] Imagem de fallback estruturada: test02.png"</span>)</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Carrega e exibe a imagem rasterizada inicial utilizando o ecossistema morph</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>img_original <span class="op">=</span> mm.read(<span class="st">'test02.png'</span>)</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>mm.show(img_original, figsize<span class="op">=</span>(<span class="dv">4</span>, <span class="dv">3</span>))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[INGESTÃO] Página PDF convertida com sucesso: test01.png
+[INGESTÃO] Página PDF convertida com sucesso: test02.png
+[INGESTÃO] Página PDF convertida com sucesso: test03.png</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div id="fig-06-pdf-para-imagem" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-06-pdf-para-imagem-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="cap06.py.pt_files/figure-html/fig-06-pdf-para-imagem-output-2.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-06-pdf-para-imagem-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;6.2: Pipeline de ingestão de documentos: rasterização adaptativa de páginas PDF para matrizes discretas em formato PNG.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="algoritmo-de-retificação-de-inclinação-deskew" class="level3" data-number="6.5.2">
+<h3 data-number="6.5.2" class="anchored" data-anchor-id="algoritmo-de-retificação-de-inclinação-deskew"><span class="header-section-number">6.5.2</span> Algoritmo de Retificação de Inclinação (<em>Deskew</em>)</h3>
+<p>A etapa de <em>deskew</em> tem como objetivo estimar e corrigir a inclinação global de um documento digitalizado. A Figura <a href="#fig-06-comparativo-pipeline" class="quarto-xref">Figura&nbsp;<span>6.3</span></a> apresenta as principais etapas do processo: a imagem original, o mapa de bordas obtido pelo operador de Canny e o documento após a correção geométrica.</p>
+<p>O algoritmo implementado neste capítulo é composto por três etapas principais:</p>
+<ol type="1">
+<li>detecção de bordas com o operador de Canny;</li>
+<li>estimação da orientação predominante por meio da Transformada de Hough;</li>
+<li>aplicação de uma transformação afim de rotação para corrigir a inclinação.</li>
+</ol>
+<p>Após a correção, o documento passa a apresentar alinhamento mais consistente com os eixos da imagem, facilitando as etapas posteriores de segmentação, extração de componentes conexos e reconhecimento de marcas.</p>
+</section>
+<section id="modelagem-matemática" class="level3" data-number="6.5.3">
+<h3 data-number="6.5.3" class="anchored" data-anchor-id="modelagem-matemática"><span class="header-section-number">6.5.3</span> Modelagem Matemática</h3>
+<section id="detecção-de-bordas" class="level4" data-number="6.5.3.1">
+<h4 data-number="6.5.3.1" class="anchored" data-anchor-id="detecção-de-bordas"><span class="header-section-number">6.5.3.1</span> Detecção de Bordas</h4>
+<p>Inicialmente, a imagem é suavizada por um filtro Gaussiano para reduzir ruídos e pequenas variações locais de intensidade. Os fundamentos da filtragem espacial e da convolução foram apresentados no Capítulo 3. Em seguida, o operador de Canny calcula a magnitude do gradiente da imagem:</p>
+<p><span class="math display">\[
+|\nabla f| =
+\sqrt{
+\left(\frac{\partial f}{\partial x}\right)^2 +
+\left(\frac{\partial f}{\partial y}\right)^2
+}.
+\]</span></p>
+<p>Após a supressão de não-máximos e a limiarização por histerese, obtém-se uma imagem binária contendo as principais bordas presentes no documento.</p>
+</section>
+<section id="transformada-de-hough" class="level4" data-number="6.5.3.2">
+<h4 data-number="6.5.3.2" class="anchored" data-anchor-id="transformada-de-hough"><span class="header-section-number">6.5.3.2</span> Transformada de Hough</h4>
+<p>Os pixels de borda são então analisados pela Transformada de Hough Linear. Cada ponto <span class="math inline">\((x,y)\)</span> contribui para o conjunto de retas descrito por</p>
+<p><span class="math display">\[
+\rho = x \cos\theta + y \sin\theta.
+\]</span></p>
+<p>Os máximos da matriz acumuladora correspondem às estruturas lineares predominantes da imagem. Em documentos, essas estruturas podem corresponder às bordas da página, linhas de tabelas, formulários ou ao próprio alinhamento das linhas de texto.</p>
+<p>O código seleciona os ângulos pertencentes ao intervalo <span class="math inline">\([-45^\circ,45^\circ]\)</span> e utiliza a mediana desses valores como estimativa da inclinação global do documento. Essa estratégia reduz a influência de detecções isoladas e produz uma estimativa mais estável da orientação predominante.</p>
+</section>
+<section id="rotação-afim" class="level4" data-number="6.5.3.3">
+<h4 data-number="6.5.3.3" class="anchored" data-anchor-id="rotação-afim"><span class="header-section-number">6.5.3.3</span> Rotação Afim</h4>
+<p>Conhecido o ângulo estimado, aplica-se uma transformação afim de rotação em torno do centro da imagem. As transformações afins foram introduzidas no Capítulo 2, onde foram estudadas operações de translação, escala, cisalhamento e rotação em coordenadas homogêneas.</p>
+<p>A função <code>mm.rotate</code> implementa essa transformação utilizando interpolação bicúbica, produzindo uma imagem alinhada e preservando a qualidade visual dos contornos e caracteres.</p>
+<p>Como a rotação gera regiões sem informação nos limites da imagem, uma máscara adicional é utilizada para identificar esses pixels e substituí-los por branco, produzindo um resultado mais adequado para as etapas posteriores de análise documental.</p>
+</section>
+</section>
+<section id="limitações-práticas" class="level3" data-number="6.5.4">
+<h3 data-number="6.5.4" class="anchored" data-anchor-id="limitações-práticas"><span class="header-section-number">6.5.4</span> Limitações Práticas</h3>
+<p>O desempenho do algoritmo depende da presença de estruturas lineares suficientemente visíveis para serem detectadas pela Transformada de Hough. Embora bordas do documento e linhas de formulários contribuam significativamente para a estimativa angular, o método também pode utilizar o alinhamento das próprias linhas de texto para inferir a orientação global da página.</p>
+<p>Entretanto, imagens com baixa resolução, ruído excessivo, sombras intensas ou inclinações muito elevadas podem reduzir a precisão da estimativa. Na prática, documentos digitalizados com resolução próxima de 200 DPI e iluminação homogênea costumam fornecer resultados adequados para as etapas subsequentes de OCR e OMR.</p>
+<div id="cell-fig-06-comparativo-pipeline" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cv2</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> morph <span class="im">import</span> mm</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> retificar_inclinacao_documento(img):</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    gray <span class="op">=</span> mm.gray(img) <span class="cf">if</span> img.ndim <span class="op">==</span> <span class="dv">3</span> <span class="cf">else</span> img</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    edges <span class="op">=</span> cv2.Canny(cv2.GaussianBlur(gray, (<span class="dv">5</span>,<span class="dv">5</span>), <span class="dv">0</span>), <span class="dv">50</span>, <span class="dv">150</span>)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    lines <span class="op">=</span> cv2.HoughLines(edges, <span class="dv">1</span>, np.pi<span class="op">/</span><span class="dv">180</span>, <span class="dv">200</span>)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> lines <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> edges, img</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    angulos <span class="op">=</span> []</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> line <span class="kw">in</span> lines:</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>        angulo <span class="op">=</span> np.rad2deg(line[<span class="dv">0</span>][<span class="dv">1</span>]) <span class="op">-</span> <span class="dv">90</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">-</span><span class="dv">45</span> <span class="op">&lt;</span> angulo <span class="op">&lt;</span> <span class="dv">45</span>:</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>            angulos.append(angulo)</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> angulos:</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> edges, img</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> edges, mm.rotate(img, np.median(angulos), interp<span class="op">=</span><span class="st">"bicubic"</span>)</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Execução do pipeline de deskew</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>img_edges, img_final <span class="op">=</span> retificar_inclinacao_documento(img_original)</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Exibição múltipla padronizada com o formato nativo do livro</span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>mm.show(</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>    [img_original, img_edges, img_final],</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>    titles<span class="op">=</span>[<span class="st">"Imagem Original"</span>, <span class="st">"Bordas de Canny"</span>, <span class="st">"Documento Retificado"</span>],</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>    cols<span class="op">=</span><span class="dv">3</span>,</span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>    figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">4</span>)</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="fig-06-comparativo-pipeline" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-06-comparativo-pipeline-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="cap06.py.pt_files/figure-html/fig-06-comparativo-pipeline-output-1.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-06-comparativo-pipeline-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;6.3: Pipeline de retificação axial: exibição comparativa entre a entrada rotacionada original, o mapa de gradientes estruturais de Canny e o resultado final alinhado com fundo normalizado em branco.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>O algoritmo apresentado nesta seção foi desenvolvido com o objetivo de ilustrar os princípios fundamentais da correção automática de inclinação utilizando detecção de bordas, Transformada de Hough e rotação afim. Por utilizar apenas as estruturas lineares predominantes da imagem, ele é suficientemente geral para funcionar em diversos tipos de documentos, formulários e páginas contendo texto.</p>
+<p>Entretanto, sistemas reais de OMR costumam explorar informações geométricas adicionais para aumentar a robustez do alinhamento. No modelo de folha de respostas utilizado pelo ecossistema MCTest, por exemplo, existem quatro discos pretos de referência posicionados próximos às extremidades do documento, além das regiões correspondentes ao cabeçalho, ao QR Code de identificação e aos quadros de respostas.</p>
+<p>Nessa situação, o alinhamento pode ser realizado a partir da localização explícita desses marcadores geométricos, permitindo estimar com maior precisão a rotação, a escala e eventuais deslocamentos da folha. Como os discos possuem posição conhecida no formulário, o processo torna-se menos sensível à quantidade de texto presente na página, à ausência de linhas estruturais e a pequenas variações de impressão ou digitalização.</p>
+<p>Por esse motivo, embora a estratégia baseada na Transformada de Hough seja amplamente utilizada e adequada para fins didáticos, a utilização de marcadores conhecidos constitui uma solução mais robusta para sistemas de correção automatizada de provas e formulários estruturados, sendo a abordagem adotada nas etapas posteriores deste capítulo.</p>
+</section>
+</section>
+<section id="equalização-local-de-contraste-com-clahe" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="equalização-local-de-contraste-com-clahe"><span class="header-section-number">6.6</span> Equalização Local de Contraste com CLAHE</h2>
+<p>A qualidade da segmentação depende diretamente do contraste da imagem de entrada. Em documentos digitalizados é comum encontrar variações de iluminação, sombras, regiões superexpostas e diferenças de tonalidade do papel, fatores que dificultam a separação entre primeiro plano e fundo por meio de um limiar global.</p>
+<p>Uma estratégia amplamente empregada consiste em melhorar inicialmente o contraste local utilizando a técnica <strong>CLAHE</strong> (<em>Contrast Limited Adaptive Histogram Equalization</em>), apresentada no Capítulo 4. Diferentemente da equalização global de histograma, o CLAHE divide a imagem em pequenas regiões (<em>tiles</em>) e equaliza cada uma delas individualmente, limitando a amplificação do contraste para evitar o realce excessivo do ruído.</p>
+<p>A Figura <a href="#fig-06-clahe-page" class="quarto-xref">Figura&nbsp;<span>6.4</span></a> ilustra esse procedimento utilizando a imagem <code>page()</code> da biblioteca <code>skimage.data</code>, amplamente empregada em experimentos de OCR e análise documental. Inicialmente, aplica-se a limiarização de Otsu diretamente sobre a imagem original. Em seguida, a mesma limiarização é realizada após a aplicação do CLAHE.</p>
+<p>Observa-se que a equalização local aumenta o contraste entre o texto e o fundo do documento, permitindo que a limiarização de Otsu produza uma imagem binária mais homogênea. Embora o algoritmo permaneça o mesmo, a melhoria do contraste reduz a influência de pequenas variações de iluminação e facilita as etapas posteriores de extração de contornos, rotulação de componentes conexos, OCR e OMR.</p>
+<p>No projeto desenvolvido na seção anterior, a folha de respostas utilizada como exemplo foi obtida por digitalização em condições controladas de iluminação. Por esse motivo, a limiarização direta foi suficiente para o processo de retificação geométrica. Em aplicações práticas, entretanto, documentos frequentemente são capturados por câmeras de dispositivos móveis ou em ambientes com iluminação não uniforme. Nesses casos, a aplicação do CLAHE antes da limiarização costuma aumentar a robustez da segmentação e melhorar a qualidade das etapas subsequentes do pipeline de Visão Computacional.</p>
+<div id="cell-fig-06-clahe-page" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cv2</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> skimage <span class="im">import</span> data</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> morph <span class="im">import</span> mm</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>img <span class="op">=</span> data.page() <span class="co"># ou</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co"># img = mm.gray(img_final) # com image da folha de prova</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>img_otsu <span class="op">=</span> mm.threshold(img)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>img_clahe <span class="op">=</span> cv2.createCLAHE(<span class="fl">2.0</span>, (<span class="dv">8</span>,<span class="dv">8</span>)).<span class="bu">apply</span>(img)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>img_clahe_otsu <span class="op">=</span> mm.threshold(img_clahe)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>mm.show(</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    [img, img_otsu, img_clahe_otsu],</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    titles<span class="op">=</span>[<span class="st">"Original"</span>, <span class="st">"Otsu"</span>, <span class="st">"CLAHE + Otsu"</span>],</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    cols<span class="op">=</span><span class="dv">3</span>,</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    figsize<span class="op">=</span>(<span class="dv">12</span>,<span class="dv">4</span>)</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="fig-06-clahe-page" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-06-clahe-page-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="cap06.py.pt_files/figure-html/fig-06-clahe-page-output-1.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-06-clahe-page-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;6.4: Influência da equalização local de contraste (CLAHE) na limiarização por Otsu.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<hr>
+</section>
+<section id="mão-na-massa-exercícios-práticos" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="mão-na-massa-exercícios-práticos"><span class="header-section-number">6.7</span> Mão na Massa: Exercícios Práticos</h2>
+<p>O aprendizado em Visão Computacional acontece <strong>praticando em casos reais</strong>. Os exercícios abaixo progressivamente aumentam em complexidade e aproximam você do desafio de implementar sistemas de VC profissionais.</p>
+<section id="exercício-1-validação-robusta-contra-ruídos-valor-40-pontos" class="level3" data-number="6.7.1">
+<h3 data-number="6.7.1" class="anchored" data-anchor-id="exercício-1-validação-robusta-contra-ruídos-valor-40-pontos"><span class="header-section-number">6.7.1</span> Exercício 1: Validação Robusta contra Ruídos (Valor: 4,0 pontos)</h3>
+<p><strong>Contexto:</strong> No Projeto 2, detectamos bolhas apenas pela <strong>circularidade</strong> e <strong>área</strong>. Porém, em documentos com baixa qualidade de scanner, manchas, rasgos ou sujeira podem ter área e circularidade similares às bolhas reais, causando falsos positivos.</p>
+<p><strong>Desafio:</strong> Implemente uma validação adicional baseada nos <strong>Momentos Invariantes de Hu</strong> (<span class="math inline">\(h_1, h_2, \ldots, h_7\)</span>). Especificamente: 1. Calcule <span class="math inline">\(h_1\)</span> (primeiro momento invariante) para <strong>uma elipse perfeita</strong> e <strong>um retângulo</strong> de mesma área 2. Compare os valores—eles devem ser significativamente diferentes 3. Use <span class="math inline">\(h_1\)</span> como critério adicional de filtro no Projeto 2: aceitar apenas bolhas cujo <span class="math inline">\(h_1\)</span> se aproxime do valor de uma elipse 4. Teste o novo pipeline em imagens com diferentes níveis de ruído e compare a taxa de falsos positivos</p>
+<p><strong>Saída esperada:</strong> Um gráfico mostrando como a métrica <span class="math inline">\(h_1\)</span> reduz falsos positivos mantendo a detecção de bolhas reais.</p>
+<hr>
+</section>
+<section id="exercício-2-detecção-de-fraudes-e-dupla-marcação-valor-60-pontos" class="level3" data-number="6.7.2">
+<h3 data-number="6.7.2" class="anchored" data-anchor-id="exercício-2-detecção-de-fraudes-e-dupla-marcação-valor-60-pontos"><span class="header-section-number">6.7.2</span> Exercício 2: Detecção de Fraudes e Dupla Marcação (Valor: 6,0 pontos)</h3>
+<p><strong>Contexto:</strong> Em avaliações reais, estudiantes frequentemente tentam fazer fraude: - Marcar <strong>duas alternativas na mesma questão</strong> (indecisão ou tentativa de fraude) - <strong>Raspar ou apagar</strong> uma marcação (deixando mancha cinza) - <strong>Marcar fora da bolha</strong> (invalidando a resposta)</p>
+<p><strong>Desafio:</strong> Modifique o Projeto 2 para adicionar <strong>validação de integridade</strong>: 1. Para cada questão, se <strong>duas ou mais alternativas</strong> apresentarem preenchimento acima de <span class="math inline">\(50\%\)</span>, marque como <strong>“ANULADA — Dupla Marcação”</strong> 2. Se o preenchimento ficar entre <span class="math inline">\(30\%-50\%\)</span> em qualquer alternativa, marque como <strong>“SUSPEITA — Preenchimento Parcial”</strong> (possível rasura) 3. Se nenhuma alternativa ultrapassar <span class="math inline">\(45\%\)</span>, marque como <strong>“BRANCO”</strong> 4. Gere um <strong>relatório detalhado</strong> indicando quais questões têm problemas e o percentual de integridade do formulário</p>
+<p><strong>Saída esperada:</strong> Um relatório estruturado em JSON ou pandas DataFrame mostrando para cada questão: [resposta_lida, confiança, status_integridade].</p>
+<hr>
+</section>
+<section id="exercício-3-pipeline-completo-de-end-to-end-valor-100-pontos-desafio" class="level3" data-number="6.7.3">
+<h3 data-number="6.7.3" class="anchored" data-anchor-id="exercício-3-pipeline-completo-de-end-to-end-valor-100-pontos-desafio"><span class="header-section-number">6.7.3</span> Exercício 3: Pipeline Completo de End-to-End (Valor: 10,0 pontos — Desafio)</h3>
+<p><strong>Contexto:</strong> Você agora tem os dois projetos funcionando separadamente. O desafio final é <strong>integrá-los em um sistema único e robusto</strong>.</p>
+<p><strong>Desafio:</strong> 1. Crie uma função <code>processar_prova_completa(caminho_pdf)</code> que: - Converta PDF para imagem (Projeto 1 — setup) - Alinhe a página automaticamente (Projeto 1) - Detecte e decodifique o QR Code (Projeto 2 — extração de ID) - Processe todas as bolhas com validação robusta (Proj 2 + Ex 1) - Detecte fraudes e anomalias (Projeto 2 + Ex 2) - Retorne um dicionário com: <code>{id_aluno, id_prova, gabarito_lido, confianca_media, questoes_problema, score_estimado}</code></p>
+<ol start="2" type="1">
+<li>Teste em <strong>múltiplas imagens</strong> com variações:
+<ul>
+<li>Alinhamento perfeito vs.&nbsp;rotacionado ±10°</li>
+<li>Qualidade de scanner alta vs.&nbsp;baixa</li>
+<li>Documentos com fraudes vs.&nbsp;legítimos</li>
+<li>Diferentes formatos de folha de resposta</li>
+</ul></li>
+<li>Documente os <strong>casos limites</strong> onde o algoritmo falha e sugira melhorias</li>
+</ol>
+<p><strong>Saída esperada:</strong> Uma classe <code>ProcessadorProvas</code> reutilizável, com testes unitários e um notebook mostrando resultados em 5+ casos reais.</p>
+<hr>
+</section>
+</section>
+<section id="próximos-passos" class="level2" data-number="6.8">
+<h2 data-number="6.8" class="anchored" data-anchor-id="próximos-passos"><span class="header-section-number">6.8</span> Próximos Passos</h2>
+<p>Após completar este capítulo, você estará pronto para: - <strong>Capítulo 7:</strong> Detecção de objetos em cenas complexas (faces, pessoas, placas de carro) - <strong>Capítulo 8:</strong> Reconhecimento de padrões e matching (buscar imagens similares) - <strong>Capítulo 9:</strong> Rastreamento em vídeo (tracking de movimentos) - <strong>Capítulo 10:</strong> Deep Learning para visão (CNN, Detecção em Tempo Real)</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiada");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiada");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../cap05/cap05.py.pt.html" class="pagination-link" aria-label="Transformadas e Compressão">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Transformadas e Compressão</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../referencias.html" class="pagination-link" aria-label="Referências">
+        <span class="nav-page-text">Referências</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

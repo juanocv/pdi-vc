@@ -76,9 +76,9 @@ div.csl-indent {
   margin-left: 2em;
 }</style>
   <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet"/>
-  <link href="../site_libs/quarto-html/quarto-syntax-highlighting-1d541e707deb911ee702dcbe28eecf08.css" id="quarto-text-highlighting-styles" rel="stylesheet"/>
+  <link href="../site_libs/quarto-html/quarto-syntax-highlighting-de63f62b328812d8e578a4d74e282472.css" id="quarto-text-highlighting-styles" rel="stylesheet"/>
   <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet"/>
-  <link append-hash="true" data-mode="light" href="../site_libs/bootstrap/bootstrap-1854e60e0a72f37cbacc43ef673120f4.min.css" id="quarto-bootstrap" rel="stylesheet"/>
+  <link append-hash="true" data-mode="light" href="../site_libs/bootstrap/bootstrap-d024cad0e32bf2110a1b02cbacc0c8bd.min.css" id="quarto-bootstrap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..900;1,8..60,300..900&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
   <link href="../custom.css" rel="stylesheet"/>
 </head>
@@ -366,37 +366,37 @@ Figura 2.18: Simulador: Redimensionamento (Nearest vs Bilinear)
 </figure>
 </div>
 </div>
-<div class="cell" id="1396c083">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a aria-hidden="true" href="#cb41-1" tabindex="-1"></a><span class="op">%%</span>writefile EP02_07.py</span>
-<span id="cb41-2"><a aria-hidden="true" href="#cb41-2" tabindex="-1"></a><span class="co"># Código Python</span></span>
-<span id="cb41-3"><a aria-hidden="true" href="#cb41-3" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb41-4"><a aria-hidden="true" href="#cb41-4" tabindex="-1"></a><span class="im">from</span> morph <span class="im">import</span> mm</span>
-<span id="cb41-5"><a aria-hidden="true" href="#cb41-5" tabindex="-1"></a></span>
-<span id="cb41-6"><a aria-hidden="true" href="#cb41-6" tabindex="-1"></a><span class="co"># 1. Leitura das dimensões, fatores e método</span></span>
-<span id="cb41-7"><a aria-hidden="true" href="#cb41-7" tabindex="-1"></a>l <span class="op">=</span> <span class="bu">int</span>(<span class="bu">input</span>())</span>
-<span id="cb41-8"><a aria-hidden="true" href="#cb41-8" tabindex="-1"></a>c <span class="op">=</span> <span class="bu">int</span>(<span class="bu">input</span>())</span>
-<span id="cb41-9"><a aria-hidden="true" href="#cb41-9" tabindex="-1"></a>sx, sy <span class="op">=</span> <span class="bu">map</span>(<span class="bu">float</span>, <span class="bu">input</span>().split())</span>
-<span id="cb41-10"><a aria-hidden="true" href="#cb41-10" tabindex="-1"></a>interp <span class="op">=</span> <span class="bu">input</span>().strip()</span>
-<span id="cb41-11"><a aria-hidden="true" href="#cb41-11" tabindex="-1"></a></span>
-<span id="cb41-12"><a aria-hidden="true" href="#cb41-12" tabindex="-1"></a><span class="co"># 2. Leitura da imagem original</span></span>
-<span id="cb41-13"><a aria-hidden="true" href="#cb41-13" tabindex="-1"></a>img <span class="op">=</span> mm.readImg(l, c)</span>
-<span id="cb41-14"><a aria-hidden="true" href="#cb41-14" tabindex="-1"></a></span>
-<span id="cb41-15"><a aria-hidden="true" href="#cb41-15" tabindex="-1"></a><span class="co"># 3. Novas dimensões</span></span>
-<span id="cb41-16"><a aria-hidden="true" href="#cb41-16" tabindex="-1"></a>l_new <span class="op">=</span> <span class="bu">round</span>(l <span class="op">*</span> sx)</span>
-<span id="cb41-17"><a aria-hidden="true" href="#cb41-17" tabindex="-1"></a>c_new <span class="op">=</span> <span class="bu">round</span>(c <span class="op">*</span> sy)</span>
-<span id="cb41-18"><a aria-hidden="true" href="#cb41-18" tabindex="-1"></a></span>
-<span id="cb41-19"><a aria-hidden="true" href="#cb41-19" tabindex="-1"></a><span class="co"># 4. Redimensionamento usando mm.resize</span></span>
-<span id="cb41-20"><a aria-hidden="true" href="#cb41-20" tabindex="-1"></a><span class="co"># cv2.resize usa (largura, altura) = (colunas, linhas)</span></span>
-<span id="cb41-21"><a aria-hidden="true" href="#cb41-21" tabindex="-1"></a>resultado <span class="op">=</span> mm.resize(img, (c_new, l_new), method<span class="op">=</span>interp)</span>
-<span id="cb41-22"><a aria-hidden="true" href="#cb41-22" tabindex="-1"></a></span>
-<span id="cb41-23"><a aria-hidden="true" href="#cb41-23" tabindex="-1"></a><span class="co"># 5. Exibição</span></span>
-<span id="cb41-24"><a aria-hidden="true" href="#cb41-24" tabindex="-1"></a><span class="bu">print</span>(mm.drawImg(resultado))</span></code></pre></div><button class="code-copy-button" title="Copiar para a área de transferência"><i class="bi"></i></button></div>
+<div class="cell" id="7ecc7d8d">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a aria-hidden="true" href="#cb42-1" tabindex="-1"></a><span class="op">%%</span>writefile EP02_07.py</span>
+<span id="cb42-2"><a aria-hidden="true" href="#cb42-2" tabindex="-1"></a><span class="co"># Código Python</span></span>
+<span id="cb42-3"><a aria-hidden="true" href="#cb42-3" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb42-4"><a aria-hidden="true" href="#cb42-4" tabindex="-1"></a><span class="im">from</span> morph <span class="im">import</span> mm</span>
+<span id="cb42-5"><a aria-hidden="true" href="#cb42-5" tabindex="-1"></a></span>
+<span id="cb42-6"><a aria-hidden="true" href="#cb42-6" tabindex="-1"></a><span class="co"># 1. Leitura das dimensões, fatores e método</span></span>
+<span id="cb42-7"><a aria-hidden="true" href="#cb42-7" tabindex="-1"></a>l <span class="op">=</span> <span class="bu">int</span>(<span class="bu">input</span>())</span>
+<span id="cb42-8"><a aria-hidden="true" href="#cb42-8" tabindex="-1"></a>c <span class="op">=</span> <span class="bu">int</span>(<span class="bu">input</span>())</span>
+<span id="cb42-9"><a aria-hidden="true" href="#cb42-9" tabindex="-1"></a>sx, sy <span class="op">=</span> <span class="bu">map</span>(<span class="bu">float</span>, <span class="bu">input</span>().split())</span>
+<span id="cb42-10"><a aria-hidden="true" href="#cb42-10" tabindex="-1"></a>interp <span class="op">=</span> <span class="bu">input</span>().strip()</span>
+<span id="cb42-11"><a aria-hidden="true" href="#cb42-11" tabindex="-1"></a></span>
+<span id="cb42-12"><a aria-hidden="true" href="#cb42-12" tabindex="-1"></a><span class="co"># 2. Leitura da imagem original</span></span>
+<span id="cb42-13"><a aria-hidden="true" href="#cb42-13" tabindex="-1"></a>img <span class="op">=</span> mm.readImg(l, c)</span>
+<span id="cb42-14"><a aria-hidden="true" href="#cb42-14" tabindex="-1"></a></span>
+<span id="cb42-15"><a aria-hidden="true" href="#cb42-15" tabindex="-1"></a><span class="co"># 3. Novas dimensões</span></span>
+<span id="cb42-16"><a aria-hidden="true" href="#cb42-16" tabindex="-1"></a>l_new <span class="op">=</span> <span class="bu">round</span>(l <span class="op">*</span> sx)</span>
+<span id="cb42-17"><a aria-hidden="true" href="#cb42-17" tabindex="-1"></a>c_new <span class="op">=</span> <span class="bu">round</span>(c <span class="op">*</span> sy)</span>
+<span id="cb42-18"><a aria-hidden="true" href="#cb42-18" tabindex="-1"></a></span>
+<span id="cb42-19"><a aria-hidden="true" href="#cb42-19" tabindex="-1"></a><span class="co"># 4. Redimensionamento usando mm.resize</span></span>
+<span id="cb42-20"><a aria-hidden="true" href="#cb42-20" tabindex="-1"></a><span class="co"># cv2.resize usa (largura, altura) = (colunas, linhas)</span></span>
+<span id="cb42-21"><a aria-hidden="true" href="#cb42-21" tabindex="-1"></a>resultado <span class="op">=</span> mm.resize(img, (c_new, l_new), method<span class="op">=</span>interp)</span>
+<span id="cb42-22"><a aria-hidden="true" href="#cb42-22" tabindex="-1"></a></span>
+<span id="cb42-23"><a aria-hidden="true" href="#cb42-23" tabindex="-1"></a><span class="co"># 5. Exibição</span></span>
+<span id="cb42-24"><a aria-hidden="true" href="#cb42-24" tabindex="-1"></a><span class="bu">print</span>(mm.drawImg(resultado))</span></code></pre></div><button class="code-copy-button" title="Copiar para a área de transferência"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Writing EP02_07.py</code></pre>
 </div>
 </div>
-<div class="cell" id="acd41c73">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a aria-hidden="true" href="#cb43-1" tabindex="-1"></a>TestSuite(<span class="st">"EP02_07.py"</span>).run()</span></code></pre></div><button class="code-copy-button" title="Copiar para a área de transferência"><i class="bi"></i></button></div>
+<div class="cell" id="c6ac1636">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a aria-hidden="true" href="#cb44-1" tabindex="-1"></a>TestSuite(<span class="st">"EP02_07.py"</span>).run()</span></code></pre></div><button class="code-copy-button" title="Copiar para a área de transferência"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">✔️ EP02_07.cases já existe em casos/
 📋 5 caso(s) carregado(s) de casos/EP02_07.cases

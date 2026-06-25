@@ -76,9 +76,9 @@ div.csl-indent {
   margin-left: 2em;
 }</style>
   <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet"/>
-  <link href="../site_libs/quarto-html/quarto-syntax-highlighting-1d541e707deb911ee702dcbe28eecf08.css" id="quarto-text-highlighting-styles" rel="stylesheet"/>
+  <link href="../site_libs/quarto-html/quarto-syntax-highlighting-de63f62b328812d8e578a4d74e282472.css" id="quarto-text-highlighting-styles" rel="stylesheet"/>
   <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet"/>
-  <link append-hash="true" data-mode="light" href="../site_libs/bootstrap/bootstrap-1854e60e0a72f37cbacc43ef673120f4.min.css" id="quarto-bootstrap" rel="stylesheet"/>
+  <link append-hash="true" data-mode="light" href="../site_libs/bootstrap/bootstrap-d024cad0e32bf2110a1b02cbacc0c8bd.min.css" id="quarto-bootstrap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..900;1,8..60,300..900&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
   <link href="../custom.css" rel="stylesheet"/>
 </head>
@@ -114,8 +114,8 @@ g_{ero}(y,x) = \min\Big(f(y,x),\ \min_{(v_y,v_x)\ \text{válido}} \big(f(v_y,v_x
 <li><strong>Tipo:</strong> A saída pode conter valores negativos ou maiores que <span class="math inline">\(255\)</span> — <strong>não</strong> há <em>clipping</em> neste EP.</li>
 <li><strong>Dica:</strong> Para remover mensagens de overflow ao ultrapassar limites do tipo uint8, incluir no início do código:</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb68"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb68-1"><a aria-hidden="true" href="#cb68-1" tabindex="-1"></a><span class="im">import</span> warnings</span>
-<span id="cb68-2"><a aria-hidden="true" href="#cb68-2" tabindex="-1"></a>warnings.filterwarnings(<span class="st">"ignore"</span>)</span></code></pre></div><button class="code-copy-button" title="Copiar para a área de transferência"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb71"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb71-1"><a aria-hidden="true" href="#cb71-1" tabindex="-1"></a><span class="im">import</span> warnings</span>
+<span id="cb71-2"><a aria-hidden="true" href="#cb71-2" tabindex="-1"></a>warnings.filterwarnings(<span class="st">"ignore"</span>)</span></code></pre></div><button class="code-copy-button" title="Copiar para a área de transferência"><i class="bi"></i></button></div>
 </section>
 <section class="level4" data-number="4.9.7.3" id="fundamentação-teórica-6">
 <h4 class="anchored" data-anchor-id="fundamentação-teórica-6" data-number="4.9.7.3"><span class="header-section-number">4.9.7.3</span> 🧠 Fundamentação Teórica</h4>
@@ -206,7 +206,7 @@ g_{ero}(y,x) = \min\Big(f(y,x),\ \min_{(v_y,v_x)\ \text{válido}} \big(f(v_y,v_x
 </tbody>
 </table>
 <div class="cell" id="cell-fig-04-sim-pesos">
-<div class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="137" id="fig-04-sim-pesos">
+<div class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="37" id="fig-04-sim-pesos">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-04-sim-pesos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div id="sim-ep0407" style="background-color:#fef9ef;border-radius:18px;border:1px solid #ede6d8;overflow:hidden;margin-top:20px;font-family:sans-serif;">
@@ -327,15 +327,21 @@ Figura 4.36: Simulador: Dilatação e Erosão com Pesos (mm.dil1 / mm.ero1)
 </figure>
 </div>
 </div>
+<div class="cell" id="355da0bd">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb72"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb72-1"><a aria-hidden="true" href="#cb72-1" tabindex="-1"></a><span class="im">import</span> morph, testsuite</span>
+<span id="cb72-2"><a aria-hidden="true" href="#cb72-2" tabindex="-1"></a>importlib.<span class="bu">reload</span>(morph)<span class="op">;</span> importlib.<span class="bu">reload</span>(testsuite)</span>
+<span id="cb72-3"><a aria-hidden="true" href="#cb72-3" tabindex="-1"></a><span class="im">from</span> morph <span class="im">import</span> mm</span>
+<span id="cb72-4"><a aria-hidden="true" href="#cb72-4" tabindex="-1"></a><span class="im">from</span> testsuite <span class="im">import</span> TestSuite</span></code></pre></div><button class="code-copy-button" title="Copiar para a área de transferência"><i class="bi"></i></button></div>
+</div>
 <div class="cell" id="f3fea8c9">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb69"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb69-1"><a aria-hidden="true" href="#cb69-1" tabindex="-1"></a><span class="op">%%</span>writefile EP04_07.py</span>
-<span id="cb69-2"><a aria-hidden="true" href="#cb69-2" tabindex="-1"></a><span class="co"># Código Python</span></span></code></pre></div><button class="code-copy-button" title="Copiar para a área de transferência"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb73"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb73-1"><a aria-hidden="true" href="#cb73-1" tabindex="-1"></a><span class="op">%%</span>writefile EP04_07.py</span>
+<span id="cb73-2"><a aria-hidden="true" href="#cb73-2" tabindex="-1"></a><span class="co"># Código Python</span></span></code></pre></div><button class="code-copy-button" title="Copiar para a área de transferência"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Overwriting EP04_07.py</code></pre>
+<pre><code>Writing EP04_07.py</code></pre>
 </div>
 </div>
 <div class="cell" id="053e66ef">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb71"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb71-1"><a aria-hidden="true" href="#cb71-1" tabindex="-1"></a>TestSuite(<span class="st">"EP04_07.py"</span>).run()</span></code></pre></div><button class="code-copy-button" title="Copiar para a área de transferência"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb75"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb75-1"><a aria-hidden="true" href="#cb75-1" tabindex="-1"></a>TestSuite(<span class="st">"EP04_07.py"</span>).run()</span></code></pre></div><button class="code-copy-button" title="Copiar para a área de transferência"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <pre style="font-family:monospace;font-size:13px;line-height:1.5;margin:0">✔️ EP04_07.cases já existe em casos/
 📋 3 caso(s) carregado(s) de casos/EP04_07.cases
@@ -2628,7 +2634,7 @@ window.edtv3_loadArtigoPreset();
       bars += '<line x1="'+(T*280/256)+'" y1="0" x2="'+(T*280/256)+'" y2="115" stroke="#e74c3c" stroke-width="2" stroke-dasharray="3,2"></line>';
       svg.innerHTML = bars;
       pixels.forEach(function(p){
-        var res = (p>=T) ? 255 : 0;
+        var res = (p>T) ? 255 : 0;
         var c = document.createElement('div');
         c.style.cssText='width:42px;height:42px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:bold;border-radius:4px;border:1px solid #ddd;';
         c.style.background='rgb('+res+','+res+','+res+')';
