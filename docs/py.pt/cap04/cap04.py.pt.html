@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.38">
+<meta name="generator" content="quarto-1.9.28">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -96,10 +96,10 @@ div.csl-indent {
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-de63f62b328812d8e578a4d74e282472.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1d541e707deb911ee702dcbe28eecf08.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-d024cad0e32bf2110a1b02cbacc0c8bd.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-1854e60e0a72f37cbacc43ef673120f4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -5006,7 +5006,7 @@ Figura&nbsp;4.22: Menor caminho geodésico em um labirinto. As distâncias geod�
 </div>
 </div>
 <div id="cell-fig-04-algoritmo-watershed2" class="cell">
-<div id="fig-04-algoritmo-watershed2" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="48">
+<div id="fig-04-algoritmo-watershed2" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="2">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-04-algoritmo-watershed2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 
@@ -5107,7 +5107,7 @@ body{font-family:var(--font-sans)}
     <div class="step">
       <div class="step-num num-coral">2</div>
       <div class="step-text">
-        Enquanto houver pixels não rotulados (<code>while g.min() == 0</code>), reiniciar o controle de atividade <code>mudou ← False</code> e varrer a imagem:
+        Enquanto houver pixels não rotulados (<code>while True</code>), reiniciar o controle de atividade <code>mudou ← False</code> e varrer a imagem:
         <div class="step-sub">
           <div class="step-sub-item">Identificar se a coordenada atual é um vazio contido no escopo: <code>g[x,y] == 0 and mask[x,y]</code>.</div>
           <div class="step-sub-item">Avaliar a vizinhança estrutural em <code>mm._viz(f, b, x, y)</code> baseada no estado síncrono estável <code>f</code>.</div>
@@ -5184,7 +5184,7 @@ body{font-family:var(--font-sans)}
     <div>
       <div class="tl-title">Laço Síncrono Iterativo</div>
       <div class="while-box">
-        <div class="while-head">while g.min() == 0</div>
+        <div class="while-head">while True</div>
         <div class="step-sub" style="border-color:var(--color-border-tertiary)">
           <div class="step-sub-item">Redefinição de flag: <code>mudou = False</code></div>
           <div class="step-sub-item">Crescimento condicional: se <code>g[x,y] == 0</code> e estiver na máscara, expande lendo <code>f</code></div>
@@ -5213,7 +5213,7 @@ body{font-family:var(--font-sans)}
     g = f.copy()
     mask = np.ones_like(f) <span class="kw">if</span> mask <span class="kw">is</span> <span class="fn">None</span> <span class="kw">else</span> (mask &gt; <span class="num-lit">0</span>)
 
-    <span class="kw">while</span> g.min() == <span class="num-lit">0</span>:
+    <span class="kw">while</span> <span class="fn">True</span>:
         mudou = <span class="fn">False</span>
         <span class="kw">for</span> x <span class="kw">in</span> <span class="fn">range</span>(f.shape[<span class="num-lit">0</span>]):
             <span class="kw">for</span> y <span class="kw">in</span> <span class="fn">range</span>(f.shape[<span class="num-lit">1</span>]):
@@ -5255,7 +5255,7 @@ body{font-family:var(--font-sans)}
   <text x="280" y="121" text-anchor="middle" font-size="11" fill="#085041">f ← mm.label0(f, b) ; g ← f.copy() ; mask ← mask &gt; 0</text>
 
   <polygon points="280,166 390,196 280,226 170,196" fill="#E6F1FB" stroke="#85B7EB" stroke-width="1"></polygon>
-  <text x="280" y="201" text-anchor="middle" font-size="12" fill="#0C447C">g.min() == 0?</text>
+  <text x="280" y="201" text-anchor="middle" font-size="12" fill="#0C447C">True?</text>
 
   <rect x="150" y="256" width="260" height="40" rx="6" fill="#FAECE7" stroke="#F0997B" stroke-width="1"></rect>
   <text x="280" y="281" text-anchor="middle" font-size="12" fill="#712B13">reiniciar ciclo: mudou ← False</text>
@@ -6473,7 +6473,7 @@ Figura&nbsp;4.29: <em>Bounding boxes</em> derivadas dos componentes conexos sobr
 <section id="download" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="download">Download</h4>
 <p>Baixe <code>morph.py</code> e <code>testsuite.py</code> executando a célula abaixo:</p>
-<div id="fac959b3" class="cell">
+<div id="b00b8feb" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os, sys, importlib, inspect, urllib.request</span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="co"># URLs do repositório</span></span>
@@ -8405,7 +8405,7 @@ Figura&nbsp;4.36: Simulador: Dilatação e Erosão com Pesos (mm.dil1 / mm.ero1)
 </figure>
 </div>
 </div>
-<div id="355da0bd" class="cell">
+<div id="6db2ecb9" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb72"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> morph, testsuite</span>
 <span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>importlib.<span class="bu">reload</span>(morph)<span class="op">;</span> importlib.<span class="bu">reload</span>(testsuite)</span>
 <span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> morph <span class="im">import</span> mm</span>
