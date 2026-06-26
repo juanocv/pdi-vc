@@ -292,14 +292,18 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#detecção-de-bordas-e-contornos" id="toc-detecção-de-bordas-e-contornos" class="nav-link" data-scroll-target="#detecção-de-bordas-e-contornos"><span class="header-section-number">6.6.1</span> Detecção de Bordas e Contornos</a></li>
   <li><a href="#isolamento-segmentação-e-decodificação-do-qrcode" id="toc-isolamento-segmentação-e-decodificação-do-qrcode" class="nav-link" data-scroll-target="#isolamento-segmentação-e-decodificação-do-qrcode"><span class="header-section-number">6.6.2</span> Isolamento, Segmentação e Decodificação do <em>QRCode</em></a></li>
+  <li><a href="#exercício" id="toc-exercício" class="nav-link" data-scroll-target="#exercício"><span class="header-section-number">6.6.3</span> Exercício</a></li>
+  <li><a href="#decodificação-de-código-de-barras" id="toc-decodificação-de-código-de-barras" class="nav-link" data-scroll-target="#decodificação-de-código-de-barras"><span class="header-section-number">6.6.4</span> Decodificação de Código de Barras</a></li>
+  <li><a href="#usar-as-implementações-do-mctest" id="toc-usar-as-implementações-do-mctest" class="nav-link" data-scroll-target="#usar-as-implementações-do-mctest"><span class="header-section-number">6.6.5</span> Usar as Implementações do MCTest</a></li>
   </ul></li>
-  <li><a href="#mão-na-massa-exercícios-práticos" id="toc-mão-na-massa-exercícios-práticos" class="nav-link" data-scroll-target="#mão-na-massa-exercícios-práticos"><span class="header-section-number">6.7</span> Mão na Massa: Exercícios Práticos</a>
+  <li><a href="#inspeção-industrial-automatizada" id="toc-inspeção-industrial-automatizada" class="nav-link" data-scroll-target="#inspeção-industrial-automatizada"><span class="header-section-number">6.7</span> Inspeção Industrial Automatizada</a></li>
+  <li><a href="#exercícios-práticos" id="toc-exercícios-práticos" class="nav-link" data-scroll-target="#exercícios-práticos"><span class="header-section-number">6.8</span> Exercícios Práticos</a>
   <ul class="collapse">
-  <li><a href="#exercício-1-validação-robusta-contra-ruídos-valor-40-pontos" id="toc-exercício-1-validação-robusta-contra-ruídos-valor-40-pontos" class="nav-link" data-scroll-target="#exercício-1-validação-robusta-contra-ruídos-valor-40-pontos"><span class="header-section-number">6.7.1</span> Exercício 1: Validação Robusta contra Ruídos (Valor: 4,0 pontos)</a></li>
-  <li><a href="#exercício-2-detecção-de-fraudes-e-dupla-marcação-valor-60-pontos" id="toc-exercício-2-detecção-de-fraudes-e-dupla-marcação-valor-60-pontos" class="nav-link" data-scroll-target="#exercício-2-detecção-de-fraudes-e-dupla-marcação-valor-60-pontos"><span class="header-section-number">6.7.2</span> Exercício 2: Detecção de Fraudes e Dupla Marcação (Valor: 6,0 pontos)</a></li>
-  <li><a href="#exercício-3-pipeline-completo-de-end-to-end-valor-100-pontos-desafio" id="toc-exercício-3-pipeline-completo-de-end-to-end-valor-100-pontos-desafio" class="nav-link" data-scroll-target="#exercício-3-pipeline-completo-de-end-to-end-valor-100-pontos-desafio"><span class="header-section-number">6.7.3</span> Exercício 3: Pipeline Completo de End-to-End (Valor: 10,0 pontos — Desafio)</a></li>
+  <li><a href="#exercício-1-validação-robusta-contra-ruídos-valor-40-pontos" id="toc-exercício-1-validação-robusta-contra-ruídos-valor-40-pontos" class="nav-link" data-scroll-target="#exercício-1-validação-robusta-contra-ruídos-valor-40-pontos"><span class="header-section-number">6.8.1</span> Exercício 1: Validação Robusta contra Ruídos (Valor: 4,0 pontos)</a></li>
+  <li><a href="#exercício-2-detecção-de-fraudes-e-dupla-marcação-valor-60-pontos" id="toc-exercício-2-detecção-de-fraudes-e-dupla-marcação-valor-60-pontos" class="nav-link" data-scroll-target="#exercício-2-detecção-de-fraudes-e-dupla-marcação-valor-60-pontos"><span class="header-section-number">6.8.2</span> Exercício 2: Detecção de Fraudes e Dupla Marcação (Valor: 6,0 pontos)</a></li>
+  <li><a href="#exercício-3-pipeline-completo-de-end-to-end-valor-100-pontos-desafio" id="toc-exercício-3-pipeline-completo-de-end-to-end-valor-100-pontos-desafio" class="nav-link" data-scroll-target="#exercício-3-pipeline-completo-de-end-to-end-valor-100-pontos-desafio"><span class="header-section-number">6.8.3</span> Exercício 3: Pipeline Completo de End-to-End (Valor: 10,0 pontos — Desafio)</a></li>
   </ul></li>
-  <li><a href="#próximos-passos" id="toc-próximos-passos" class="nav-link" data-scroll-target="#próximos-passos"><span class="header-section-number">6.8</span> Próximos Passos</a></li>
+  <li><a href="#próximos-passos" id="toc-próximos-passos" class="nav-link" data-scroll-target="#próximos-passos"><span class="header-section-number">6.9</span> Próximos Passos</a></li>
   </ul>
 </nav>
     </div>
@@ -326,7 +330,6 @@ window.Quarto = {
 
 
 <p><a href="https://colab.research.google.com/github/fzampirolli/pdi-vc/blob/master/notebooks_alunos/cap06/cap06_aluno.ipynb"><img src="imagens/colab-badge.png" class="img-fluid" style="width:16.0%"></a> <a href="https://github.com/fzampirolli/pdi-vc"><img src="imagens/github-badge.png" class="img-fluid" style="width:20.0%"></a></p>
-<p>Uma forma mais enxuta é eliminar explicações que são retomadas no parágrafo final e reduzir a sobreposição entre a introdução e os objetivos. Segue uma versão mais fluida e com menos redundâncias:</p>
 <p>🚧 <strong>Capítulo em desenvolvimento</strong></p>
 <p>O conteúdo deste capítulo encontra-se em fase de elaboração e será disponibilizado em versão futura, incluindo exercícios práticos, estudos de caso, desafios de programação e aplicações integradas.</p>
 <hr>
@@ -355,10 +358,10 @@ window.Quarto = {
 </section>
 <section id="configuração-do-ambiente" class="level2" data-number="6.2">
 <h2 data-number="6.2" class="anchored" data-anchor-id="configuração-do-ambiente"><span class="header-section-number">6.2</span> Configuração do Ambiente</h2>
-<p>Os exemplos deste capítulo utilizam bibliotecas amplamente empregadas em Processamento Digital de Imagens e Visão Computacional. Caso necessário, instale previamente os pacotes abaixo.</p>
+<p>Os exemplos deste capítulo utilizam bibliotecas amplamente empregadas em Processamento Digital de Imagens e Visão Computacional. O bloco abaixo instala os pacotes necessários; em ambientes que já os possuam, a execução pode ser ignorada.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Instalação das bibliotecas necessárias</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install opencv<span class="op">-</span>python scikit<span class="op">-</span>image numpy pdf2image pandas tabulate</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Além dessas bibliotecas, será utilizado o módulo didático <code>morph.py</code>, desenvolvido para simplificar operações de leitura, visualização e processamento de imagens. O código a seguir verifica a disponibilidade do arquivo, realiza seu <em>download</em> quando necessário e importa o módulo para uso ao longo do capítulo.</p>
+<p>Além dessas bibliotecas, será utilizado o módulo didático <code>morph.py</code>, desenvolvido para simplificar operações de leitura, visualização e processamento de imagens ao longo deste livro. O código a seguir verifica sua disponibilidade, realiza o <em>download</em> quando necessário e confirma a versão carregada.</p>
 <div id="ede7291f" class="cell" data-quarto-raw="true">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os, importlib, urllib.request</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cv2 </span>
@@ -388,7 +391,7 @@ window.Quarto = {
 <section id="imagens-públicas-com-skimage.data" class="level3" data-number="6.3.1">
 <h3 data-number="6.3.1" class="anchored" data-anchor-id="imagens-públicas-com-skimage.data"><span class="header-section-number">6.3.1</span> Imagens Públicas com <code>skimage.data</code></h3>
 <p>A biblioteca <code>skimage.data</code> disponibiliza uma coleção de imagens de referência frequentemente utilizada em PDI-VC. O conjunto inclui fotografias, documentos digitalizados, padrões sintéticos e outros exemplos adequados para segmentação, extração de contornos, análise geométrica e reconhecimento de padrões.</p>
-<p>A Tabela <a href="#tbl-skimage-data" class="quarto-xref">Tabela&nbsp;<span>6.1</span></a> apresenta algumas das principais imagens dessa coleção, enquanto a <a href="#fig-skimage-data" class="quarto-xref">Figura&nbsp;<span>6.1</span></a> ilustra exemplos representativos. Neste capítulo, destacam-se as imagens <code>page()</code> e <code>text()</code>, particularmente adequadas para experimentos de OCR (<em>Optical Character Recognition</em>), OMR (<em>Optical Mark Recognition</em>) e análise documental.</p>
+<p>A Tabela <a href="#tbl-skimage-data" class="quarto-xref">Tabela&nbsp;<span>6.1</span></a> apresenta algumas das principais imagens dessa coleção, enquanto a <span class="quarto-unresolved-ref">?fig-skimage-data</span> ilustra exemplos representativos. Neste capítulo, destacam-se as imagens <code>page()</code> e <code>text()</code>, particularmente adequadas para experimentos de OCR (<em>Optical Character Recognition</em>), OMR (<em>Optical Mark Recognition</em>) e análise documental.</p>
 </section>
 <section id="imagens-reais-com-opencv" class="level3" data-number="6.3.2">
 <h3 data-number="6.3.2" class="anchored" data-anchor-id="imagens-reais-com-opencv"><span class="header-section-number">6.3.2</span> Imagens Reais com OpenCV</h3>
@@ -469,7 +472,7 @@ Tabela&nbsp;6.1: Principais imagens públicas disponíveis no módulo <em>skimag
 </div>
 </figure>
 </div>
-<div id="cell-fig-skimage-data" class="cell">
+<div id="cell-fig-06-skimage-data" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> skimage <span class="im">import</span> data</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -493,12 +496,12 @@ Tabela&nbsp;6.1: Principais imagens públicas disponíveis no módulo <em>skimag
 <span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
-<div id="fig-skimage-data" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-06-skimage-data" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-skimage-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="cap06.py.pt_files/figure-html/fig-skimage-data-output-1.png" class="img-fluid figure-img">
+<div aria-describedby="fig-06-skimage-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="cap06.py.pt_files/figure-html/fig-06-skimage-data-output-1.png" class="img-fluid figure-img">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-skimage-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-06-skimage-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figura&nbsp;6.1: Algumas imagens públicas disponíveis em <em>skimage.data</em>.
 </figcaption>
 </figure>
@@ -520,7 +523,8 @@ Figura&nbsp;6.1: Algumas imagens públicas disponíveis em <em>skimage.data</em>
 <li><strong>Análise das marcações:</strong> avaliação do preenchimento das regiões candidatas;</li>
 <li><strong>Interpretação:</strong> conversão das marcações em respostas ou dados estruturados.</li>
 </ol>
-<p>Esses princípios também fundamentam sistemas de <strong>Inspeção Industrial</strong>, empregados para controle de qualidade, detecção de defeitos, verificação de componentes e medição de dimensões. Em ambos os casos, o fluxo de processamento envolve aquisição, segmentação, extração de características e tomada de decisão automatizada.</p>
+<p>Esses princípios se estendem naturalmente à <strong>Inspeção Industrial Automatizada</strong>. Em linhas de produção, o mesmo encadeamento — aquisição, pré-processamento, segmentação, extração de características e decisão — é empregado para detectar defeitos superficiais, verificar a integridade de componentes e medir dimensões com precisão subpixel. A diferença reside no domínio de aplicação: enquanto o OMR opera sobre documentos com estrutura predefinida, a inspeção industrial lida com objetos cujas variações geométricas e radiométricas devem ser modeladas de forma mais flexível.</p>
+<p>Nas seções seguintes, ambas as aplicações são desenvolvidas por meio de projetos práticos que reproduzem etapas típicas de sistemas reais.</p>
 <hr>
 </section>
 <section id="projetos-práticos-construção-de-um-pipeline-de-análise-documental" class="level2" data-number="6.5">
@@ -721,8 +725,8 @@ Figura&nbsp;6.4: Correção de iluminação não-uniforme antes da limiarizaçã
 <p>O procedimento adotado é composto por cinco etapas. Inicialmente, aplica-se um <strong>fechamento morfológico</strong> (dilatação seguida de erosão), operação estudada no <strong>Capítulo 3</strong>, utilizando um elemento estruturante em disco (<code>mm.sedisk(33)</code>). Essa operação preserva os discos de referência e reduz pequenas descontinuidades, tornando-os mais homogêneos. Em seguida, a imagem é invertida (<code>mm.neg</code>), de modo que os discos passem a corresponder a componentes claros sobre fundo escuro.</p>
 <p>Na sequência, aplica-se a operação <code>mm.edgeoff</code> (<strong>Capítulo 4</strong>), que remove componentes conectados à borda da imagem, eliminando artefatos como sombras de digitalização, marcas de corte e outros objetos espúrios presentes nas margens. Os componentes remanescentes são então analisados por meio de seus contornos, sendo filtrados por propriedades geométricas, como área e circularidade, para selecionar apenas os quatro discos de referência.</p>
 <p>Por fim, os centros desses discos são ordenados espacialmente (superior esquerdo, superior direito, inferior esquerdo e inferior direito) e utilizados como pontos de controle em uma transformação de perspectiva (<em>perspective warp</em>). Essa transformação retifica a imagem, produzindo uma representação alinhada e com dimensões conhecidas para as etapas subsequentes de segmentação e reconhecimento.</p>
-<p>A Figura <a href="#fig-07-deteccao-marcadores" class="quarto-xref">Figura&nbsp;<span>6.5</span></a> apresenta as principais etapas desse <em>pipeline</em>, desde o processamento morfológico até a imagem retificada.</p>
-<div id="cell-fig-07-deteccao-marcadores" class="cell">
+<p>A Figura <a href="#fig-06-deteccao-marcadores" class="quarto-xref">Figura&nbsp;<span>6.5</span></a> apresenta as principais etapas desse <em>pipeline</em>, desde o processamento morfológico até a imagem retificada.</p>
+<div id="cell-fig-06-deteccao-marcadores" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cv2</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> morph <span class="im">import</span> mm</span>
@@ -782,12 +786,12 @@ Figura&nbsp;6.4: Correção de iluminação não-uniforme antes da limiarizaçã
 <span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a>    figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">4</span>)</span>
 <span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
-<div id="fig-07-deteccao-marcadores" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-06-deteccao-marcadores" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-07-deteccao-marcadores-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="cap06.py.pt_files/figure-html/fig-07-deteccao-marcadores-output-1.png" class="img-fluid figure-img">
+<div aria-describedby="fig-06-deteccao-marcadores-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="cap06.py.pt_files/figure-html/fig-06-deteccao-marcadores-output-1.png" class="img-fluid figure-img">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07-deteccao-marcadores-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-06-deteccao-marcadores-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figura&nbsp;6.5: Detecção dos discos marcadores, extração de contornos e retificação por transformação de perspectiva.
 </figcaption>
 </figure>
@@ -801,8 +805,8 @@ Figura&nbsp;6.5: Detecção dos discos marcadores, extração de contornos e ret
 <p>Inicialmente, a imagem retificada em escala de cinza é binarizada por meio da operação <code>mm.threshold</code>. Em seguida, aplica-se uma <strong>abertura morfológica</strong> (erosão seguida de dilatação), estudada no <strong>Capítulo 3</strong>, utilizando um elemento estruturante quadrado de pequenas dimensões (<code>mm.sebox(2)</code>). Essa operação elimina pequenos ruídos e suaviza imperfeições sem comprometer a estrutura do marcador. Por fim, a imagem é invertida (<code>mm.neg</code>), de modo que o <em>QRCode</em> passe a constituir um componente claro sobre fundo escuro, facilitando a extração de contornos.</p>
 <p>A localização do <em>QRCode</em> é realizada por meio da identificação dos contornos externos da imagem binarizada. Entre os componentes detectados, seleciona-se aquele cuja geometria apresenta formato aproximadamente quadrado e maior área, descartando outros elementos impressos da folha. A região correspondente é então expandida por uma pequena margem de segurança, garantindo que todo o marcador seja preservado no recorte.</p>
 <p>O <em>QRCode</em> é extraído diretamente da imagem retificada original em escala de cinza, preservando sua qualidade radiométrica. Como essa região normalmente possui dimensões reduzidas, aplica-se um redimensionamento com interpolação cúbica antes da etapa de leitura, aumentando a resolução espacial e favorecendo a identificação dos módulos do código. A decodificação é então realizada por meio do detector de <em>QRCode</em> do OpenCV (<code>cv2.QRCodeDetector</code>), produzindo a sequência de caracteres originalmente codificada no marcador.</p>
-<p>A Figura <a href="#fig-07-processamento-qrcode" class="quarto-xref">Figura&nbsp;<span>6.6</span></a> apresenta o fluxo completo de processamento, desde o pré-processamento morfológico até a extração das informações armazenadas no <em>QRCode</em>.</p>
-<div id="cell-fig-07-processamento-qrcode" class="cell">
+<p>A Figura <a href="#fig-06-processamento-qrcode" class="quarto-xref">Figura&nbsp;<span>6.6</span></a> apresenta o fluxo completo de processamento, desde o pré-processamento morfológico até a extração das informações armazenadas no <em>QRCode</em>.</p>
+<div id="cell-fig-06-processamento-qrcode" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cv2</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> morph <span class="im">import</span> mm</span>
@@ -887,12 +891,12 @@ Figura&nbsp;6.5: Detecção dos discos marcadores, extração de contornos e ret
 <span id="cb10-82"><a href="#cb10-82" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Verifique o limiar, as margens da região ou a qualidade da imagem."</span></span>
 <span id="cb10-83"><a href="#cb10-83" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
-<div id="fig-07-processamento-qrcode" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-06-processamento-qrcode" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-07-processamento-qrcode-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="cap06.py.pt_files/figure-html/fig-07-processamento-qrcode-output-1.png" class="img-fluid figure-img">
+<div aria-describedby="fig-06-processamento-qrcode-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="cap06.py.pt_files/figure-html/fig-06-processamento-qrcode-output-1.png" class="img-fluid figure-img">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07-processamento-qrcode-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-06-processamento-qrcode-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figura&nbsp;6.6: Pipeline de processamento do <em>QRCode</em>: limiarização, abertura morfológica, extração do maior quadro e decodificação digital.
 </figcaption>
 </figure>
@@ -903,28 +907,418 @@ Figura&nbsp;6.6: Pipeline de processamento do <em>QRCode</em>: limiarização, a
 325a356b71367266556955646b7233454149624a694f417730...</code></pre>
 </div>
 </div>
-<hr>
+</section>
+<section id="exercício" class="level3" data-number="6.6.3">
+<h3 data-number="6.6.3" class="anchored" data-anchor-id="exercício"><span class="header-section-number">6.6.3</span> Exercício</h3>
+<p>repetir processo anterior parecido para o pdf com codigo de barras <code>dados\provas_barcode.pdf</code>…</p>
+</section>
+<section id="decodificação-de-código-de-barras" class="level3" data-number="6.6.4">
+<h3 data-number="6.6.4" class="anchored" data-anchor-id="decodificação-de-código-de-barras"><span class="header-section-number">6.6.4</span> Decodificação de Código de Barras</h3>
+<p>O <em>QR Code</em> é uma variante bidimensional de código de barras, capaz de armazenar centenas de caracteres em uma área compacta. Sistemas mais simples, entretanto, ainda utilizam <strong>códigos de barras lineares</strong> (1D), amplamente presentes em embalagens, documentos fiscais e etiquetas logísticas. A decodificação desses símbolos segue o mesmo princípio do <em>pipeline</em> anterior — aquisição, pré-processamento e leitura —, mas utiliza a biblioteca <code>pyzbar</code>, que suporta dezenas de simbologia s, incluindo EAN-13, Code 128 e QR Code.</p>
+<p>A Figura <a href="#fig-06-barcode-decode" class="quarto-xref">Figura&nbsp;<span>6.7</span></a> exibe a imagem do código de barras carregada e o resultado da decodificação impresso abaixo.</p>
+<div id="4b4aa940" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install pyzbar</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Requirement already satisfied: pyzbar in /home/fz/VSCode/pdi-vc/.venv/lib/python3.12/site-packages (0.1.9)</code></pre>
+</div>
+</div>
+<div id="cell-fig-06-barcode-decode" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyzbar.pyzbar <span class="im">import</span> decode</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> morph <span class="im">import</span> mm</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>image <span class="op">=</span> mm.read(<span class="st">'dados/old/barcode.png'</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>mm.show(image)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>barcodes <span class="op">=</span> decode(image)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> barcodes:</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    dados <span class="op">=</span> barcodes[<span class="dv">0</span>].data.decode(<span class="st">"utf-8"</span>)</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Código de barras decodificado com sucesso:</span><span class="ch">\n</span><span class="sc">{</span>dados<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span> <span class="pp">ValueError</span>(</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Falha na decodificação do código de barras. "</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Verifique o contraste, a resolução ou a qualidade da imagem."</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="fig-06-barcode-decode" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-06-barcode-decode-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="cap06.py.pt_files/figure-html/fig-06-barcode-decode-output-1.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-06-barcode-decode-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;6.7: Decodificação de código de barras linear com <code>pyzbar</code>: imagem de entrada e dados extraídos.
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Código de barras decodificado com sucesso:
+0000000000055</code></pre>
+</div>
+</div>
+</section>
+<section id="usar-as-implementações-do-mctest" class="level3" data-number="6.6.5">
+<h3 data-number="6.6.5" class="anchored" data-anchor-id="usar-as-implementações-do-mctest"><span class="header-section-number">6.6.5</span> Usar as Implementações do MCTest</h3>
+<p>O <strong>MCTest</strong> é um sistema de código aberto para criação, distribuição e correção automatizada de avaliações, desenvolvido na UFABC. Seu módulo de Visão Computacional, concentrado no arquivo <code>CVMCTest.py</code>, implementa o mesmo <em>pipeline</em> descrito nas seções anteriores — retificação por perspectiva, isolamento do <em>QR Code</em> e leitura das bolhas — em uma forma diretamente utilizável em produção. O código-fonte e a documentação estão disponíveis em <a href="https://github.com/fzampirolli/mctest">github.com/fzampirolli/mctest</a> e em <a href="http://vision.ufabc.edu.br">vision.ufabc.edu.br</a>.</p>
+<section id="obtenção-e-preparação-do-módulo" class="level4" data-number="6.6.5.1">
+<h4 data-number="6.6.5.1" class="anchored" data-anchor-id="obtenção-e-preparação-do-módulo"><span class="header-section-number">6.6.5.1</span> Obtenção e Preparação do Módulo</h4>
+<p>O arquivo <code>CVMCTest.py</code> pertence ao ecossistema Django do MCTest e contém importações de modelos e configurações do <em>framework</em> que não existem fora do ambiente Web. Para utilizá-lo em um <em>notebook</em>, basta baixá-lo com <code>requests</code> e remover essas dependências com <code>sed</code>, tornando o módulo autocontido.</p>
+<div id="f18687c2" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>CVMCTest <span class="op">=</span> requests.get(<span class="st">"https://raw.githubusercontent.com/fzampirolli/mctest/master/exam/CVMCTest.py"</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">'CVMCTest.py'</span>, <span class="st">'w'</span>) <span class="im">as</span> writefile:</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    writefile.write(CVMCTest.text)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="98d79549" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># instalar se ainda nao estiver</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">False</span>:</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="op">!</span>pip install PyPDF2 <span class="op">&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="op">!</span>pip install bcrypt <span class="op">&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="op">!</span>pip install scikit<span class="op">-</span>image <span class="op">&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="op">!</span>pip show pyarrow <span class="op">&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="op">!</span>pip install <span class="op">--</span>upgrade cudf<span class="op">-</span>cu12 <span class="op">&gt;</span> <span class="op">/</span>dev<span class="op">/</span>null</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Cada linha do <code>sed</code> abaixo elimina um grupo de importações incompatíveis — modelos de banco de dados (<code>exam</code>, <code>student</code>, <code>topic</code>), configurações do servidor (<code>mctest</code>) e o próprio <em>framework</em> (<code>django</code>). Sem essa limpeza, qualquer <code>import CVMCTest</code> lançaria <code>ModuleNotFoundError</code> imediatamente.</p>
+<div id="4cfe501a" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># remove linhas with "form django.", ...</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>sed <span class="op">--</span><span class="kw">in</span><span class="op">-</span>place <span class="st">'/from django./d'</span> CVMCTest.py</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>sed <span class="op">--</span><span class="kw">in</span><span class="op">-</span>place <span class="st">'/from exam./d'</span> CVMCTest.py</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>sed <span class="op">--</span><span class="kw">in</span><span class="op">-</span>place <span class="st">'/from mctest./d'</span> CVMCTest.py</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>sed <span class="op">--</span><span class="kw">in</span><span class="op">-</span>place <span class="st">'/from student./d'</span> CVMCTest.py</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>sed <span class="op">--</span><span class="kw">in</span><span class="op">-</span>place <span class="st">'/from topic./d'</span> CVMCTest.py</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>sed <span class="op">--</span><span class="kw">in</span><span class="op">-</span>place <span class="st">'/from .models import VariationExam/d'</span> CVMCTest.py</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="decodificação-do-qr-code-com-cvmctest" class="level4" data-number="6.6.5.2">
+<h4 data-number="6.6.5.2" class="anchored" data-anchor-id="decodificação-do-qr-code-com-cvmctest"><span class="header-section-number">6.6.5.2</span> Decodificação do QR Code com <code>CVMCTest</code></h4>
+<p>Com o módulo preparado, a função <code>decodeQRcode</code> aplica internamente as mesmas etapas de binarização, zoom e detecção apresentadas na seção anterior, devolvendo diretamente o dicionário de metadados da prova. O exemplo abaixo utiliza uma imagem já segmentada do <em>QR Code</em> — equivalente a <code>img_qrcode_final</code> obtido no <em>pipeline</em> manual. A Figura <a href="#fig-06-mctest-qrcode-seg" class="quarto-xref">Figura&nbsp;<span>6.8</span></a> exibe essa imagem de entrada, e o resultado impresso confirma que ambas as abordagens produzem o mesmo dicionário de metadados.</p>
+<div id="cell-fig-06-mctest-qrcode-seg" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="bu">file</span> <span class="op">=</span> <span class="st">"./dados/old/extra02.qrcodeSeg.png"</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>image <span class="op">=</span> mm.read(<span class="bu">file</span>)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>mm.show(image)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="fig-06-mctest-qrcode-seg" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-06-mctest-qrcode-seg-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="cap06.py.pt_files/figure-html/fig-06-mctest-qrcode-seg-output-1.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-06-mctest-qrcode-seg-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;6.8: Imagem segmentada do <em>QR Code</em> utilizada como entrada para <code>CVMCTest.decodeQRcode</code>.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div id="c482113b" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> CVMCTest</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>ss <span class="op">=</span> CVMCTest.cvMCTest.decodeQRcode(image)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>ss</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="203">
+<pre><code>{'date': '0',
+ 'idClassroom': '81',
+ 'idExam': '103',
+ 'idStudent': '11000001',
+ 'term': '2',
+ 'stylesheet': '1',
+ 'var1': '5',
+ 'var2': '0',
+ 'var3': '0',
+ 'var4': '0',
+ 'var5': '0',
+ 'text': '0',
+ 'answer': '5',
+ 'numquest': 5,
+ 'correct': '',
+ 'dbtext': '',
+ 'variations': '23124301',
+ 'variant': '23234021'}</code></pre>
+</div>
+</div>
+</section>
+<section id="extração-da-área-de-respostas" class="level4" data-number="6.6.5.3">
+<h4 data-number="6.6.5.3" class="anchored" data-anchor-id="extração-da-área-de-respostas"><span class="header-section-number">6.6.5.3</span> Extração da Área de Respostas</h4>
+<p>O <em>pipeline</em> completo começa pela rasterização do PDF e pela leitura da imagem em escala de cinza, exatamente como na seção de ingestão de documentos. A função <code>getAnswerArea</code> localiza os quatro discos de referência, estima a transformação de perspectiva e devolve a região da folha que contém os quadros de marcação, já retificada e com dimensões fixas. A Figura <a href="#fig-06-mctest-img-original" class="quarto-xref">Figura&nbsp;<span>6.9</span></a> exibe a imagem em escala de cinza carregada, e a Figura <a href="#fig-06-mctest-answer-area" class="quarto-xref">Figura&nbsp;<span>6.10</span></a> mostra a área de respostas extraída por <code>getAnswerArea</code>.</p>
+<div id="cell-fig-06-mctest-img-original" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="bu">file</span> <span class="op">=</span> <span class="st">"dados/provas_qrcode.pdf"</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>pages <span class="op">=</span> convert_from_path(<span class="bu">file</span>, <span class="dv">200</span>)  <span class="co"># dpi 100=min 500=max</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>numPAGES <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>MYFILES <span class="op">=</span> <span class="st">'extra02.qrcode'</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> page <span class="kw">in</span> pages:</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  myfile0 <span class="op">=</span> MYFILES <span class="op">+</span> <span class="st">'_p'</span> <span class="op">+</span> <span class="bu">str</span>(numPAGES) <span class="op">+</span> <span class="st">'.png'</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  page.save(myfile0)</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>  numPAGES <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(myfile0)</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>pages.clear()</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>img_color <span class="op">=</span> mm.read(myfile0)</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>img <span class="op">=</span> img0 <span class="op">=</span> mm.gray(img_color)</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>mm.show(img)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>extra02.qrcode_p0.png
+extra02.qrcode_p1.png
+extra02.qrcode_p2.png</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div id="fig-06-mctest-img-original" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-06-mctest-img-original-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="cap06.py.pt_files/figure-html/fig-06-mctest-img-original-output-2.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-06-mctest-img-original-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;6.9: Imagem da folha de respostas em escala de cinza carregada a partir do PDF rasterizado.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div id="cell-fig-06-mctest-answer-area" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> CVMCTest</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>countPage <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>img2 <span class="op">=</span> CVMCTest.cvMCTest.getAnswerArea(img, countPage)</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>mm.show(img2)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="fig-06-mctest-answer-area" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-06-mctest-answer-area-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="cap06.py.pt_files/figure-html/fig-06-mctest-answer-area-output-1.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-06-mctest-answer-area-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;6.10: Área de respostas extraída por <code>getAnswerArea</code>: região retificada contendo os quadros de marcação.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Nota de compatibilidade:</strong> versões recentes do NumPy (≥ 2.0) removeram o alias <code>np.int0</code>. Caso <code>CVMCTest.py</code> utilize esse tipo, o comando abaixo aplica a correção diretamente no arquivo antes de recarregá-lo:</p>
+<div id="2061487c" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>sed <span class="op">-</span>i <span class="st">'s/box = np.int0(cv2.boxPoints(rect))/box = cv2.boxPoints(rect).astype(np.intp)/'</span> <span class="op">~/</span>VSCode<span class="op">/</span>pdi<span class="op">-</span>vc<span class="op">/</span><span class="bu">all</span><span class="op">/</span>cap06<span class="op">/</span>CVMCTest.py</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="392797b2" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> importlib</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> CVMCTest</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>importlib.<span class="bu">reload</span>(CVMCTest)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="207">
+<pre><code>&lt;module 'CVMCTest' from '/home/fz/VSCode/pdi-vc/all/cap06/CVMCTest.py'&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="segmentação-do-qr-code-e-localização-dos-quadros" class="level4" data-number="6.6.5.4">
+<h4 data-number="6.6.5.4" class="anchored" data-anchor-id="segmentação-do-qr-code-e-localização-dos-quadros"><span class="header-section-number">6.6.5.4</span> Segmentação do <em>QR Code</em> e Localização dos Quadros</h4>
+<p>Dentro da área de respostas retificada, o MCTest executa duas operações preparatórias antes de ler as bolhas. A função <code>segmentQRcode</code> isola o <em>QR Code</em> para uma segunda tentativa de decodificação — útil quando a resolução da imagem completa era insuficiente —, enquanto <code>getQRCode</code> devolve o indicador <code>myFlagArea</code>, que sinaliza se a área de respostas foi localizada com sucesso, e o dicionário <code>qr</code>, que acumulará todas as informações da prova. A Figura <span class="quarto-unresolved-ref">?fig-06-mctest-qrcode-seg2</span> exibe o <em>QR Code</em> isolado dentro da área de respostas.</p>
+<div id="cell-06-mctest-qrcode-seg2" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> CVMCTest</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>imgQR <span class="op">=</span> CVMCTest.cvMCTest.segmentQRcode(img2, countPage)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>mm.show(imgQR)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="mctest-qrcode-seg2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="cap06.py.pt_files/figure-html/mctest-qrcode-seg2-output-1.png" class="img-fluid figure-img"></p>
+<figcaption>Região do <em>QR Code</em> isolada por <code>segmentQRcode</code> dentro da área de respostas retificada.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div id="852eb082" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> CVMCTest</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>ss <span class="op">=</span> CVMCTest.cvMCTest.decodeQRcode(image)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>ss</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="209">
+<pre><code>{'date': '0',
+ 'idClassroom': '81',
+ 'idExam': '103',
+ 'idStudent': '11000001',
+ 'term': '2',
+ 'stylesheet': '1',
+ 'var1': '5',
+ 'var2': '0',
+ 'var3': '0',
+ 'var4': '0',
+ 'var5': '0',
+ 'text': '0',
+ 'answer': '5',
+ 'numquest': 5,
+ 'correct': '',
+ 'dbtext': '',
+ 'variations': '23124301',
+ 'variant': '23234021'}</code></pre>
+</div>
+</div>
+<p>A função <code>findSquares</code> varre <code>img2</code> em busca dos quadros de respostas e devolve uma lista de pares de coordenadas <code>(p1, p2)</code> — canto superior esquerdo e inferior direito de cada quadro. A Figura <a href="#fig-mctest-img2-full" class="quarto-xref">Figura&nbsp;<span>6.11</span></a> exibe a área de respostas completa e a Figura <a href="#fig-mctest-img2-crop" class="quarto-xref">Figura&nbsp;<span>6.12</span></a> mostra o recorte inferior, onde os quadros de marcação estão concentrados.</p>
+<div id="cell-fig-mctest-img2-full" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>mm.show(img2)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="fig-mctest-img2-full" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mctest-img2-full-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="cap06.py.pt_files/figure-html/fig-mctest-img2-full-output-1.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mctest-img2-full-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;6.11: Área de respostas completa (<code>img2</code>) antes da localização dos quadros de marcação.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div id="cell-fig-mctest-img2-crop" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>img3 <span class="op">=</span> img2[<span class="dv">220</span>:,:]</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>mm.show(img3)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="fig-mctest-img2-crop" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mctest-img2-crop-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="cap06.py.pt_files/figure-html/fig-mctest-img2-crop-output-1.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mctest-img2-crop-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;6.12: Recorte inferior da área de respostas, concentrando os quadros de bolhas a serem segmentados.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div id="0c53f3da" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>myFlagArea, qr <span class="op">=</span> CVMCTest.cvMCTest.getQRCode(img, countPage)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>myFlagArea, qr</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="212">
+<pre><code>(True,
+ {'date': '0',
+  'idClassroom': '81',
+  'idExam': '103',
+  'idStudent': '11000002',
+  'term': '2',
+  'stylesheet': '1',
+  'var1': '5',
+  'var2': '0',
+  'var3': '0',
+  'var4': '0',
+  'var5': '0',
+  'text': '0',
+  'answer': '5',
+  'numquest': 5,
+  'correct': '',
+  'dbtext': '',
+  'variations': '22341230',
+  'variant': '21510432'})</code></pre>
+</div>
+</div>
+<div id="d4c6733a" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>rectSquares <span class="op">=</span> CVMCTest.cvMCTest.findSquares(qr,img2, countPage)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>rectSquares</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="213">
+<pre><code>[[[np.int64(296), np.int64(508)], [np.int64(430), np.int64(674)]]]</code></pre>
+</div>
+</div>
+</section>
+<section id="leitura-automática-das-respostas" class="level4" data-number="6.6.5.5">
+<h4 data-number="6.6.5.5" class="anchored" data-anchor-id="leitura-automática-das-respostas"><span class="header-section-number">6.6.5.5</span> Leitura Automática das Respostas</h4>
+<p>Para cada quadro localizado em <code>rectSquares</code>, <code>setColumns</code> e <code>setLines</code> estimam, respectivamente, o número de alternativas por questão e o número de questões, analisando a distribuição espacial das bolhas. Com essas dimensões conhecidas, <code>segmentAnswers</code> avalia o grau de preenchimento de cada bolha e classifica a resposta marcada. Por fim, <code>setAnswarsOneLine</code> consolida as respostas de todos os quadros em uma única entrada no dicionário <code>qr</code>, pronta para comparação com o gabarito oficial recuperado do <em>QR Code</em>. A Figura <a href="#fig-mctest-answers" class="quarto-xref">Figura&nbsp;<span>6.13</span></a> exibe o valor final de <code>qr['answers']</code> com as respostas lidas automaticamente.</p>
+<div id="cell-fig-mctest-answers" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>testAnswers <span class="op">=</span> []</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> myFlagArea:</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> countSquare <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(rectSquares)):</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>      p1, p2 <span class="op">=</span> rectSquares[countSquare]</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> <span class="va">True</span>:</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>          imgQi <span class="op">=</span> CVMCTest.cvMCTest.imgAnswers[p1[<span class="dv">0</span>]:p2[<span class="dv">0</span>], p1[<span class="dv">1</span>]:p2[<span class="dv">1</span>]]</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>          [NUM_COLUMNS, img] <span class="op">=</span> CVMCTest.cvMCTest.setColumns(imgQi, countPage, countSquare)</span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>          [NUM_LINES, img] <span class="op">=</span> CVMCTest.cvMCTest.setLines(imgQi, countPage, countSquare)</span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>          NUM_RESPOSTAS <span class="op">=</span> NUM_COLUMNS</span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>          NUM_QUESTOES <span class="op">=</span> NUM_LINES</span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a>      imgQiNC <span class="op">=</span> CVMCTest.cvMCTest.imgAnswers[p1[<span class="dv">0</span>]:p2[<span class="dv">0</span>], p1[<span class="dv">1</span>]:p2[<span class="dv">1</span>]]</span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a>      testAnswers.append(CVMCTest.cvMCTest.segmentAnswers(</span>
+<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a>          [imgQi, imgQiNC], countPage, countSquare, NUM_QUESTOES, qr</span>
+<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a>      ))</span>
+<span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a>  qr <span class="op">=</span> CVMCTest.cvMCTest.setAnswarsOneLine(testAnswers, qr)  <span class="co"># deixa as respostas de cada quadro em uma linha</span></span>
+<span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a>qr[<span class="st">'answers'</span>]</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="fig-mctest-answers" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="214">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mctest-answers-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<pre><code>'0,0,0,0,0'</code></pre>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mctest-answers-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;6.13: Respostas lidas automaticamente pelo MCTest após segmentação e classificação de todas as bolhas.
+</figcaption>
+</figure>
+</div>
+</div>
 </section>
 </section>
-<section id="mão-na-massa-exercícios-práticos" class="level2" data-number="6.7">
-<h2 data-number="6.7" class="anchored" data-anchor-id="mão-na-massa-exercícios-práticos"><span class="header-section-number">6.7</span> Mão na Massa: Exercícios Práticos</h2>
-<p>O aprendizado em Visão Computacional acontece <strong>praticando em casos reais</strong>. Os exercícios abaixo progressivamente aumentam em complexidade e aproximam você do desafio de implementar sistemas de VC profissionais.</p>
-<section id="exercício-1-validação-robusta-contra-ruídos-valor-40-pontos" class="level3" data-number="6.7.1">
-<h3 data-number="6.7.1" class="anchored" data-anchor-id="exercício-1-validação-robusta-contra-ruídos-valor-40-pontos"><span class="header-section-number">6.7.1</span> Exercício 1: Validação Robusta contra Ruídos (Valor: 4,0 pontos)</h3>
+</section>
+<section id="inspeção-industrial-automatizada" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="inspeção-industrial-automatizada"><span class="header-section-number">6.7</span> Inspeção Industrial Automatizada</h2>
+<p>A inspeção visual automatizada é uma das aplicações mais consolidadas da Visão Computacional na indústria. Em linhas de produção de alta velocidade, câmeras industriais capturam imagens de cada peça ou produto, e algoritmos de processamento determinam, em milissegundos, se a peça está dentro das especificações de qualidade. Essa abordagem elimina a variabilidade inerente à inspeção humana e permite taxas de verificação incompatíveis com operadores manuais.</p>
+<p>Do ponto de vista algorítmico, a detecção de defeitos por subtração de imagem é uma das estratégias mais diretas: compara-se a imagem capturada com uma referência livre de defeitos. Regiões com diferença de intensidade acima de um limiar são classificadas como anomalias. Esse método pressupõe que as condições de iluminação e o posicionamento do objeto sejam reprodutíveis entre capturas — requisito atendido em ambientes industriais controlados, mas que requer atenção em sistemas de campo.</p>
+<p>A Figura <a href="#fig-industrial-defeito" class="quarto-xref">Figura&nbsp;<span>6.14</span></a> ilustra essa abordagem com uma imagem simulada: à esquerda, o produto de referência; ao centro, a versão com defeito introduzido artificialmente; à direita, a máscara binária resultante da limiarização da diferença, destacando a região afetada.</p>
+<div id="cell-fig-industrial-defeito" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> skimage <span class="im">import</span> data, color</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> morph <span class="im">import</span> mm</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Imagem de referência (produto sem defeito)</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>product_color <span class="op">=</span> data.coffee()</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>product_gray <span class="op">=</span> color.rgb2gray(product_color)</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Inserção de defeito simulado: arranhão escuro de 10×100 px</span></span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>defect_image <span class="op">=</span> np.copy(product_gray)</span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>defect_image[<span class="dv">100</span>:<span class="dv">110</span>, <span class="dv">200</span>:<span class="dv">300</span>] <span class="op">=</span> <span class="fl">0.1</span></span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Detecção por subtração e limiarização</span></span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a>difference <span class="op">=</span> np.<span class="bu">abs</span>(product_gray <span class="op">-</span> defect_image)</span>
+<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>defect_threshold <span class="op">=</span> <span class="fl">0.15</span>          <span class="co"># ajustável conforme a aplicação</span></span>
+<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a>detected_defect <span class="op">=</span> (difference <span class="op">&gt;</span> defect_threshold).astype(np.uint8) <span class="op">*</span> <span class="dv">255</span></span>
+<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a>mm.show(</span>
+<span id="cb39-19"><a href="#cb39-19" aria-hidden="true" tabindex="-1"></a>    [product_gray, defect_image, detected_defect],</span>
+<span id="cb39-20"><a href="#cb39-20" aria-hidden="true" tabindex="-1"></a>    titles<span class="op">=</span>[<span class="st">"Referência"</span>, <span class="st">"Com defeito"</span>, <span class="st">"Defeito detectado"</span>],</span>
+<span id="cb39-21"><a href="#cb39-21" aria-hidden="true" tabindex="-1"></a>    cols<span class="op">=</span><span class="dv">3</span>,</span>
+<span id="cb39-22"><a href="#cb39-22" aria-hidden="true" tabindex="-1"></a>    figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">4</span>)</span>
+<span id="cb39-23"><a href="#cb39-23" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb39-24"><a href="#cb39-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-25"><a href="#cb39-25" aria-hidden="true" tabindex="-1"></a>status <span class="op">=</span> <span class="st">"Defeito detectado."</span> <span class="cf">if</span> detected_defect.<span class="bu">any</span>() <span class="cf">else</span> <span class="st">"Produto conforme."</span></span>
+<span id="cb39-26"><a href="#cb39-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(status)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="fig-industrial-defeito" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-industrial-defeito-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="cap06.py.pt_files/figure-html/fig-industrial-defeito-output-1.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-industrial-defeito-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;6.14: Detecção de defeito por subtração de imagem: produto de referência, imagem com defeito simulado e máscara de anomalia detectada.
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Defeito detectado.</code></pre>
+</div>
+</div>
+</section>
+<section id="exercícios-práticos" class="level2" data-number="6.8">
+<h2 data-number="6.8" class="anchored" data-anchor-id="exercícios-práticos"><span class="header-section-number">6.8</span> Exercícios Práticos</h2>
+<p>Os exercícios a seguir ampliam progressivamente os <em>pipelines</em> desenvolvidos neste capítulo, introduzindo requisitos de robustez, detecção de anomalias e integração sistêmica. Cada exercício indica o valor de pontuação e a saída esperada, permitindo avaliação objetiva da implementação.</p>
+<p>Arquivo: <code>dados\provas_barcode.pdf</code></p>
+<section id="exercício-1-validação-robusta-contra-ruídos-valor-40-pontos" class="level3" data-number="6.8.1">
+<h3 data-number="6.8.1" class="anchored" data-anchor-id="exercício-1-validação-robusta-contra-ruídos-valor-40-pontos"><span class="header-section-number">6.8.1</span> Exercício 1: Validação Robusta contra Ruídos (Valor: 4,0 pontos)</h3>
 <p><strong>Contexto:</strong> No Projeto 2, detectamos bolhas apenas pela <strong>circularidade</strong> e <strong>área</strong>. Porém, em documentos com baixa qualidade de scanner, manchas, rasgos ou sujeira podem ter área e circularidade similares às bolhas reais, causando falsos positivos.</p>
 <p><strong>Desafio:</strong> Implemente uma validação adicional baseada nos <strong>Momentos Invariantes de Hu</strong> (<span class="math inline">\(h_1, h_2, \ldots, h_7\)</span>). Especificamente: 1. Calcule <span class="math inline">\(h_1\)</span> (primeiro momento invariante) para <strong>uma elipse perfeita</strong> e <strong>um retângulo</strong> de mesma área 2. Compare os valores—eles devem ser significativamente diferentes 3. Use <span class="math inline">\(h_1\)</span> como critério adicional de filtro no Projeto 2: aceitar apenas bolhas cujo <span class="math inline">\(h_1\)</span> se aproxime do valor de uma elipse 4. Teste o novo pipeline em imagens com diferentes níveis de ruído e compare a taxa de falsos positivos</p>
 <p><strong>Saída esperada:</strong> Um gráfico mostrando como a métrica <span class="math inline">\(h_1\)</span> reduz falsos positivos mantendo a detecção de bolhas reais.</p>
 <hr>
 </section>
-<section id="exercício-2-detecção-de-fraudes-e-dupla-marcação-valor-60-pontos" class="level3" data-number="6.7.2">
-<h3 data-number="6.7.2" class="anchored" data-anchor-id="exercício-2-detecção-de-fraudes-e-dupla-marcação-valor-60-pontos"><span class="header-section-number">6.7.2</span> Exercício 2: Detecção de Fraudes e Dupla Marcação (Valor: 6,0 pontos)</h3>
+<section id="exercício-2-detecção-de-fraudes-e-dupla-marcação-valor-60-pontos" class="level3" data-number="6.8.2">
+<h3 data-number="6.8.2" class="anchored" data-anchor-id="exercício-2-detecção-de-fraudes-e-dupla-marcação-valor-60-pontos"><span class="header-section-number">6.8.2</span> Exercício 2: Detecção de Fraudes e Dupla Marcação (Valor: 6,0 pontos)</h3>
 <p><strong>Contexto:</strong> Em avaliações reais, estudiantes frequentemente tentam fazer fraude: - Marcar <strong>duas alternativas na mesma questão</strong> (indecisão ou tentativa de fraude) - <strong>Raspar ou apagar</strong> uma marcação (deixando mancha cinza) - <strong>Marcar fora da bolha</strong> (invalidando a resposta)</p>
 <p><strong>Desafio:</strong> Modifique o Projeto 2 para adicionar <strong>validação de integridade</strong>: 1. Para cada questão, se <strong>duas ou mais alternativas</strong> apresentarem preenchimento acima de <span class="math inline">\(50\%\)</span>, marque como <strong>“ANULADA — Dupla Marcação”</strong> 2. Se o preenchimento ficar entre <span class="math inline">\(30\%-50\%\)</span> em qualquer alternativa, marque como <strong>“SUSPEITA — Preenchimento Parcial”</strong> (possível rasura) 3. Se nenhuma alternativa ultrapassar <span class="math inline">\(45\%\)</span>, marque como <strong>“BRANCO”</strong> 4. Gere um <strong>relatório detalhado</strong> indicando quais questões têm problemas e o percentual de integridade do formulário</p>
 <p><strong>Saída esperada:</strong> Um relatório estruturado em JSON ou pandas DataFrame mostrando para cada questão: [resposta_lida, confiança, status_integridade].</p>
 <hr>
 </section>
-<section id="exercício-3-pipeline-completo-de-end-to-end-valor-100-pontos-desafio" class="level3" data-number="6.7.3">
-<h3 data-number="6.7.3" class="anchored" data-anchor-id="exercício-3-pipeline-completo-de-end-to-end-valor-100-pontos-desafio"><span class="header-section-number">6.7.3</span> Exercício 3: Pipeline Completo de End-to-End (Valor: 10,0 pontos — Desafio)</h3>
+<section id="exercício-3-pipeline-completo-de-end-to-end-valor-100-pontos-desafio" class="level3" data-number="6.8.3">
+<h3 data-number="6.8.3" class="anchored" data-anchor-id="exercício-3-pipeline-completo-de-end-to-end-valor-100-pontos-desafio"><span class="header-section-number">6.8.3</span> Exercício 3: Pipeline Completo de End-to-End (Valor: 10,0 pontos — Desafio)</h3>
 <p><strong>Contexto:</strong> Você agora tem os dois projetos funcionando separadamente. O desafio final é <strong>integrá-los em um sistema único e robusto</strong>.</p>
 <p><strong>Desafio:</strong> 1. Crie uma função <code>processar_prova_completa(caminho_pdf)</code> que: - Converta PDF para imagem (Projeto 1 — setup) - Alinhe a página automaticamente (Projeto 1) - Detecte e decodifique o QR Code (Projeto 2 — extração de ID) - Processe todas as bolhas com validação robusta (Proj 2 + Ex 1) - Detecte fraudes e anomalias (Projeto 2 + Ex 2) - Retorne um dicionário com: <code>{id_aluno, id_prova, gabarito_lido, confianca_media, questoes_problema, score_estimado}</code></p>
 <ol start="2" type="1">
@@ -941,9 +1335,16 @@ Figura&nbsp;6.6: Pipeline de processamento do <em>QRCode</em>: limiarização, a
 <hr>
 </section>
 </section>
-<section id="próximos-passos" class="level2" data-number="6.8">
-<h2 data-number="6.8" class="anchored" data-anchor-id="próximos-passos"><span class="header-section-number">6.8</span> Próximos Passos</h2>
-<p>Após completar este capítulo, você estará pronto para: - <strong>Capítulo 7:</strong> Detecção de objetos em cenas complexas (faces, pessoas, placas de carro) - <strong>Capítulo 8:</strong> Reconhecimento de padrões e matching (buscar imagens similares) - <strong>Capítulo 9:</strong> Rastreamento em vídeo (tracking de movimentos) - <strong>Capítulo 10:</strong> Deep Learning para visão (CNN, Detecção em Tempo Real)</p>
+<section id="próximos-passos" class="level2" data-number="6.9">
+<h2 data-number="6.9" class="anchored" data-anchor-id="próximos-passos"><span class="header-section-number">6.9</span> Próximos Passos</h2>
+<p>Este capítulo encerrou a construção de um <em>pipeline</em> completo de análise documental — da ingestão do PDF à leitura automática das respostas —, utilizando operações morfológicas, transformações geométricas, detecção de contornos e decodificação de marcadores. Esses fundamentos são transferíveis a qualquer domínio que envolva reconhecimento de padrões em imagens estruturadas.</p>
+<p>Os capítulos seguintes ampliam o escopo para cenas não estruturadas e aprendizado de representações:</p>
+<ul>
+<li><strong>Capítulo 7</strong> — Detecção de objetos em cenas complexas: faces, pedestres e placas de veículos, com técnicas baseadas em descritores e janelas deslizantes.</li>
+<li><strong>Capítulo 8</strong> — Reconhecimento e <em>matching</em> de padrões: busca por similaridade visual e correspondência de características entre imagens.</li>
+<li><strong>Capítulo 9</strong> — Rastreamento em vídeo: estimação de trajetórias e associação de detecções ao longo do tempo.</li>
+<li><strong>Capítulo 10</strong> — Aprendizado profundo para visão: redes convolucionais, detecção em tempo real e transferência de aprendizado.</li>
+</ul>
 
 
 </section>
