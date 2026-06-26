@@ -460,3 +460,229 @@ Neste capítulo, exploramos a transição do Processamento Digital de Imagens pa
 
 [1] Moreira, P. H. C., Ferreira, B. P., & Reis, M. V. D. (2025). Automated Correction of Multiple Choice Tests Using Computer Vision. *Anais do XVI Workshop de Sistemas de Informação (WSIS)*. [https://sol.sbc.org.br/index.php/wsis/article/view/37623](https://sol.sbc.org.br/index.php/wsis/article/view/37623) 
 [2] PyImageSearch. (2016). Bubble sheet multiple choice scanner and test grader using OMR, Python, and OpenCV. [https://pyimagesearch.com/2016/10/03/bubble-sheet-multiple-choice-scanner-and-test-grader-using-omr-python-and-opencv/](https://pyimagesearch.com/2016/10/03/bubble-sheet-multiple-choice-scanner-and-test-grader-using-omr-python-and-opencv/) 
+
+
+
+
+
+
+Exatamente — os blocos de código do MCTest que geram saída visual precisam ter o cabeçalho Quarto e ser referenciados no texto antes. Vou listar cada bloco que exibe imagem e gera saída, e reescrever a seção completa com os labels corretos.Agora tenho mapeados todos os blocos com saída visual. Vou reescrever a seção completa com os cabeçalhos Quarto em todos os blocos que geram figura e as referências `@fig-` no texto antes de cada um.
+
+---
+
+### Usar as Implementações do MCTest
+
+O **MCTest** é um sistema de código aberto para criação, distribuição e correção automatizada de avaliações, desenvolvido na UFABC. Seu módulo de Visão Computacional, concentrado no arquivo `CVMCTest.py`, implementa o mesmo *pipeline* descrito nas seções anteriores — retificação por perspectiva, isolamento do *QR Code* e leitura das bolhas — em uma forma diretamente utilizável em produção. O código-fonte e a documentação estão disponíveis em [github.com/fzampirolli/mctest](https://github.com/fzampirolli/mctest) e em [vision.ufabc.edu.br](http://vision.ufabc.edu.br).
+
+#### Obtenção e Preparação do Módulo
+
+O arquivo `CVMCTest.py` pertence ao ecossistema Django do MCTest e contém importações de modelos e configurações do *framework* que não existem fora do ambiente Web. Para utilizá-lo em um *notebook*, basta baixá-lo com `requests` e remover essas dependências com `sed`, tornando o módulo autocontido.
+
+```python
+import requests
+CVMCTest = requests.get("https://raw.githubusercontent.com/fzampirolli/mctest/master/exam/CVMCTest.py")
+with open('CVMCTest.py', 'w') as writefile:
+    writefile.write(CVMCTest.text)
+```
+
+```python
+# instalar se ainda nao estiver
+if False:
+  !pip install PyPDF2 > /dev/null
+  !pip install bcrypt > /dev/null
+  !pip install scikit-image > /dev/null
+  !pip show pyarrow > /dev/null
+  !pip install --upgrade cudf-cu12 > /dev/null
+```
+
+Cada linha do `sed` abaixo elimina um grupo de importações incompatíveis — modelos de banco de dados (`exam`, `student`, `topic`), configurações do servidor (`mctest`) e o próprio *framework* (`django`). Sem essa limpeza, qualquer `import CVMCTest` lançaria `ModuleNotFoundError` imediatamente.
+
+```python
+# remove linhas with "from django.", ...
+!sed --in-place '/from django./d' CVMCTest.py
+!sed --in-place '/from exam./d' CVMCTest.py
+!sed --in-place '/from mctest./d' CVMCTest.py
+!sed --in-place '/from student./d' CVMCTest.py
+!sed --in-place '/from topic./d' CVMCTest.py
+!sed --in-place '/from .models import VariationExam/d' CVMCTest.py
+```
+
+#### Decodificação do *QR Code* com `CVMCTest`
+
+Com o módulo preparado, a função `decodeQRcode` aplica internamente as mesmas etapas de binarização, zoom e detecção apresentadas na seção anterior, devolvendo diretamente o dicionário de metadados da prova. O exemplo abaixo utiliza uma imagem já segmentada do *QR Code* — equivalente a `img_qrcode_final` obtido no *pipeline* manual. A Figura @fig-mctest-qrcode-seg exibe essa imagem de entrada, e o resultado impresso confirma que ambas as abordagens produzem o mesmo dicionário de metadados.
+
+```python
+#| label: fig-mctest-qrcode-seg
+#| fig-cap: "Imagem segmentada do *QR Code* utilizada como entrada para `CVMCTest.decodeQRcode`."
+#| echo: true
+#| output: true
+
+import cv2
+import matplotlib.pyplot as plt
+
+file = "./dados/old/extra02.qrcodeSeg.png"
+
+image = mm.read(file)
+mm.show(image)
+```
+
+```python
+import CVMCTest
+
+ss = CVMCTest.cvMCTest.decodeQRcode(image)
+ss
+```
+
+#### Extração da Área de Respostas
+
+O *pipeline* completo começa pela rasterização do PDF e pela leitura da imagem em escala de cinza, exatamente como na seção de ingestão de documentos. A função `getAnswerArea` localiza os quatro discos de referência, estima a transformação de perspectiva e devolve a região da folha que contém os quadros de marcação, já retificada e com dimensões fixas. A Figura @fig-mctest-img-original exibe a imagem em escala de cinza carregada, e a Figura @fig-mctest-answer-area mostra a área de respostas extraída por `getAnswerArea`.
+
+```python
+file = "dados/provas_qrcode.pdf"
+pages = convert_from_path(file, 200)  # dpi 100=min 500=max
+numPAGES = 0
+MYFILES = 'extra02.qrcode'
+for page in pages:
+  myfile0 = MYFILES + '_p' + str(numPAGES) + '.png'
+  page.save(myfile0)
+  numPAGES += 1
+  print(myfile0)
+pages.clear()
+```
+
+```python
+#| label: fig-mctest-img-original
+#| fig-cap: "Imagem da folha de respostas em escala de cinza carregada a partir do PDF rasterizado."
+#| echo: true
+#| output: true
+
+img_color = mm.read(myfile0)
+img = img0 = mm.gray(img_color)
+mm.show(img)
+```
+
+```python
+#| label: fig-mctest-answer-area
+#| fig-cap: "Área de respostas extraída por `getAnswerArea`: região retificada contendo os quadros de marcação."
+#| echo: true
+#| output: true
+
+import CVMCTest
+countPage = 0
+img2 = CVMCTest.cvMCTest.getAnswerArea(img, countPage)
+mm.show(img2)
+```
+
+> **Nota de compatibilidade:** versões recentes do NumPy (≥ 2.0) removeram o alias `np.int0`. Caso `CVMCTest.py` utilize esse tipo, aplique a correção abaixo e recarregue o módulo antes de prosseguir.
+
+```python
+!sed -i 's/box = np.int0(cv2.boxPoints(rect))/box = cv2.boxPoints(rect).astype(np.intp)/' CVMCTest.py
+```
+
+```python
+import importlib
+import CVMCTest
+
+importlib.reload(CVMCTest)
+```
+
+#### Segmentação do *QR Code* e Localização dos Quadros
+
+Dentro da área de respostas retificada, o MCTest executa duas operações preparatórias antes de ler as bolhas. A função `segmentQRcode` isola o *QR Code* para uma segunda tentativa de decodificação — útil quando a resolução da imagem completa era insuficiente —, enquanto `getQRCode` devolve o indicador `myFlagArea`, que sinaliza se a área de respostas foi localizada com sucesso, e o dicionário `qr`, que acumulará todas as informações da prova. A Figura @fig-mctest-qrcode-seg2 exibe o *QR Code* isolado dentro da área de respostas.
+
+```python
+#| label: fig-mctest-qrcode-seg2
+#| fig-cap: "Região do *QR Code* isolada por `segmentQRcode` dentro da área de respostas retificada."
+#| echo: true
+#| output: true
+
+import CVMCTest
+imgQR = CVMCTest.cvMCTest.segmentQRcode(img2, countPage)
+mm.show(imgQR)
+```
+
+```python
+import CVMCTest
+
+ss = CVMCTest.cvMCTest.decodeQRcode(imgQR)
+ss
+```
+
+A função `findSquares` varre `img2` em busca dos quadros de respostas e devolve uma lista de pares de coordenadas `(p1, p2)` — canto superior esquerdo e inferior direito de cada quadro. A Figura @fig-mctest-img2-full exibe a área de respostas completa e a Figura @fig-mctest-img2-crop mostra o recorte inferior, onde os quadros de marcação estão concentrados.
+
+```python
+#| label: fig-mctest-img2-full
+#| fig-cap: "Área de respostas completa (`img2`) antes da localização dos quadros de marcação."
+#| echo: true
+#| output: true
+
+mm.show(img2)
+```
+
+```python
+#| label: fig-mctest-img2-crop
+#| fig-cap: "Recorte inferior da área de respostas, concentrando os quadros de bolhas a serem segmentados."
+#| echo: true
+#| output: true
+
+img3 = img2[220:,:]
+mm.show(img3)
+```
+
+```python
+myFlagArea, qr = CVMCTest.cvMCTest.getQRCode(img, countPage)
+myFlagArea, qr
+```
+
+```python
+rectSquares = CVMCTest.cvMCTest.findSquares(qr, img2, countPage)
+rectSquares
+```
+
+#### Leitura Automática das Respostas
+
+Para cada quadro localizado em `rectSquares`, `setColumns` e `setLines` estimam, respectivamente, o número de alternativas por questão e o número de questões, analisando a distribuição espacial das bolhas. Com essas dimensões conhecidas, `segmentAnswers` avalia o grau de preenchimento de cada bolha e classifica a resposta marcada. Por fim, `setAnswarsOneLine` consolida as respostas de todos os quadros em uma única entrada no dicionário `qr`, pronta para comparação com o gabarito oficial recuperado do *QR Code*. A Figura @fig-mctest-answers exibe o valor final de `qr['answers']` com as respostas lidas automaticamente.
+
+```python
+#| label: fig-mctest-answers
+#| fig-cap: "Respostas lidas automaticamente pelo MCTest após segmentação e classificação de todas as bolhas."
+#| echo: true
+#| output: true
+
+testAnswers = []
+if myFlagArea:
+
+  for countSquare in range(len(rectSquares)):
+      p1, p2 = rectSquares[countSquare]
+
+      if True:
+          imgQi = CVMCTest.cvMCTest.imgAnswers[p1[0]:p2[0], p1[1]:p2[1]]
+          [NUM_COLUMNS, img] = CVMCTest.cvMCTest.setColumns(imgQi, countPage, countSquare)
+          [NUM_LINES, img] = CVMCTest.cvMCTest.setLines(imgQi, countPage, countSquare)
+          NUM_RESPOSTAS = NUM_COLUMNS
+          NUM_QUESTOES = NUM_LINES
+
+      imgQiNC = CVMCTest.cvMCTest.imgAnswers[p1[0]:p2[0], p1[1]:p2[1]]
+      testAnswers.append(CVMCTest.cvMCTest.segmentAnswers(
+          [imgQi, imgQiNC], countPage, countSquare, NUM_QUESTOES, qr
+      ))
+
+  qr = CVMCTest.cvMCTest.setAnswarsOneLine(testAnswers, qr)  # deixa as respostas de cada quadro em uma linha
+qr['answers']
+```
+
+---
+
+**O que foi corrigido em relação à versão anterior:**
+
+Sete blocos que produzem saída visual ganharam cabeçalho Quarto com `label`, `fig-cap`, `echo: true` e `output: true`, e cada um é referenciado no texto imediatamente antes com `@fig-`:
+
+| Label | Bloco |
+|---|---|
+| `fig-mctest-qrcode-seg` | `mm.show(image)` — QR Code segmentado de entrada |
+| `fig-mctest-img-original` | `mm.show(img)` — folha em escala de cinza |
+| `fig-mctest-answer-area` | `mm.show(img2)` — área de respostas por `getAnswerArea` |
+| `fig-mctest-qrcode-seg2` | `mm.show(imgQR)` — QR Code isolado por `segmentQRcode` |
+| `fig-mctest-img2-full` | `mm.show(img2)` — área completa antes de `findSquares` |
+| `fig-mctest-img2-crop` | `mm.show(img3)` — recorte inferior dos quadros |
+| `fig-mctest-answers` | `qr['answers']` — saída final das respostas lidas |
