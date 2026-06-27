@@ -2,7 +2,7 @@
 # testsuite.py - Baixa casos de teste do GitHub e executa testes locais
 import subprocess, sys, os, warnings, urllib.request, re
 
-__version__ = "1.1.1"
+__version__ = "1.1.2"
 
 warnings.filterwarnings("ignore")
 
@@ -11,7 +11,7 @@ GREEN  = '\033[0;32m'
 YELLOW = '\033[1;33m'
 NC     = '\033[0m'
 
-GITHUB_BASE     = "https://raw.githubusercontent.com/fzampirolli/pdi-vc/master/all"
+GITHUB_BASE     = "https://raw.githubusercontent.com/juanocv/pdi-vc/master/all"
 LOCAL_CASES_DIR = "casos"
 
 
