@@ -150,15 +150,31 @@ class TestSuite:
 
     def _baixar(self, nome_caso, caminho_local):
         os.makedirs(LOCAL_CASES_DIR, exist_ok=True)
+    
         if os.path.exists(caminho_local):
             self._p(f"✔️ {nome_caso} já existe em {LOCAL_CASES_DIR}/")
             return True
-        cap_int = int(self.cap_str)
-        ex_int  = int(self.ex_str)
-        for url in [
-            f"{GITHUB_BASE}/cap{self.cap_str}/casos/{nome_caso}",
-            f"{GITHUB_BASE}/cap{self.cap_str}/cap{cap_int}/EP{cap_int}_{ex_int}.cases",
-        ]:
+    
+        urls = []
+    
+        # Caso antigo: capítulos numéricos
+        if self.cap_str.isdigit():
+            cap_int = int(self.cap_str)
+            ex_int  = int(self.ex_str)
+    
+            urls.extend([
+                f"{GITHUB_BASE}/cap{self.cap_str}/casos/{nome_caso}",
+                f"{GITHUB_BASE}/cap{self.cap_str}/cap{cap_int}/EP{cap_int}_{ex_int}.cases",
+            ])
+    
+        # Caso novo: capítulos com string, exemplo EPX_01
+        else:
+            urls.extend([
+                f"{GITHUB_BASE}/cap{self.cap_str}/casos/{nome_caso}",
+                f"{GITHUB_BASE}/{self.cap_str}/casos/{nome_caso}",
+            ])
+    
+        for url in urls:
             self._p(f"📥 Tentando: {url}")
             try:
                 urllib.request.urlretrieve(url, caminho_local)
@@ -166,6 +182,7 @@ class TestSuite:
                 return True
             except Exception:
                 pass
+    
         self._p(f"❌ Não foi possível baixar {nome_caso}")
         return False
 
