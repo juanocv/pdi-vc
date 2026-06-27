@@ -2,7 +2,7 @@
 # testsuite.py - Baixa casos de teste do GitHub e executa testes locais
 import subprocess, sys, os, warnings, urllib.request, re
 
-__version__ = "1.1.3"
+__version__ = "1.1.4"
 
 warnings.filterwarnings("ignore")
 
