@@ -133,11 +133,20 @@ class TestSuite:
 
     @staticmethod
     def _normalizar(base):
-        m = re.match(r'EP(\d+)_(\d+)', base, re.IGNORECASE)
+        m = re.match(r'EP([A-Za-z0-9]+)_(\d+)', base, re.IGNORECASE)
         if not m:
             return None, None, None
-        cap, ex = int(m.group(1)), int(m.group(2))
-        return f"EP{cap:02d}_{ex:02d}", f"{cap:02d}", f"{ex:02d}"
+    
+        cap = m.group(1)
+        ex = int(m.group(2))
+    
+        # Se cap for número, mantém o padrão antigo: EP04_01
+        if cap.isdigit():
+            cap_norm = f"{int(cap):02d}"
+        else:
+            cap_norm = cap
+    
+        return f"EP{cap_norm}_{ex:02d}", cap_norm, f"{ex:02d}"
 
     def _baixar(self, nome_caso, caminho_local):
         os.makedirs(LOCAL_CASES_DIR, exist_ok=True)
