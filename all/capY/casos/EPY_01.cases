@@ -1,0 +1,38 @@
+#### case=Caso1
+input=2 2
+1 0
+0 1
+4
+output=1 0
+0 2
+Instância 1: 1 pixels
+Instância 2: 1 pixels
+Total de instâncias: 2
+
+#### case=Caso2
+input=2 2
+1 0
+0 1
+8
+output=1 0
+0 1
+Instância 1: 2 pixels
+Total de instâncias: 1
+
+#### case=Caso3
+input=5 5
+1 1 0 0 1
+1 0 0 1 0
+0 0 1 0 0
+0 1 0 0 1
+1 0 0 1 1
+8
+output=1 1 0 0 2
+1 0 0 2 0
+0 0 2 0 0
+0 2 0 0 3
+2 0 0 3 3
+Instância 1: 3 pixels
+Instância 2: 5 pixels
+Instância 3: 3 pixels
+Total de instâncias: 3
